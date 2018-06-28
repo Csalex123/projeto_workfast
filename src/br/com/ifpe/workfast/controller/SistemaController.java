@@ -9,4 +9,9 @@ public class SistemaController {
 	public String olaMundo() {
 		return "ola";
 	}
+	
+	@RequestMapping("colaborador/pagina")
+	public String ajuda() {
+		return "colaborador/ajudaColaborador";
+	}
 }
