@@ -7,6 +7,6 @@
 <title>Tela Administrador</title>
 </head>
 <body>
-<p>Tela ADM</p>
+<p>Tela ADM </p>
 </body>
 </html>
