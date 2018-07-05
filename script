@@ -1,0 +1,18 @@
+create database workfast;
+use workfast;
+
+create table tipo_usuario(
+ id_tipo int AUTO_INCREMENT PRIMARY KEY,
+ descricao varchar(100) not null
+);
+
+
+create table usuario(
+ id_usuario int AUTO_INCREMENT PRIMARY KEY,
+ email varchar(100) not null,
+ senha varchar(100) not null,
+ ativo char(1) not null,
+ nivel_acesso char(1) not null,
+ fk_tipo int not null,
+ FOREIGN KEY(fk_tipo) REFERENCES tipo_usuario (id_tipo)
+);
