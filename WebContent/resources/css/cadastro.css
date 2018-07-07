@@ -1,0 +1,52 @@
+body{
+		background: rgba(30, 144, 255, 0.8);
+		margin-bottom: 40px;
+	}
+
+	h2 , label, button, p,a{
+		font-family: 'PT Serif', serif;
+	}
+
+
+	/* Estilizando a mensagem dos input*/
+	label.error{
+		color: rgba(255, 0, 0, 1); 
+		font-weight: normal;
+		padding: 5px 0px;
+	}
+
+	#container_cadastro{
+		margin: 0 auto;
+		float: none;
+	}
+
+
+	#txt_cadastrar{
+		text-align: center;
+		font-weight: bold;
+	}
+
+
+	#button_cadastrar{
+		float: right; 
+		width: 160px;
+	}
+
+	/* Mensagem: "Já tem uma conta"; */
+	#p_mensagem{
+		text-align: center;
+		margin-top: 70px;
+	}
+
+
+	#img_logo{
+		height: 55px;
+		width: 530px;
+		margin-bottom: 30px;
+		margin-top: 30px;
+
+		/* Centraliza a imagem */
+		display: block;
+		margin-left: auto;
+		margin-right: auto
+	}

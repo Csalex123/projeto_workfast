@@ -16,4 +16,9 @@ http://www.springframework.org/schema/context/spring-context-3.0.xsd">
 		<property name="prefix" value="/WEB-INF/view/" />
 		<property name="suffix" value=".jsp" />
 	</bean>
+	
+	<!-- A linha abaixo é necessária para poder carregar nos JSP os arquivos CSS, imagens, JavaScript e etc -->
+	<mvc:resources mapping="/resources/**" location="/resources/" />
+	<mvc:annotation-driven />
+	
 </beans>
