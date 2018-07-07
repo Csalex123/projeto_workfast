@@ -14,4 +14,9 @@ public class SistemaController {
 	public String ajuda() {
 		return "colaborador/ajudaColaborador";
 	}
+	
+	@RequestMapping("logingmail")
+	public String loginGmail() {
+		return "login-gmail/logingmail";
+	}
 }
