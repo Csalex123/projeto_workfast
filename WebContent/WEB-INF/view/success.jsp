@@ -44,47 +44,36 @@
 </head>
 <body>
 
-	<img id="myImg">
-	<br>
-	<p id="name"></p>
+	<div class="container">
+		<div>
+			<img id="img_logo"
+				src="<%=request.getContextPath()%>/resources/img/logo_workfast.png"
+				class="img-responsive">
+		</div>
 
+		<div class="panel panel-default col-sm-4" id="container_login">
 
-	<div id="status"></div>
+			<h2 id="txt_login">Login do google com sucesso!</h2>
 
+			<div class="row" id="div_button">
+				<center>
+					<button onclick="myFunction()">
+						<a style="text-decoration: none;" href="entrar">
+							Voltar
+						</a>
+					</button>
+				</center>
+			</div>
 
+			<script>
+				function myFunction() {
+					gapi.auth2.getAuthInstance().disconnect();
+					location.reload();
+				}
+			</script>
+		</div>
 
-	<script type="text/javascript">
-		function onSignIn(googleUser) {
-			// window.location.href='success.jsp';
-
-			var profile = googleUser.getBasicProfile();
-			var imagurl = profile.getImageUrl();
-			var name = profile.getName();
-			var email = profile.getEmail();
-			document.getElementById("myImg").src = imagurl;
-			document.getElementById("name").innerHTML = name;
-
-			document.getElementById("myP").style.visibility = "hidden";
-
-			document.getElementById("status").innerHTML = 'Bem vindo ' + name
-					+ '! <a href="success.jsp"?email=' + email + '&name=' + name
-					+ '/>Continue com o login do Google</a></p>'
-
-		}
-	</script>
-
-
-
-
-
-	<button onclick="myFunction()">Sair</button>
-
-	<script>
-		function myFunction() {
-			gapi.auth2.getAuthInstance().disconnect();
-			location.reload();
-		}
-	</script>
+	</div>
 
 
 

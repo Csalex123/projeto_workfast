@@ -18,4 +18,10 @@ public class indexController {
 			public String login() {
 			 	return "login";
 		}
+		
+		//Método para chamar a página de login google success
+				@RequestMapping("googleSuccess")
+					public String loginGoogleSuccess() {
+					 	return "success";
+				}
 }	

@@ -9,8 +9,10 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 
-	
-
+	<!-- Login google -->
+	<script src="https://apis.google.com/js/platform.js" async defer></script>
+	<meta name="google-signin-client_id" 
+	content="1012288331395-k24u9pj63e593k273179pbtrigshvj2p.apps.googleusercontent.com">
 
 	<!-- Fonte Google -->
 	<link href="https://fonts.googleapis.com/css?family=PT+Serif" rel="stylesheet">
@@ -81,8 +83,48 @@
 
 			<div class="row" id="div_button">
 				<center>
-					<button class="btn btn-default" id="facebook"> Facebook</button>
-					<button class="btn btn-default" id="google"> Google</button>
+					<button class="btn btn-default" id="facebook" style="float: left; margin-left: 9%"> Facebook</button>
+					
+					<!--	Login Google	-->
+					<div class="g-signin2" data-onsuccess="onSignIn" id="myP"></div>
+					
+					<img id="myImg">
+					<br>
+					<p id="name"></p>
+				
+					<div id="status"></div>
+				
+					<script type="text/javascript">
+						function onSignIn(googleUser) {
+							// window.location.href='success.jsp';
+				
+							var profile = googleUser.getBasicProfile();
+							var imagurl = profile.getImageUrl();
+							var name = profile.getName();
+							var email = profile.getEmail();
+							document.getElementById("myImg").src = imagurl;
+							document.getElementById("name").innerHTML = name;
+				
+							document.getElementById("myP").style.visibility = "hidden";
+				
+							document.getElementById("status").innerHTML = 'Bem vindo ' + name
+									+ '! <a href="googleSuccess"?email=' + email + '&name=' + name
+									+ '/>Continue com o login do Google</a></p>'
+				
+						}
+					</script>
+									
+					<button onclick="myFunction()">Sair</button>
+				
+					<script>
+						function myFunction() {
+							gapi.auth2.getAuthInstance().disconnect();
+							location.reload();
+						}
+					</script>
+					<!--	Fim Login Google	-->
+					
+					<!-- <button class="btn btn-default" id="google">Google</button> -->
 				</center>
 			</div>
 		</div>
