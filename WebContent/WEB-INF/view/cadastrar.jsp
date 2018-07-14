@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="ISO-8859-1"%>
+    
+<!-- Importando a biblioteca Taglib -->
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -48,7 +51,12 @@
 
 			<!-- Formulário de cadastro-->
 			<div class="panel-body">
-				<form action="" id="form_cadastro">
+				<form action="incluirUsuario" id="form_cadastro">
+					<div class="form-group">
+						<label for="nome">Nome:</label>
+						<input type="text"  class="form-control" id="nome" placeholder="Digite seu nome e sobrenome" name="nome">
+					</div>
+					
 					<div class="form-group">
 						<label for="email">E-mail:</label>
 						<input type="email"  class="form-control" id="email" placeholder="Digite  seu e-mail" name="email">
@@ -80,10 +88,14 @@
 					<div class="form-group">
 						<label >Tipo de acesso:</label>
 						<div> 
-							<select class="form-control">
-								<option selected="">Cliente</option>
-								<option>Prestador de Serviços</option>
-							</select>
+							<div class="form-group">
+								<select id="tipo_acesso" name="tipo_acesso" class="form-control" >
+									<option value=""> Selecione </option>
+									<c:forEach items="${listaTipoAcesso}" var="obj">
+										<option value="${obj.id}">${obj.descricao}</option>
+									</c:forEach>
+								</select>
+							</div>
 						</div>
 					</div>
 

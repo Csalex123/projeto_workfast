@@ -5,6 +5,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -22,17 +24,42 @@ public class Usuario {
 	private String email;
 	
 	@Column
-	private String login;
-	
-	@Column
 	private String senha;
+	
+	@ManyToOne
+	@JoinColumn(name = "fk_tipo")
+	private TipoAcesso tipo_acesso;
 
+	
+	public String getEmail() {
+		return email;
+	}
+	
+	public void setEmail(String email) {
+		this.email = email;
+	}
+	
+	public String getSenha() {
+		return senha;
+	}
+	
+	public void setSenha(String senha) {
+		this.senha = senha;
+	}
+	
 	public int getId() {
 		return id;
 	}
-
 	public void setId(int id) {
 		this.id = id;
+	}
+	
+	public TipoAcesso getTipo_acesso() {
+		return tipo_acesso;
+	}
+	
+	public void setTipo_acesso(TipoAcesso tipo_acesso) {
+		this.tipo_acesso = tipo_acesso;
 	}
 
 	public String getNome() {
@@ -42,29 +69,7 @@ public class Usuario {
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
-
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
-	public String getLogin() {
-		return login;
-	}
-
-	public void setLogin(String login) {
-		this.login = login;
-	}
-
-	public String getSenha() {
-		return senha;
-	}
-
-	public void setSenha(String senha) {
-		this.senha = senha;
-	}
+	
+	
 
 }

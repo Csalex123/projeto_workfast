@@ -26,12 +26,28 @@
 			$("#form_cadastro").validate({
 					//Regras de validação
 					rules:{
+						
+						
+						nome:{
+							required: true,
+							maxlength: 45,
+							minlength: 2
+						},
 
 						email:{
 							required: true,
 							maxlength: 100,
 							minlength: 8,
-							email: true
+							email: true,
+							remote:{
+								url:"disponivel",
+								type:"get",
+								data:{
+									email: function(){
+										return $("#email").val();
+									}
+								}
+							}
 						},
 
 						senha:{
@@ -45,35 +61,52 @@
 						},
 
 						contrato:{
-							required: true,
+							required: true
 
+						}, 
+						
+						tipo_acesso:{
+							required: true,
 						}
 
 					},
 
 					messages:{
+						
+						nome:{
+							required: "<span class='glyphicon glyphicon-asterisk'></span> Este campo é obrigatório.",
+							minlength: "O nome deve ter no mínimo 2 caracteres.",
+							maxlength: "O nome deve ter no máximo 45 caracteres."	
+							
+						},
+						
 						email:{
-							required: "Este campo é obrigatório.",
+							required: "<span class='glyphicon glyphicon-asterisk'></span> Este campo é obrigatório.",
 							minlength: "O e-mail deve ter no mínimo 8 caracteres.",
-							maxlength: "O e-mail deve ter no máximo 100 caracteres."
+							maxlength: "O e-mail deve ter no máximo 100 caracteres.",
+							remote: "<span class='glyphicon glyphicon-remove'></span> Este e-mail já está sendo usado por outra pessoa."
 							
 						},
 
 						senha:{
-							required: "Este campo é obrigatório",
+							required: "<span class='glyphicon glyphicon-asterisk'></span> Este campo é obrigatório",
 							rangelength: "Por favor, forneça uma senha entre 6 e 18 caracteres de comprimento.",
 							
 						},
 
 						senha2:{
-							required: "Este campo é obrigatório",
+							required: "<span class='glyphicon glyphicon-asterisk'></span> Este campo é obrigatório",
 							equalTo: "As senhas são diferentes, verifique."
 
 						},
 
 						contrato:{
-							required: "Você deve aceitar os termos."
+							required: "<span class='glyphicon glyphicon-asterisk'></span> Você deve aceitar os termos."
 
+						},
+						
+						tipo_acesso:{
+							required:"<span class='glyphicon glyphicon-asterisk'></span> Este campo é obrigatório",
 						}
 					}
 

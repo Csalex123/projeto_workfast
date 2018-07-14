@@ -62,7 +62,7 @@
 				<form action="efetuarLogin" method="post" id="form_login">
 
 					<div class="form-group">
-						<label for="email">Login:</label> <input type="text"
+						<label for="email">E-mail:</label> <input type="text"
 							class="form-control" id="inputLogin"
 							placeholder="Digite  seu e-mail" name="login"
 							value="${usuario.login}" maxlength="20" required="required"
