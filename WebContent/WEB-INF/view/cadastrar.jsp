@@ -51,7 +51,7 @@
 
 			<!-- Formulário de cadastro-->
 			<div class="panel-body">
-				<form action="incluirUsuario" id="form_cadastro">
+				<form action="incluirUsuario" id="form_cadastro" method="post">
 					<div class="form-group">
 						<label for="nome">Nome:</label>
 						<input type="text"  class="form-control" id="nome" placeholder="Digite seu nome e sobrenome" name="nome">
@@ -115,6 +115,8 @@
 						Já tem uma conta?
 						<a href="entrar" style="color: red;" data-toggle="tooltip" data-placement="top" title="Se clicar você será redirecionado para a página de login">Fazer login</a>
 					</p>
+					<input name="ativo" type="hidden"  value="1">
+					<input name="nivel_acesso" type="hidden"  value="1">
 				</form>
 			</div>
 		</div>

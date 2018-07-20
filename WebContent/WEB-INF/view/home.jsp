@@ -10,7 +10,8 @@
 </head>
 <body style="margin-left: 5%; margin-right: 5%;">
 	<br />
-	<c:import url="/WEB-INF/view/login.jsp" />
-	<div align="right" style="color: #6E6E6E; marginright: 2%;">Bem vindo, ${usuarioLogado.nome}</div>
+	
+	<div align="right" style="color: #6E6E6E; marginright: 2%;">Bem vindo, ${usuarioLogado.email}</div>
+	<div align="right" style="color: #6E6E6E; marginright: 2%;">Bem vindo, ${usuarioLogado.tipo_acesso.descricao}</div>
 </body>
 </html>

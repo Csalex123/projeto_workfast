@@ -1,12 +1,94 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
+<html lang="pt-BR">
+
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Tela Administrador</title>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+    <!-- Required meta tags-->
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    
+
+    <!-- Title Page-->
+    <title>WorkFast - Area do Administrador</title>
+
+ 
+    <!-- Bootstrap CSS-->
+    <link href="<%=request.getContextPath()%>/resources/vendor/bootstrap.min.css" rel="stylesheet" media="all">
+
+    
+    <!-- Main CSS-->
+    <link href="<%=request.getContextPath()%>/resources/css/theme-adm.css" rel="stylesheet" media="all">
+
 </head>
-<body>
-<p>Tela ADM </p>
+
+<body class="animsition">
+ 
+    <div class="page-wrapper">
+    <!-- menu adm -->
+      <c:import url="../administrador/menu.jsp"/>
+       
+        <!-- PAGE CONTENT-->
+        <div class="page-content--bgf7">
+            
+
+            <!-- WELCOME-->
+            <section class="welcome p-t-10" >
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12" style="margin-top: 15px;">
+                            <h1 class="title-4">Bem vindo 
+                                <span>${usuarioLogado.nome}</span>
+                            </h1>
+                            <hr class="line-seprate">
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!-- END WELCOME-->
+
+            <section class="p-t-60 p-b-20" style="padding-bottom: 30%;" >
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12"> 
+
+                            
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- COPYRIGHT-->
+
+            <section class="p-t-60 p-b-20" >
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="copyright">
+                                <p>Copyright © 2018 WorkFast. Todos os direitos reservados..</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!-- END COPYRIGHT-->
+        </div>
+
+    </div>
+
+    <!-- Jquery JS-->
+    <script src="<%=request.getContextPath()%>/resources/vendor/jquery-3.2.1.min.js"></script>
+    <!-- Bootstrap JS-->
+    <script src="<%=request.getContextPath()%>/resources/vendor/bootstrap-4.1/popper.min.js"></script>
+    <script src="<%=request.getContextPath()%>/resources/vendor/bootstrap-4.1/bootstrap.min.js"></script>
+    
+    
+
+    <!-- Main JS-->
+    <script src="<%=request.getContextPath()%>/resources/js/main.js"></script>
+
 </body>
+
 </html>
+<!-- end document-->

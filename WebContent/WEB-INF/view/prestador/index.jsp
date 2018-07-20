@@ -5,16 +5,14 @@
 <head>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Tela Cliente</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Tela Prestador</title>
 </head>
 <body>
-<p>Tela Cliente</p>
+<p>Tela Prestador </p>
 <br />
 	
 	<div align="right" style="color: #6E6E6E; marginright: 2%;">Bem vindo, ${usuarioLogado.nome}</div>
-	
-
 
 </body>
 </html>

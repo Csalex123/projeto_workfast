@@ -26,6 +26,12 @@ public class Usuario {
 	@Column
 	private String senha;
 	
+	@Column
+	private String ativo;
+	
+	@Column
+	private String nivel_acesso;
+	
 	@ManyToOne
 	@JoinColumn(name = "fk_tipo")
 	private TipoAcesso tipo_acesso;
@@ -69,6 +75,24 @@ public class Usuario {
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
+
+	public String getAtivo() {
+		return ativo;
+	}
+
+	public void setAtivo(String ativo) {
+		this.ativo = ativo;
+	}
+
+	public String getNivel_acesso() {
+		return nivel_acesso;
+	}
+
+	public void setNivel_acesso(String nivel_acesso) {
+		this.nivel_acesso = nivel_acesso;
+	}
+	
+	
 	
 	
 

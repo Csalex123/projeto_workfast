@@ -50,6 +50,7 @@
 				src="<%=request.getContextPath()%>/resources/img/logo_workfast.png"
 				class="img-responsive">
 		</div>
+		<div><center>${msg}</center></div>
 
 		<div class="panel panel-default col-sm-4" id="container_login">
 
@@ -64,8 +65,8 @@
 					<div class="form-group">
 						<label for="email">E-mail:</label> <input type="text"
 							class="form-control" id="inputLogin"
-							placeholder="Digite  seu e-mail" name="login"
-							value="${usuario.login}" maxlength="20" required="required"
+							placeholder="Digite  seu e-mail" name="email"
+							value="${usuario.email}" maxlength="20" required="required"
 							tabindex="1">
 					</div>
 

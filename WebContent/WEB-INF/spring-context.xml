@@ -22,14 +22,16 @@ http://www.springframework.org/schema/context/spring-context-3.0.xsd">
 	
 	<mvc:annotation-driven conversion-service="conversionService" />
 	
-		<bean id="conversionService" class="org.springframework.context.support.ConversionServiceFactoryBean">
+		<bean id="conversionService"
+			class="org.springframework.context.support.ConversionServiceFactoryBean">
 			<property name="converters">
-				<list>
-					<!-- Importando os convertes -->
-					<bean class="br.com.ifpe.workfast.converters.TipoAcessoConverter" />
-					<bean class="br.com.ifpe.workfast.converters.DataConverter" />
-				</list>
+			<list>
+			<bean class="br.com.ifpe.workfast.converters.TipoAcessoConverter" />
+			</list>
 			</property>
 		</bean>
+	 <mvc:interceptors>
+	     <bean class="br.com.ifpe.workfast.util.AutorizadorInterceptor" />
+	 </mvc:interceptors>
 	
 </beans>

@@ -64,7 +64,21 @@ public class UsuarioDao {
 		manager.close();
 		factory.close();
 		return obj;
+		
+	}
 
-}
+   
+	
+	// listar  usuarios do tipo; cliente
+	public List<Usuario> listarUsuarioCliente() {
+		EntityManagerFactory factory = 
+		Persistence.createEntityManagerFactory(PERSISTENCE_UNIT);
+		EntityManager manager = factory.createEntityManager();
+		List<Usuario> lista = manager.createQuery("FROM Usuario ORDER BY nome").getResultList();
+		manager.close();
+		factory.close();
+		return lista;
+		}
 
+	
 }

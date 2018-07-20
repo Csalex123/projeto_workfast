@@ -42,6 +42,8 @@ public class indexController {
 	public String login() {
 		return "login";
 	}
+	
+		
 
 	// Método para chamar a página de login google success
 	@RequestMapping("googleSuccess")
@@ -52,6 +54,7 @@ public class indexController {
 	// Método para fazer a inclusão do usuário
 		@RequestMapping("incluirUsuario")
 		public String save(Usuario usuario) {
+			
 			UsuarioDao dao = new UsuarioDao();
 			dao.salvar(usuario);
 			
@@ -61,15 +64,37 @@ public class indexController {
 	// Método para efetuar o login
 	@RequestMapping("efetuarLogin")
 	public String efetuarLogin(Usuario usuario, HttpSession session, Model model) {
-		
+		 
 		UsuarioDao dao = new UsuarioDao();
 		Usuario usuarioLogado = dao.buscarUsuario(usuario);
 		
+		
 		if (usuarioLogado != null) {
-			session.setAttribute("usuarioLogado", usuarioLogado);
-			return "home";
+			
+			if(usuarioLogado.getAtivo().equals("1")) {
+				
+				if(usuarioLogado.getTipo_acesso().getDescricao().equals("Cliente")) {
+					session.setAttribute("usuarioLogado", usuarioLogado);
+					return "cliente/index";	
+				}else if(usuarioLogado.getTipo_acesso().getDescricao().equals("Prestador de Serviços")) {
+					session.setAttribute("usuarioLogado", usuarioLogado);
+					return "prestador/index";
+				}else if(usuarioLogado.getTipo_acesso().getDescricao().equals("Administrador")) {
+					session.setAttribute("usuarioLogado", usuarioLogado);
+					return "administrador/index";
+				}
+				
+			}else {
+			  
+				model.addAttribute("msg", "Seu acesso ao sistema esta bloqueado temporariamente!");
+				
+				return "login";
+				
+			}
+			
+			
 		}
-		model.addAttribute("msg", "Não foi encontrado um usuário com o login e senha informados.");
+		model.addAttribute("msg", "Não foi encontrado o usuário com o login e senha informados.");
 		
 		return "login";
 	}
