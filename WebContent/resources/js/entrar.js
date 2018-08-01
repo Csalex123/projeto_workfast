@@ -38,7 +38,7 @@
 				rules:{
 					email2:{
 						required: true,
-						maxlength: 100,
+						maxlength: 60,
 						minlength: 8,
 						email: true
 
@@ -49,7 +49,7 @@
 					email2:{
 						required: "Este campo é obrigatório.",
 						minlength: "O e-mail deve ter no mínimo 8 caracteres.",
-						maxlength: "O e-mail deve ter no máximo 100 caracteres."	
+						maxlength: "O e-mail deve ter no máximo 60 caracteres."	
 					}
 
 				}

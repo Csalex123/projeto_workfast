@@ -217,7 +217,7 @@
                                                         <i class="zmdi zmdi-account"></i>Minha conta</a>
                                                 </div>
                                                 <div class="account-dropdown__item">
-                                                    <a href="#">
+                                                    <a href="meuEnderecos">
                                                         <i class="fa fa-map-marker"></i>Meus endereços</a>
                                                 </div>
                                             </div>

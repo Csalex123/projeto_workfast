@@ -4,10 +4,25 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<meta http-equiv="refresh" content="3; workfast/cliente/index">
-<title>Insert title here</title>
+<meta http-equiv="refresh" content="3; URL=paginaInicialCliente">
+<title>Workfast</title>
 </head>
 <body>
-<center><h1>Cadastrado com sucesso!<br> ${usuarioLogado.nome}, voce esta sendo encaminhado para pagina inicial!</h1></center>
+<center>
+	<center>
+		<img id="img_logo"
+			src="<%=request.getContextPath()%>/resources/img/logo_workfast.png"
+			class="img-responsive">
+	</center>
+	
+	<h1>Dados atualizados com sucesso!<br> 
+	${usuarioLogado.nome}, voce está sendo encaminhado para pagina inicial!</h1><br><br> 
+	
+		<center>
+		<img style="width: 150px; height: 120px;" id="img_logo"
+			src="<%=request.getContextPath()%>/resources/img/aceito.png"
+			class="img-responsive">
+	</center>
+</center>
 </body>
 </html>

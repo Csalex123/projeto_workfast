@@ -66,7 +66,7 @@
 						<label for="email">E-mail:</label> <input type="text"
 							class="form-control" id="inputLogin"
 							placeholder="Digite  seu e-mail" name="email"
-							value="${usuario.email}" maxlength="20" required="required"
+							value="${usuario.email}" maxlength="40" required="required"
 							tabindex="1">
 					</div>
 
@@ -176,8 +176,8 @@
 						<div class="form-group">
 
 							<!-- Formulário para recuperar senha -->
-							<label for="email">Informe seu e-mail:</label> <input
-								type="email" name="email2" class="form-control"
+							<label for="email">Informe seu e-mail:</label> 
+							<input type="email" maxlength="40" name="email2" class="form-control"
 								placeholder="Digite seu e-mail">
 						</div>
 						<button class="btn btn-primary form-control">Enviar</button>

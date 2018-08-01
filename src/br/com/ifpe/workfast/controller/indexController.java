@@ -98,8 +98,9 @@ public class indexController {
 			if(usuarioLogado.getAtivo().equals("1")) {
 				
 				if(usuarioLogado.getTipo_acesso().getDescricao().equals(TipoAcesso.getTipoCliente())) {
-					
+
 					    session.setAttribute("usuarioLogado", usuarioLogado);
+					   
 						
 					    if(dados == null){
 							if(usuarioLogado.getTipo_usuario().equals("1")) {
