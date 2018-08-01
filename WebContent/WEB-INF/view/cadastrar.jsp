@@ -84,15 +84,32 @@
 						<label for="repetir_senha">Confirmar senha:</label>
 						<input type="password" class="form-control" id="repetir_senha"   name="senha2"   placeholder="Confirme sua senha" >
 					</div>
+					
+					<div class="form-group">
+						<label for="tipo">Tipo:</label>
+						<div> 
+							<div class="form-group">
+								<select id="tipo_usuario" name="tipo_usuario" class="form-control" required >
+									<option value="">Selecione </option>
+									<option value="1">Físico</option>
+									<option value="2">Jurídico</option>
+									
+								</select>
+							</div>
+						</div>
+					</div>
 
 					<div class="form-group">
-						<label >Tipo de acesso:</label>
+						<label >Acessar como:</label>
 						<div> 
 							<div class="form-group">
 								<select id="tipo_acesso" name="tipo_acesso" class="form-control" >
 									<option value=""> Selecione </option>
 									<c:forEach items="${listaTipoAcesso}" var="obj">
-										<option value="${obj.id}">${obj.descricao}</option>
+									    <c:if test="${obj.descricao != 'Administrador'}">
+                                           <option value="${obj.id}">${obj.descricao}</option>
+                                        </c:if>
+										
 									</c:forEach>
 								</select>
 							</div>

@@ -1,10 +1,13 @@
+ <!-- Importando a biblioteca Taglib -->
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+ 
  <!-- HEADER DESKTOP-->
         <header class="header-desktop3 d-none d-lg-block">
             <div class="section__content section__content--p35">
                 <div class="header3-wrap">
                     <div class="header__logo">
                         <a href="paginaInicial">
-                            <img src="images/icon/logo2.png" alt="WorkFast" width="250" height="50" />
+                            <img src="<%=request.getContextPath()%>/resources/img/icon/logo2.png" alt="WorkFast" width="250" height="50" />
                         </a>
                     </div>
                     <div class="header__navbar">
@@ -16,13 +19,18 @@
                             </li>
                             <li class="has-sub">
                                 <a href="#">
+                                  
                                     <i class="fas fa-group"></i>Gerenciar
                                     <span class="bot-line"></span>
                                 </a>
                                 <ul class="header3-sub-list list-unstyled">
-                                    <li>
-                                        <a href="gerenciarAdm">Adminstradores</a>
-                                    </li>
+                                
+                                    <c:if test="${usuarioLogado.nivel_acesso != '2'}">
+	                                     <li>
+	                                        <a href="gerenciarAdm">Adminstradores</a>
+	                                     </li>
+                                    </c:if>
+                                   
                                     <li>
                                         <a href="gerenciarPrestador">Prestadores de Serviços</a>
                                     </li>
@@ -90,7 +98,7 @@
                         <div class="account-wrap">
                             <div class="account-item account-item--style2 clearfix js-item-menu">
                                 <div class="image">
-                                    <img src="images/icon/avatar-01.jpg" alt="Fulano " />
+                                    <img src="<%=request.getContextPath()%>/resources/img/icon/avatar-01.jpg" alt="${usuarioLogado.nome} " />
                                 </div>
                                 <div class="content">
                                     <a class="js-acc-btn" href="#">${usuarioLogado.nome}</a>
@@ -99,7 +107,7 @@
                                     <div class="info clearfix">
                                         <div class="image">
                                             <a href="#">
-                                                <img src="images/icon/avatar-01.jpg" alt="Fulano" />
+                                                <img src="<%=request.getContextPath()%>/resources/img/icon/avatar-01.jpg" alt="${usuarioLogado.nome}" />
                                             </a>
                                         </div>
                                         <div class="content">
@@ -117,7 +125,7 @@
                                         
                                     </div>
                                     <div class="account-dropdown__footer">
-                                        <a href="#">
+                                        <a href="logout">
                                             <i class="zmdi zmdi-power"></i>Sair</a>
                                     </div>
                                 </div>
@@ -135,7 +143,7 @@
                 <div class="container-fluid">
                     <div class="header-mobile-inner" >
                         <a class="logo" href="paginaInicial">
-                            <img src="images/icon/logo2.png" alt="workfast" width="250" height="50"/>
+                            <img src="<%=request.getContextPath()%>/resources/img/icon/logo2.png" alt="workfast" width="250" height="50"/>
                         </a>
                         <button class="hamburger hamburger--slider" type="button" style="background-color: #191970;">
                             <span class="hamburger-box"  >
@@ -227,7 +235,7 @@
                 <div class="account-wrap">
                     <div class="account-item account-item--style2 clearfix js-item-menu">
                         <div class="image">
-                            <img src="images/icon/avatar-01.jpg" alt="John Doe" />
+                            <img src="<%=request.getContextPath()%>/resources/img/icon/avatar-01.jpg" alt="${usuarioLogado.nome}" />
                         </div>
                         <div class="content">
                             <a class="js-acc-btn" href="#">${usuarioLogado.nome}</a>
@@ -236,7 +244,7 @@
                             <div class="info clearfix">
                                 <div class="image">
                                     <a href="#">
-                                        <img src="images/icon/avatar-01.jpg" alt="John Doe" />
+                                        <img src="<%=request.getContextPath()%>/resources/img/icon/avatar-01.jpg" alt="${usuarioLogado.nome}" />
                                     </a>
                                 </div>
                                 <div class="content">
@@ -253,7 +261,7 @@
                                 </div>
                             </div>
                             <div class="account-dropdown__footer">
-                                <a href="#">
+                                <a href="logout">
                                     <i class="zmdi zmdi-power"></i>Sair</a>
                             </div>
                         </div>

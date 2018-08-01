@@ -21,6 +21,9 @@ public class AutorizadorInterceptor extends HandlerInterceptorAdapter {
 			uri.endsWith("cadastro")||
 			uri.endsWith("disponivel")||
 			uri.endsWith("entrar")||
+			uri.endsWith("incluirUsuario")||
+			uri.endsWith("procurar_cpf")||
+			uri.endsWith("procurar_rg")||
 			uri.endsWith("googleSuccess")||
 			uri.endsWith("efetuarLogin")) {
 			
@@ -34,10 +37,11 @@ public class AutorizadorInterceptor extends HandlerInterceptorAdapter {
 				
 				return false;
 			}
+			
 			return true;
 		}
 			
-		response.sendRedirect("/workfast/login");
+		response.sendRedirect("/workfast/entrar");
 		return false;
 		}
 }

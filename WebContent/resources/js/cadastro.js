@@ -1,5 +1,14 @@
 
 		$(document).ready(function(){
+			
+			function bloquear() {
+			    alert("bloquear");
+			}
+			
+			
+            function desbloquear() {
+            	alert("desbloquear");
+			}
 
 			//Função que muda o input do tipo passwd para text
 			$("#olho").click(function(){
@@ -67,6 +76,10 @@
 						
 						tipo_acesso:{
 							required: true,
+						},
+						
+						tipo_usuario:{
+							required: true
 						}
 
 					},
@@ -106,6 +119,10 @@
 						},
 						
 						tipo_acesso:{
+							required:"<span class='glyphicon glyphicon-asterisk'></span> Este campo é obrigatório"
+						},
+						
+						tipo_usuario:{
 							required:"<span class='glyphicon glyphicon-asterisk'></span> Este campo é obrigatório",
 						}
 					}
