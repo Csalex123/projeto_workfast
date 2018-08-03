@@ -4,6 +4,7 @@
 <html>
 <head>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 
@@ -76,7 +77,7 @@
                                          <label for="cpf" class=" form-control-label">CPF:</label>
                                     </div>
                                     <div class="col-12 col-md-5">
-                                         <input type="text" name="cpf" id="cpf" class="form-control">
+                                         <input type="text" name="cpf" id="cpf" value="${dadosPessoais.cpfCnpj}" class="form-control">
                                     </div>
                                  </div>
                                
@@ -131,7 +132,9 @@
                                          <label for="data"  class=" form-control-label">Data de nascimento:</label>
                                     </div>
                                     <div class="col-12 col-md-5">
-                                         <input type="text" name="data" id="data" placeholder="00/00/0000" class="form-control">
+                                         <input type="text" name="data" id="data" value="<fmt:formatDate
+										value="${dadosPessoais.dataNascimento}" type="both"
+										pattern="dd/MM/yyyy" dateStyle="full" />" placeholder="00/00/0000" class="form-control">
                                     </div>
                                  </div>
                                

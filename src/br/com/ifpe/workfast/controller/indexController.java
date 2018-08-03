@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import br.com.ifpe.workfast.model.DadosPessoais;
 import br.com.ifpe.workfast.model.DadosPessoaisDao;
+import br.com.ifpe.workfast.model.Profissao;
+import br.com.ifpe.workfast.model.ProfissaoDao;
 import br.com.ifpe.workfast.model.TipoAcesso;
 import br.com.ifpe.workfast.model.TipoAcessoDao;
 import br.com.ifpe.workfast.model.Usuario;
@@ -82,66 +84,69 @@ public class indexController {
 			return "UsuarioSucesso";
 		}
 
-	// Método para efetuar o login
-	@RequestMapping("efetuarLogin")
-	public String efetuarLogin(Usuario usuario, HttpSession session, Model model) {
-		 
-		UsuarioDao dao = new UsuarioDao();
-		DadosPessoaisDao dao2 = new DadosPessoaisDao();
-		
-		Usuario usuarioLogado = dao.buscarUsuario(usuario);
-		DadosPessoais dados = dao2.buscarDadosPessoaisUsuario(usuarioLogado.getId());
-		
-		
-		if (usuarioLogado != null) {
+		// Método para efetuar o login
+		@RequestMapping("efetuarLogin")
+		public String efetuarLogin(Usuario usuario, HttpSession session, Model model) {
+			 
+			UsuarioDao dao = new UsuarioDao();
+			DadosPessoaisDao dao2 = new DadosPessoaisDao();
 			
-			if(usuarioLogado.getAtivo().equals("1")) {
+			Usuario usuarioLogado = dao.buscarUsuario(usuario);
+			
+			if (usuarioLogado != null) {
 				
-				if(usuarioLogado.getTipo_acesso().getDescricao().equals(TipoAcesso.getTipoCliente())) {
-
-					    session.setAttribute("usuarioLogado", usuarioLogado);
-					   
+				if(usuarioLogado.getAtivo().equals("1")) {
+					
+					DadosPessoais dados = dao2.buscarDadosPessoaisUsuario(usuarioLogado.getId());
+					
+					if(usuarioLogado.getTipo_acesso().getDescricao().equals("Cliente")) {
 						
-					    if(dados == null){
-							if(usuarioLogado.getTipo_usuario().equals("1")) {
-								return "cliente/cadastroClienteFisico";
-							}else {
-								return "cliente/cadastroClienteJuridico";
+						    session.setAttribute("usuarioLogado", usuarioLogado);
+							
+						    if(dados == null){
+								if(usuarioLogado.getTipo_usuario().equals("1")) {
+									return "cliente/cadastroClienteFisico";
+								}else {
+									return "cliente/cadastroClienteJuridico";
+								}
 							}
+						
+						    return "cliente/index";	
+						
+					}else if(usuarioLogado.getTipo_acesso().getDescricao().equals("Prestador de Serviço")) {
+						session.setAttribute("usuarioLogado", usuarioLogado);
+						  
+						if(dados == null){
+							
+								if(usuarioLogado.getTipo_usuario().equals("1")) {
+									ProfissaoDao daoProfissao = new ProfissaoDao();
+									List<Profissao> listaProfissao = daoProfissao.listar();
+									model.addAttribute("listaProfissao", listaProfissao);
+									return "prestador/cadastroPrestadorFisico";
+								}else {
+									return "prestador/cadastroPrestadorJuridico";
+								}
 						}
+						return "prestador/index";
+					}else if(usuarioLogado.getTipo_acesso().getDescricao().equals("Administrador")) {
+						session.setAttribute("usuarioLogado", usuarioLogado);
+						return "administrador/index";
+					}
 					
-					    return "cliente/index";	
+				}else {
+				  
+					model.addAttribute("msg", "Seu acesso ao sistema esta bloqueado temporariamente!");
 					
-				}else if(usuarioLogado.getTipo_acesso().getDescricao().equals(TipoAcesso.getTipoPrestador())) {
-					session.setAttribute("usuarioLogado", usuarioLogado);
-					  
-					if(dados == null){
-							if(usuarioLogado.getTipo_usuario().equals("1")) {
-								return "prestador/cadastroPrestadorFisico";
-							}else {
-								return "prestador/cadastroPrestadorJuridico";
-							}
-						}
-					return "prestador/index";
-				}else if(usuarioLogado.getTipo_acesso().getDescricao().equals(TipoAcesso.getTipoAdministrador())) {
-					session.setAttribute("usuarioLogado", usuarioLogado);
-					return "administrador/index";
+					return "login";
+					
 				}
 				
-			}else {
-			  
-				model.addAttribute("msg", "Seu acesso ao sistema esta bloqueado temporariamente!");
-				
-				return "login";
 				
 			}
+			model.addAttribute("msg", "Não foi encontrado o usuário com o login e senha informados.");
 			
-			
+			return "login";
 		}
-		model.addAttribute("msg", "Não foi encontrado o usuário com o login e senha informados.");
-		
-		return "login";
-	}
 	
 	// metodo para encerra a sessao do usuario no sistema
 	@RequestMapping("logout")

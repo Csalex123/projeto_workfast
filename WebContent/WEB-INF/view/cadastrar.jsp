@@ -52,6 +52,9 @@
 			<!-- Formulário de cadastro-->
 			<div class="panel-body">
 				<form action="incluirUsuario" id="form_cadastro" method="post">
+				
+					<input type="hidden"  class="form-control" value="img_avatar.png" name="foto">
+					
 					<div class="form-group">
 						<label for="nome">Nome:</label>
 						<input type="text"  class="form-control" id="nome" placeholder="Digite seu nome e sobrenome" name="nome">

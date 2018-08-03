@@ -28,7 +28,7 @@ public class Usuario {
 	private String senha;
 	
 	@Column
-	private String ativo;
+	private String ativo;	
 	
 	@Column
 	private String nivel_acesso;

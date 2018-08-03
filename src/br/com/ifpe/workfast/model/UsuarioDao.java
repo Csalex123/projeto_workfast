@@ -76,6 +76,7 @@ public class UsuarioDao {
 		Query query = null;
 		query = manager.createQuery("FROM Usuario u WHERE u.tipo_acesso.descricao = :paramTipo ORDER BY nome");
 		query.setParameter("paramTipo", "Cliente");
+		
 		List<Usuario> lista = query.getResultList();
 		manager.close();
 		factory.close();

@@ -42,122 +42,135 @@
 
 
 </head>
-<body>
+<body class="animsition">
 
-	<div class="container">
-		<div>
-			<img id="img_logo"
-				src="<%=request.getContextPath()%>/resources/img/logo_workfast.png"
-				class="img-responsive">
-		</div>
-		<div><center>${msg}</center></div>
+		<div class="container">
 
-		<div class="panel panel-default col-sm-4" id="container_login">
-
-			<h2 id="txt_login">Efetuar login</h2>
-
-			<!-- Formulário de cadastro-->
-			<div class="panel-body">
-			
-			
-				<form action="efetuarLogin" method="post" id="form_login">
-
-					<div class="form-group">
-						<label for="email">E-mail:</label> <input type="text"
-							class="form-control" id="inputLogin"
-							placeholder="Digite  seu e-mail" name="email"
-							value="${usuario.email}" maxlength="40" required="required"
-							tabindex="1">
+					<div>
+						<img id="img_logo"
+							src="<%=request.getContextPath()%>/resources/img/logo_workfast.png"
+							class="img-responsive">
 					</div>
 
-					<div class="form-group">
-						<label>Senha:</label> <input type="password" class="form-control"
-							id="inputSenha" placeholder="Digite sua senha" name="senha"
-							value="${usuario.senha}" maxlength="20" required="required"
-							tabindex="2">
+					<div>
+						<center>
+							<c:if test="${not empty msg}">
+									<b>${msg}</b>					
+							</c:if>
+						</center>
 					</div>
-			</div>
 
-			<div>
-				<a href="" style="color: red; font-weight: bold;"
-					data-toggle="modal" data-target="#modal_recuperar_senha">Esqueceu
-					sua senha?</a>
-			</div>
+					<div class="panel panel-default col-sm-4" id="container_login">
 
-			<div class="form-group">
-				<div class="col-sm-offset-2 col-sm-10">
-					<button type="submit" id="button_login" class="btn btn-primary">
-						Entrar</button>
+						<h2 id="txt_login">Efetuar login</h2>
+
+						<!-- Formulário de cadastro-->
+						<div class="panel-body">
+
+
+							<form action="efetuarLogin" method="post" id="form_login">
+
+								<div class="form-group">
+									<label for="email">E-mail:</label> <input type="text"
+										class="form-control" id="inputLogin"
+										placeholder="Digite  seu e-mail" name="email"
+										value="${usuario.email}" maxlength="40" required="required"
+										tabindex="1">
+								</div>
+
+								<div class="form-group">
+									<label>Senha:</label> <input type="password"
+										class="form-control" id="inputSenha"
+										placeholder="Digite sua senha" name="senha"
+										value="${usuario.senha}" maxlength="20" required="required"
+										tabindex="2">
+								</div>
+						</div>
+
+						<div>
+							<a href="" style="color: red; font-weight: bold;"
+								data-toggle="modal" data-target="#modal_recuperar_senha">Esqueceu
+								sua senha?</a>
+						</div>
+
+						<div class="form-group">
+							<div class="col-sm-offset-2 col-sm-10">
+								<button type="submit" id="button_login" class="btn btn-primary">
+									Entrar</button>
+							</div>
+						</div>
+
+						<div>
+							<p id="p_mensagem">
+								Ainda não tem uma conta? <a href="cadastro"
+									style="color: green;" data-toggle="tooltip"
+									data-placement="top"
+									title="Se clicar você será redirecionado para a página de cadastro">Cadastrar-se</a>
+							</p>
+						</div>
+
+						</form>
+
+						<hr>
+
+						<div class="row" id="div_button">
+							<center>
+								<button class="btn btn-default" id="facebook"
+									style="float: left; margin-left: 9%">Facebook</button>
+
+								<!--	Login Google	-->
+								<div class="g-signin2" data-onsuccess="onSignIn" id="myP"></div>
+
+								<img id="myImg"> <br>
+								<p id="name"></p>
+
+								<div id="status"></div>
+
+								<script type="text/javascript">
+									function onSignIn(googleUser) {
+										// window.location.href='success.jsp';
+
+										var profile = googleUser
+												.getBasicProfile();
+										var imagurl = profile.getImageUrl();
+										var name = profile.getName();
+										var email = profile.getEmail();
+										document.getElementById("myImg").src = imagurl;
+										document.getElementById("name").innerHTML = name;
+
+										document.getElementById("myP").style.visibility = "hidden";
+
+										document.getElementById("status").innerHTML = 'Bem vindo '
+												+ name
+												+ '! <a href="googleSuccess"?email='
+												+ email
+												+ '&name='
+												+ name
+												+ '/>Continue com o login do Google</a></p>'
+
+									}
+								</script>
+
+								<button onclick="myFunction()">Sair</button>
+
+								<script>
+									function myFunction() {
+										gapi.auth2.getAuthInstance()
+												.disconnect();
+										location.reload();
+									}
+								</script>
+								<!--	Fim Login Google	-->
+
+								<!-- <button class="btn btn-default" id="google">Google</button> -->
+							</center>
+						</div>
+					</div>
 				</div>
 			</div>
-
-			<div>
-				<p id="p_mensagem">
-					Ainda não tem uma conta? <a href="cadastro" style="color: green;"
-						data-toggle="tooltip" data-placement="top"
-						title="Se clicar você será redirecionado para a página de cadastro">Cadastrar-se</a>
-				</p>
-			</div>
-
-			</form>
-
-			<hr>
-
-			<div class="row" id="div_button">
-				<center>
-					<button class="btn btn-default" id="facebook"
-						style="float: left; margin-left: 9%">Facebook</button>
-
-					<!--	Login Google	-->
-					<div class="g-signin2" data-onsuccess="onSignIn" id="myP"></div>
-
-					<img id="myImg"> <br>
-					<p id="name"></p>
-
-					<div id="status"></div>
-
-					<script type="text/javascript">
-						function onSignIn(googleUser) {
-							// window.location.href='success.jsp';
-
-							var profile = googleUser.getBasicProfile();
-							var imagurl = profile.getImageUrl();
-							var name = profile.getName();
-							var email = profile.getEmail();
-							document.getElementById("myImg").src = imagurl;
-							document.getElementById("name").innerHTML = name;
-
-							document.getElementById("myP").style.visibility = "hidden";
-
-							document.getElementById("status").innerHTML = 'Bem vindo '
-									+ name
-									+ '! <a href="googleSuccess"?email='
-									+ email
-									+ '&name='
-									+ name
-									+ '/>Continue com o login do Google</a></p>'
-
-						}
-					</script>
-
-					<button onclick="myFunction()">Sair</button>
-
-					<script>
-						function myFunction() {
-							gapi.auth2.getAuthInstance().disconnect();
-							location.reload();
-						}
-					</script>
-					<!--	Fim Login Google	-->
-
-					<!-- <button class="btn btn-default" id="google">Google</button> -->
-				</center>
-			</div>
 		</div>
+	</div>
 
-	</div>
-	</div>
-	</div>
 
 
 	<!-- Modal -->
@@ -176,8 +189,8 @@
 						<div class="form-group">
 
 							<!-- Formulário para recuperar senha -->
-							<label for="email">Informe seu e-mail:</label> 
-							<input type="email" maxlength="40" name="email2" class="form-control"
+							<label for="email">Informe seu e-mail:</label> <input
+								type="email" maxlength="40" name="email2" class="form-control"
 								placeholder="Digite seu e-mail">
 						</div>
 						<button class="btn btn-primary form-control">Enviar</button>
@@ -191,7 +204,5 @@
 
 		</div>
 	</div>
-
-
 </body>
 </html>
