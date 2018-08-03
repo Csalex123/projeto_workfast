@@ -4,13 +4,10 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<meta http-equiv="refresh" content="3; URL='paginaInicialPrestador'">
+<title>Redirecionar - Prestador</title>
 </head>
 <body>
-
-
-
-
-vai carai
+<center><h4>Cadastrado com sucesso!<br> ${usuarioLogado.nome}, voce esta sendo encaminhado para pagina inicial!</h4></center>
 </body>
 </html>

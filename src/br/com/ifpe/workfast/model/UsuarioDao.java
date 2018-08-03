@@ -71,14 +71,89 @@ public class UsuarioDao {
 	
 	// listar  usuarios do tipo; cliente
 	public List<Usuario> listarUsuarioCliente() {
-		EntityManagerFactory factory = 
-		Persistence.createEntityManagerFactory(PERSISTENCE_UNIT);
+		EntityManagerFactory factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT);
 		EntityManager manager = factory.createEntityManager();
-		List<Usuario> lista = manager.createQuery("FROM Usuario ORDER BY nome").getResultList();
+		Query query = null;
+		query = manager.createQuery("FROM Usuario u WHERE u.tipo_acesso.descricao = :paramTipo ORDER BY nome");
+		query.setParameter("paramTipo", "Cliente");
+		List<Usuario> lista = query.getResultList();
 		manager.close();
 		factory.close();
 		return lista;
 		}
+	
+
+	public Usuario buscarPorId(int id) {
+		Usuario obj = null;
+		EntityManagerFactory factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT);
+		EntityManager manager = factory.createEntityManager();
+		obj = manager.find(Usuario.class, id);
+		manager.close();
+		factory.close();
+
+		return obj;
+	}
+	 
+	// listar  usuarios do tipo; administrador
+	public List<Usuario> listarUsuarioAdm(Usuario usuario) {
+			EntityManagerFactory factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT);
+			EntityManager manager = factory.createEntityManager();
+			Query query = null;
+			
+			switch(usuario.getNivel_acesso()) {	
+			  case "0":
+				query = manager.createQuery("FROM Usuario u WHERE u.tipo_acesso.descricao = :paramTipo AND u.id NOT IN (:paramId) ORDER BY nome");
+				query.setParameter("paramTipo", "Administrador");
+				query.setParameter("paramId", usuario.getId());
+				
+			  break;
+			  
+			  case "1":
+				  query = manager.createQuery("FROM Usuario u WHERE u.tipo_acesso.descricao = :paramTipo AND u.id NOT IN (:paramId) AND u.nivel_acesso NOT IN (0,1) ORDER BY nome");
+				  query.setParameter("paramTipo", "Administrador");
+				  query.setParameter("paramId", usuario.getId());
+				  
+		      break;
+		      			  
+			  default:
+				  query = null;
+			  break;
+			}
+			
+			
+			
+			List<Usuario> lista = query.getResultList();
+			manager.close();
+			factory.close();
+			return lista;
+	}
+	
+	 
+	// listar  usuarios do tipo; prestador
+	public List<Usuario> listarUsuarioPrestador() {
+		EntityManagerFactory factory =  Persistence.createEntityManagerFactory(PERSISTENCE_UNIT);
+		EntityManager manager = factory.createEntityManager();
+		Query query = null;
+		query = manager.createQuery("FROM Usuario u WHERE u.tipo_acesso.descricao LIKE = :paramTipo ORDER BY nome");
+		query.setParameter("paramTipo", "Prestador de Servico");
+		List<Usuario> lista = query.getResultList();
+		manager.close();
+		factory.close();
+		return lista;
+	}
+	
+	public void alterar(Usuario usuario) {
+
+		EntityManagerFactory factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT);
+		EntityManager manager = factory.createEntityManager();
+
+		manager.getTransaction().begin();
+		manager.merge(usuario);
+		manager.getTransaction().commit();
+
+		manager.close();
+		factory.close();
+	}
 
 	
 }

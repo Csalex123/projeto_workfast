@@ -14,6 +14,25 @@
     <title>WorkFast - Area do Administrador</title>
 
  
+    <!-- Fontfaces CSS-->
+    <link href="<%=request.getContextPath()%>/resources/css/font-face.css" rel="stylesheet" media="all">
+    <link href="<%=request.getContextPath()%>/resources/vendor/font-awesome-4.7/css/font-awesome.min.css" rel="stylesheet" media="all">
+    <link href="<%=request.getContextPath()%>/resources/vendor/font-awesome-5/css/fontawesome-all.min.css" rel="stylesheet" media="all">
+    <link href="<%=request.getContextPath()%>/resources/vendor/mdi-font/css/material-design-iconic-font.min.css" rel="stylesheet" media="all">
+
+    <!-- Bootstrap CSS-->
+    <link href="<%=request.getContextPath()%>/resources/vendor/bootstrap-4.1/bootstrap.min.css" rel="stylesheet" media="all">
+
+    <!-- Vendor CSS-->
+    <link href="<%=request.getContextPath()%>/resources/vendor/animsition/animsition.min.css" rel="stylesheet" media="all">
+    <link href="<%=request.getContextPath()%>/resources/vendor/bootstrap-progressbar/bootstrap-progressbar-3.3.4.min.css" rel="stylesheet" media="all">
+    <link href="<%=request.getContextPath()%>/resources/vendor/wow/animate.css" rel="stylesheet" media="all">
+    <link href="<%=request.getContextPath()%>/resources/vendor/css-hamburgers/hamburgers.min.css" rel="stylesheet" media="all">
+    <link href="<%=request.getContextPath()%>/resources/vendor/slick/slick.css" rel="stylesheet" media="all">
+    <link href="<%=request.getContextPath()%>/resources/vendor/select2/select2.min.css" rel="stylesheet" media="all">
+    <link href="<%=request.getContextPath()%>/resources/vendor/perfect-scrollbar/perfect-scrollbar.css" rel="stylesheet" media="all">
+
+     
     <!-- Bootstrap CSS-->
     <link href="<%=request.getContextPath()%>/resources/vendor/bootstrap.min.css" rel="stylesheet" media="all">
 
@@ -44,17 +63,20 @@
                             <br>
                             <div class="table-data__tool">
                                 <div class="table-data__tool-left">
-                                     <form>
+                                     
                                          <div class="form-group">
                                                
                                                 <input type="text" id="txtPesquisa" placeholder="Pesquise aqui.." class="form-control">
                                                 
                                             </div>
-                                    </form>
+                                    
                                 </div>
                                 <div class="table-data__tool-right">
-                                    <button class="au-btn au-btn-icon au-btn--azul au-btn--small">
-                                        <i class="zmdi zmdi-plus"></i>Nova Especialização</button>
+                                  <form action="cadastrarProfissao">
+                                    <button type="submit" class="au-btn au-btn-icon au-btn--azul au-btn--small">
+                                     <i class="zmdi zmdi-plus"></i>Nova Especialização</button>
+                                    
+                                  </form>
                                     
                                 </div>
                             </div>
@@ -64,62 +86,47 @@
                                         <tr>
                                             
                                             <th>Nome</th>
-                                            <th>Descrição</th>
+                                            
                                             
                                         </tr>
                                     </thead>
                                     <tbody id="tbProfissao">
-                                        <tr class="tr-shadow">
-                                           
-                                            <td width="180">Profissão</td>
+                                       <c:forEach var="profissao" items="${listaProfissao}">
+										<tr class="tr-shadow">
 
-                                            <td>
-                                                <span>descricão</span>
-                                            </td>
+											<td width="300">${profissao.nome}</td>
 
-                                           
-                                            <td>
-                                                <div class="table-data-feature">
-                                                   
-                                                    <button class="item" data-toggle="tooltip" data-placement="top" title="Editar">
-                                                        <i class="zmdi zmdi-edit"></i>
-                                                    </button>
-                                                    <button class="item" data-toggle="tooltip" data-placement="top" title="Excluir">
-                                                        <i class="zmdi zmdi-delete"></i>
-                                                    </button>
-                                                   
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr class="spacer"></tr>
-                                         <tr class="tr-shadow">
-                                           
-                                            <td width="180">Profissão2</td>
+																		
 
-                                            <td>
-                                                <span>descrição2</span>
-                                            </td>
 
-                                        
-                                           
-                                            <td>
-                                                <div class="table-data-feature">
-                                                   
-                                                    <button class="item" data-toggle="tooltip" data-placement="top" title="Editar">
-                                                        <i class="zmdi zmdi-edit"></i>
-                                                    </button>
-                                                    <button class="item" data-toggle="tooltip" data-placement="top" title="Excluir">
-                                                        <i class="zmdi zmdi-delete"></i>
-                                                    </button>
-                                                   
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr class="spacer"></tr>
+											<td>
+												<div class="table-data-feature">
+                                                    
+                                                      <a href="editarProfissao?id=${profissao.id}" class="item" data-toggle="tooltip"
+														data-placement="top" title="Editar">
+														<i class="zmdi zmdi-edit"></i>
+													  </a>
+                                                    &nbsp;
+													
 
-                                        
+													<a href="deleteProfissao?id=${profissao.id}" class="item" data-toggle="tooltip"
+														data-placement="top" title="Excluir">
+														<i class="zmdi zmdi-delete"></i>
+													</a>
+
+
+												</div>
+											</td>
+
+										</tr>
+										<tr class="spacer"></tr>
+
+									</c:forEach>
+                                       
+                                                                                
                                     </tbody>
                                 </table>
+                                <div><center>${msg}</center></div>
                             </div>
                         </div>
                     </div>
@@ -147,17 +154,30 @@
         </div>
 
     </div>
-    <!-- Jquery JS-->
+     <!-- Jquery JS-->
     <script src="<%=request.getContextPath()%>/resources/vendor/jquery-3.2.1.min.js"></script>
     <!-- Bootstrap JS-->
     <script src="<%=request.getContextPath()%>/resources/vendor/bootstrap-4.1/popper.min.js"></script>
     <script src="<%=request.getContextPath()%>/resources/vendor/bootstrap-4.1/bootstrap.min.js"></script>
-    
-    
+    <!-- Vendor JS       -->
+    <script src="<%=request.getContextPath()%>/resources/vendor/slick/slick.min.js">
+    </script>
+    <script src="<%=request.getContextPath()%>/resources/vendor/wow/wow.min.js"></script>
+    <script src="<%=request.getContextPath()%>/resources/vendor/animsition/animsition.min.js"></script>
+    <script src="<%=request.getContextPath()%>/resources/vendor/bootstrap-progressbar/bootstrap-progressbar.min.js">
+    </script>
+    <script src="<%=request.getContextPath()%>/resources/vendor/counter-up/jquery.waypoints.min.js"></script>
+    <script src="<%=request.getContextPath()%>/resources/vendor/counter-up/jquery.counterup.min.js">
+    </script>
+    <script src="<%=request.getContextPath()%>/resources/vendor/circle-progress/circle-progress.min.js"></script>
+    <script src="<%=request.getContextPath()%>/resources/vendor/perfect-scrollbar/perfect-scrollbar.js"></script>
+    <script src="<%=request.getContextPath()%>/resources/vendor/chartjs/Chart.bundle.min.js"></script>
+    <script src="<%=request.getContextPath()%>/resources/vendor/select2/select2.min.js">
+    </script>
 
     <!-- Main JS-->
     <script src="<%=request.getContextPath()%>/resources/js/main.js"></script>
-     
+  
      <script>
 		$(document).ready(function(){
 		  $("#txtPesquisa").on("keyup", function() {

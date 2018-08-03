@@ -17,6 +17,7 @@ public class Usuario {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	
+	
 	@Column
 	private String nome;
 	
@@ -32,8 +33,14 @@ public class Usuario {
 	@Column
 	private String nivel_acesso;
 	
+	@Column
+	private String tipo_usuario;
+	
+	@Column
+	private String foto;
+	
 	@ManyToOne
-	@JoinColumn(name = "fk_tipo")
+	@JoinColumn(name = "fk_tipo_acesso")
 	private TipoAcesso tipo_acesso;
 
 	
@@ -91,6 +98,25 @@ public class Usuario {
 	public void setNivel_acesso(String nivel_acesso) {
 		this.nivel_acesso = nivel_acesso;
 	}
+
+	public String getTipo_usuario() {
+		return tipo_usuario;
+	}
+
+	public void setTipo_usuario(String tipo_usuario) {
+		this.tipo_usuario = tipo_usuario;
+	}
+	
+
+	public String getFoto() {
+		return foto;
+	}
+
+	public void setFoto(String foto) {
+		this.foto = foto;
+	}
+
+	
 	
 	
 	
