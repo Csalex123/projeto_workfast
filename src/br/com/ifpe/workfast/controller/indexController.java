@@ -148,4 +148,95 @@ public class indexController {
 		session.invalidate();
 		return "login";
 	}
+	
+	//------------------------------------------------------------------------------
+	
+	//Adm
+	
+	@RequestMapping("saveAdm")
+	public String saveAdministrador(Usuario usuario, Model model) {
+
+		UsuarioDao dao = new UsuarioDao();
+		dao.salvar(usuario);
+		model.addAttribute("mensagem", "Administrador incluido com Sucesso");
+		return "administrador/adm";
+	}
+
+	@RequestMapping("editAdm")
+	public String editAdministrador(@RequestParam("id") Integer id, Model model) {
+		UsuarioDao dao = new UsuarioDao();
+		Usuario usuario = dao.buscarPorId(id);
+		model.addAttribute("usuarioAdm", usuario);
+		return "administrador/alterarAdministrador";
+	}
+
+	@RequestMapping("updateAdm")
+	public String updateAdministrador(Usuario usuario, Model model) {
+		UsuarioDao dao = new UsuarioDao();
+		dao.alterar(usuario);
+		model.addAttribute("mensagem", "Administrador Alterado com Sucesso!");
+		return "forward:gerenciarAdm";
+	}
+	
+	@RequestMapping("bloquearUsuario")
+	public String bloquearAcesso(@RequestParam("id") Integer id,Model model) {
+		UsuarioDao dao = new UsuarioDao();
+		Usuario usuario = dao.buscarPorId(id);
+		usuario.setAtivo("0");
+		dao.alterar(usuario);
+		
+		String encaminhar = " ";
+		if(usuario.getTipo_acesso().getDescricao().equals("Cliente")) {
+			
+			 encaminhar = "gerenciarCliente";
+			
+		}else if(usuario.getTipo_acesso().getDescricao().equals("Administrador") ) {
+			
+			encaminhar ="gerenciarAdm";
+			 
+		}else if(usuario.getTipo_acesso().getDescricao().equals("Prestador de Servico")) {
+			
+			encaminhar = "gerenciarPrestador";
+		}
+		model.addAttribute("mensagem", usuario.getNome()+" bloqueado!");
+		return "forward:"+encaminhar;
+		
+	}
+	
+	@RequestMapping("desbloquearUsuario")
+	public String desbloquearAcesso(@RequestParam("id") Integer id,Model model) {
+		UsuarioDao dao = new UsuarioDao();
+		Usuario usuario = dao.buscarPorId(id);
+		usuario.setAtivo("1");
+		dao.alterar(usuario);
+		
+		
+		String encaminhar = " ";
+		if(usuario.getTipo_acesso().getDescricao().equals(TipoAcesso.getTipoCliente())) {
+			
+			 encaminhar = "gerenciarCliente";
+			
+		}else if(usuario.getTipo_acesso().getDescricao().equals(TipoAcesso.getTipoAdministrador()) ) {
+			
+			encaminhar ="gerenciarAdm";
+			 
+		}else if(usuario.getTipo_acesso().getDescricao().equals(TipoAcesso.getTipoPrestador())) {
+			
+			encaminhar = "gerenciarPrestador";
+		}
+		model.addAttribute("mensagem",  usuario.getNome()+" Ativo!");
+		
+		return "forward:"+encaminhar;
+	}
+	
+	@RequestMapping("deleteAdm")
+	public String deleteAdministrador(@RequestParam("id") Integer id, Model model) {
+
+		UsuarioDao dao = new UsuarioDao();
+		dao.remover(id);
+		model.addAttribute("mensagem", "Administrador Removido com Sucesso");
+		
+		return "forward:gerenciarAdm";
+	}
+
 }

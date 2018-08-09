@@ -188,7 +188,7 @@
 
 									<div class="form-group">
 										<label>Endereço</label> <input id="endereco"
-											class="au-input au-input--full" type="text" name="logradouro"
+											class="au-input au-input--full" type="text" name="rua"
 											placeholder="Digite seu endereco">
 									</div>
 
@@ -211,10 +211,20 @@
 											placeholder="Digite seu cidade">
 									</div>
 								</div>
+								
+								<div class="row">
+								<div class="col-md-6 col-lg-6">
+
+									<div class="form-group">
+										<label>Complemento</label> <input id="complemento"
+											class="au-input au-input--full" type="text" name="complemento"
+											placeholder="Digite seu complemento">
+									</div>
+								</div>
 								<div class="col-md-6 col-lg-6">
 									<div class="form-group">
 										<label>Estado</label>
-										<select class="form-control" id="estado" name="estado">
+										<select class="form-control" id="estado" name="uf">
 											<option value="">Selecione</option>
 											<option value="AC">Acre</option>
 											<option value="AL">Alagoas</option>
@@ -250,7 +260,7 @@
 							
 							<div class="form-group">
 								<label>Numero</label> <input id="cep"
-									class="au-input au-input--full" type="text" name="numero"
+									class="au-input au-input--full" type="text" name="numeroCasa"
 									placeholder="Digite o numero">
 							</div>
 

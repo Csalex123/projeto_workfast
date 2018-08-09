@@ -14,7 +14,6 @@
 <!-- Title Page-->
 <title>WorkFast - Area do Administrador</title>
 
-
 <!-- Fontfaces CSS-->
 <link href="<%=request.getContextPath()%>/resources/css/font-face.css"
 	rel="stylesheet" media="all">
@@ -75,110 +74,96 @@
 		<!-- menu adm -->
 		<c:import url="../administrador/menu.jsp" />
 
-		<!-- Conteudo-->
+		<!-- PAGE CONTENT-->
 		<div class="page-content--bgf7">
 
-			<!-- DATA TABLE-->
-			<section class="p-t-20">
+
+			<section class="p-t-60 p-b-20">
 			<div class="container">
 				<div class="row">
 					<div class="col-md-12">
-						<br>
-						<h3 class="title-5 m-b-35">Prestadores de Serviços</h3>
-						<hr class="line-seprate">
-						<br>
-						<div class="table-data__tool">
-							<div class="table-responsive table-responsive-data2">
-								<form>
-									<div class="form-group">
 
-										<input type="text" id="txtPesquisa" name="txtPesquisa"
-											placeholder="Pesquise aqui.." class="form-control">
+						<div style="text-align: center; color: red;">${mensagem}</div>
+
+						<form action="updateAdm" method="post">
+						
+						<input type="hidden" value="${usuarioAdm.id}" name="id" >
+						<input type="hidden" value="0" name="tipo_usuario" >
+						<input type="hidden" value="2" name="tipo_acesso" >
+							<div class="card">
+								<div class="card-header">
+									<strong>Administrador -</strong> <small> Formulario de
+										Cadastro</small>
+								</div>
+								<div class="card-body card-block">
+									<div class="form-group">
+										<label for="nome" class=" form-control-label">Nome</label> <input
+											type="text" id="nome" name="nome" placeholder="Digite o nome e sobrenome"
+											class="form-control" value="${usuarioAdm.nome}" required="required">
+									</div>
+
+									<div class="form-group">
+										<label for="email" class=" form-control-label">Email</label> <input
+											type="email" id="email" name="email" placeholder="Digite o email"
+											class="form-control" value="${usuarioAdm.email}" required="required">
+									</div>
+
+									<div class="form-group">
+										<label for="senha" class=" form-control-label">Senha</label> <input
+											type="password" id="senha" name="senha" placeholder="Digite uma senha"
+											class="form-control" value="${usuarioAdm.senha}" required="required">
+									</div>
+									<div class="form-group">
+										<label for="ativo" class=" form-control-label">Ativo</label> <select
+											name="ativo" id="ativo" name="ativo" class=" form-control"
+											required="required">
+
+											<option value="1" selected="selected">Sim</option>
+											<option value="0">Não</option>
+
+										</select>
 
 									</div>
-								</form>
+									<div class="form-group">
+										<label for="nivel" class=" form-control-label">Nivel</label> <select
+											name="nivel_acesso" id="nivel_acesso" name="nivel_acesso" class=" form-control"
+											required="required">
+											<option value="selecione">Selecione uma opção</option>
+											<c:if test="${usuarioLogado.nivel_acesso == '0'}">
+                                               <option value="1">Master</option>
+                                            </c:if>
+											
+											<option value="2">Comum</option>
+
+										</select>
+
+									</div>
+
+
+								</div>
+								<div class="card-footer">
+									<div style="margin: 0 auto; float: right;">
+										<button type="submit" class="btn btn-primary btn-sm">
+											<i class="fa fa-dot-circle-o"></i> Cadastrar
+										</button>
+										<button type="reset" class="btn btn-danger btn-sm">
+											<i class="fa fa-ban"></i> Resetar
+										</button>
+									</div>
+
+								</div>
 							</div>
-
-						</div>
-						<div class="table-responsive table-responsive-data2"
-							style="padding-bottom: 20%">
-							<table class="table table-data2">
-								<thead>
-									<tr>
-
-										<th>Nome</th>
-										<th>Tipo</th>
-										<th>Email</th>
-
-										<th>Acesso</th>
-									</tr>
-								</thead>
-								<tbody id="tbPrestador">
-									<c:forEach var="usuarioPrestador"
-										items="${listaUsuarioPrestador}">
-										<tr class="tr-shadow">
-
-											<td width="180">${usuarioPrestador.nome}</td>
-											<td><c:choose>
-													<c:when test="${usuarioPrestador.tipo_usuario == '1'}">
-														<span>Físico</span>
-													</c:when>
-													<c:otherwise>
-														<span>Jurídico</span>
-													</c:otherwise>
-												</c:choose></td>
-
-											<td><span>${usuarioPrestador.email}</span></td>
-
-											<td><c:choose>
-													<c:when test="${usuarioPrestador.ativo == '1'}">
-														<span>Ativo</span>
-													</c:when>
-													<c:otherwise>
-														<span>Bloqueado</span>
-													</c:otherwise>
-												</c:choose></td>
-
-											<td>
-												<div class="table-data-feature">
-
-													<c:choose>
-														<c:when test="${usuarioPrestador.ativo == '1'}">
-															<a href="bloquearUsuario?id=${usuarioPrestador.id}"
-																class="item" data-toggle="tooltip" data-placement="top"
-																title="Bloquear"> <i class="zmdi zmdi-lock"></i>
-															</a>
-
-														</c:when>
-														<c:otherwise>
-															<a href="desbloquearUsuario?id=${usuarioPrestador.id}"
-																class="item" data-toggle="tooltip" data-placement="top"
-																title="Desbloquear"> <i class="zmdi zmdi-lock-open"></i>
-															</a>
-														</c:otherwise>
-													</c:choose>
+						</form>
 
 
-
-												</div>
-											</td>
-										</tr>
-										<tr class="spacer"></tr>
-
-									</c:forEach>
-
-
-
-
-								</tbody>
-							</table>
-						</div>
 					</div>
+
+
+
 				</div>
 			</div>
-			</section>
-			<!-- END DATA TABLE-->
 
+			</section>
 
 			<!-- COPYRIGHT-->
 
@@ -209,43 +194,40 @@
 	<!-- Vendor JS       -->
 	<script
 		src="<%=request.getContextPath()%>/resources/vendor/slick/slick.min.js">
-    </script>
+		
+	</script>
 	<script
 		src="<%=request.getContextPath()%>/resources/vendor/wow/wow.min.js"></script>
 	<script
 		src="<%=request.getContextPath()%>/resources/vendor/animsition/animsition.min.js"></script>
 	<script
 		src="<%=request.getContextPath()%>/resources/vendor/bootstrap-progressbar/bootstrap-progressbar.min.js">
-    </script>
+		
+	</script>
 	<script
 		src="<%=request.getContextPath()%>/resources/vendor/counter-up/jquery.waypoints.min.js"></script>
 	<script
 		src="<%=request.getContextPath()%>/resources/vendor/counter-up/jquery.counterup.min.js">
-    </script>
+		
+	</script>
 	<script
 		src="<%=request.getContextPath()%>/resources/vendor/circle-progress/circle-progress.min.js"></script>
 	<script
-		src="<%=request.getContextPath()%>/resources/vendor/perfect-scrollbar/perfect-scrollbar.js"></script>
+		src="<%=request.getContextPath()%>/resources/vendor/perfect-scrollbar/perfect-scrollbar.js">
+	</script> 
 	<script
 		src="<%=request.getContextPath()%>/resources/vendor/chartjs/Chart.bundle.min.js"></script>
 	<script
 		src="<%=request.getContextPath()%>/resources/vendor/select2/select2.min.js">
-    </script>
-
-	<!-- Main JS-->
-	<script src="<%=request.getContextPath()%>/resources/js/main.js"></script>
-
-	<script>
-		$(document).ready(function(){
-		  $("#txtPesquisa").on("keyup", function() {
-		    var value = $(this).val().toLowerCase();
-		    $("#tbPrestador tr").filter(function() {
-		      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-		    });
-		  });
+		
+	</script> <!-- Main JS--> <script
+		src="<%=request.getContextPath()%>/resources/js/main.js"></script>
+		<script>
+		$(document).ready(function() {
+			$('#ativo').val("${usuarioAdm.ativo}");
+			$('#nivel_acesso').val("${usuarioAdm.nivel_acesso}")	 
 		});
 		</script>
-
 </body>
 
 </html>

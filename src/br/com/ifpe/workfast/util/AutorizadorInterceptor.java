@@ -33,7 +33,7 @@ public class AutorizadorInterceptor extends HandlerInterceptorAdapter {
 		
 		if (usuario != null) {
 			
-			if(uri.endsWith("efetuarLogin")) {
+			if(uri.endsWith("entrar") && uri.endsWith("cadastro") ) {
 				
 				return false;
 			}

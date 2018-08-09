@@ -99,7 +99,8 @@
 							</div>
 							<div class="table-data__tool-right">
 								<form action="cadastrarAdministrador">
-									<button type="submit" class="au-btn au-btn-icon au-btn--azul au-btn--small"
+									<button type="submit"
+										class="au-btn au-btn-icon au-btn--azul au-btn--small"
 										style="background-color:">
 										<i class="zmdi zmdi-plus"></i>Novo Administrador
 									</button>
@@ -108,16 +109,19 @@
 
 							</div>
 						</div>
+						
 						<div class="table-responsive table-responsive-data2"
 							style="padding-bottom: 20%">
+							<div style="text-align: center; color: red;">${mensagem}</div>
 							<table class="table table-data2">
 								<thead>
 									<tr>
 
 										<th>Nome</th>
 										<th>Email</th>
+										<th>Nivel</th>
 
-										<th>Ativo</th>
+										<th>Acesso</th>
 									</tr>
 								</thead>
 								<tbody id="tbAdm">
@@ -127,30 +131,63 @@
 											<td width="180">${usuarioAdm.nome}</td>
 
 											<td><span>${usuarioAdm.email}</span></td>
+											<td>
+											
+													<c:if test="${usuarioAdm.nivel_acesso == '1'}">
+														<span>Master</span>
+													</c:if>
+													
+													<c:if test="${usuarioAdm.nivel_acesso == '2'}">
+														<span>Comum</span>
+													</c:if>
+													
+											</td>
 
-											<td><label class="au-checkbox"> <c:choose>
-														<c:when test="${usuarioAdm.ativo == '1'}">
-															<input type="checkbox" CHECKED>
-														</c:when>
-														<c:otherwise>
-															<input type="checkbox">
-														</c:otherwise>
-													</c:choose> <span class="au-checkmark"></span>
-											</label></td>
+											<td><c:choose>
+													<c:when test="${usuarioAdm.ativo == '1'}">
+														<span>Ativo</span>
+													</c:when>
+													<c:otherwise>
+														<span>Bloqueado</span>
+													</c:otherwise>
+												</c:choose></td>
 
 
 											<td>
 												<div class="table-data-feature">
+													
+														<c:choose>
+															<c:when test="${usuarioAdm.ativo == '1'}">
+																<a href="bloquearUsuario?id=${usuarioAdm.id}" class="item" data-toggle="tooltip"
+																	data-placement="top" title="Bloquear">
+																	<i class="zmdi zmdi-lock"></i>
+																 </a>
+																
+															</c:when>
+															<c:otherwise>
+																<a href="desbloquearUsuario?id=${usuarioAdm.id}" class="item" data-toggle="tooltip"
+																	data-placement="top" title="Desbloquear">
+																	 <i class="zmdi zmdi-lock-open"></i>
+																 </a>
+															</c:otherwise>
+														</c:choose>
 
-													<button class="item" data-toggle="tooltip"
+													
+
+													
+													<a href="editAdm?id=${usuarioAdm.id}" class="item" data-toggle="tooltip"
 														data-placement="top" title="Editar">
 														<i class="zmdi zmdi-edit"></i>
-													</button>
+													  </a>
 
-													<button class="item" data-toggle="tooltip"
-														data-placement="top" title="Excluir">
-														<i class="zmdi zmdi-delete"></i>
-													</button>
+													
+
+													<a href="deleteAdm?id=${usuarioAdm.id}"  class="item" data-toggle="tooltip"
+															data-placement="top" title="Excluir">
+															<i class="zmdi zmdi-delete"></i>
+													</a>
+
+													
 
 
 												</div>

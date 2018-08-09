@@ -154,6 +154,20 @@ public class UsuarioDao {
 		manager.close();
 		factory.close();
 	}
+	
+	public void remover(int id) {
+
+		EntityManagerFactory factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT);
+		EntityManager manager = factory.createEntityManager();
+		Usuario usuario = manager.find(Usuario.class, id);
+
+		manager.getTransaction().begin();
+		manager.remove(usuario);
+		manager.getTransaction().commit();
+
+		manager.close();
+		factory.close();
+	}
 
 	
 }

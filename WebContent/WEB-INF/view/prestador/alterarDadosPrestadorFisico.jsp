@@ -202,13 +202,13 @@
 												<b><label for="endereco" class="control-label mb-1">Endereco</label></b>
 
 												<input id="endereco" name="logradouro" type="text"
-													class="form-control" value="${endereco.logradouro}">
+													class="form-control" value="${endereco.rua}">
 											</div>
 										</div>
 										<div class="col-4">
 											<b><label for="numero" class="control-label mb-1">
 													Numero</label></b> <input id="numero" name="numero" type="text"
-												class="form-control" value="${endereco.numero}">
+												class="form-control" value="${endereco.numeroCasa}">
 										</div>
 
 									</div>
@@ -233,6 +233,12 @@
 												class="form-control" value="${endereco.cep}">
 										</div>
 									</div>
+									
+									<div class="col-4">
+											<b><label for="cep" class="control-label mb-1">
+													Complemento</label></b> <input  name="complemento" type="text"
+												class="form-control" value="${endereco.complemento}">
+										</div>
 									<br>
 									<div class="col-6">
 										<b><label for="estado" class="control-label mb-1">Estado</label></b>

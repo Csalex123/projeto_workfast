@@ -27,7 +27,7 @@
 						rgIe:{
 							required: true,
 							maxlength: 13,
-							minlength: 13,
+							minlength: 12,
 							remote:{
 								url:"procurar_rg",
 								type:"get",

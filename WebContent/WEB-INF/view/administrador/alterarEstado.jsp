@@ -14,7 +14,6 @@
 <!-- Title Page-->
 <title>WorkFast - Area do Administrador</title>
 
-
 <!-- Fontfaces CSS-->
 <link href="<%=request.getContextPath()%>/resources/css/font-face.css"
 	rel="stylesheet" media="all">
@@ -75,110 +74,66 @@
 		<!-- menu adm -->
 		<c:import url="../administrador/menu.jsp" />
 
-		<!-- Conteudo-->
+		<!-- PAGE CONTENT-->
 		<div class="page-content--bgf7">
 
-			<!-- DATA TABLE-->
-			<section class="p-t-20">
+
+			<section class="p-t-60 p-b-20">
+			
 			<div class="container">
 				<div class="row">
 					<div class="col-md-12">
-						<br>
-						<h3 class="title-5 m-b-35">Prestadores de Serviços</h3>
-						<hr class="line-seprate">
-						<br>
-						<div class="table-data__tool">
-							<div class="table-responsive table-responsive-data2">
-								<form>
+                       <div><center>${msg}</center></div>
+						<form action="updateEstado" method="post" >
+							<div class="card">
+								<div class="card-header">
+									<strong>Estado - UF -</strong> <small> Formulario de
+										Alteração</small>
+								</div>
+								<input type="hidden" name="idEstado" value="${estado.idEstado}">
+								<div class="card-body card-block">
 									<div class="form-group">
-
-										<input type="text" id="txtPesquisa" name="txtPesquisa"
-											placeholder="Pesquise aqui.." class="form-control">
-
+										<label for="nome" class=" form-control-label">Nome</label> <input
+											type="text" id="nome" name="nome" placeholder="Digite o nome do Estado"
+											class="form-control" required="required" value="${estado.nome}">
 									</div>
-								</form>
+
+									<div class="form-group ">
+										<label for="descricao" class=" form-control-label">Descrição</label> 
+										
+                                            <input
+											type="text" id="uf" name="uf" placeholder="Digite a sigla"
+											class="form-control" required="required" value="${estado.uf}">
+                            
+									</div>
+
+									
+
+
+								</div>
+								<div class="card-footer">
+									<div style="margin: 0 auto; float: right;">
+										<button type="#" class="btn btn-primary btn-sm">
+											<i class="fa fa-dot-circle-o"></i> Cadastrar
+										</button>
+										<button type="reset" class="btn btn-danger btn-sm">
+											<i class="fa fa-ban"></i> Resetar
+										</button>
+									</div>
+
+								</div>
 							</div>
-
-						</div>
-						<div class="table-responsive table-responsive-data2"
-							style="padding-bottom: 20%">
-							<table class="table table-data2">
-								<thead>
-									<tr>
-
-										<th>Nome</th>
-										<th>Tipo</th>
-										<th>Email</th>
-
-										<th>Acesso</th>
-									</tr>
-								</thead>
-								<tbody id="tbPrestador">
-									<c:forEach var="usuarioPrestador"
-										items="${listaUsuarioPrestador}">
-										<tr class="tr-shadow">
-
-											<td width="180">${usuarioPrestador.nome}</td>
-											<td><c:choose>
-													<c:when test="${usuarioPrestador.tipo_usuario == '1'}">
-														<span>Físico</span>
-													</c:when>
-													<c:otherwise>
-														<span>Jurídico</span>
-													</c:otherwise>
-												</c:choose></td>
-
-											<td><span>${usuarioPrestador.email}</span></td>
-
-											<td><c:choose>
-													<c:when test="${usuarioPrestador.ativo == '1'}">
-														<span>Ativo</span>
-													</c:when>
-													<c:otherwise>
-														<span>Bloqueado</span>
-													</c:otherwise>
-												</c:choose></td>
-
-											<td>
-												<div class="table-data-feature">
-
-													<c:choose>
-														<c:when test="${usuarioPrestador.ativo == '1'}">
-															<a href="bloquearUsuario?id=${usuarioPrestador.id}"
-																class="item" data-toggle="tooltip" data-placement="top"
-																title="Bloquear"> <i class="zmdi zmdi-lock"></i>
-															</a>
-
-														</c:when>
-														<c:otherwise>
-															<a href="desbloquearUsuario?id=${usuarioPrestador.id}"
-																class="item" data-toggle="tooltip" data-placement="top"
-																title="Desbloquear"> <i class="zmdi zmdi-lock-open"></i>
-															</a>
-														</c:otherwise>
-													</c:choose>
+						</form>
 
 
-
-												</div>
-											</td>
-										</tr>
-										<tr class="spacer"></tr>
-
-									</c:forEach>
-
-
-
-
-								</tbody>
-							</table>
-						</div>
 					</div>
+
+
+
 				</div>
 			</div>
-			</section>
-			<!-- END DATA TABLE-->
 
+			</section>
 
 			<!-- COPYRIGHT-->
 
@@ -209,43 +164,33 @@
 	<!-- Vendor JS       -->
 	<script
 		src="<%=request.getContextPath()%>/resources/vendor/slick/slick.min.js">
-    </script>
+		
+	</script>
 	<script
 		src="<%=request.getContextPath()%>/resources/vendor/wow/wow.min.js"></script>
 	<script
 		src="<%=request.getContextPath()%>/resources/vendor/animsition/animsition.min.js"></script>
 	<script
 		src="<%=request.getContextPath()%>/resources/vendor/bootstrap-progressbar/bootstrap-progressbar.min.js">
-    </script>
+		
+	</script>
 	<script
 		src="<%=request.getContextPath()%>/resources/vendor/counter-up/jquery.waypoints.min.js"></script>
 	<script
 		src="<%=request.getContextPath()%>/resources/vendor/counter-up/jquery.counterup.min.js">
-    </script>
+		
+	</script>
 	<script
 		src="<%=request.getContextPath()%>/resources/vendor/circle-progress/circle-progress.min.js"></script>
-	<script
-		src="<%=request.getContextPath()%>/resources/vendor/perfect-scrollbar/perfect-scrollbar.js"></script>
-	<script
+	<scrip
+		src="<%=request.getContextPath()%>/resources/vendor/perfect-scrollbar/perfect-scrollbar.js">
+	</script> <script
 		src="<%=request.getContextPath()%>/resources/vendor/chartjs/Chart.bundle.min.js"></script>
 	<script
 		src="<%=request.getContextPath()%>/resources/vendor/select2/select2.min.js">
-    </script>
-
-	<!-- Main JS-->
-	<script src="<%=request.getContextPath()%>/resources/js/main.js"></script>
-
-	<script>
-		$(document).ready(function(){
-		  $("#txtPesquisa").on("keyup", function() {
-		    var value = $(this).val().toLowerCase();
-		    $("#tbPrestador tr").filter(function() {
-		      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-		    });
-		  });
-		});
-		</script>
-
+		
+	</script> <!-- Main JS--> <script
+		src="<%=request.getContextPath()%>/resources/js/main.js"></script>
 </body>
 
 </html>

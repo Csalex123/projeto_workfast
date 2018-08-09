@@ -47,10 +47,9 @@ public class DadosPessoaisController {
         daoEndereco.salvarEndereco(endereco);
         
         
-		if(id == 1 ) {return "cliente/cadastroDadosSucesso";}
-		if(id == 3 ) {return "prestador/cadastroDadosSucesso";}
+		return "prestador/cadastroDadosSucesso";
 		
-		return null;
+		
 		
 	}
 	
@@ -61,10 +60,9 @@ public class DadosPessoaisController {
 		DadosPessoaisDao dao = new DadosPessoaisDao();
 		dao.salvar(dados);
         
-		if(id == 1 ) {return "cliente/cadastroDadosSucesso";}
-		if(id == 3 ) {return "prestador/cadastroDadosSucesso";}
+		return "cliente/cadastroDadosSucesso";
 		
-		return null;
+		
 		
 	}
 	

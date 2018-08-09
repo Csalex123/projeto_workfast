@@ -83,7 +83,12 @@
 				<div class="row">
 					<div class="col-md-12">
 
-						<form>
+						<div style="text-align: center; color: red;">${mensagem}</div>
+
+						<form action="saveAdm" method="post">
+						
+						<input type="hidden" value="0" name="tipo_usuario" >
+						<input type="hidden" value="2" name="tipo_acesso" >
 							<div class="card">
 								<div class="card-header">
 									<strong>Administrador -</strong> <small> Formulario de
@@ -92,24 +97,24 @@
 								<div class="card-body card-block">
 									<div class="form-group">
 										<label for="nome" class=" form-control-label">Nome</label> <input
-											type="text" id="nome" placeholder="Digite o nome e sobrenome"
+											type="text" id="nome" name="nome" placeholder="Digite o nome e sobrenome"
 											class="form-control" required="required">
 									</div>
 
 									<div class="form-group">
 										<label for="email" class=" form-control-label">Email</label> <input
-											type="email" id="email" placeholder="Digite o email"
+											type="email" id="email" name="email" placeholder="Digite o email"
 											class="form-control" required="required">
 									</div>
 
 									<div class="form-group">
 										<label for="senha" class=" form-control-label">Senha</label> <input
-											type="password" id="senha" placeholder="Digite uma senha"
+											type="password" id="senha" name="senha" placeholder="Digite uma senha"
 											class="form-control" required="required">
 									</div>
 									<div class="form-group">
 										<label for="ativo" class=" form-control-label">Ativo</label> <select
-											name="ativo" id="ativo" class=" form-control"
+											name="ativo" id="ativo" name="ativo" class=" form-control"
 											required="required">
 
 											<option value="1" selected="selected">Sim</option>
@@ -120,10 +125,13 @@
 									</div>
 									<div class="form-group">
 										<label for="nivel" class=" form-control-label">Nivel</label> <select
-											name="nivel_acesso" id="nivel_acesso" class=" form-control"
+											name="nivel_acesso" id="nivel_acesso" name="nivel_acesso" class=" form-control"
 											required="required">
 											<option value="selecione">Selecione uma opção</option>
-											<option value="1">Master</option>
+											<c:if test="${usuarioLogado.nivel_acesso == '0'}">
+                                               <option value="1">Master</option>
+                                            </c:if>
+											
 											<option value="2">Comum</option>
 
 										</select>
@@ -134,7 +142,7 @@
 								</div>
 								<div class="card-footer">
 									<div style="margin: 0 auto; float: right;">
-										<button type="#" class="btn btn-primary btn-sm">
+										<button type="submit" class="btn btn-primary btn-sm">
 											<i class="fa fa-dot-circle-o"></i> Cadastrar
 										</button>
 										<button type="reset" class="btn btn-danger btn-sm">
@@ -203,9 +211,10 @@
 	</script>
 	<script
 		src="<%=request.getContextPath()%>/resources/vendor/circle-progress/circle-progress.min.js"></script>
-	<scrip
+	<script
 		src="<%=request.getContextPath()%>/resources/vendor/perfect-scrollbar/perfect-scrollbar.js">
-	</script> <script
+	</script> 
+	<script
 		src="<%=request.getContextPath()%>/resources/vendor/chartjs/Chart.bundle.min.js"></script>
 	<script
 		src="<%=request.getContextPath()%>/resources/vendor/select2/select2.min.js">

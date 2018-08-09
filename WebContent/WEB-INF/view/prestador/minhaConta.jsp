@@ -196,7 +196,7 @@
 												<b><label for="endereco" class="control-label mb-1">Endereco</label></b>
 
 												<p>
-													<label> ${endereco.logradouro} </label>
+													<label> ${endereco.rua} </label>
 												</p>
 											</div>
 										</div>
@@ -205,7 +205,7 @@
 													Numero</label></b>
 
 											<p>
-												<label>${endereco.numero}</label>
+												<label>${endereco.numeroCasa}</label>
 											</p>
 										</div>
 
@@ -243,7 +243,16 @@
 										<b><label for="estado" class="control-label mb-1">Estado</label></b>
 
 										<p>
-											<label>${endereco.estado}</label>
+											<label>${endereco.uf}</label>
+										</p>
+
+									</div>
+									
+									<div class="col-6">
+										<b><label for="estado" class="control-label mb-1">Complemento</label></b>
+
+										<p>
+											<label>${endereco.complemento}</label>
 										</p>
 
 									</div>

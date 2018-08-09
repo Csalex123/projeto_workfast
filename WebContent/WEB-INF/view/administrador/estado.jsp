@@ -14,7 +14,6 @@
 <!-- Title Page-->
 <title>WorkFast - Area do Administrador</title>
 
-
 <!-- Fontfaces CSS-->
 <link href="<%=request.getContextPath()%>/resources/css/font-face.css"
 	rel="stylesheet" media="all">
@@ -84,84 +83,77 @@
 				<div class="row">
 					<div class="col-md-12">
 						<br>
-						<h3 class="title-5 m-b-35">Prestadores de Serviços</h3>
+						<h3 class="title-5 m-b-35">Estados - UF </h3>
 						<hr class="line-seprate">
 						<br>
 						<div class="table-data__tool">
-							<div class="table-responsive table-responsive-data2">
-								<form>
-									<div class="form-group">
+							<div class="table-data__tool-left">
 
-										<input type="text" id="txtPesquisa" name="txtPesquisa"
-											placeholder="Pesquise aqui.." class="form-control">
+								<div class="form-group">
 
-									</div>
-								</form>
+									<input type="text" id="txtPesquisa" name="pesquisa"
+										placeholder="Pesquise aqui.." class="form-control">
+
+								</div>
+
 							</div>
+							<div class="table-data__tool-right">
+								<form action="cadastrarEstado">
+									<button type="submit"
+										class="au-btn au-btn-icon au-btn--azul au-btn--small"
+										style="background-color:">
+										<i class="zmdi zmdi-plus"></i>Novo Estado
+									</button>
+								</form>
 
+
+							</div>
 						</div>
+						
 						<div class="table-responsive table-responsive-data2"
 							style="padding-bottom: 20%">
+							<div style="text-align: center; color: red;">${msg}</div>
 							<table class="table table-data2">
 								<thead>
 									<tr>
 
 										<th>Nome</th>
-										<th>Tipo</th>
-										<th>Email</th>
-
-										<th>Acesso</th>
+										<th>UF</th>
+										
 									</tr>
 								</thead>
-								<tbody id="tbPrestador">
-									<c:forEach var="usuarioPrestador"
-										items="${listaUsuarioPrestador}">
+								<tbody id="tbEstado">
+									<c:forEach var="estado" items="${listarEstados}">
 										<tr class="tr-shadow">
 
-											<td width="180">${usuarioPrestador.nome}</td>
-											<td><c:choose>
-													<c:when test="${usuarioPrestador.tipo_usuario == '1'}">
-														<span>Físico</span>
-													</c:when>
-													<c:otherwise>
-														<span>Jurídico</span>
-													</c:otherwise>
-												</c:choose></td>
+											<td width="180">${estado.nome}</td>
 
-											<td><span>${usuarioPrestador.email}</span></td>
+											<td><span>${estado.uf}</span></td>
+											
 
-											<td><c:choose>
-													<c:when test="${usuarioPrestador.ativo == '1'}">
-														<span>Ativo</span>
-													</c:when>
-													<c:otherwise>
-														<span>Bloqueado</span>
-													</c:otherwise>
-												</c:choose></td>
+												<td><div class="table-data-feature">
+													
+																										
 
-											<td>
-												<div class="table-data-feature">
+													
+													<a href="editarEstado?id=${estado.idEstado}" class="item" data-toggle="tooltip"
+														data-placement="top" title="Editar">
+														<i class="zmdi zmdi-edit"></i>
+													  </a>
 
-													<c:choose>
-														<c:when test="${usuarioPrestador.ativo == '1'}">
-															<a href="bloquearUsuario?id=${usuarioPrestador.id}"
-																class="item" data-toggle="tooltip" data-placement="top"
-																title="Bloquear"> <i class="zmdi zmdi-lock"></i>
-															</a>
+													
 
-														</c:when>
-														<c:otherwise>
-															<a href="desbloquearUsuario?id=${usuarioPrestador.id}"
-																class="item" data-toggle="tooltip" data-placement="top"
-																title="Desbloquear"> <i class="zmdi zmdi-lock-open"></i>
-															</a>
-														</c:otherwise>
-													</c:choose>
+													<a href="deleteEstado?id=${estado.idEstado}"  class="item" data-toggle="tooltip"
+															data-placement="top" title="Excluir">
+															<i class="zmdi zmdi-delete"></i>
+													</a>
 
+													
 
 
 												</div>
 											</td>
+
 										</tr>
 										<tr class="spacer"></tr>
 
@@ -239,7 +231,7 @@
 		$(document).ready(function(){
 		  $("#txtPesquisa").on("keyup", function() {
 		    var value = $(this).val().toLowerCase();
-		    $("#tbPrestador tr").filter(function() {
+		    $("#tbEstado tr").filter(function() {
 		      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
 		    });
 		  });
