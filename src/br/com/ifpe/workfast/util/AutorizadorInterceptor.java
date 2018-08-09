@@ -22,6 +22,8 @@ public class AutorizadorInterceptor extends HandlerInterceptorAdapter {
 			uri.endsWith("disponivel")||
 			uri.endsWith("entrar")||
 			uri.endsWith("incluirUsuario")||
+			uri.endsWith("procurar_cpf")||
+			uri.endsWith("procurar_rg")||
 			uri.endsWith("googleSuccess")||
 			uri.endsWith("efetuarLogin")) {
 			

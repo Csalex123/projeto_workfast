@@ -84,7 +84,7 @@
 					
 					<div class="form-group">
 						<label for="telefone">Número Telefone fixo :</label>
-						<input type="text"  class="form-control" id="telefone" placeholder="(xx) xxxx-xxxx" name="telefone">
+						<input type="text"  class="form-control" id="telefone" placeholder="(00) 0000-0000" name="telefone">
 					</div>
 					
 							

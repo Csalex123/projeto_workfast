@@ -44,8 +44,22 @@ public class DadosPessoaisController {
 		
 		
         EnderecoDao daoEndereco = new EnderecoDao();
-        daoEndereco.salvar(endereco);
+        daoEndereco.salvarEndereco(endereco);
         
+        
+		if(id == 1 ) {return "cliente/cadastroDadosSucesso";}
+		if(id == 3 ) {return "prestador/cadastroDadosSucesso";}
+		
+		return null;
+		
+	}
+	
+	
+	@RequestMapping("salvarDadosPessoais")
+	public String save(@RequestParam("idTipoAcesso") Integer id, DadosPessoais dados) {
+
+		DadosPessoaisDao dao = new DadosPessoaisDao();
+		dao.salvar(dados);
         
 		if(id == 1 ) {return "cliente/cadastroDadosSucesso";}
 		if(id == 3 ) {return "prestador/cadastroDadosSucesso";}

@@ -1,18 +1,73 @@
 create database workfast;
 use workfast;
 
-create table tipo_usuario(
- id_tipo int AUTO_INCREMENT PRIMARY KEY,
+create table tipo_acesso(
+ id int AUTO_INCREMENT PRIMARY KEY,
  descricao varchar(100) not null
 );
 
 
 create table usuario(
- id_usuario int AUTO_INCREMENT PRIMARY KEY,
+ id int AUTO_INCREMENT PRIMARY KEY,
+ nome varchar(100) not null,
  email varchar(100) not null,
  senha varchar(100) not null,
  ativo char(1) not null,
  nivel_acesso char(1) not null,
- fk_tipo int not null,
- FOREIGN KEY(fk_tipo) REFERENCES tipo_usuario (id_tipo)
+ foto varchar(100) null,
+ tipo_usuario char(1) not null,
+ fk_tipo_acesso int not null,
+ FOREIGN KEY(fk_tipo_acesso) REFERENCES tipo_acesso(id)
 );
+
+create table profissao(
+id int AUTO_INCREMENT PRIMARY KEY,
+nome varchar(100) not null,
+descricao varchar(100) not null,
+);
+
+create table profissao_usuario(
+id int AUTO_INCREMENT PRIMARY KEY,
+fk_usuario int not null,
+fk_profissao int not null,
+FOREIGN KEY(fk_usuario) REFERENCES usuario (id),
+FOREIGN KEY(fk_profissao) REFERENCES profissao (id),
+);
+
+create table servico(
+id int AUTO_INCREMENT PRIMARY KEY,
+nome varchar(100) not null,
+descricao varchar(100) not null,
+valor double not null,
+fk_profissao_usuario int not null
+FOREIGN KEY(fk_profissao_usuario) REFERENCES profissao_usuario (id)
+);
+
+create table dado_pessoal(
+id int AUTO_INCREMENT PRIMARY KEY,
+nomeFantasia varchar(100) null,
+razaoSocial varchar(100) null,
+cpfCnpj varchar(15) not null,
+rgIe varchar(15) null,  
+sexo char(1) null,
+dataNascimento date null,
+telefone varchar(15) null,
+celular varchar(15) null,
+fk_usuario int not null,
+FOREIGN KEY(fk_usuario) REFERENCES usuario (id)
+)
+
+create table endereco(
+id int AUTO_INCREMENT PRIMARY KEY,
+cidade varchar(45) not null,
+rua varchar(45) not null,
+bairro varchar(45) not null,
+numero_casa varchar(45) not null,
+cep varchar(15) not null,
+estado varchar(10) not null,
+complemento varchar(70) not null,
+fk_usuario int not null,
+FOREIGN KEY(fk_usuario) REFERENCES usuario (id)
+);
+
+

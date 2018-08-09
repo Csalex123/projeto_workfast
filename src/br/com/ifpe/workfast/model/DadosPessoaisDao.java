@@ -58,5 +58,53 @@ public class DadosPessoaisDao {
 		factory.close();
 	}
 	
+	//Método para buscar verificar se o cpf já existe no banco de dados
+			public DadosPessoais buscarPorCpf(String cpf){
+
+				DadosPessoais obj = null;
+
+				EntityManagerFactory factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT);
+				EntityManager manager = factory.createEntityManager();
+				Query query = null;
+				
+				query = manager.createQuery("FROM DadosPessoais WHERE cpfCnpj = :paramCpf");
+				query.setParameter("paramCpf", cpf);
+
+				try{
+					obj = (DadosPessoais) query.getSingleResult();
+				}catch(NoResultException nre){
+					return null;
+				}
+				
+				manager.close();
+				factory.close();
+				return obj;
+				
+			}
+			
+			//Método para buscar verificar se o RG já existe no banco de dados
+			public DadosPessoais buscarPorRG(String rg){
+
+				DadosPessoais obj = null;
+
+				EntityManagerFactory factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT);
+				EntityManager manager = factory.createEntityManager();
+				Query query = null;
+				
+				query = manager.createQuery("FROM DadosPessoais WHERE rgIe = :paramRg");
+				query.setParameter("paramRg", rg);
+
+				try{
+					obj = (DadosPessoais) query.getSingleResult();
+				}catch(NoResultException nre){
+					return null;
+				}
+				
+				manager.close();
+				factory.close();
+				return obj;
+				
+			}
+	
 	
 }

@@ -21,23 +21,27 @@ public class Endereco {
 	private String cidade;
 	
 	@Column
-	private String bairro;
+	private String rua;
 	
 	@Column
-	private String logradouro;
+	private String bairro;
 	
 	@Column
 	private String cep;
 	
-	@Column
-	private String numero;
+	@Column(name="estado")
+	private String uf;
 	
 	@Column
-	private String estado;
+	private String complemento;
+	
+	@Column(name="numero_casa")
+	private String numeroCasa;
 	
 	@ManyToOne
-	@JoinColumn(name = "fk_usuario")
+	@JoinColumn(name="fk_usuario")
 	private Usuario usuario;
+	
 
 	public int getId() {
 		return id;
@@ -55,20 +59,20 @@ public class Endereco {
 		this.cidade = cidade;
 	}
 
+	public String getRua() {
+		return rua;
+	}
+
+	public void setRua(String rua) {
+		this.rua = rua;
+	}
+
 	public String getBairro() {
 		return bairro;
 	}
 
 	public void setBairro(String bairro) {
 		this.bairro = bairro;
-	}
-
-	public String getLogradouro() {
-		return logradouro;
-	}
-
-	public void setLogradouro(String logradouro) {
-		this.logradouro = logradouro;
 	}
 
 	public String getCep() {
@@ -79,20 +83,28 @@ public class Endereco {
 		this.cep = cep;
 	}
 
-	public String getNumero() {
-		return numero;
+	public String getUf() {
+		return uf;
 	}
 
-	public void setNumero(String numero) {
-		this.numero = numero;
+	public void setUf(String uf) {
+		this.uf = uf;
 	}
 
-	public String getEstado() {
-		return estado;
+	public String getComplemento() {
+		return complemento;
 	}
 
-	public void setEstado(String estado) {
-		this.estado = estado;
+	public void setComplemento(String complemento) {
+		this.complemento = complemento;
+	}
+
+	public String getNumeroCasa() {
+		return numeroCasa;
+	}
+
+	public void setNumeroCasa(String numeroCasa) {
+		this.numeroCasa = numeroCasa;
 	}
 
 	public Usuario getUsuario() {
@@ -102,6 +114,8 @@ public class Endereco {
 	public void setUsuario(Usuario usuario) {
 		this.usuario = usuario;
 	}
+
+	
 	
 	
 	

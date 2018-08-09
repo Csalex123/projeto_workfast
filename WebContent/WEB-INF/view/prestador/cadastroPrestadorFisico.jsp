@@ -66,6 +66,18 @@
 <link
 	href="<%=request.getContextPath()%>/resources/css/theme-prestador.css"
 	rel="stylesheet" media="all">
+	
+<!-- Jquery -->
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	
+	
+<!-- Jquery validate -->
+<script type="text/javascript" src="<%=request.getContextPath()%>/resources/js/jquery.validate.min.js"></script>
+
+<!-- Código JavaScript desta Página(Página de cadastro) -->
+<script type="text/javascript"
+	src="<%=request.getContextPath()%>/resources/js/prestador/cadastroPrestadorFisico.js"></script>
 
 </head>
 <body class="animsition">
@@ -83,7 +95,7 @@
 						</a>
 					</div>
 					<div style="margin-bottom: 20px;">
-						<center>Ola ${usuarioLogado.nome}! Antes de ter acesso ao
+						<center>Olá, ${usuarioLogado.nome}! Antes de ter acesso ao
 							sistema informe algumas informações no formulario abaixo.</center>
 					</div>
 					<div class="login-form">
