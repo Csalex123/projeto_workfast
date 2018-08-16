@@ -45,6 +45,7 @@
                                     <i class="fas fa-wrench"></i>
                                     <span class="bot-line"></span>Especializações</a>
                             </li>
+                            
                               <li class="has-sub">
                                 <a href="#">
                                   
@@ -59,6 +60,25 @@
                                     </li>
                                     <li>
                                         <a href="telaCidade">Cidade</a>
+                                    </li>
+                                   
+                                </ul>
+                            </li>
+                            
+                            <li class="has-sub">
+                                <a href="#">
+                                  
+                                    <i class="fas  fa-map-marker"></i>Servicos
+                                    <span class="bot-line"></span>
+                                </a>
+                                <ul class="header3-sub-list list-unstyled">
+                                
+                                                          
+                                    <li>
+                                        <a href="telaServico">Novo</a>
+                                    </li>
+                                    <li>
+                                        <a href="telaCategoriaServico">Categoria</a>
                                     </li>
                                    
                                 </ul>
@@ -202,7 +222,44 @@
                                     <i class="fas fa-wrench"></i>
                                     <span class="bot-line"></span>Especializações</a>
                             </li>
+                             <li class="has-sub">
+                                <a href="#">
+                                  
+                                    <i class="fas  fa-map-marker"></i>Localidade
+                                    <span class="bot-line"></span>
+                                </a>
+                                <ul class="header3-sub-list list-unstyled">
+                                
+                                                          
+                                    <li>
+                                        <a href="telaEstado">Estado</a>
+                                    </li>
+                                    <li>
+                                        <a href="telaCidade">Cidade</a>
+                                    </li>
+                                   
+                                </ul>
+                            </li>
                             
+                            <li class="has-sub">
+                                <a href="#">
+                                  
+                                    <i class="fas  fa-map-marker"></i>Servicos
+                                    <span class="bot-line"></span>
+                                </a>
+                                <ul class="header3-sub-list list-unstyled">
+                                
+                                                          
+                                    <li>
+                                        <a href="telaServico">Novo</a>
+                                    </li>
+                                    <li>
+                                        <a href="telaCategoriaServico">Categoria</a>
+                                    </li>
+                                   
+                                </ul>
+                            </li>
+                           
                       
                     </ul>
                 </div>

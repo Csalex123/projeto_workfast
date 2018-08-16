@@ -15,7 +15,7 @@ public class TipoAcessoDao {
 
 		EntityManagerFactory factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT);
 		EntityManager manager = factory.createEntityManager();
-		List<TipoAcesso> lista = manager.createQuery("FROM TipoAcesso ORDER BY id").getResultList();
+		List<TipoAcesso> lista = manager.createQuery("FROM TipoAcesso ORDER BY descricao").getResultList();
 		manager.close();
 		factory.close();
 

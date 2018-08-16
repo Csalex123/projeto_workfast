@@ -69,9 +69,9 @@
 
 				<div class="login-form">
 					<form id="form_cadastroCliente"
-						action="salvarDadosPessoais?idTipoAcesso=${usuarioLogado.tipo_acesso.id}"
+						action="salvarDadosPessoais?idTipoAcesso=${usuarioLogado.tipo_acesso.idTipoAcesso}"
 						method="post">
-						<input type="hidden" value="${usuarioLogado.id}" name="usuario">
+						<input type="hidden" value="${usuarioLogado.idUsuario}" name="usuario">
 						<input type="hidden" value="" name="nomeFantasia"> <input
 							type="hidden" value="" name="razaoSocial">
 

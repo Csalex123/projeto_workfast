@@ -74,6 +74,8 @@
 							class="form-control" id="email" placeholder="Digite  seu e-mail"
 							name="email">
 					</div>
+					
+					<input type="hidden" value="img_avatar.png" name="foto">
 
 
 					<div class="form-group">
@@ -128,7 +130,7 @@
 									<option value="">Selecione</option>
 									<c:forEach items="${listaTipoAcesso}" var="obj">
 										<c:if test="${obj.descricao != 'Administrador'}">
-											<option value="${obj.id}">${obj.descricao}</option>
+											<option value="${obj.idTipoAcesso}">${obj.descricao}</option>
 										</c:if>
 
 									</c:forEach>

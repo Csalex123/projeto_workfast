@@ -12,8 +12,7 @@
 
 
 <!-- Title Page-->
-<title>WorkFast - Area do Administrador</title>
-
+<title>WorkFast - Area do Prestador</title>
 
 <!-- Fontfaces CSS-->
 <link href="<%=request.getContextPath()%>/resources/css/font-face.css"
@@ -64,10 +63,9 @@
 
 
 <!-- Main CSS-->
-<link href="<%=request.getContextPath()%>/resources/css/theme-adm.css"
+<link
+	href="<%=request.getContextPath()%>/resources/css/theme-prestador.css"
 	rel="stylesheet" media="all">
-<script type="text/javascript"
-	src="<%=request.getContextPath()%>/resources/js/cadastro.js"></script>
 
 </head>
 
@@ -75,136 +73,85 @@
 
 	<div class="page-wrapper">
 		<!-- menu adm -->
-		<c:import url="../administrador/menu.jsp" />
+		<c:import url="../prestador/menu.jsp" />
 
-		<!-- Conteudo-->
-		<div class="page-content--bgf7">
-
-			<!-- DATA TABLE-->
-			<section class="p-t-20">
-			<div class="container">
+		<section class="au-breadcrumb m-t-75" style="margin-bottom:60px;">
+		<div class="section__content section__content--p30">
+			<div class="container-fluid">
 				<div class="row">
 					<div class="col-md-12">
-						<br>
-						<h3 class="title-5 m-b-35">Clientes</h3>
-						<hr class="line-seprate">
-						<br>
-						<div class="table-data__tool">
-							<div class="table-responsive table-responsive-data2">
-								<form>
-									<div class="form-group">
-
-										<input type="text" id="txtPesquisa" name="txtPesquisa"
-											placeholder="Pesquise aqui.." class="form-control">
-
-									</div>
-								</form>
+						<div class="au-breadcrumb-content">
+							<div class="au-breadcrumb-left" style="margin-top: 5px;">
+								<h1 class="title-4">Todos Serviços não finalizados</h1>
 							</div>
+							
+							
 
-						</div>
-
-						<div class="table-responsive table-responsive-data2"
-							style="padding-bottom: 20%">
-							<div style="text-align: center; color: red;">${mensagem}</div>
-							<table class="table table-data2">
-								<thead>
-									<tr>
-
-										<th>Nome</th>
-										<th>Tipo</th>
-										<th>Email</th>
-
-
-										<th>Ativo</th>
-									</tr>
-								</thead>
-								<tbody id="tbCliente">
-									<c:forEach var="usuarioCliente" items="${listaUsuarioCliente}">
-										<tr class="tr-shadow">
-
-											<td width="180">${usuarioCliente.nome}</td>
-
-											<td><c:choose>
-													<c:when test="${usuarioCliente.tipo_usuario == '1'}">
-														<span>Físico</span>
-													</c:when>
-													<c:otherwise>
-														<span>Jurídico</span>
-													</c:otherwise>
-												</c:choose></td>
-
-											<td><span>${usuarioCliente.email}</span></td>
-
-
-
-											<td><c:choose>
-													<c:when test="${usuarioCliente.ativo == '1'}">
-														<span>Ativo</span>
-													</c:when>
-													<c:otherwise>
-														<span>Bloqueado</span>
-													</c:otherwise>
-												</c:choose></td>
-
-											<td>
-												<div class="table-data-feature">
-													<c:choose>
-														<c:when test="${usuarioCliente.ativo == '1'}">
-															<a href="bloquearUsuario?id=${usuarioCliente.idUsuario}"
-																class="item" data-toggle="tooltip" data-placement="top"
-																title="Bloquear"> <i class="zmdi zmdi-lock"></i>
-															</a>
-
-														</c:when>
-														<c:otherwise>
-															<a href="desbloquearUsuario?id=${usuarioCliente.idUsuario}"
-																class="item" data-toggle="tooltip" data-placement="top"
-																title="Desbloquear"> <i class="zmdi zmdi-lock-open"></i>
-															</a>
-														</c:otherwise>
-													</c:choose>
-
-
-
-
-
-												</div>
-											</td>
-										</tr>
-										<tr class="spacer"></tr>
-
-									</c:forEach>
-
-
-
-
-								</tbody>
-							</table>
 						</div>
 					</div>
 				</div>
 			</div>
-			</section>
-			<button id="myBtn" value="myvalue" onclick="myFunction()">Try
-				it</button>
-			<!-- END DATA TABLE-->
-
-
-			<!-- COPYRIGHT-->
-
-			<section class="p-t-60 p-b-20">
-			<div class="container">
-				<div class="row">
-					<div class="col-md-12">
-						<div class="copyright">
-							<p>Copyright © 2018 WorkFast. Todos os direitos reservados..</p>
-						</div>
-					</div>
-				</div>
-			</div>
-			</section>
-			<!-- END COPYRIGHT-->
 		</div>
+		</section>
+		<section>
+		<div class="section__content section__content--p30">
+			<div class="container-fluid">
+				<div class="row" style="padding-bottom: 50%;">
+	
+					<!-- Conteiner de listagem de candidatos -->
+                    <div class="container-fluid" style="margin-top: 30px;">
+                        <div class="fontawesome-list-wrap">
+                            <section >
+                                <div class="table-responsive table-responsive-data2">
+                                    <table class="table table-data2">
+                                        <thead>
+                                            <tr>
+                                            	<th>Nome do Cliente</th>
+                                                <th>Serviço</th>
+                                                <th>Data início</th>
+                                                <th>Estapa</th>
+                                                
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr >
+                                            	<td>João</td>
+                                                <td>Fotografia</td>
+                                               	<td>20/00/2000</td>
+                                               	<td><b style="color: #B8860B">Contrato</b></td>
+                                                <td>
+                                                    <a href="TerceiraEtapa"><button class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="Visualizar">Visualizar</button></a>                      
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                             </section>    
+                        </div>
+                    </div>
+					
+
+				</div>
+			</div>
+		</div>
+		</section>
+
+		<section>
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="copyright">
+						<p>
+							Copyright © 2018 WorkFast. Todos os direitos reservados.
+						</p>
+					</div>
+				</div>
+			</div>
+		</div>
+		</section>
+
+	</div>
 
 	</div>
 
@@ -244,32 +191,6 @@
 
 	<!-- Main JS-->
 	<script src="<%=request.getContextPath()%>/resources/js/main.js"></script>
-
-	<script>
-     function bloquear(id) {
-    	 var x = id.value;
-    	 alert(x);
-       }
-     
-     $(window).load(function(){
-    	 
-      
-     });
-     
-    
-		
-		$(document).ready(function(){
-			
-			
-		
-		  $("#txtPesquisa").on("keyup", function() {
-		    var value = $(this).val().toLowerCase();
-		    $("#tbCliente tr").filter(function() {
-		      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-		    });
-		  });
-		});
-		</script>
 
 </body>
 

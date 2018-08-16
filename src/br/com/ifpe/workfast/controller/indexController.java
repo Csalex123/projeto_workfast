@@ -10,8 +10,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import br.com.ifpe.workfast.model.Cidade;
+import br.com.ifpe.workfast.model.CidadeDao;
 import br.com.ifpe.workfast.model.DadosPessoais;
 import br.com.ifpe.workfast.model.DadosPessoaisDao;
+import br.com.ifpe.workfast.model.Estado;
+import br.com.ifpe.workfast.model.EstadoDao;
 import br.com.ifpe.workfast.model.Profissao;
 import br.com.ifpe.workfast.model.ProfissaoDao;
 import br.com.ifpe.workfast.model.TipoAcesso;
@@ -81,7 +85,7 @@ public class indexController {
 
 	// Método para efetuar o login
 	@RequestMapping("efetuarLogin")
-	public String efetuarLogin(Usuario usuario, HttpSession session, Model model) {
+	public String efetuarLogin(Usuario usuario, HttpSession session, Model model, Model modelEstado, Model modelCidade) {
 
 		UsuarioDao dao = new UsuarioDao();
 		DadosPessoaisDao dao2 = new DadosPessoaisDao();
@@ -92,7 +96,7 @@ public class indexController {
 
 			if (usuarioLogado.getAtivo().equals("1")) {
 
-				DadosPessoais dados = dao2.buscarDadosPessoaisUsuario(usuarioLogado.getId());
+				DadosPessoais dados = dao2.buscarDadosPessoaisUsuario(usuarioLogado.getIdUsuario());
 
 				if (usuarioLogado.getTipo_acesso().getDescricao().equals(TipoAcesso.getTipoCliente())) {
 
@@ -115,9 +119,15 @@ public class indexController {
 
 						if (usuarioLogado.getTipo_usuario().equals("1")) {
 							ProfissaoDao daoProfissao = new ProfissaoDao();
+							EstadoDao daoEstado = new EstadoDao();
+							CidadeDao daoCidade = new CidadeDao();
 							List<Profissao> listaProfissao = daoProfissao.listar();
+							List<Estado> listaEstado = daoEstado.listar();
+							List<Cidade> listaCidade= daoCidade.listar();
 							model.addAttribute("listaProfissao", listaProfissao);
-							return "prestador/cadastroPrestadorFisico";
+							modelEstado.addAttribute("listaEstado",listaEstado);
+							modelCidade.addAttribute("listaCidade",listaCidade);
+							return "forward:primeiroAcessoFisico";
 						} else {
 							return "prestador/cadastroPrestadorJuridico";
 						}

@@ -1,5 +1,6 @@
 package br.com.ifpe.workfast.model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -14,7 +15,8 @@ public class UsuarioProfissao {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
+	@Column(name="id")
+	private int idProfissaoUsuario;
 	
 	@ManyToOne
 	@JoinColumn(name = "fk_usuario")
@@ -24,12 +26,12 @@ public class UsuarioProfissao {
 	@JoinColumn(name = "fk_profissao")
 	private Profissao profissao;
 	
-	public int getId() {
-		return id;
+	public int getIdProfissaoUsuario() {
+		return idProfissaoUsuario;
 	}
 
-	public void setId(int id) {
-		this.id = id;
+	public void setIdProfissaoUsuario(int idProfissaoUsuario) {
+		this.idProfissaoUsuario = idProfissaoUsuario;
 	}
 
 	public Usuario getUsuario() {

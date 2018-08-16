@@ -9,12 +9,16 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import br.com.ifpe.workfast.model.CategoriaServico;
+import br.com.ifpe.workfast.model.CategoriaServicoDao;
 import br.com.ifpe.workfast.model.Cidade;
 import br.com.ifpe.workfast.model.CidadeDao;
 import br.com.ifpe.workfast.model.Estado;
 import br.com.ifpe.workfast.model.EstadoDao;
 import br.com.ifpe.workfast.model.Profissao;
 import br.com.ifpe.workfast.model.ProfissaoDao;
+import br.com.ifpe.workfast.model.Servico;
+import br.com.ifpe.workfast.model.ServicoDao;
 import br.com.ifpe.workfast.model.Usuario;
 import br.com.ifpe.workfast.model.UsuarioDao;
 
@@ -35,6 +39,25 @@ public class AdministradorController {
 		List<Profissao> listaProfissao = dao.listar();
 		model.addAttribute("listaProfissao", listaProfissao);
 		return "administrador/profissao";
+	}
+
+	// metodo para redirecionar para pagina de servico
+	@RequestMapping("telaServico")
+	public String servico(Model model) {
+
+		ServicoDao dao = new ServicoDao();
+		List<Servico> listaServico = dao.listar();
+		model.addAttribute("listaServico", listaServico);
+		return "administrador/servico";
+	}
+
+	// metodo para redirecionar para pagina de categoria servico
+	@RequestMapping("telaCategoriaServico")
+	public String categoriaServico(Model model) {
+		CategoriaServicoDao dao = new CategoriaServicoDao();
+		List<CategoriaServico> listaCategoriaServico = dao.listar();
+		model.addAttribute("listaCategoriaServico", listaCategoriaServico);
+		return "administrador/categoriaServico";
 	}
 
 	// metodo para redirecionar para pagina de gerenciamento de cliente
@@ -106,6 +129,24 @@ public class AdministradorController {
 	@RequestMapping("cadastrarEstado")
 	public String cadastrarEstado() {
 		return "administrador/cadastroEstado";
+	}
+
+	// metodo para redirecionar para pagina que contem o formulario de cadastro
+	// de servico
+	@RequestMapping("cadastrarServico")
+	public String cadastrarServico(Model model) {
+		CategoriaServicoDao dao = new CategoriaServicoDao();
+
+		List<CategoriaServico> listarCategoriaServico = dao.listar();
+		model.addAttribute("listarCategoriaServico", listarCategoriaServico);
+		return "administrador/cadastroServico";
+	}
+
+	// metodo para redirecionar para pagina que contem o formulario de cadastro
+	// de servico
+	@RequestMapping("cadastrarCategoriaServico")
+	public String cadastrarCategoriaServico() {
+		return "administrador/cadastroCategoriaServico";
 	}
 
 	// metodo para redirecionar para pagina que contem o formulario de cadastro

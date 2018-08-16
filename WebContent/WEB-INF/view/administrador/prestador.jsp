@@ -144,14 +144,14 @@
 
 													<c:choose>
 														<c:when test="${usuarioPrestador.ativo == '1'}">
-															<a href="bloquearUsuario?id=${usuarioPrestador.id}"
+															<a href="bloquearUsuario?id=${usuarioPrestador.idUsuario}"
 																class="item" data-toggle="tooltip" data-placement="top"
 																title="Bloquear"> <i class="zmdi zmdi-lock"></i>
 															</a>
 
 														</c:when>
 														<c:otherwise>
-															<a href="desbloquearUsuario?id=${usuarioPrestador.id}"
+															<a href="desbloquearUsuario?id=${usuarioPrestador.idUsuario}"
 																class="item" data-toggle="tooltip" data-placement="top"
 																title="Desbloquear"> <i class="zmdi zmdi-lock-open"></i>
 															</a>

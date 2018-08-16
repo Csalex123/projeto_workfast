@@ -55,8 +55,8 @@
 			<!-- Formulário de cadastro-->
 			<div class="panel-body">
 			
-				<form action="salvarDadosPessoais?idTipoAcesso=${usuarioLogado.tipo_acesso.id}" id="form_cadastroPrestador" method="post">
-				  <input type="hidden" value="${usuarioLogado.id}" name="usuario">
+				<form action="salvarDadosPessoais?idTipoAcesso=${usuarioLogado.tipo_acesso.idTipoAcesso}" id="form_cadastroPrestador" method="post">
+				  <input type="hidden" value="${usuarioLogado.idUsuario}" name="usuario">
 				    <input type="hidden" value=" " name="sexo">
 				    <input type="hidden" value="01/10/2000" name="dataNascimento">
 				    <input type="hidden" value=" " name="celular">

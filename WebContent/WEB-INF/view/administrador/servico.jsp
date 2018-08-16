@@ -57,7 +57,7 @@
                     <div class="row">
                         <div class="col-md-12">
                             <br>
-                            <h3 class="title-5 m-b-35">Especialização (Profissão)</h3>
+                            <h3 class="title-5 m-b-35">Serviços</h3>
                             <hr class="line-seprate">
 
                             <br>
@@ -72,29 +72,32 @@
                                     
                                 </div>
                                 <div class="table-data__tool-right">
-                                  <form action="cadastrarProfissao">
+                                  <form action="cadastrarServico">
                                     <button type="submit" class="au-btn au-btn-icon au-btn--azul au-btn--small">
-                                     <i class="zmdi zmdi-plus"></i>Nova Especialização</button>
+                                     <i class="zmdi zmdi-plus"></i>Novo Serviço</button>
                                     
                                   </form>
                                     
                                 </div>
                             </div>
                             <div class="table-responsive table-responsive-data2" style="padding-bottom: 20%">
+                                <div><center>${msg}</center></div>
                                 <table class="table table-data2">
                                     <thead>
                                         <tr>
                                             
                                             <th>Nome</th>
+                                            <th>Categoria</th>
                                             
                                             
                                         </tr>
                                     </thead>
-                                    <tbody id="tbProfissao">
-                                       <c:forEach var="profissao" items="${listaProfissao}">
+                                    <tbody id="tbServico">
+                                       <c:forEach var="servico" items="${listaServico}">
 										<tr class="tr-shadow">
 
-											<td width="300">${profissao.nome}</td>
+											<td width="300">${servico.nome}</td>
+											<td width="300">${servico.categoriaServico.nome}</td>
 
 																		
 
@@ -102,14 +105,14 @@
 											<td>
 												<div class="table-data-feature">
                                                     
-                                                      <a href="editarProfissao?id=${profissao.idProfissao}" class="item" data-toggle="tooltip"
+                                                      <a href="editarServico?id=${servico.idServico}" class="item" data-toggle="tooltip"
 														data-placement="top" title="Editar">
 														<i class="zmdi zmdi-edit"></i>
 													  </a>
                                                     &nbsp;
 													
 
-													<a href="deleteProfissao?id=${profissao.idProfissao}" class="item" data-toggle="tooltip"
+													<a href="deleteServico?id=${servico.idServico}" class="item" data-toggle="tooltip"
 														data-placement="top" title="Excluir">
 														<i class="zmdi zmdi-delete"></i>
 													</a>
@@ -126,7 +129,7 @@
                                                                                 
                                     </tbody>
                                 </table>
-                                <div><center>${msg}</center></div>
+                                
                             </div>
                         </div>
                     </div>
@@ -182,7 +185,7 @@
 		$(document).ready(function(){
 		  $("#txtPesquisa").on("keyup", function() {
 		    var value = $(this).val().toLowerCase();
-		    $("#tbProfissao tr").filter(function() {
+		    $("#tbServico tr").filter(function() {
 		      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
 		    });
 		  });

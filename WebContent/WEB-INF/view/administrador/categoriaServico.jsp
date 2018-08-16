@@ -57,7 +57,7 @@
                     <div class="row">
                         <div class="col-md-12">
                             <br>
-                            <h3 class="title-5 m-b-35">Especialização (Profissão)</h3>
+                            <h3 class="title-5 m-b-35">Categoria Serviço</h3>
                             <hr class="line-seprate">
 
                             <br>
@@ -72,15 +72,16 @@
                                     
                                 </div>
                                 <div class="table-data__tool-right">
-                                  <form action="cadastrarProfissao">
+                                  <form action="cadastrarCategoriaServico">
                                     <button type="submit" class="au-btn au-btn-icon au-btn--azul au-btn--small">
-                                     <i class="zmdi zmdi-plus"></i>Nova Especialização</button>
+                                     <i class="zmdi zmdi-plus"></i>Nova categoria</button>
                                     
                                   </form>
                                     
                                 </div>
                             </div>
                             <div class="table-responsive table-responsive-data2" style="padding-bottom: 20%">
+                                <div><center>${msg}</center></div>
                                 <table class="table table-data2">
                                     <thead>
                                         <tr>
@@ -90,11 +91,11 @@
                                             
                                         </tr>
                                     </thead>
-                                    <tbody id="tbProfissao">
-                                       <c:forEach var="profissao" items="${listaProfissao}">
+                                    <tbody id="tbCategoriaServico">
+                                       <c:forEach var="categoria" items="${listaCategoriaServico}">
 										<tr class="tr-shadow">
 
-											<td width="300">${profissao.nome}</td>
+											<td width="300">${categoria.nome}</td>
 
 																		
 
@@ -102,14 +103,14 @@
 											<td>
 												<div class="table-data-feature">
                                                     
-                                                      <a href="editarProfissao?id=${profissao.idProfissao}" class="item" data-toggle="tooltip"
+                                                      <a href="editarCategoriaServico?id=${categoria.idCategoriaServico}" class="item" data-toggle="tooltip"
 														data-placement="top" title="Editar">
 														<i class="zmdi zmdi-edit"></i>
 													  </a>
                                                     &nbsp;
 													
 
-													<a href="deleteProfissao?id=${profissao.idProfissao}" class="item" data-toggle="tooltip"
+													<a href="deleteCategoriaServico?id=${categoria.idCategoriaServico}" class="item" data-toggle="tooltip"
 														data-placement="top" title="Excluir">
 														<i class="zmdi zmdi-delete"></i>
 													</a>
@@ -126,7 +127,7 @@
                                                                                 
                                     </tbody>
                                 </table>
-                                <div><center>${msg}</center></div>
+                                
                             </div>
                         </div>
                     </div>
@@ -182,7 +183,7 @@
 		$(document).ready(function(){
 		  $("#txtPesquisa").on("keyup", function() {
 		    var value = $(this).val().toLowerCase();
-		    $("#tbProfissao tr").filter(function() {
+		    $("#tbCategoriaServico tr").filter(function() {
 		      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
 		    });
 		  });

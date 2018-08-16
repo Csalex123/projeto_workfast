@@ -104,14 +104,14 @@ public class UsuarioDao {
 			  case "0":
 				query = manager.createQuery("FROM Usuario u WHERE u.tipo_acesso.descricao = :paramTipo AND u.id NOT IN (:paramId) ORDER BY nome");
 				query.setParameter("paramTipo", "Administrador");
-				query.setParameter("paramId", usuario.getId());
+				query.setParameter("paramId", usuario.getIdUsuario());
 				
 			  break;
 			  
 			  case "1":
 				  query = manager.createQuery("FROM Usuario u WHERE u.tipo_acesso.descricao = :paramTipo AND u.id NOT IN (:paramId) AND u.nivel_acesso NOT IN (0,1) ORDER BY nome");
 				  query.setParameter("paramTipo", "Administrador");
-				  query.setParameter("paramId", usuario.getId());
+				  query.setParameter("paramId", usuario.getIdUsuario());
 				  
 		      break;
 		      			  

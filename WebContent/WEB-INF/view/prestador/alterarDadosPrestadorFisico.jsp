@@ -102,8 +102,8 @@
 							<form action="alterarDadosPessoais" method="post">
 								<div class="card-body">
                                    
-                                   <input type="hidden" name="id" value="${dadosPessoais.id}">
-                                   <input type="hidden" name="usuario" value="${usuarioLogado.id}">
+                                   <input type="hidden" name="id" value="${dadosPessoais.idDadosPessoais}">
+                                   <input type="hidden" name="usuario" value="${usuarioLogado.idUsuario}">
 									<div class="form-group">
 										<b><label for="nome" class="control-label mb-1">Nome</label></b>
 										<input id="nome" name="nome" type="text" class="form-control"
@@ -194,7 +194,7 @@
 								<div class="card-body">
                                    
                                    <input type="hidden" name="id" value="${endereco.id}">
-                                    <input type="hidden" name="usuario" value="${usuarioLogado.id}">
+                                    <input type="hidden" name="usuario" value="${usuarioLogado.idUsuario}">
 
 									<div class="row">
 										<div class="col-8">
@@ -219,7 +219,7 @@
 												<b><label for="cidade" class="control-label mb-1">Cidade</label></b>
 
 												<input id="cidade" name="cidade" type="text"
-													class="form-control" value="${endereco.cidade}">
+													class="form-control" value="${endereco.cidade.nome}">
 											</div>
 										</div>
 										<div class="col-4">

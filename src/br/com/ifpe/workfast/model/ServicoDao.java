@@ -7,11 +7,12 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
 
-public class CidadeDao {
-
+public class ServicoDao {
+	
+	
 protected static final String PERSISTENCE_UNIT = "workfast";
 	
-	public void salvar(Cidade obj) {
+	public void salvar(Servico obj) {
 
 		EntityManagerFactory factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT);
 		EntityManager manager = factory.createEntityManager();
@@ -25,47 +26,47 @@ protected static final String PERSISTENCE_UNIT = "workfast";
 	}
 
 	
-	public Cidade buscarPorId(int id) {
+	public Servico buscarPorId(int id) {
 
-		Cidade obj = null;
+		Servico obj = null;
 
 		EntityManagerFactory factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT);
 		EntityManager manager = factory.createEntityManager();
-		obj = manager.find(Cidade.class, id);
+		obj = manager.find(Servico.class, id);
 		manager.close();
 		factory.close();
 
 		return obj;
 	}
 	
-	public List<Cidade> listar() {
+	public List<Servico> listar() {
 		EntityManagerFactory factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT);
 		EntityManager manager = factory.createEntityManager();
-		List<Cidade> lista = manager.createQuery("FROM Cidade c ORDER BY c.estado.nome").getResultList();
+		List<Servico> lista = manager.createQuery("FROM Servico ORDER BY nome").getResultList();
 		manager.close();
 		factory.close();
 		return lista;
 	}
 	
-	public List<Cidade> filtrarPorEstado(int cod) {
+	public List<Servico> filtrarPorCategoria(int cod) {
 		EntityManagerFactory factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT);
 		EntityManager manager = factory.createEntityManager();
 		Query query = null;
-		query = manager.createQuery("FROM Cidade c WHERE c.estado.idEstado = :paramId ORDER BY nome");
+		query = manager.createQuery("FROM Servico s WHERE s.categoriaServico.idCategoriaServico = :paramId ORDER BY nome");
 		query.setParameter("paramId", cod);
-		List<Cidade> lista = query.getResultList();		
+		List<Servico> lista = query.getResultList();		
 		manager.close();
 		factory.close();
 		return lista;
 	}
 	
-	public void alterar(Cidade cidade) {
+	public void alterar(Servico servico) {
 
 		EntityManagerFactory factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT);
 		EntityManager manager = factory.createEntityManager();
 
 		manager.getTransaction().begin();
-		manager.merge(cidade);
+		manager.merge(servico);
 		manager.getTransaction().commit();
 
 		manager.close();
@@ -78,14 +79,15 @@ protected static final String PERSISTENCE_UNIT = "workfast";
 
 		EntityManagerFactory factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT);
 		EntityManager manager = factory.createEntityManager();
-		Cidade cidade = manager.find(Cidade.class, id);
+		Servico servico = manager.find(Servico.class, id);
 
 		manager.getTransaction().begin();
-		manager.remove(cidade);
+		manager.remove(servico);
 		manager.getTransaction().commit();
 
 		manager.close();
 		factory.close();
 	}
+
 
 }

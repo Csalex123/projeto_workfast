@@ -51,7 +51,7 @@
                         </li>
                          <li>
                                 <a href="logout">
-                                <i class="zmdi zmdi-power"></i>Sair</a>
+                                <i class="far fa-sign-out-alt"></i>Sair</a>
                           </li>
                         
                     </ul>
@@ -190,8 +190,10 @@
                                 <div class="account-wrap">
                                     <div class="account-item clearfix js-item-menu">
                                         <div class="image">
-                                            <img src="<%=request.getContextPath()%>/resources/img/icon_cliente/kratos.jpg"  />
+                                            <img src="<%=request.getContextPath()%>/resources/img/${usuarioLogado.foto}"  />
                                         </div>
+                                        
+                                        
                                         <div class="content">
                                             <a class="js-acc-btn" href="#">${usuarioLogado.nome}</a>
                                         </div>
@@ -200,7 +202,7 @@
 
                                                 <div class="image">
                                                     <a href="#">
-                                                        <img src="<%=request.getContextPath()%>/resources/img/icon_cliente/kratos.jpg"  />    
+                                                        <img src="<%=request.getContextPath()%>/resources/img/${usuarioLogado.foto}"  />    
                                                     </a>
                                                 </div>
 

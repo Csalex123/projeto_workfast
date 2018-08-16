@@ -175,7 +175,7 @@
 
 					<form action="salvarEndereco" method="post">
 
-						<input type="hidden" value="${usuarioLogado.id}" name="usuario">
+						<input type="hidden" value="${usuarioLogado.idUsuario}" name="usuario">
 
 						<div class="row form-group">
 							<div class="col col-md-3">

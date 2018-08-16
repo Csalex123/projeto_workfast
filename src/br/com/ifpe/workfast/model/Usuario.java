@@ -15,8 +15,8 @@ public class Usuario {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
-	
+	@Column(name="id")
+	private int idUsuario;
 	
 	@Column
 	private String nome;
@@ -60,11 +60,11 @@ public class Usuario {
 		this.senha = senha;
 	}
 	
-	public int getId() {
-		return id;
+	public int getIdUsuario() {
+		return idUsuario;
 	}
-	public void setId(int id) {
-		this.id = id;
+	public void setIdUsuario(int idUsuario) {
+		this.idUsuario = idUsuario;
 	}
 	
 	public TipoAcesso getTipo_acesso() {

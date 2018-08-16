@@ -19,7 +19,7 @@ public class DadosPessoaisDao {
 		EntityManagerFactory factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT);
 		EntityManager manager = factory.createEntityManager();
 		Query query = null;
-		query = manager.createQuery("FROM DadosPessoais WHERE usuario.id = :paramId");
+		query = manager.createQuery("FROM DadosPessoais WHERE usuario.idUsuario = :paramId");
 		query.setParameter("paramId", idUsuario);
 
 		try{

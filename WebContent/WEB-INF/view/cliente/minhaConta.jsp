@@ -58,18 +58,22 @@
                         <div class="fontawesome-list-wrap">
                             <h2 style="text-align: center;"><b>Minha conta</b></h2><br>
                             <section>
-                                <div class="row form-group">
-                                    <img src="<%=request.getContextPath()%>/resources/img/icon_cliente/img_avatar.png" class="img-responsive img-thumbnail" alt="Gabriel" style="width: 150px; height: 144px; margin-left: 20px; ">
-                                    <input type="file" class="btn btn-default" name="">
-                                </div>
-
-                                 <div class="row form-group" >    
-                                 	<div class="col col-md-3">        
-                                 	<button type="button" class="btn btn-primary" > &nbsp;
-                                 		<i class="fas fa-upload"></i> Enviar foto</button>    
-                                 	</div> 
-                                 </div>
-
+                            
+                               <form action="#" method="post">
+	                                <div class="row form-group">
+	                                    <img src="<%=request.getContextPath()%>/resources/img/${usuarioLogado.foto}" class="img-responsive img-thumbnail" alt="foto" style="width: 150px; height: 144px; margin-left: 20px; ">   
+	                                    <input type="file" class="btn btn-default" name="">
+	                                </div>
+	                           
+	                                 <div class="row form-group" >    
+	                                 	<div class="col col-md-3">        
+	                                 	<button type="submit" class="btn btn-primary" > &nbsp;
+	                                 		<i class="fas fa-upload"></i> Enviar foto</button>    
+	                                 	</div> 
+	                                 </div>     
+	 						  </form>
+	 						  
+	 						    <form action="#" method="post">
                                  <h3 style="text-align: center;">Dados Pessoais</h3><br>
 
                                 <div class="row form-group" style="margin-top: 20px;">
@@ -119,7 +123,7 @@
                                        <label for="select"  class=" form-control-label">Sexo:</label>
                                      </div>
                                           <div class="col-12 col-md-5">
-                                               <select name="select" id="select" class="form-control">
+                                               <select name="sexo" id="select" class="form-control">
                                                        <option value="M">Masculino</option>
                                                        <option value="F">Feminino</option>
                                                </select>
@@ -143,10 +147,13 @@
                                 <!-- Fim do Filtro de profissão-->
                                 <div class="row form-group" style="float: right;">
                                     <div class="col col-md-3">
-                                        <button type="button" class="btn btn-primary">
+                                        <button type="submit" class="btn btn-primary">
                                         <i class="fas fa-upload"></i>&nbsp; Atualizar dados</button>
                                     </div>
                                  </div>
+                                 
+                              </form>
+                              
                             </section><br><br>
                         
 

@@ -17,8 +17,9 @@ public class Endereco {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	
-	@Column
-	private String cidade;
+	@ManyToOne
+	@JoinColumn(name="cidade")
+	private Cidade cidade;
 	
 	@Column
 	private String rua;
@@ -29,8 +30,9 @@ public class Endereco {
 	@Column
 	private String cep;
 	
-	@Column(name="estado")
-	private String uf;
+	@ManyToOne
+	@JoinColumn(name="estado")
+	private Estado estado;
 	
 	@Column
 	private String complemento;
@@ -51,11 +53,11 @@ public class Endereco {
 		this.id = id;
 	}
 
-	public String getCidade() {
+	public Cidade getCidade() {
 		return cidade;
 	}
 
-	public void setCidade(String cidade) {
+	public void setCidade(Cidade cidade) {
 		this.cidade = cidade;
 	}
 
@@ -83,12 +85,12 @@ public class Endereco {
 		this.cep = cep;
 	}
 
-	public String getUf() {
-		return uf;
+	public Estado getEstado() {
+		return estado;
 	}
 
-	public void setUf(String uf) {
-		this.uf = uf;
+	public void setEstado(Estado estado) {
+		this.estado = estado;
 	}
 
 	public String getComplemento() {

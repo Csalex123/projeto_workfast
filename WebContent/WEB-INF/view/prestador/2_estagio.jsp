@@ -9,11 +9,78 @@
 
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	
+<style type="text/css">
+
+* {
+    box-sizing: border-box;
+}
+
+#progress {
+    padding: 0;
+    list-style-type: none;
+    font-family: arial;
+    font-size: 12px;
+    clear: both;
+    line-height: 1em;
+    margin: 0 -1px;
+    text-align: center;
+}
+
+#progress li {
+    font-size: 1.4em;
+    float: left;
+    padding: 10px 30px 10px 40px;
+    background: #333;
+    color: #fff;
+    position: relative;
+    border-top: 1px solid #666;
+    border-bottom: 1px solid #666;
+    width: 19%;
+    margin: 0 1px;
+    margin-bottom: 50px;
+}
+
+#progress li:before {
+    content: '';
+    border-left: 16px solid #fff;
+    border-top: 16px solid transparent;
+    border-bottom: 16px solid transparent;
+    position: absolute;
+    top: 0;
+    left: 0;
+    
+}
+#progress li:after {
+    content: '';
+    border-left: 16px solid #333;
+    border-top: 16px solid transparent;
+    border-bottom: 16px solid transparent;
+    position: absolute;
+    top: 0;
+    left: 100%;
+    z-index: 20;
+}
+
+#progress li.active {
+
+    font-weight: bold;
+    background: #23468c;
+}
+
+#progress li.active:after {
+    border-left-color: #23468c;
+}
+
+/*Mapa*/
+
+#mapa { width: 100%; height: 400px; float: left }
+#trajeto-texto { width: 100%; height: 400px; overflow: scroll }
+</style>
 
 
 <!-- Title Page-->
-<title>WorkFast - Area do Administrador</title>
-
+<title>WorkFast - Area do Prestador</title>
 
 <!-- Fontfaces CSS-->
 <link href="<%=request.getContextPath()%>/resources/css/font-face.css"
@@ -64,10 +131,11 @@
 
 
 <!-- Main CSS-->
-<link href="<%=request.getContextPath()%>/resources/css/theme-adm.css"
+<link
+	href="<%=request.getContextPath()%>/resources/css/theme-prestador.css"
 	rel="stylesheet" media="all">
-<script type="text/javascript"
-	src="<%=request.getContextPath()%>/resources/js/cadastro.js"></script>
+	
+
 
 </head>
 
@@ -75,138 +143,72 @@
 
 	<div class="page-wrapper">
 		<!-- menu adm -->
-		<c:import url="../administrador/menu.jsp" />
-
-		<!-- Conteudo-->
-		<div class="page-content--bgf7">
-
-			<!-- DATA TABLE-->
-			<section class="p-t-20">
-			<div class="container">
-				<div class="row">
-					<div class="col-md-12">
-						<br>
-						<h3 class="title-5 m-b-35">Clientes</h3>
-						<hr class="line-seprate">
-						<br>
-						<div class="table-data__tool">
-							<div class="table-responsive table-responsive-data2">
-								<form>
-									<div class="form-group">
-
-										<input type="text" id="txtPesquisa" name="txtPesquisa"
-											placeholder="Pesquise aqui.." class="form-control">
-
-									</div>
-								</form>
-							</div>
-
-						</div>
-
-						<div class="table-responsive table-responsive-data2"
-							style="padding-bottom: 20%">
-							<div style="text-align: center; color: red;">${mensagem}</div>
-							<table class="table table-data2">
-								<thead>
-									<tr>
-
-										<th>Nome</th>
-										<th>Tipo</th>
-										<th>Email</th>
+		<c:import url="../prestador/menu.jsp" />
+<!-- Container de conteúdo-->
+            <div class="main-content main-content--pb30">
+                <div class="section__content section__content--p30">
 
 
-										<th>Ativo</th>
-									</tr>
-								</thead>
-								<tbody id="tbCliente">
-									<c:forEach var="usuarioCliente" items="${listaUsuarioCliente}">
-										<tr class="tr-shadow">
+                    <!-- Conteiner de Filtro -->
+                    <div class="container-fluid">
+                        
+                        <!-- Conteiner de listagem de candidatos -->         
+                                
+                        <div class="fontawesome-list-wrap">
+                               <section>
+                                    <h3 style="text-align: center;">Progresso do pedido</h3><br>    
+                                    <ul id="progress">
+                                            <li ></span>Inf. Cliente</li>
+                                            <li class="active">Inf. Serviço</li>
+                                            <li >Contrato</li>
+                                            <li>Efetuando</li>
+                                            <li>Finalizado</li>
+                                    </ul>
+                                    
+                                </section>
 
-											<td width="180">${usuarioCliente.nome}</td>
+                            <section >
+                                  <h2 style="text-align: center;">Informações do Serviço</h2><br>
+                                <p> Aqui você terá um fórum para se comunicar com o cliente para tirar a suas dúvidas sobre o serviço que ele vai querer.</p><br>
 
-											<td><c:choose>
-													<c:when test="${usuarioCliente.tipo_usuario == '1'}">
-														<span>Físico</span>
-													</c:when>
-													<c:otherwise>
-														<span>Jurídico</span>
-													</c:otherwise>
-												</c:choose></td>
+                                <h4 style="text-align: center;"> chat</h4><br>
+        
+                            
 
-											<td><span>${usuarioCliente.email}</span></td>
+                 
+                                <!-- Fim do Filtro de profissão-->
+                                <div class="row form-group"  style="float: right;">
+                                    <div class="col col-md-3">
+                                        <a href="TerceiraEtapa"><button type="button" class="btn btn-primary">
+                                        &nbsp;<i class="fas fa-forward"></i> Avançar</button>
+                                    </div></a>
+                                 </div>
 
+                            </section><br><br>
+                        </div>
+                    </div>
+                </div>
+            </div>
+		</section>
 
-
-											<td><c:choose>
-													<c:when test="${usuarioCliente.ativo == '1'}">
-														<span>Ativo</span>
-													</c:when>
-													<c:otherwise>
-														<span>Bloqueado</span>
-													</c:otherwise>
-												</c:choose></td>
-
-											<td>
-												<div class="table-data-feature">
-													<c:choose>
-														<c:when test="${usuarioCliente.ativo == '1'}">
-															<a href="bloquearUsuario?id=${usuarioCliente.idUsuario}"
-																class="item" data-toggle="tooltip" data-placement="top"
-																title="Bloquear"> <i class="zmdi zmdi-lock"></i>
-															</a>
-
-														</c:when>
-														<c:otherwise>
-															<a href="desbloquearUsuario?id=${usuarioCliente.idUsuario}"
-																class="item" data-toggle="tooltip" data-placement="top"
-																title="Desbloquear"> <i class="zmdi zmdi-lock-open"></i>
-															</a>
-														</c:otherwise>
-													</c:choose>
-
-
-
-
-
-												</div>
-											</td>
-										</tr>
-										<tr class="spacer"></tr>
-
-									</c:forEach>
-
-
-
-
-								</tbody>
-							</table>
-						</div>
+		<section>
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="copyright">
+						<p>
+							Copyright © 2018 WorkFast. Todos os direitos reservados.
+						</p>
 					</div>
 				</div>
 			</div>
-			</section>
-			<button id="myBtn" value="myvalue" onclick="myFunction()">Try
-				it</button>
-			<!-- END DATA TABLE-->
-
-
-			<!-- COPYRIGHT-->
-
-			<section class="p-t-60 p-b-20">
-			<div class="container">
-				<div class="row">
-					<div class="col-md-12">
-						<div class="copyright">
-							<p>Copyright © 2018 WorkFast. Todos os direitos reservados..</p>
-						</div>
-					</div>
-				</div>
-			</div>
-			</section>
-			<!-- END COPYRIGHT-->
 		</div>
+		</section>
 
 	</div>
+
+	</div>
+
 
 	<!-- Jquery JS-->
 	<script
@@ -244,32 +246,6 @@
 
 	<!-- Main JS-->
 	<script src="<%=request.getContextPath()%>/resources/js/main.js"></script>
-
-	<script>
-     function bloquear(id) {
-    	 var x = id.value;
-    	 alert(x);
-       }
-     
-     $(window).load(function(){
-    	 
-      
-     });
-     
-    
-		
-		$(document).ready(function(){
-			
-			
-		
-		  $("#txtPesquisa").on("keyup", function() {
-		    var value = $(this).val().toLowerCase();
-		    $("#tbCliente tr").filter(function() {
-		      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-		    });
-		  });
-		});
-		</script>
 
 </body>
 

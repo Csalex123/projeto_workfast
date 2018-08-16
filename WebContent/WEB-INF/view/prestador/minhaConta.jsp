@@ -100,7 +100,7 @@
 					<div class="col-lg-12 col-md-12 col-sm-12 ">
 						<div class="card">
 						${msg}
-						<form action="editarDadosPrestadorFisico?IdUsuario=${usuarioLogado.id}" method="post">
+						<form action="editarDadosPrestadorFisico?IdUsuario=${usuarioLogado.idUsuario}" method="post">
 														
 							<div class="card-body">
 								
@@ -217,7 +217,7 @@
 												<b><label for="cidade" class="control-label mb-1">Cidade</label></b>
 
 												<p>
-													<label>${endereco.cidade}</label>
+													<label>${endereco.cidade.nome}</label>
 												</p>
 											</div>
 										</div>
@@ -243,7 +243,7 @@
 										<b><label for="estado" class="control-label mb-1">Estado</label></b>
 
 										<p>
-											<label>${endereco.uf}</label>
+											<label>${endereco.estado.uf}</label>
 										</p>
 
 									</div>

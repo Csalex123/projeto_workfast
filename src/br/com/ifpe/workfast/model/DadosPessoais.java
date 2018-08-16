@@ -18,7 +18,8 @@ public class DadosPessoais {
  
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
+	@Column(name="id")
+	private int idDadosPessoais;
 	@Column
 	private String nomeFantasia;
 	
@@ -49,13 +50,13 @@ public class DadosPessoais {
 	private Usuario usuario;
 
 
-	public int getId() {
-		return id;
+	public int getIdDadosPessoais() {
+		return idDadosPessoais;
 	}
 
 
-	public void setId(int id) {
-		this.id = id;
+	public void setIdDadosPessoais(int idDadosPessoais) {
+		this.idDadosPessoais = idDadosPessoais;
 	}
 
 

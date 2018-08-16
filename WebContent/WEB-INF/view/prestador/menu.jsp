@@ -1,5 +1,7 @@
  <!-- Importando a biblioteca Taglib -->
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+
+
  
  <aside class="menu-sidebar2">
             <div class="logo">
@@ -13,7 +15,7 @@
                         <img src="<%=request.getContextPath()%>/resources/img/icon/avatar-big-01.jpg" alt="${usuarioLogado.nome}" />
                     </div>
                     <h4 class="name">${usuarioLogado.nome}</h4>
-                    <a href="logout">Sair</a>
+                    <a href="logout"><i class="fas fa-sign-out"></i>Sair</a>
                 </div>
                 <nav class="navbar-sidebar2">
                     <ul class="list-unstyled navbar__list">
@@ -40,15 +42,15 @@
                             </a>
                             <ul class="list-unstyled navbar__sub-list js-sub-list">
                                 <li>
-                                    <a href="#">
+                                    <a href="Propostas">
                                         <i class="fas fa-pencil "></i>Propostas</a>
                                 </li>
                                 <li>
-                                    <a href="#">
+                                    <a href="ServicosPendentes">
                                         <i class="far fa-thumb-tack"></i>Em aberto</a>
                                 </li>
                                 <li>
-                                    <a href="#">
+                                    <a href="ServicosFinalizados">
                                         <i class="fas fa-legal"></i>Terminados</a>
                                 </li>
                                
@@ -120,10 +122,17 @@
                                         <div class="account-dropdown__item">
                                             <a href="minhaConta">
                                                 <i class="zmdi zmdi-account"></i>Minha Conta</a>
+                                                
+                                        </div>
+                                         <div class="account-dropdown__item">
+                                            <a href="logout">
+                                                <i class="fal fa-sign-out"></i>Sair</a>                     
                                         </div>
                                         
                                     </div>
                                 </div>
+                                
+                             
                             </div>
                         </div>
                     </div>
@@ -168,15 +177,15 @@
                             </a>
                             <ul class="list-unstyled navbar__sub-list js-sub-list">
                                 <li>
-                                    <a href="#">
+                                    <a href="Propostas">
                                         <i class="fas fa-pencil "></i>Propostas</a>
                                 </li>
                                 <li>
-                                    <a href="#">
+                                    <a href="ServicosPendentes">
                                         <i class="far fa-thumb-tack"></i>Em aberto</a>
                                 </li>
                                 <li>
-                                    <a href="#">
+                                    <a href="ServicosFinalizados">
                                         <i class="fas fa-legal"></i>Terminados</a>
                                 </li>
                                
@@ -184,8 +193,11 @@
                         </li>
                         <li>
                            <a href="minhaConta">
-                                                <i class="zmdi zmdi-account"></i>Minha Conta</a>
+                                  <i class="zmdi zmdi-account"></i>Minha Conta</a>
+                          
                         </li>
+                       
+                        
                         
                     </ul>
                     </nav>

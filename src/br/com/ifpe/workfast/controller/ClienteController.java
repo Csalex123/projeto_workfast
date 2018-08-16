@@ -29,7 +29,7 @@ public class ClienteController {
 		DadosPessoaisDao dao = new DadosPessoaisDao();
 		Usuario usuario = (Usuario) request.getSession().getAttribute("usuarioLogado");
 
-		DadosPessoais dados = dao.buscarDadosPessoaisUsuario(usuario.getId());
+		DadosPessoais dados = dao.buscarDadosPessoaisUsuario(usuario.getIdUsuario());
 		model.addAttribute("dadosPessoais", dados);
 
 		return "cliente/minhaConta";
@@ -62,7 +62,7 @@ public class ClienteController {
 
 		EnderecoDao dao = new EnderecoDao();
 		Usuario usuario = (Usuario) request.getSession().getAttribute("usuarioLogado");
-		List<Endereco> endereco = dao.listarEnderecoCliente(usuario.getId());
+		List<Endereco> endereco = dao.listarEnderecoCliente(usuario.getIdUsuario());
 
 		model.addAttribute("listaEndereco", endereco);
 

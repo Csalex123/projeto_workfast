@@ -47,7 +47,7 @@ public class DadosPessoaisController {
         daoEndereco.salvarEndereco(endereco);
         
         
-		return "prestador/cadastroDadosSucesso";
+		return "forward:vincularServico";
 		
 		
 		

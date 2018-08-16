@@ -13,7 +13,8 @@ public class TipoAcesso {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
+	@Column(name="id")
+	private int idTipoAcesso;
 	
 	@Column
 	private String descricao;
@@ -25,11 +26,11 @@ public class TipoAcesso {
 	private final static String TIPO_ADMINISTRADOR = "Administrador";
 	
 	
-	public int getId() {
-		return id;
+	public int getIdTipoAcesso() {
+		return idTipoAcesso;
 	}
-	public void setId(int id) {
-		this.id = id;
+	public void setIdTipoAcesso(int idTipoAcesso) {
+		this.idTipoAcesso = idTipoAcesso;
 	}
 	
 	public String getDescricao() {
