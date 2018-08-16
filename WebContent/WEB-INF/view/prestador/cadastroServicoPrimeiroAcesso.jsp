@@ -83,24 +83,26 @@
 </head>
 <body class="animsition">
 	<div class="page-wrapper">
+		<form action="#" method="post">
+			<div class="container">
+				<div class="login-wrap">
 
-		<div class="container">
-			<div class="login-wrap">
-				<div class="login-content" style="width: 600px;">
+					<div class="login-content" style="width: 600px;">
 
-					<div class="login-logo">
-						<a href="#"> <img
-							src="<%=request.getContextPath()%>/resources/img/logo_workfast.png"
-							class="img-responsive">
+						<div class="login-logo">
+							<a href="#"> <img
+								src="<%=request.getContextPath()%>/resources/img/logo_workfast.png"
+								class="img-responsive">
 
-						</a>
-					</div>
-					<div style="margin-bottom: 20px;">
-						<center>Olá, ${usuarioLogado.nome}! Escolha o servico que deseja realizar.</center>
-					</div>
-					<div class="login-form">
-						<form action="#" method="post">
-							
+							</a>
+						</div>
+						<div style="margin-bottom: 20px;">
+							<center>Olá, ${usuarioLogado.nome}! Escolha o servico
+								que deseja realizar.</center>
+						</div>
+						<div class="login-form">
+
+
 							<div class="form-group">
 								<label>Categoria</label> <select required="required"
 									id="categoria" name="categoriaServico" class="form-control">
@@ -114,80 +116,107 @@
 
 								</select>
 							</div>
-							
+
 							<div class="form-group">
 								<label>Serviços</label> <select required="required"
 									id="servicos" name="servicos" class="form-control">
-									
+
 
 								</select>
 							</div>
-							
+
 							<div class="form-group ">
-							<label for="descricao" class=" form-control-label">Digite um breve descrição sobre o serviço escolhido! (255 caracteres)</label> 
-										
-                               <textarea  required="required" name="descricao" id="descricao"  placeholder="Digite aqui..." class="form-control"></textarea>
-                            
+								<label for="descricao" class=" form-control-label">Digite
+									uma breve descrição sobre o serviço escolhido! (255 caracteres)</label>
+
+								<textarea required="required" name="descricao" id="descricao"
+									placeholder="Digite aqui..." class="form-control"></textarea>
+
 							</div>
-							
-							 <div class="col-lg-12">
-                                <div class="au-card au-card--bg-blue au-card-top-countries m-b-30">
-                                    <div class="au-card-inner">
-                                        <div class="table-responsive">
-                                         
-                                         <center>Area de atuação do Serviço</center>
-                                            <table class="table table-top-countries">
-                                               <thead>
-													<tr>
+
+
+
+						</div>
+					</div>
+
+
+
+
+				</div>
+
+
+			</div>
+			<div class="container">
+			
+			<div class="row">
+
+				<div class="col-lg-6 col-md-6">
+					<div class="table-responsive table--no-card m-b-30"
+						style="height: 250px;">
+						<table class="table table-borderless table-striped table-earning">
+							<thead>
+								<tr>
+									<th>${endereco.estado.nome}</th>
+									<th></th>
+
+
+								</tr>
+							</thead>
+							<tbody>
+								<c:forEach items="${listaCidades}" var="obj">
+
+									<tr>
+										<td id="${obj.idCidade }">${obj.nome}</td>
+										<td class="text-right"><label class="au-checkbox" >
+												<input type="checkbox" style="background-color: #FFFF00;" name="check[]" class="checkCidades" value="${obj.idCidade }"> <span class="au-checkmark"></span>
+										</label></td>
+									</tr>
+
+
+
+								</c:forEach>
+
+
+
+							</tbody>
+						</table>
+					</div>
+				</div>
 				
-														<th>${endereco.estado.nome} </th>
-														
-													</tr>
-												</thead>
-                                                <tbody>
-                                                	<c:forEach items="${listaCidades}" var="obj">
-                                                	
-                                                	<tr>
-                                                        <td>${obj.nome} </td>
-                                                        <td class="text-right"><label class="au-checkbox">
-                                                            <input type="checkbox">
-                                                            <span class="au-checkmark"></span>
-                                                        </label></td>
-                                                    </tr>
+				<div class="col-lg-6 col-md-6">
+					<div class="table-responsive table--no-card m-b-30"
+						style="height: 250px;">
+						<table class="table table-borderless table-striped table-earning">
+							<thead>
+								<tr>
+									<th>Area de atuação</th>
+									
 
-														
-					
-													</c:forEach>
-                                                
-                                                    
-                                                    
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-                                  </div>
-                               </div>
-							
-							
-							
 
-							<button class="au-btn au-btn--block au-btn--green m-b-20"
-								type="submit">Cadastrar</button>
+								</tr>
+							</thead>
+							<tbody id="tbAtuacao">
 
-						</form>
-
+							</tbody>
+						</table>
 					</div>
 				</div>
 
-			</div>
-		</div>
 
+			</div>
+			
+			</div>
+
+			<button class="au-btn au-btn--block au-btn--green m-b-20"
+				style="text-align:center; margin:20px auto; width: 250px;" type="submit">Cadastrar</button>
+
+		</form>
 
 	</div>
 
 	<!-- Jquery JS-->
 	<script type="text/javascript">
-	
+		
 	var selectOption = document.getElementById("categoria");
     selectOption.addEventListener('change', function(){
     	$('#servicos').html("");
@@ -219,6 +248,25 @@
 
        
     });
+    
+    $(document).ready(function() {
+        $(".checkCidades").click(function(e) {
+            
+            var html = "";
+            var checados = [];
+            $.each($("input[name='check[]']:checked"), function(){  
+            	checados.push($(this).val());
+            	var nome = $("#"+ $(this).val()).text(); 
+               html += '<tr><td>'+nome+'</td></tr>';
+            	
+            });
+            $("#tbAtuacao").html(html);
+           
+        });
+    });
+
+    
+   
 
 
 	
@@ -264,8 +312,13 @@
 	<script src="<%=request.getContextPath()%>/resources/js/main.js"></script>
 
 
-	<script type="text/javascript"
-		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.0/jquery.mask.js"></script>
+	<script>
+	
+	 $(document).ready(function() {
+	        
+	    });
+
+	</script>
 
 	
 

@@ -134,7 +134,7 @@ public class UsuarioDao {
 		EntityManagerFactory factory =  Persistence.createEntityManagerFactory(PERSISTENCE_UNIT);
 		EntityManager manager = factory.createEntityManager();
 		Query query = null;
-		query = manager.createQuery("FROM Usuario u WHERE u.tipo_acesso.descricao LIKE = :paramTipo ORDER BY nome");
+		query = manager.createQuery("FROM Usuario u WHERE u.tipo_acesso.descricao  = :paramTipo ORDER BY nome");
 		query.setParameter("paramTipo", "Prestador de Servico");
 		List<Usuario> lista = query.getResultList();
 		manager.close();

@@ -92,6 +92,24 @@ public class PrestadorController {
 	public String quintaEtapa() {
 		return "prestador/5_estagio";
 	}
+	
+	// metodo para redirecionar para pagina servicos
+		@RequestMapping("ExibirServicos")
+		public String ExibirServico() {
+			return "prestador/servicos";
+		}
+
+		// metodo para adicionar servicos
+		@RequestMapping("servicosAdd")
+		public String servicosAdd() {
+			return "prestador/addServico";
+		}
+
+		// metodo para editar servicos
+		@RequestMapping("servicosEdit")
+		public String servicosEdit() {
+			return "prestador/editServico";
+		}
 		
 	
 	
@@ -200,7 +218,7 @@ public class PrestadorController {
 		Usuario usuario = (Usuario) request.getSession().getAttribute("usuarioLogado");
         
 		EnderecoDao daoEndereco = new EnderecoDao();
-        Endereco enderecoPrestador = daoEndereco.buscarEnderecoUsuarioPrestador(usuario.getIdUsuario());
+        Endereco enderecoPrestador = daoEndereco.buscarEnderecoUsuarioPrestador(2);
         
         CidadeDao daoCidade = new CidadeDao();
         List<Cidade> listaCidades = daoCidade.filtrarPorEstado(enderecoPrestador.getEstado().getIdEstado());
