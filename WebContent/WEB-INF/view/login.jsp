@@ -50,7 +50,9 @@
 				src="<%=request.getContextPath()%>/resources/img/logo_workfast.png"
 				class="img-responsive">
 		</div>
-		<div><center>${msg}</center></div>
+		<div>
+			<center>${msg}</center>
+		</div>
 
 		<div class="panel panel-default col-sm-4" id="container_login">
 
@@ -58,8 +60,8 @@
 
 			<!-- Formulário de cadastro-->
 			<div class="panel-body">
-			
-			
+
+
 				<form action="efetuarLogin" method="post" id="form_login">
 
 					<div class="form-group">
@@ -152,6 +154,17 @@
 
 					<!-- <button class="btn btn-default" id="google">Google</button> -->
 				</center>
+
+				<div>
+					<center>
+						<p id="p_mensagem">
+							Quer voltar para página inicial? <a href="index"
+								style="color: blue;" data-toggle="tooltip" data-placement="top"
+								title="Se clicar você será redirecionado para a página inicial">Clique
+								aqui</a>
+						</p>
+					</center>
+				</div>
 			</div>
 		</div>
 

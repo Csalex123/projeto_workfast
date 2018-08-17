@@ -25,6 +25,13 @@ import br.com.ifpe.workfast.model.UsuarioDao;
 
 @Controller
 public class indexController {
+	
+	
+	// Método para chamar a página inicial
+		@RequestMapping("index")
+		public String index() {
+			return "index";
+		}
 
 	// Método para chamar a página de cadastro
 	@RequestMapping("cadastro")

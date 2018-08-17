@@ -164,6 +164,17 @@
 						name="nivel_acesso" type="hidden" value="1">
 				</form>
 			</div>
+			
+			<div>
+					<center>
+						<p id="p_mensagem">
+							Quer voltar para página inicial? <a href="index"
+								style="color: blue;" data-toggle="tooltip" data-placement="top"
+								title="Se clicar você será redirecionado para a página inicial">Clique
+								aqui</a>
+						</p>
+					</center>
+				</div>
 		</div>
 	</div>
 	</div>

@@ -119,6 +119,404 @@ CREATE TABLE IF NOT EXISTS `cidade` (
   `estado` int(5) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_Cidade_estado` (`estado`)
+);
+
+CREATE TABLE `categoria_servico` (
+  `id` int(11) NOT NULL,
+  `nome` varchar(60) NOT NULL
+) 
+
+
+INSERT INTO `categoria_servico` (`id`, `nome`) VALUES
+(1, 'Artesanato'),
+(2, 'Audio Visual'),
+(3, 'Beleza'),
+(4, 'Brindes'),
+(5, 'Comunicação'),
+(6, 'Confecção'),
+(7, 'Decoração'),
+(8, 'Educação'),
+(9, 'Eletrodomesticos'),
+(10, 'Eletrônica'),
+(11, 'Eventos'),
+(12, 'gastronomia'),
+(13, 'Gráfico'),
+(14, 'Informática'),
+(15, 'Locações'),
+(16, 'Manutenção'),
+(17, 'Mecânico'),
+(18, 'Móveis'),
+(19, 'Profissional Liberal'),
+(20, 'Refrigeração'),
+(21, 'Seguros'),
+(22, 'Serviços Domésticos'),
+(23, 'Sonorização'),
+(24, 'Tradução'),
+(25, 'Transporte'),
+(26, 'Turismo'),
+(27, 'Limpeza'),
+(28, 'Vulcanização'),
+(29, 'Revestimento'),
+(30, 'Telecomunição'),
+(31, 'Jardinagem'),
+(32, 'Construção e Reforma'),
+(33, 'Saúde'),
+(34, 'Proteção e Segurança'),
+(35, 'Pet'),
+(36, 'Outros');
+
+
+
+
+CREATE TABLE `subcategoria_servico` (
+  id int(11) AUTO_INCREMENT PRIMARY KEY,
+  nome varchar(60) NOT NULL,
+  fk_categoria_servico int not null,
+  FOREIGN KEY(fk_categoria_servico) REFERENCES categoria_servico(id)
 )
+
+
+
+INSERT INTO subcategoria_servico (nome, fk_categoria_servico) VALUES
+("Artesanato", 1),
+("Trico", 1),
+("Crochê", 1),
+("Outos", 1);
+
+INSERT INTO subcategoria_servico (nome, fk_categoria_servico) VALUES
+("Fotografia", 2),
+("Filmagem", 2),
+("Sonorização", 2),
+("Produção", 2),
+("Conversao LP para CD", 2),
+("Conversão VHS para DVD/Blu Ray", 2),
+("Recuperação de K7/VHS", 2),
+("Estúdio de Música", 2),
+("Sistema de Audio, video Automação", 2),
+("Outros", 2);
+
+INSERT INTO subcategoria_servico (nome, fk_categoria_servico) VALUES
+("Cabeleleiro", 3),
+("Manicure", 3),
+("Pedicure", 3),
+("Massagem", 3),
+("Podólogo", 3),
+("Esteticista", 3),
+("Barbeiro", 3),
+("Depilação", 3),
+("Designer de Sombrancelhas", 3),
+("Outros", 3);
+
+
+INSERT INTO subcategoria_servico (nome, fk_categoria_servico) VALUES
+("Pastas, Camistas", 4),
+("Canetas, Chaveiros", 4),
+("Adesivos", 4),
+("Outros", 4);
+
+ INSERT INTO subcategoria_servico (nome, fk_categoria_servico) VALUES
+("Comunicação Visual", 5),
+("Identidade Visual", 5),
+("Faixas", 5),
+("Letreiros", 5),
+("Grafiteiro", 5),
+("Marketing Digital", 5),
+("Outros", 5);
+
+
+INSERT INTO subcategoria_servico (nome, fk_categoria_servico) VALUES
+("Costureira", 6),
+("Silk Screen", 6),
+("Alfaiate", 6),
+("Manutenção de Roupa", 6),
+("Pequenos Reparos", 6),
+("Outros", 6);
+
+ INSERT INTO subcategoria_servico (nome, fk_categoria_servico) VALUES
+("Persianas", 7),
+("Toldos", 7),
+("Papel de Parede", 7),
+("Cortinas", 7),
+("Tapetes", 7),
+("Caspetes", 7),
+("Designer de Interiores", 7),
+("Decorador", 7),
+("Paisagismo", 7),
+("Decorador", 7),
+("Jardinagem", 7),
+("Outros", 7);
+
+INSERT INTO subcategoria_servico (nome, fk_categoria_servico) VALUES
+("Aula Particular", 8),
+("Aula de Reforço", 8),
+("Aula de Inglês", 8),
+("Aula de Alemão", 8),
+("Aula de Espanhol", 8),
+("Aula de Italiano", 8),
+("Aula de Instrumentos Musicais", 8),
+("Aula Particular de Ballet", 8),
+("Arte", 8),
+("Outros", 8);
+
+ INSERT INTO subcategoria_servico (nome, fk_categoria_servico) VALUES
+("Consertos em Geral", 9),
+("Outros", 9);
+
+ INSERT INTO subcategoria_servico (nome, fk_categoria_servico) VALUES
+("Conserto em Geral", 10),
+("Manutenção em Geral", 10),
+("Outros", 10);
+
+INSERT INTO subcategoria_servico (nome, fk_categoria_servico) VALUES
+("Festas em Geral", 11),
+("Coffe Break", 11),
+("Coquetel", 11),
+("Churrasco", 11),
+("Organização de Eventos", 11),
+("Sonorização", 11),
+("Comes e Bebes", 11),
+("Mestre de Cerimônia", 11),
+("Fotógrafo", 11),
+("Músico", 11),
+("Locação de Cadeiras, Mesas, Utensílios", 11),
+("Animador de Festas", 11),
+("Assessor de Casamento", 11),
+("Bartender", 11),
+("Cantos de Cerimonias", 11),
+("Confeiteiro", 11),
+("Conzinheiro", 11),
+("Decoração Para Eventos", 11),
+("Outros", 11);
+
+INSERT INTO subcategoria_servico (nome, fk_categoria_servico) VALUES
+("Doces e Salgados", 12),
+("Bolos", 12),
+("Jantares", 12),
+("Comida Vegetariana", 12),
+("Churrasco", 12),
+("Outros", 12);
+
+INSERT INTO subcategoria_servico (nome, fk_categoria_servico) VALUES
+("Impressão de Panfletos", 13),
+("Cartões de Visita", 13),
+("Convites", 13),
+("Impressos", 13),
+("Etiquetas", 13),
+("Logotipos", 13),
+("Arte Graficas", 13),
+("Cartunista", 13),
+("Outros", 13);
+
+ INSERT INTO subcategoria_servico (nome, fk_categoria_servico) VALUES
+("Programador", 14),
+("Web Designer", 14),
+("Analista de Sistemas", 14),
+("Equipamentos em Geral", 14),
+("Web Sites", 14),
+("Consultoria", 14),
+("Desenvolvimento de Sistemas", 14),
+("Redes e Cabeamento", 14),
+("Conserto de Computadores", 14),
+("Outros", 14);
+
+INSERT INTO subcategoria_servico (nome, fk_categoria_servico) VALUES
+("Geradores", 15),
+("Veículos em Geral", 15),
+("Cadeiras, Mesas e Utensílios", 15),
+("Banheiro Químico", 15),
+("Segurança", 15),
+("Garçom", 15),
+("Som Para Eventos", 15),
+("Máquinas de Jogos", 15),
+("Quadras em Geral", 15),
+("Casa de Praia", 15),
+("Sítios em Geral", 15),
+("Salões em Geral", 15),
+("Outros", 15);
+
+INSERT INTO subcategoria_servico (nome, fk_categoria_servico) VALUES
+("Reparação em Geral", 16),
+("Conserto em Geral", 16),
+("Reforma em Geral", 16),
+("Pintura em Geral", 16),
+("Eletricista", 16),
+("Encanador", 16),
+("Pedreiro", 16),
+("Telhadista", 16),
+("Pisos", 16),
+("Gesseiro", 16),
+("Dry Wall", 16),
+("Rufos e Calhas", 16),
+("Aparelhos de Ginástica", 16),
+("Outros", 16);
+
+ INSERT INTO subcategoria_servico (nome, fk_categoria_servico) VALUES
+("Conserto de Automoveis", 17),
+("Conserto de Motocicletas", 17),
+("Conserto de Motores", 17),
+("Outros", 17);
+
+
+INSERT INTO subcategoria_servico (nome, fk_categoria_servico) VALUES
+("Marcenaria", 18),
+("Montagem", 18),
+("Móveis Encomendados", 18),
+("Restauração", 18),
+("Tapeçaria", 18),
+("Estofador", 18),
+("Outros", 18);
+
+ INSERT INTO subcategoria_servico (nome, fk_categoria_servico) VALUES
+("Médico", 19),
+("Advogado", 19),
+("Engenheiro", 19),
+("Arquiteto", 19),
+("Programador", 19),
+("Web Designer", 19),
+("Dentista", 19),
+("Fisioterapeuta", 19),
+("Massagista", 19),
+("Designer Comunicação Visual", 19),
+("Contador", 19),
+("Personal Trainer", 19),
+("Personal Stylist", 19),
+("Personal Organizer", 19),
+("Outros", 19);
+
+INSERT INTO subcategoria_servico (nome, fk_categoria_servico) VALUES
+("Instalação em Geral", 20),
+("Conserto em Geral", 20),
+("Montagem de Câmara Fria", 20),
+("Outros", 20);
+
+INSERT INTO subcategoria_servico (nome, fk_categoria_servico) VALUES
+("Automotivo", 21),
+("Residencial", 21),
+("Pessoal", 21),
+("Outros", 21);
+
+ INSERT INTO subcategoria_servico (nome, fk_categoria_servico) VALUES
+("Diarista", 22),
+("Faxina", 22),
+("Limpeza em Geral", 22),
+("Lavagem de Roupa", 22),
+("Passar de Roupa", 22),
+("Cuidador", 22),
+("Babá", 22),
+("Outros", 22);
+
+ INSERT INTO subcategoria_servico (nome, fk_categoria_servico) VALUES
+("Som Para Eventos", 23),
+("Som Automotivo", 23),
+("Instalação de Home Theater", 23),
+("Outros", 23);
+	
+ INSERT INTO subcategoria_servico (nome, fk_categoria_servico) VALUES
+("Tradutor", 24),
+("Tradutor e Intérprete", 24),
+("Traduções Simultâneas", 24),
+("Outros", 24);
+
+ INSERT INTO subcategoria_servico (nome, fk_categoria_servico) VALUES
+("Mudança", 25),
+("Ônibus Escolar", 25),
+("Motorista", 25),
+("Outros", 25);
+
+INSERT INTO subcategoria_servico (nome, fk_categoria_servico) VALUES
+("Hospedagem Em Casa de Familia", 26),
+("Hotel", 26),
+("Motel", 26),
+("Pousada", 26),
+("Outros", 26);
+
+INSERT INTO subcategoria_servico (nome, fk_categoria_servico) VALUES
+("Predial", 27),
+("Tapetes e Carpetes", 27),
+("Residencial", 27),
+("Piscina", 27),
+("Fachadas", 27),
+("Automotiva", 27),
+("Pós-Obra", 27),
+("Caixa DAgua", 27),
+("Movéis", 27),
+("Outros", 27);
+
+ INSERT INTO subcategoria_servico (nome, fk_categoria_servico) VALUES
+("Correias Transportadoras", 28),
+("Borracharia", 28),
+("Pneus", 28),
+("Borracha em Geral", 28),
+("Outros", 28);
+
+INSERT INTO subcategoria_servico (nome, fk_categoria_servico) VALUES
+("Impermeabilização", 29),
+("Cilindro", 29),
+("Piso", 29),
+("Azulejo", 29),
+("Forros", 29),
+("Outros", 29);
+
+INSERT INTO subcategoria_servico (nome, fk_categoria_servico) VALUES
+("Telefonia", 30),
+("Radios e Comunicação", 30),
+("Teleconferência", 30),
+("Instalação de Redes de Computadores", 30),
+("Instalação e Manutenção de Câmeras", 30),
+("Instalação e Manutenção de Interfones", 30),
+("Instalação de Cental Telefonica/PABX", 30),
+("Outros", 30);
+
+ INSERT INTO subcategoria_servico (nome, fk_categoria_servico) VALUES
+("Projeto de Jardinagem", 31),
+("Limpeza e Manutenção de Jardim", 31),
+("Plantio de Árvore", 31),
+("Fetilização de Terrenos", 31),
+("Poda de Árvore", 31),
+("Adubação Química", 31),
+("Outros", 31);
+
+INSERT INTO subcategoria_servico (nome, fk_categoria_servico) VALUES
+("Hidraúlica", 32),
+("Pintura", 32),
+("Eletrica", 32),
+("Alvenaria", 32),
+("Telhadista", 32),
+("Pedreiro", 32),
+("Dry Wall", 32),
+("Azulejista", 32),
+("Serralheiro", 32),
+("Outros", 32);
+
+INSERT INTO subcategoria_servico (nome, fk_categoria_servico) VALUES
+("Terapia", 33),
+("Fisioterapia e RPG", 33),
+("Tratamento Odontológico", 33),
+("Clínicas em Geral", 33),
+("Outros", 33);
+
+INSERT INTO subcategoria_servico (nome, fk_categoria_servico) VALUES
+("Instalação de Rede de Proteção", 34),
+("Instalação de Tela Mosqueteira", 34),
+("Instalação de Cerca Elética", 34),
+("Instalação de Câmera de Segurança", 34),
+("Instalação de Alarmes", 34),
+("Monitoramento", 34),
+("serviço de Segurança", 34),
+("serviço de Escolta", 34),
+("Segurança do Trabalho", 34),
+("Porteiro", 34),
+("Outros", 34);
+
+INSERT INTO subcategoria_servico (nome, fk_categoria_servico) VALUES
+("Veterinário", 35),
+("Veterinário em Domicílio", 35),
+("Banho e Tosa", 35),
+("Banho e Tosa me Domicílio", 35),
+("Dog Walker", 35),
+("Outros", 35);
+
+INSERT INTO subcategoria_servico (nome, fk_categoria_servico) VALUES
+("Outros", 36);
 
 

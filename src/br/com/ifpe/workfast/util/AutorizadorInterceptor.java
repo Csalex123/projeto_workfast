@@ -18,6 +18,7 @@ public class AutorizadorInterceptor extends HandlerInterceptorAdapter {
 			uri.contains("css") ||
 			uri.contains("img") ||
 			uri.contains("js") ||
+			uri.contains("index") ||
 			uri.endsWith("cadastro")||
 			uri.endsWith("disponivel")||
 			uri.endsWith("entrar")||
