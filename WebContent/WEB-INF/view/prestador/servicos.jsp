@@ -112,31 +112,62 @@
 								<tr>
 									<th>Categoria</th>
 									<th>Serviço</th>
+									<th>Atuação</th>
 								</tr>
 							</thead>
 							<tbody>
-								<tr class="tr-shadow">
-									<td>Categoria1</td>
-									<td>Serviço1</td>
+							<c:forEach var="servicosPrestador" items="${listaUsuarioServico}">
+										<tr class="tr-shadow">
+
+											<td width="180">${servicosPrestador.servico.categoriaServico.nome}</td>
+
+											<td><span>${servicosPrestador.servico.nome}</span></td>
+											<td>
+											
+											 <select  class="form-control">
+											    <option >Cidades</option>
+											     <c:forEach items="${listaCidades}" var="cidadesAtuacao">
+
+												     <option disabled >${cidadesAtuacao.cidade.nome}</option>
 
 
-									<td>
-										<div class="table-data-feature">
-											<a href="servicosEdit">
-												<button class="item" data-toggle="tooltip"
-													data-placement="top" title="Alterar">
-													<i class="zmdi zmdi-edit"></i>
-												</button>
-											</a> <a href="#">
-												<button class="item" data-toggle="tooltip"
-													data-placement="top" title="Deletar">
-													<i class="zmdi zmdi-delete"></i>
-												</button>
-											</a>
-										</div>
-									</td>
-								</tr>
-							</tbody>
+										    	  </c:forEach>
+
+										     </select>
+													
+											</td>
+
+									
+
+
+											<td>
+												<div class="table-data-feature">
+													
+																										
+
+													
+													<a href="servicosEdit?id=${servicosPrestador.idUsuarioServico}" class="item" data-toggle="tooltip"
+														data-placement="top" title="Editar">
+														<i class="zmdi zmdi-edit"></i>
+													  </a>
+
+													
+
+													<a href="servicoDelete?id=${servicosPrestador.idUsuarioServico}"  class="item" data-toggle="tooltip"
+															data-placement="top" title="Excluir">
+															<i class="zmdi zmdi-delete"></i>
+													</a>
+
+													
+
+
+												</div>
+											</td>
+
+										</tr>
+										<tr class="spacer"></tr>
+
+									</c:forEach>							</tbody>
 						</table>
 					</div>
 				</div>
@@ -144,8 +175,8 @@
 		</div>
 		</section>
 
-		<section>
-		<div class="container-fluid">
+		<section  >
+		<div class="container-fluid" style="margin-top: 70%;">
 			<div class="row">
 				<div class="col-md-12">
 					<div class="copyright">

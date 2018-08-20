@@ -1,5 +1,6 @@
 package br.com.ifpe.workfast.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -17,15 +18,21 @@ import com.google.gson.Gson;
 import br.com.ifpe.workfast.model.CategoriaServico;
 import br.com.ifpe.workfast.model.CategoriaServicoDao;
 import br.com.ifpe.workfast.model.Cidade;
+import br.com.ifpe.workfast.model.CidadeAtuacaoServico;
+import br.com.ifpe.workfast.model.CidadeAtuacaoServicoDao;
 import br.com.ifpe.workfast.model.CidadeDao;
 import br.com.ifpe.workfast.model.DadosPessoais;
 import br.com.ifpe.workfast.model.DadosPessoaisDao;
 import br.com.ifpe.workfast.model.Endereco;
 import br.com.ifpe.workfast.model.EnderecoDao;
+import br.com.ifpe.workfast.model.Profissao;
+import br.com.ifpe.workfast.model.ProfissaoDao;
 import br.com.ifpe.workfast.model.Servico;
 import br.com.ifpe.workfast.model.ServicoDao;
 import br.com.ifpe.workfast.model.Usuario;
 import br.com.ifpe.workfast.model.UsuarioDao;
+import br.com.ifpe.workfast.model.UsuarioServico;
+import br.com.ifpe.workfast.model.UsuarioServicoDao;
 
 @Controller
 public class PrestadorController {
@@ -95,7 +102,17 @@ public class PrestadorController {
 	
 	// metodo para redirecionar para pagina servicos
 		@RequestMapping("ExibirServicos")
-		public String ExibirServico() {
+		public String ExibirServico(Model modelServico, Model modelCidades,HttpServletRequest request) {
+			Usuario usuario = (Usuario) request.getSession().getAttribute("usuarioLogado");
+			UsuarioServicoDao dao = new UsuarioServicoDao();
+		    CidadeAtuacaoServicoDao dao2 = new CidadeAtuacaoServicoDao();
+			List<UsuarioServico> listaUsuarioServico = dao.listarServicosUsuario(usuario.getIdUsuario());
+			for(int i = 0; i < listaUsuarioServico.size();i++) {
+				List<CidadeAtuacaoServico> listaCidades = dao2.buscarPorIdServico(listaUsuarioServico.get(i).getServico().getIdServico());
+				modelCidades.addAttribute("listaCidades", listaCidades);
+			}
+			modelServico.addAttribute("listaUsuarioServico", listaUsuarioServico);
+
 			return "prestador/servicos";
 		}
 
@@ -107,7 +124,31 @@ public class PrestadorController {
 
 		// metodo para editar servicos
 		@RequestMapping("servicosEdit")
-		public String servicosEdit() {
+		public String servicosEdit(@RequestParam("id") Integer idUsuarioServico,Model modelServico,Model modelCategoria,Model modelCidadesServicos,Model modelCidades,Model modelEstado,HttpServletRequest request) {
+			
+			Usuario usuario = (Usuario) request.getSession().getAttribute("usuarioLogado");
+	        
+			UsuarioServicoDao daoServicoUsuario = new UsuarioServicoDao();
+	        UsuarioServico usuarioServico = daoServicoUsuario.buscarPorId(idUsuarioServico);
+	        
+			EnderecoDao daoEndereco = new EnderecoDao();
+	        Endereco enderecoPrestador = daoEndereco.buscarEnderecoUsuarioPrestador(2);
+	        
+	        CidadeDao daoCidade = new CidadeDao();
+	        List<Cidade> listaCidades = daoCidade.filtrarPorEstado(enderecoPrestador.getEstado().getIdEstado());
+	        
+	        CategoriaServicoDao dao = new CategoriaServicoDao();
+			List<CategoriaServico> listaCategoria = dao.listar();
+			
+			CidadeAtuacaoServicoDao daoCidadesServico = new CidadeAtuacaoServicoDao();
+			List<CidadeAtuacaoServico> listaCidadesServico = daoCidadesServico.buscarPorIdServico(usuarioServico.getServico().getIdServico());
+					
+			
+			modelCategoria.addAttribute("listaCategoria", listaCategoria);
+			modelCidades.addAttribute("listaCidades", listaCidades);
+			modelEstado.addAttribute("endereco", enderecoPrestador);
+			modelServico.addAttribute("usuarioServico", usuarioServico);
+			modelCidadesServicos.addAttribute("listaCidadesServico", listaCidadesServico);
 			return "prestador/editServico";
 		}
 		
@@ -120,7 +161,8 @@ public class PrestadorController {
 	// metodo para redirecionar para pagina servicos
 	@RequestMapping("paginaServicos")
 	public String paginaServicos() {
-		return "prestador/servicos";
+		
+				return "prestador/servicos";
 	}
 
 	// metodo para redirecionar para pagina de cadastro primerio acesso: tipo fisico
@@ -233,5 +275,49 @@ public class PrestadorController {
 
 		return "prestador/cadastroServicoPrimeiroAcesso";
 	}
+	
+	@RequestMapping(value = "cadastrarUsuarioServico", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+	public @ResponseBody String cadastrarUsuarioServico(@RequestParam("idServico") Integer idServico, @RequestParam("descricao") String descricao,
+			@RequestParam("idUsuario") Integer idUsuario, @RequestParam("idsCidades") String[] cidades ){
+			
+     	 Servico servico = new Servico();
+		 servico.setIdServico(idServico);
+		 Usuario usuario = new Usuario();
+		 usuario.setIdUsuario(idUsuario);
+		 
+	     UsuarioServico usuarioServico = new UsuarioServico();
+         usuarioServico.setServico(servico);
+	     usuarioServico.setUsuario(usuario);
+	     usuarioServico.setDescricao(descricao);
+	     
+	     UsuarioServicoController controller = new UsuarioServicoController();
+     
+	     
+	     UsuarioServico retornoIdUsuarioServico = controller.save(usuarioServico); 
+    
+		 
+	     CidadeAtuacaoServico atuacao = new CidadeAtuacaoServico();
+	     atuacao.setUsuarioServico(retornoIdUsuarioServico);
+	     List<Cidade> cidadesSelecionadas = new ArrayList<Cidade>();
+		Cidade cidade;
+	     
+	     
+	     for(int i =0; i<cidades.length;i++) {
+	    	String id = cidades[i].replaceAll("[^0-9]", "");
+	    	cidade = new Cidade();
+	        cidade.setIdCidade(Integer.parseInt(id));
+	        cidadesSelecionadas.add(cidade);
+	     }
+	     
+	     
+	     CidadeAtuacaoServicoController controllerAtuacao = new CidadeAtuacaoServicoController();
+	     controllerAtuacao.save(atuacao, cidadesSelecionadas);
+	     
+	     return new Gson().toJson("paginaInicialPrestador");
+	    
+
+
+	}
+
 
 }
