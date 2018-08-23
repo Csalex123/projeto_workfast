@@ -67,6 +67,20 @@
 	href="<%=request.getContextPath()%>/resources/css/theme-prestador.css"
 	rel="stylesheet" media="all">
 
+<!-- Jquery -->
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+
+<!-- Jquery validate -->
+<script type="text/javascript"
+	src="<%=request.getContextPath()%>/resources/js/jquery.validate.min.js"></script>
+
+<!-- Código JavaScript desta Página(Página de cadastro) -->
+<script type="text/javascript"
+	src="<%=request.getContextPath()%>/resources/js/prestador/cadastroPrestadorFisico.js"></script>
+
+
 </head>
 
 <body class="animsition">
@@ -101,62 +115,260 @@
 					<!-- Conteiner de listagem de candidatos -->
 					<div class="container-fluid" style="margin-top: 30px;">
 						<div class="fontawesome-list-wrap">
-							<form action="#" method="post" id="form_servico">
-								<div class="form-group">
-									<label for="categoria">Categoria:</label> <select type="text"
-										class="form-control" id="categoria" name="categoria"
-										required="required" tabindex="1">
-										<option selected disabled>Selecione</option>
-										<option>Mecancico</option>
-									</select>
-								</div>
+							
+								<div class="login-form">
 
-								<div class="form-group">
-									<label for="servico">Serviço:</label> <select type="text"
-										class="form-control" id="servico" name="servico"
-										required="required" tabindex="1">
-										<option selected disabled>Selecione</option>
-										<option>Mecancico</option>
-									</select>
-								</div>
 
-								<div class="form-group">
-									<label for="descricao">Descrição:</label>
-									<textarea class="form-control col-lg-12" id="descricao"
-										style="height: 100px;">
-										
-									</textarea>
-								</div>
+									<div class="form-group">
+										<label>Categoria</label> <select required="required"
+											id="categoria" name="categoriaServico" class="form-control">
+											<option value="">Selecione</option>
+											<c:forEach items="${listaCategoria}" var="obj">
 
-								<div class="form-group text-center">
-									<button class="btn btn-primary" data-toggle="tooltip"
-										data-placement="top" title="Salvar">Salvar</button>
+												<option value="${obj.idCategoriaServico}">${obj.nome}</option>
+
+
+											</c:forEach>
+
+										</select>
+									</div>
+
+									<div class="form-group">
+										<label>Serviços</label> <select required="required"
+											id="servicos" name="servicos" class="form-control">
+
+
+										</select>
+									</div>
+
+									<div class="form-group ">
+										<label for="descricao" class=" form-control-label">Digite
+											uma breve descrição sobre o serviço escolhido! (255
+											caracteres)</label>
+
+										<textarea required="required" name="descricao" id="descricao"
+											placeholder="Digite aqui..." class="form-control"></textarea>
+
+									</div>
+
+
+
 								</div>
-							</form>
 						</div>
+
+
+
+
 					</div>
 
 
 				</div>
+				<br>
+				<br>
+				<div class="container">
+
+					<div class="row">
+
+						<div class="col-lg-6 col-md-6">
+							<div class="table-responsive table--no-card m-b-30"
+								style="height: 250px;">
+								<table
+									class="table table-borderless table-striped table-earning">
+									<thead>
+										<tr>
+											<th>${endereco.estado.nome}</th>
+											<th></th>
+
+
+										</tr>
+									</thead>
+									<tbody>
+										<c:forEach items="${listaCidades}" var="obj">
+
+											<tr>
+												<td id="${obj.idCidade }">${obj.nome}</td>
+												<td class="text-right" style="background-color: #c1c1c1;"><label
+													class="au-checkbox"> <input type="checkbox"
+														name="check[]" class="checkCidades"
+														value="${obj.idCidade }"> <span
+														class="au-checkmark"></span>
+												</label></td>
+											</tr>
+
+
+
+										</c:forEach>
+
+
+
+									</tbody>
+								</table>
+							</div>
+						</div>
+
+						<div class="col-lg-6 col-md-6">
+							<div class="table-responsive table--no-card m-b-30"
+								style="height: 250px;">
+								<table
+									class="table table-borderless table-striped table-earning">
+									<thead>
+										<tr>
+											<th>Area de atuação</th>
+
+
+
+										</tr>
+									</thead>
+									<tbody id="tbAtuacao">
+
+									</tbody>
+								</table>
+							</div>
+						</div>
+
+
+					</div>
+
+				</div>
+
+
+
+
+
+				<div class="form-group text-center">
+					<button class="btn btn-primary" data-toggle="tooltip"
+						data-placement="top" id="btnCadastrar" title="Salvar">Salvar</button>
+				</div>
+				
 			</div>
 		</div>
-		</section>
+	</div>
+	</div>
+	</div>
+	</section>
 
-		<section>
-		<div class="container-fluid">
-			<div class="row">
-				<div class="col-md-12">
-					<div class="copyright">
-						<p>Copyright © 2018 WorkFast. Todos os direitos reservados.</p>
-					</div>
+	<section>
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="copyright">
+					<p>Copyright © 2018 WorkFast. Todos os direitos reservados.</p>
 				</div>
 			</div>
 		</div>
-		</section>
-
 	</div>
+	</section>
 
-	</div>
+	<script type="text/javascript">
+		var checados = [];
+		var idUsuario = "${usuarioLogado.idUsuario}";
+
+		var selectOption = document.getElementById("categoria");
+		selectOption
+				.addEventListener(
+						'change',
+						function() {
+							$('#servicos').html("");
+							var id = $(this).val();
+
+							//encaminhando os valores do formulario para ser processadas 
+							$
+									.post(
+											'filtrarServico',
+											{
+												idCategoria : id
+
+											},
+											function(dadosJSON) {
+												var linhas = '';
+												linhas += "<option value='' >Selecione </option>";
+
+												$(dadosJSON)
+														.each(
+																function(i) {
+
+																	linhas += "<option value='"+dadosJSON[i].idServico+"'>"
+																			+ dadosJSON[i].nome
+																			+ "</option>";
+
+																});
+												$('#servicos').html(linhas);
+
+											});
+
+							return false;// impedindo o encaminhamento
+
+						});
+
+		$(document).ready(function() {
+
+			$(".checkCidades").click(function(e) {
+
+				var html = "";
+				checados = [];
+				$.each($("input[name='check[]']:checked"), function() {
+
+					checados.push($(this).val());
+
+					var nome = $("#" + $(this).val()).text();
+					html += '<tr><td>' + nome + '</td></tr>';
+
+				});
+
+				$("#tbAtuacao").html(html);
+
+			});
+
+			$.each($("input[name='check[]']"), function() {
+
+				if ($(this).val() == "${endereco.cidade.idCidade}") {
+                      $(this).click();
+				}
+
+			});
+
+		});
+
+		var btnCadastrar = document.getElementById("btnCadastrar");
+		btnCadastrar.addEventListener('click', function() {
+
+			var idServico = $("#servicos").val();
+
+			var descricao = $("#descricao").val();
+			// var array = checados.join(',');
+			
+            if(idServico == null || idServico == ""){
+            	alert("Selecione um servico.");
+            }else if(descricao == null || descricao == ""){
+            	alert("Informe uma descrição do servico.")
+            }else{
+            	//encaminhando os valores do formulario para ser processadas 
+    			$.post('saveServico', {
+    				idServico : idServico,
+    				idUsuario : idUsuario,
+    				descricao : descricao,
+    				idsCidades : JSON.stringify(checados)
+
+    			}, function(dadosJSON) {
+    				if(dadosJSON == true){
+    					alert("Voce ja esta vinculado(a) com esse serviço!");
+    				}else{
+    					 alert("Serviço cadastrado com sucesso!");
+    	    				window.location = "ExibirServicos";	
+    					
+    				}
+    				
+                   
+
+    			});
+	
+            }
+			
+			return false;// impedindo o encaminhamento
+
+		});
+	</script>
+	
 
 	<!-- Jquery JS-->
 	<script

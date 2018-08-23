@@ -111,7 +111,7 @@
 		<div class="section__content section__content--p30">
 			<div class="container-fluid">
 				<div class="row">
-
+               
 					<!-- Conteiner de listagem de candidatos -->
 					<div class="container-fluid" style="margin-top: 30px;">
 						<div class="fontawesome-list-wrap">
@@ -229,7 +229,7 @@
 										data-placement="top" id="btnAlterar" title="Salvar">Alterar</button>
 								</div>
 
-
+               
 				</div>
 
 			</div>
@@ -259,6 +259,9 @@
 	<!-- Jquery JS-->
 	<script type="text/javascript">
 		var checados = [];
+		var cidadesAtuacao = JSON.parse("${listaCidadesServico}");
+		
+		
 		
 		var selectOption = document.getElementById("categoria");
 		function listarServicos(id){
@@ -333,6 +336,7 @@
 						});
 
 		$(document).ready(function() {
+			
 			$('#categoria').val("${usuarioServico.servico.categoriaServico.idCategoriaServico}");
 			$('#categoria').find('option').each(function(){
 
@@ -368,14 +372,24 @@
 				$("#tbAtuacao").html(html);
 
 			});
-
+			
+				
+				
+			
+		   for(i = 0; i < cidadesAtuacao.length; i++){
 			$.each($("input[name='check[]']"), function() {
 
-				if ($(this).val() == "${endereco.cidade.idCidade}") {
-                      $(this).click();
-				}
+				
+					if ($(this).val() == cidadesAtuacao[i]) {
+	                    $(this).click();
+					}
+				
+				
 
 			});
+		  }
+		   
+		   //alert(checados);
 
 		});
 
@@ -383,8 +397,10 @@
 		btnCadastrar.addEventListener('click', function() {
 
 			var idServico = $("#servicos").val();
-
+            var idUsuario = "${usuarioLogado.idUsuario}";
 			var descricao = $("#descricao").val();
+			var idCategoria = $("#categoria").val();
+			
 			// var array = checados.join(',');
 			
             if(idServico == null || idServico == ""){
@@ -393,14 +409,18 @@
             	alert("Informe uma descrição do servico.")
             }else{
             	//encaminhando os valores do formulario para ser processadas 
-    			$.post('cadastrarUsuarioServico', {
+    			$.post('updateUsuarioServico', {
     				idServico : idServico,
     				idUsuario : idUsuario,
     				descricao : descricao,
-    				idsCidades : JSON.stringify(checados)
+    				idCategoria : idCategoria,
+    				idUsuarioServico: "${usuarioServico.idUsuarioServico}",
+    				idsCidades : JSON.stringify(checados),
+    				temp : JSON.stringify(cidadesAtuacao)
 
     			}, function(dadosJSON) {
 
+    				alert("Servico Alterado com sucesso!");
     				window.location = dadosJSON;
 
     			});

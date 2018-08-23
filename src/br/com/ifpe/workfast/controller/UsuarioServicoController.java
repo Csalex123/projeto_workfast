@@ -26,7 +26,15 @@ public class UsuarioServicoController {
 		
 		return retorno;
 	}
+    
+	public boolean existeVinculacao(int idUsuario, int idServico) {
 
+		UsuarioServicoDao dao = new UsuarioServicoDao();
+		boolean retorno = dao.existeVinculacao(idUsuario, idServico);
+
+		
+		return retorno;
+	}
 
 	
 	public String edit(@RequestParam("id") Integer id, Model model, Model model2) {
@@ -36,11 +44,11 @@ public class UsuarioServicoController {
 	}
 
 	
-	public String update(Servico servico, Model model) {
-
+	public void update(UsuarioServico usuarioServico) {
+        UsuarioServicoDao dao = new UsuarioServicoDao();
+        dao.alterar(usuarioServico);
 		
 		
-		return "";
 	}
 
 	

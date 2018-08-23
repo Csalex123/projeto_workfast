@@ -61,6 +61,10 @@
 	href="<%=request.getContextPath()%>/resources/vendor/bootstrap.min.css"
 	rel="stylesheet" media="all">
 
+<!-- Jquery -->
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
 
 <!-- Main CSS-->
 <link
@@ -98,7 +102,18 @@
 			<div class="row">
 				<div class="col-md-12">
 					<div class="table-data__tool">
+					    <div class="table-data__tool-left">
+
+								<div class="form-group">
+
+									<input type="text" id="txtPesquisa" name="pesquisa"
+										placeholder="Pesquise aqui.." class="form-control">
+
+								</div>
+
+							</div>
 						<div class="table-data__tool-right">
+						   
 							<a href="servicosAdd">
 								<button class="au-btn au-btn-icon au-btn--green au-btn--small">
 									<i class="zmdi zmdi-plus"></i>Adicionar Serviço
@@ -115,7 +130,7 @@
 									<th>Atuação</th>
 								</tr>
 							</thead>
-							<tbody>
+							<tbody id="tbServico" >
 							<c:forEach var="servicosPrestador" items="${listaUsuarioServico}">
 										<tr class="tr-shadow">
 
@@ -124,14 +139,9 @@
 											<td><span>${servicosPrestador.servico.nome}</span></td>
 											<td>
 											
-											 <select  class="form-control">
-											    <option >Cidades</option>
-											     <c:forEach items="${listaCidades}" var="cidadesAtuacao">
-
-												     <option disabled >${cidadesAtuacao.cidade.nome}</option>
-
-
-										    	  </c:forEach>
+											 <select  onclick="carregarCidades(${servicosPrestador.idUsuarioServico})" id="${servicosPrestador.idUsuarioServico}" class="form-control">
+											    
+											     
 
 										     </select>
 													
@@ -167,7 +177,9 @@
 										</tr>
 										<tr class="spacer"></tr>
 
-									</c:forEach>							</tbody>
+
+             			  </c:forEach>					
+             		 	</tbody>
 						</table>
 					</div>
 				</div>
@@ -190,6 +202,38 @@
 	</div>
 
 	</div>
+	<script type="text/javascript">
+	$(document).ready(function(){
+		  $('select').click();
+	  });
+	function carregarCidades(idUsuarioServico){
+		$
+		.post(
+				'listarCidades',
+				{
+					idUsuarioServico : idUsuarioServico
+
+				},
+				function(dadosJSON) {
+					var linhas = '';
+					linhas += "<option value='' >Cidades </option>";
+
+					$(dadosJSON)
+					 
+							.each(
+									function(i) {
+                                        
+                                        	 linhas += "<option>"+ dadosJSON[i].cidade.nome + "</option>";
+                                         
+										
+
+									});
+					$('#'+idUsuarioServico).html(linhas);
+
+				});
+
+	}
+	</script>
 
 	<!-- Jquery JS-->
 	<script
@@ -231,6 +275,16 @@
 
 	<!-- Main JS-->
 	<script src="<%=request.getContextPath()%>/resources/js/main.js"></script>
+	<script>
+		$(document).ready(function(){
+		  $("#txtPesquisa").on("keyup", function() {
+		    var value = $(this).val().toLowerCase();
+		    $("#tbServico tr").filter(function() {
+		      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+		    });
+		  });
+		});
+		</script>
 
 </body>
 

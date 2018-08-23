@@ -50,13 +50,35 @@ protected static final String PERSISTENCE_UNIT = "workfast";
 		return obj;
 	}
 	
-	public List<CidadeAtuacaoServico>  buscarPorIdServico(int id) {
+	public CidadeAtuacaoServico buscarCidade(int idUsuarioServico, int idCidade) {
+
+		
+		EntityManagerFactory factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT);
+		EntityManager manager = factory.createEntityManager();
+		
+		Query query = manager.createQuery("FROM CidadeAtuacaoServico cas WHERE cas.usuarioServico.idUsuarioServico =:paramUsuarioServico AND cas.cidade.idCidade =:paramCidade");
+		query.setParameter("paramUsuarioServico", idUsuarioServico);
+		query.setParameter("paramCidade", idCidade);
+		
+		List<CidadeAtuacaoServico> registros = query.getResultList();
+		CidadeAtuacaoServico obj = null;
+		if (!registros.isEmpty()) {
+			obj = (CidadeAtuacaoServico) registros.get(0);
+		}
+		
+		manager.close();
+		factory.close();
+		return obj;
+	}
+	
+	public List<CidadeAtuacaoServico>  buscarPorIdUsuarioServico(int idUsuarioServico) {
 
 		EntityManagerFactory factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT);
 		EntityManager manager = factory.createEntityManager();
 		Query query = null;
-		query = manager.createQuery("FROM CidadeAtuacaoServico cas WHERE cas.usuarioServico.servico.idServico = :paramId");
-		query.setParameter("paramId", id);
+		query = manager.createQuery("FROM CidadeAtuacaoServico cas WHERE cas.usuarioServico.idUsuarioServico =:paramId");
+		query.setParameter("paramId", idUsuarioServico);
+			
 		List<CidadeAtuacaoServico> lista = query.getResultList();
 		manager.close();
 		factory.close();

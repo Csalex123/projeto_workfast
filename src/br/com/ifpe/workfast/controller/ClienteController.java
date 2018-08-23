@@ -9,17 +9,38 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import br.com.ifpe.workfast.model.CategoriaServico;
+import br.com.ifpe.workfast.model.CategoriaServicoDao;
 import br.com.ifpe.workfast.model.DadosPessoais;
 import br.com.ifpe.workfast.model.DadosPessoaisDao;
 import br.com.ifpe.workfast.model.Endereco;
 import br.com.ifpe.workfast.model.EnderecoDao;
+import br.com.ifpe.workfast.model.Estado;
+import br.com.ifpe.workfast.model.EstadoDao;
 import br.com.ifpe.workfast.model.Usuario;
 
 @Controller
 public class ClienteController {
 	// metodo para redirecionar para pagina inicial
 	@RequestMapping("paginaInicialCliente")
-	public String paginaInical() {
+	public String paginaInical(Model modelEstado, Model modelCategoria, Model modelEndereco, HttpServletRequest request) {
+		Usuario usuario = (Usuario) request.getSession().getAttribute("usuarioLogado");
+
+		
+		EstadoDao daoEstado = new EstadoDao();
+		EnderecoDao dao = new EnderecoDao();
+		CategoriaServicoDao daoCategoria = new CategoriaServicoDao();
+		List<Endereco> endereco = dao.listarEnderecoCliente(usuario.getIdUsuario());
+
+		
+		List<Estado> listaEstado = daoEstado.listar();
+		List<CategoriaServico> listaCategoria = daoCategoria.listar();
+		
+		modelEndereco.addAttribute("listaEndereco", endereco);
+		modelEstado.addAttribute("listaEstado", listaEstado);
+		modelCategoria.addAttribute("listaCategoria", listaCategoria);
+		
+		
 		return "cliente/index";
 	}
 

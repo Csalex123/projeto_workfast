@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.NoResultException;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
 
@@ -53,6 +54,28 @@ protected static final String PERSISTENCE_UNIT = "workfast";
 		manager.close();
 		factory.close();
 		return lista;
+	}
+	
+	public boolean existeVinculacao(int idUsuario, int idServico){
+
+		
+		EntityManagerFactory factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT);
+		EntityManager manager = factory.createEntityManager();
+		Query query = null;
+		query = manager.createQuery("FROM UsuarioServico WHERE usuario.idUsuario =:paramUsuario AND servico.idServico =:paramServico");
+		query.setParameter("paramUsuario", idUsuario);
+		query.setParameter("paramServico", idServico);
+
+		try{
+			query.getSingleResult();
+		}catch(NoResultException nre){
+			return false;
+		}
+		
+		manager.close();
+		factory.close();
+		return true ;
+		
 	}
 	
 	

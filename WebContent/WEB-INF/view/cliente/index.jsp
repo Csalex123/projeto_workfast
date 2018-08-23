@@ -36,6 +36,10 @@
     <!-- Bootstrap CSS-->
     <link href="<%=request.getContextPath()%>/resources/vendor/bootstrap.min.css" rel="stylesheet" media="all">
 
+    <!-- Jquery -->
+    <script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
     
     <!-- Main CSS-->
     <link href="<%=request.getContextPath()%>/resources/css/theme-cliente.css" rel="stylesheet" media="all">
@@ -61,8 +65,15 @@
                                        <label for="select" class=" form-control-label">Estado:</label>
                                         </div>
                                             <div class="col-12 col-md-5">
-                                                <select name="select" id="select" class="form-control">
-                                                        <option value="1">Pernambuco</option>
+                                                <select name="estado" id="estado" class="form-control">
+                                                        <option value="">Selecione um Estado</option>
+                                                        
+															<c:forEach items="${listaEstado}" var="obj">
+				
+																<option value="${obj.idEstado}">${obj.nome}</option>
+				
+				
+															</c:forEach>
                                                 </select>
                                             </div>
                                      </div>
@@ -75,10 +86,9 @@
                                        <label for="select" class=" form-control-label">Cidade:</label>
                                         </div>
                                             <div class="col-12 col-md-5">
-                                                <select name="select" id="select" class="form-control">
-                                                        <option value="0">Recife</option>
-                                                        <option value="1">Jaboatão dos Guararapes</option>
-                                                        <option value="2">Cabo de santo agostinho</option>
+                                                <select name="cidade" id="cidade" class="form-control">
+                                                       
+                                                       
                                                 </select>
                                             </div>
                                      </div>
@@ -87,13 +97,17 @@
                                 <!-- Filtro de Faixa de preço -->
                                 <div class="row form-group">
                                     <div class="col col-md-3">
-                                       <label for="select" class=" form-control-label">Faixa de preço:</label>
+                                       <label for="select" class=" form-control-label">Categoria</label>
                                         </div>
                                             <div class="col-12 col-md-5">
-                                                <select name="select" id="select" class="form-control">
-                                                        <option value="0">Entre R$30 e R$80</option>
-                                                        <option value="1">Entre R$80 e R$130</option>
-                                                        <option value="2">Entre R$130 e R$200</option>
+                                                <select name="categoria" id="categoria" class="form-control">
+                                                        <option value="">Selecione uma categoria</option>
+                                                        <c:forEach items="${listaCategoria}" var="obj">
+				
+																<option value="${obj.idCategoriaServico}">${obj.nome}</option>
+				
+				
+															</c:forEach>
                                                 </select>
                                             </div>
                                      </div>
@@ -102,14 +116,11 @@
                                 <!-- Filtro de Profissão -->
                                 <div class="row form-group">
                                     <div class="col col-md-3">
-                                       <label for="select" class=" form-control-label">Profissão:</label>
+                                       <label for="select" class=" form-control-label">Servico</label>
                                         </div>
                                             <div class="col-12 col-md-5">
-                                                <select name="select" id="select" class="form-control">
-                                                        <option value="0">Eletricista</option>
-                                                        <option value="1">Mecânico</option>
-                                                        <option value="2">Advogado</option>
-                                                        <option value="2">Motorista</option>
+                                                <select name="servicos" id="servicos" class="form-control">
+                                                        
                                                 </select>
                                             </div>
                                      </div>
@@ -136,7 +147,7 @@
                                                 <th>Foto</th>
                                                 <th>Nome</th>
                                                 <th>Profissão</th>
-                                                <th>Valor</th>
+                                                
                                                 <th></th>
                                             </tr>
                                         </thead>
@@ -147,7 +158,7 @@
                                             </td>
                                                 <td><a href="#">Diego Passos</a></td>
                                                 <td >Mecânico</td>
-                                                <td>R$ 100.00</td>
+                  
                                                 <td>
                                                     <a href="PrimeiroEstagio"><button class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="Contratar">Contratar <i class="fa fa-handshake-o "></i></button></a>
                                                     <button class="btn btn-danger" class="item" data-toggle="tooltip" data-placement="top" title="Chat">Chat <i class="zmdi zmdi-comment-more"></i></button>
@@ -161,45 +172,6 @@
                     </div>
 
 
-
-                   <!-- Conteiner de listagem de candidatos -->
-                    <div class="container-fluid" style="margin-top: 30px; margin-bottom: 80px;">
-                        <div class="fontawesome-list-wrap">
-                            <section >
-                                <div class="table-responsive table-responsive-data2">
-                                    <table class="table table-data2">
-                                        <thead>
-                                            <tr>
-                                                <th>Foto</th>
-                                                <th>name</th>
-                                                <th>Profissão</th>
-                                                <th>Valor</th>
-                                                <th></th>
-                                            </tr>
-                                        </thead>
-
-                                        <tbody>
-                                            <tr >
-                                                <td>
-                                                    <img style="width: 80px; height: 60px;" src="images/icon/icone_pedreiro.png" alt="Marcílio God" />
-                                                </td>
-                                                <td><a href="#">João Silva</a></td>
-                                                <td class="desc">Pedreiro</td>
-                                                <td>R$ 90.00</td>
-                                                <td>
-                                                    <button class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="Contratar">Contratar <i class="fa fa-handshake-o "></i></button>
-                                                    <button class="btn btn-danger" class="item" data-toggle="tooltip" data-placement="top" title="Chat">Chat <i class="zmdi zmdi-comment-more"></i></button>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                             </section>  
-                             
-                             
-                                
-                        </div>
-                    </div>
 					
 							<section >
 				                <div class="container-fluid">
@@ -217,7 +189,76 @@
             </div>
 	
 
+   <script type="text/javascript">
+   var selectOption = document.getElementById("categoria");
+	selectOption
+			.addEventListener(
+					'change',
+					function() {
+						$('#servicos').html("");
+						var id = $(this).val();
 
+						//encaminhando os valores do formulario para ser processadas 
+						$
+								.post(
+										'filtrarServico',
+										{
+											idCategoria : id
+
+										},
+										function(dadosJSON) {
+											var linhas = '';
+											linhas += "<option value='' >Selecione </option>";
+
+											$(dadosJSON)
+													.each(
+															function(i) {
+
+																linhas += "<option value='"+dadosJSON[i].idServico+"'>"
+																		+ dadosJSON[i].nome
+																		+ "</option>";
+
+															});
+											$('#servicos').html(linhas);
+
+										});
+
+						return false;// impedindo o encaminhamento
+
+					});
+
+   var selectOption = document.getElementById("estado");
+   selectOption.addEventListener('change', function(){
+   	$('#cidade').html("");
+      var id = $(this).val();
+     
+      //encaminhando os valores do formulario para ser processadas 
+        $.post('filtrarCidade', {
+           idEstado:id
+           
+         }, function(dadosJSON){
+       	  var linhas = '';
+       	  linhas += "<option value='' >Selecione </option>";
+				
+
+				$(dadosJSON).each(function (i) {
+				
+					linhas += "<option value='"+dadosJSON[i].idCidade+"'>"+dadosJSON[i].nome+"</option>";
+				
+				});
+				$('#cidade').html(linhas);
+               
+         });
+
+      
+       
+     return false;// impedindo o encaminhamento
+     
+
+
+      
+   });
+   </script>
 
     <!-- Jquery JS-->
     <script src="<%=request.getContextPath()%>/resources/vendor/jquery-3.2.1.min.js"></script>

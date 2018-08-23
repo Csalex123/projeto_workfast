@@ -1,15 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.0.1
--- https://www.phpmyadmin.net/
+-- version 4.5.2
+-- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Tempo de geração: 09/08/2018 às 22:26
--- Versão do servidor: 10.1.32-MariaDB
--- Versão do PHP: 7.2.5
+-- Generation Time: Aug 23, 2018 at 07:22 
+-- Server version: 10.1.13-MariaDB
+-- PHP Version: 7.0.8
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
-START TRANSACTION;
 SET time_zone = "+00:00";
 
 
@@ -19,23 +17,76 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Banco de dados: `workfast`
+-- Database: `workfast`
 --
 
 -- --------------------------------------------------------
 
 --
--- Estrutura para tabela `cidade`
+-- Table structure for table `categoria_servico`
+--
+
+CREATE TABLE `categoria_servico` (
+  `id` int(11) NOT NULL,
+  `nome` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `categoria_servico`
+--
+
+INSERT INTO `categoria_servico` (`id`, `nome`) VALUES
+(1, 'Artesanato'),
+(2, 'Audio Visual'),
+(3, 'Beleza'),
+(4, 'Brindes'),
+(5, 'Comunicação'),
+(6, 'Confecção'),
+(7, 'Decoração'),
+(8, 'Educação'),
+(9, 'Eletrodomesticos'),
+(10, 'Eletrônica'),
+(11, 'Eventos'),
+(12, 'gastronomia'),
+(13, 'Gráfico'),
+(14, 'Informática'),
+(15, 'Locações'),
+(16, 'Manutenção'),
+(17, 'Mecânico'),
+(18, 'Móveis'),
+(19, 'Profissional Liberal'),
+(20, 'Refrigeração'),
+(21, 'Seguros'),
+(22, 'Serviços Domésticos'),
+(23, 'Sonorização'),
+(24, 'Tradução'),
+(25, 'Transporte'),
+(26, 'Turismo'),
+(27, 'Limpeza'),
+(28, 'Vulcanização'),
+(29, 'Revestimento'),
+(30, 'Telecomunição'),
+(31, 'Jardinagem'),
+(32, 'Construção e Reforma'),
+(33, 'Saúde'),
+(34, 'Proteção e Segurança'),
+(35, 'Pet'),
+(36, 'Outros');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `cidade`
 --
 
 CREATE TABLE `cidade` (
   `id` int(11) NOT NULL,
-  `nome` varchar(255) DEFAULT NULL,
-  `estado` int(11) DEFAULT NULL
+  `nome` varchar(255) NOT NULL,
+  `estado` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Fazendo dump de dados para tabela `cidade`
+-- Dumping data for table `cidade`
 --
 
 INSERT INTO `cidade` (`id`, `nome`, `estado`) VALUES
@@ -5609,15 +5660,36 @@ INSERT INTO `cidade` (`id`, `nome`, `estado`) VALUES
 -- --------------------------------------------------------
 
 --
--- Estrutura para tabela `dado_pessoal`
+-- Table structure for table `cidade_atuacao_servico`
+--
+
+CREATE TABLE `cidade_atuacao_servico` (
+  `id` int(11) NOT NULL,
+  `fk_cidade` int(11) NOT NULL,
+  `fk_usuarioServico` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `cidade_atuacao_servico`
+--
+
+INSERT INTO `cidade_atuacao_servico` (`id`, `fk_cidade`, `fk_usuarioServico`) VALUES
+(1, 3339, 1),
+(2, 3339, 2),
+(3, 3339, 3);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `dado_pessoal`
 --
 
 CREATE TABLE `dado_pessoal` (
   `id` int(11) NOT NULL,
   `nomeFantasia` varchar(100) DEFAULT NULL,
   `razaoSocial` varchar(100) DEFAULT NULL,
-  `cpfCnpj` varchar(18) NOT NULL,
-  `rgIe` varchar(17) DEFAULT NULL,
+  `cpfCnpj` varchar(15) NOT NULL,
+  `rgIe` varchar(15) DEFAULT NULL,
   `sexo` char(1) DEFAULT NULL,
   `dataNascimento` date DEFAULT NULL,
   `telefone` varchar(20) DEFAULT NULL,
@@ -5626,74 +5698,54 @@ CREATE TABLE `dado_pessoal` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Fazendo dump de dados para tabela `dado_pessoal`
+-- Dumping data for table `dado_pessoal`
 --
 
 INSERT INTO `dado_pessoal` (`id`, `nomeFantasia`, `razaoSocial`, `cpfCnpj`, `rgIe`, `sexo`, `dataNascimento`, `telefone`, `celular`, `fk_usuario`) VALUES
-(1, '', '', '8888', '88888', '1', '1992-12-11', '99999', '999999', 1),
-(4, 'Varejao Mix', 'varejao mix LT', '12345', '13232323', '', '2000-01-10', '67676767', ' ', 7),
-(5, '', '', '44444444', '4444', '2', '1992-12-11', '565665', '676767676', 8),
-(6, '', '', '1111', '11111', '1', '1993-04-11', '111111', '11111', 9),
-(7, '', '', '111.111.111-11', '11.111.111-1', '1', '1111-11-11', '', '', 13),
-(8, '', '', '111.111.111-12', '11.111.111-2', '1', '1111-11-11', '(11) 1111-1111', '(11) 1 1111-1111', 14),
-(9, 'vitarela', 'Blaaaaaaaaaaaaaaaaaa', '11.111.111/1111-11', 'aaaaa', '', '2000-01-10', '(35) 8141-4545', ' ', 15),
-(10, 'asasa', 'Blaaaaaaaaaaaaaaaaaa', '11.111.111/1111-12', '3123', '', '2000-01-10', '(81) 9857-2417', ' ', 17),
-(11, '', '', '1111111111', '11111111111', '1', '1001-09-10', '(81) 1111-1111', '(81) 1 1111-1111', 18),
-(12, '', '', '212.222.222-22', '11.111.141-1', '1', '1333-12-10', '(81) 9857-2417', '(81) 9 8572-4176', 19),
-(13, '', '', '212.222.222-22', '11.111.141-1', '1', '1333-12-10', '(81) 9857-2417', '(81) 9 8572-4176', 19),
-(14, '', '', '212.222.222-22', '11.111.141-1', '1', '1333-12-10', '(81) 9857-2417', '(81) 9 8572-4176', 19),
-(15, '', '', '111.111.111-11', '1.111.111', '1', '2223-10-22', '(11) 1111-1111', '(11) 11111-1111', 20),
-(16, '', '', '111.111.111-11', '1.111.111', '1', '2223-10-22', '(11) 1111-1111', '(11) 11111-1111', 20),
-(17, '', '', '111.111.121-11', '11.112.111-1', '1', '1333-12-10', '(81) 9857-2417', '(81) 9 8572-4176', 21),
-(18, '', '', '111.111.111-15', '11.111.111-4', '1', '1111-11-11', '(81) 9999-9999', '(81) 9 8777-7777', 22),
-(19, '', '', '323.432.534-54', '11.111.111-5', '1', '1333-12-10', '(11) 1111-1111', '(81) 9 8572-4176', 23),
-(20, '', '', '111.111.111-11', '1.111.111', '1', '1111-11-11', '(11) 1111-1111', '(11) 11111-1111', 24),
-(21, '', '', '111.111.111-11', '1.111.111', '1', '1111-11-11', '(11) 1111-1111', '(11) 11111-1111', 26);
+(1, '', '', '111.111.111-11', '1.111.111', '1', '1994-12-11', '(11) 1111-1111', '(11) 11111-1111', 2),
+(2, '', '', '222.222.222-22', '2.222.222', '1', '2000-12-11', '(22) 2222-2222', '(22) 22222-2222', 3),
+(3, '', '', '999.999.999-99', '99.999.999-9', '1', '1994-12-11', '(11) 1111-1111', '(11) 1 1111-1111', 4);
 
 -- --------------------------------------------------------
 
 --
--- Estrutura para tabela `endereco`
+-- Table structure for table `endereco`
 --
 
 CREATE TABLE `endereco` (
   `id` int(11) NOT NULL,
-  `cidade` varchar(45) NOT NULL,
+  `cidade` int(11) NOT NULL,
+  `rua` varchar(45) NOT NULL,
   `bairro` varchar(45) NOT NULL,
   `numero_casa` varchar(45) NOT NULL,
-  `cep` varchar(10) NOT NULL,
-  `estado` varchar(15) NOT NULL,
-  `rua` varchar(70) NOT NULL,
-  `fk_usuario` int(11) NOT NULL,
-  `complemento` varchar(255) DEFAULT NULL
+  `cep` varchar(20) NOT NULL,
+  `estado` int(11) NOT NULL,
+  `complemento` varchar(70) DEFAULT NULL,
+  `fk_usuario` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Fazendo dump de dados para tabela `endereco`
+-- Dumping data for table `endereco`
 --
 
-INSERT INTO `endereco` (`id`, `cidade`, `bairro`, `numero_casa`, `cep`, `estado`, `rua`, `fk_usuario`, `complemento`) VALUES
-(1, 'Cabo de Santo Agostinho', 'São Francisco', '111', '54530410', 'PE', 'Rua Manoel Florentino da Silva', 13, 'casa'),
-(2, 'Cabo de Santo Agostinho', 'São Francisco', '111', '54530410', 'PE', 'Rua Manoel Florentino da Silva', 13, 'Casa'),
-(3, 'Cabo de Santo Agostinho', 'São Francisco', '111', '54530410', 'PE', 'Rua Manoel Florentino da Silva', 13, 'Casa'),
-(5, 'Recife', 'Cajueiro', '196', '52221190', 'PE', 'Rua Antônio Tibúrcio', 22, 'casa'),
-(6, 'Cabo de Santo Agostinho', 'SÃ£o Francisco', '111', '54.530-410', 'PE', 'Rua Manoel Florentino da Silva', 24, 'Casa'),
-(7, 'Cabo de Santo Agostinho', 'SÃ£o Francisco', '111', '54.530-410', 'PE', 'Rua Manoel Florentino da Silva', 26, 'casa');
+INSERT INTO `endereco` (`id`, `cidade`, `rua`, `bairro`, `numero_casa`, `cep`, `estado`, `complemento`, `fk_usuario`) VALUES
+(1, 3339, 'Rua Quarenta e Cinco', 'Parque Capibaribe', '11', '54.720-235', 16, 'casa', 2),
+(2, 3339, 'Rua Quarenta e Cinco', 'Parque Capibaribe', '11', '54.720-235', 16, 'casa', 3);
 
 -- --------------------------------------------------------
 
 --
--- Estrutura para tabela `estado`
+-- Table structure for table `estado`
 --
 
 CREATE TABLE `estado` (
   `id` int(11) NOT NULL,
-  `nome` varchar(255) DEFAULT NULL,
-  `uf` varchar(255) DEFAULT NULL
+  `nome` varchar(255) NOT NULL,
+  `uf` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Fazendo dump de dados para tabela `estado`
+-- Dumping data for table `estado`
 --
 
 INSERT INTO `estado` (`id`, `nome`, `uf`) VALUES
@@ -5728,49 +5780,1101 @@ INSERT INTO `estado` (`id`, `nome`, `uf`) VALUES
 -- --------------------------------------------------------
 
 --
--- Estrutura para tabela `profissao`
+-- Table structure for table `profissao`
 --
 
 CREATE TABLE `profissao` (
   `id` int(11) NOT NULL,
   `nome` varchar(100) NOT NULL,
-  `descricao` varchar(100) NOT NULL
+  `descricao` varchar(100) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Fazendo dump de dados para tabela `profissao`
+-- Dumping data for table `profissao`
 --
 
 INSERT INTO `profissao` (`id`, `nome`, `descricao`) VALUES
-(1, 'Encanador', 'testrd'),
-(2, 'teste', 'deajdlkajdkljsald');
+(1, 'Fonoaudiologo', NULL),
+(2, 'Baba', NULL),
+(3, 'Gestor público', NULL),
+(4, 'Ginasta artística', NULL),
+(5, 'Ginasta rítmica', NULL),
+(6, 'Ginecologista', NULL),
+(7, 'Gourmet', NULL),
+(8, 'Governador', NULL),
+(9, 'Governanta', NULL),
+(10, 'Grafologista', NULL),
+(11, 'Gravurista', NULL),
+(12, 'Guarda ou policial rodoviário', NULL),
+(13, 'Guarda roupeiro', NULL),
+(14, 'Guardador de veículos', NULL),
+(15, 'Guia turistico', NULL),
+(16, 'Guincheiro', NULL),
+(17, 'Guitarrista', NULL),
+(18, 'Harpista', NULL),
+(19, 'Headhunter', NULL),
+(20, 'Hematologista', NULL),
+(21, 'Historiador', NULL),
+(22, 'Homeopata', NULL),
+(23, 'Hostess', NULL),
+(24, 'Ilustrador', NULL),
+(25, 'Implantodontista', NULL),
+(26, 'Impressor', NULL),
+(27, 'Imunologista', NULL),
+(28, 'Infectologista', NULL),
+(29, 'Inspetor', NULL),
+(30, 'Instalador de linha telefônica', NULL),
+(31, 'Instalador de painéis', NULL),
+(32, 'Instrumentador cirúrgico', NULL),
+(33, 'Instrumentista musical', NULL),
+(34, 'Instrutor', NULL),
+(35, 'Intérprete', NULL),
+(36, 'Intérprete de Bíblias', NULL),
+(37, 'Intérprete e tradutor de língua de sinais', NULL),
+(38, 'Investigador de Polícia', NULL),
+(39, 'Investigador particular', NULL),
+(40, 'Jangadeiro', NULL),
+(41, 'Jardineiro', NULL),
+(42, 'Jogador de badminton', NULL),
+(43, 'Jogador de basquete', NULL),
+(44, 'Jogador de bocha', NULL),
+(45, 'Jogador de boliche', NULL),
+(46, 'Jogador de futebol', NULL),
+(47, 'Jogador de golfe', NULL),
+(48, 'Jogador de handebol', NULL),
+(49, 'Jogador de hóquei', NULL),
+(50, 'Jogador de tênis de mesa', NULL),
+(51, 'Jogador de vôlei', NULL),
+(52, 'Jóquei', NULL),
+(53, 'Jornaleiro', NULL),
+(54, 'Jornalista', NULL),
+(55, 'Judoca', NULL),
+(56, 'Juiz de direito', NULL),
+(57, 'Juiz de futebol', NULL),
+(58, 'Juiz ou árbitro de futebol', NULL),
+(59, 'Karateca', NULL),
+(60, 'Kite-surfer', NULL),
+(61, 'Laboratorista', NULL),
+(62, 'Lactarista hospitalar', NULL),
+(63, 'Lamboteiro', NULL),
+(64, 'Lancheiro', NULL),
+(65, 'Lanterneiro', NULL),
+(66, 'Lapidário', NULL),
+(67, 'Lavador', NULL),
+(68, 'Lavador de veículos', NULL),
+(69, 'Leão de chácara', NULL),
+(70, 'Leiloeiro', NULL),
+(71, 'Leiteiro', NULL),
+(72, 'Lenhador', NULL),
+(73, 'Letrista', NULL),
+(74, 'Levantador de peso', NULL),
+(75, 'Líder comunitário', NULL),
+(76, 'Limpador de vidros', NULL),
+(77, 'Lixeiro/Coletor de lixo', NULL),
+(78, 'Locutor', NULL),
+(79, 'Lubrificador de máquinas', NULL),
+(80, 'Lutador de jiu-jitsu', NULL),
+(81, 'Lutador de karatê', NULL),
+(82, 'Lutador de kung fu', NULL),
+(83, 'Lutador de luta livre', NULL),
+(84, 'Lutador de taekwondo', NULL),
+(85, 'Luthier', NULL),
+(86, 'Mãe social', NULL),
+(87, 'Maestro', NULL),
+(88, 'Mágico', NULL),
+(89, 'Maitre', NULL),
+(90, 'Major', NULL),
+(91, 'Manicure', NULL),
+(92, 'Manobrista', NULL),
+(93, 'Maquiador', NULL),
+(94, 'Maquinista', NULL),
+(95, 'Marcador de luz', NULL),
+(96, 'Marceneiro', NULL),
+(97, 'Marechal', NULL),
+(98, 'Marinheiro', NULL),
+(99, 'Marketeiro', NULL),
+(100, 'Massagista', NULL),
+(101, 'Massoterapeuta', NULL),
+(102, 'Matemático', NULL),
+(103, 'Mecânico', NULL),
+(104, 'Mecânico de vôo', NULL),
+(105, 'Mecanógrafo', NULL),
+(106, 'Médico', NULL),
+(107, 'Médico cirurgião', NULL),
+(108, 'Médico geneticista', NULL),
+(109, 'Médico legista', NULL),
+(110, 'Médico nuclear', NULL),
+(111, 'Médico cardiologista', NULL),
+(112, 'Médico pediatra', NULL),
+(113, 'Médico clinico', NULL),
+(114, 'Médico oftalmologista', NULL),
+(115, 'Médico do trabalho', NULL),
+(116, 'Meeiro', NULL),
+(117, 'Mensageiro', NULL),
+(118, 'Meredeira', NULL),
+(119, 'Mergulhador', NULL),
+(120, 'Mestre cervejeiro', NULL),
+(121, 'Mestre-de-obras', NULL),
+(122, 'Metalúrgico', NULL),
+(123, 'Meteorologista', NULL),
+(124, 'Microfonista', NULL),
+(125, 'Militar da Aeronáutica', NULL),
+(126, 'Militar da Marinha', NULL),
+(127, 'Militar do Exército', NULL),
+(128, 'Ministro', NULL),
+(129, 'Modelista', NULL),
+(130, 'Modelo', NULL),
+(131, 'Moldador', NULL),
+(132, 'Moldureiro', NULL),
+(133, 'Moleiro', NULL),
+(134, 'Montador', NULL),
+(135, 'Montador de negativos', NULL),
+(136, 'Motofrete', NULL),
+(137, 'Motorista', NULL),
+(138, 'Mototaxista', NULL),
+(139, 'Museólogo', NULL),
+(140, 'Músico', NULL),
+(141, 'Musicoterapeuta', NULL),
+(142, 'Nadador', NULL),
+(143, 'Naturólogo', NULL),
+(144, 'Navegador', NULL),
+(145, 'Necromaquiador', NULL),
+(146, 'Nefrologista', NULL),
+(147, 'Neonatologista', NULL),
+(148, 'Neurocirurgião', NULL),
+(149, 'Neurologista', NULL),
+(150, 'Notário', NULL),
+(151, 'Numerólogo', NULL),
+(152, 'Nutricionista', NULL),
+(153, 'Nutrologista', NULL),
+(154, 'Obstetra', NULL),
+(155, 'Oceanógrafo', NULL),
+(156, 'Oculista', NULL),
+(157, 'Odontologista estético', NULL),
+(158, 'Odontologista legal', NULL),
+(159, 'Odontologista preventivo e social', NULL),
+(160, 'Odontopediatra', NULL),
+(161, 'Office-boy', NULL),
+(162, 'Oficial de justiça', NULL),
+(163, 'Oftalmologista', NULL),
+(164, 'Ombudsman', NULL),
+(165, 'Operador de bombas', NULL),
+(166, 'Operador de telemarketing', NULL),
+(167, 'Operador de vídeo', NULL),
+(168, 'Optometrista', NULL),
+(169, 'Orçamentista', NULL),
+(170, 'Orientador educacional', NULL),
+(171, 'Ortesista', NULL),
+(172, 'Ortodontista', NULL),
+(173, 'Ortopedista', NULL),
+(174, 'Ortoptista', NULL),
+(175, 'Otorrinolaringologista', NULL),
+(176, 'Ourives', NULL),
+(177, 'Paginador', NULL),
+(178, 'Paisagista', NULL),
+(179, 'Panfleteiro', NULL),
+(180, 'Panificador/Padeiro', NULL),
+(181, 'Paparazzo', NULL),
+(182, 'Papiloscopista', NULL),
+(183, 'Pára-quedista', NULL),
+(184, 'Paramédico', NULL),
+(185, 'Parteira tradicional', NULL),
+(186, 'Passador', NULL),
+(187, 'Pastilheiro', NULL),
+(188, 'Patinador', NULL),
+(189, 'Patologista', NULL),
+(190, 'Patologista oral', NULL),
+(191, 'Peão de rodeiro', NULL),
+(192, 'Pecuarista', NULL),
+(193, 'Pedagogo', NULL),
+(194, 'Pediatra', NULL),
+(195, 'Pedicure', NULL),
+(196, 'Pedreiro', NULL),
+(197, 'Peixeiro', NULL),
+(198, 'Penhorista', NULL),
+(199, 'Percursionista', NULL),
+(200, 'Perfumista', NULL),
+(201, 'Perfusionista', NULL),
+(202, 'Perito criminal', NULL),
+(203, 'Perito judicial', NULL),
+(204, 'Personal stylist', NULL),
+(205, 'Personal trainer', NULL),
+(206, 'Pescador', NULL),
+(207, 'Pesquisador', NULL),
+(208, 'Petroleiro', NULL),
+(209, 'Pianista', NULL),
+(210, 'Piloto automobilístico', NULL),
+(211, 'Piloto de avião', NULL),
+(212, 'Pintor', NULL),
+(213, 'Pizzaiolo', NULL),
+(214, 'Plastimodelista', NULL),
+(215, 'Pneumologista', NULL),
+(216, 'Podólogo', NULL),
+(217, 'Policial civil', NULL),
+(218, 'Policial federal', NULL),
+(219, 'Policial militar', NULL),
+(220, 'Polidor de produção', NULL),
+(221, 'Político', NULL),
+(222, 'Porteiro', NULL),
+(223, 'Portuário', NULL),
+(224, 'Prático', NULL),
+(225, 'Prefeito', NULL),
+(226, 'Prensista', NULL),
+(227, 'Preparador de máquinas', NULL),
+(228, 'Presidente da República', NULL),
+(229, 'Procurador de justiça', NULL),
+(230, 'Produtor de audio visual', NULL),
+(231, 'Produtor de eventos', NULL),
+(232, 'Produtor de multimídia', NULL),
+(233, 'Produtor editorial', NULL),
+(234, 'Produtor fonográfico', NULL),
+(235, 'Produtor musical', NULL),
+(236, 'Professor', NULL),
+(237, 'Profissional de áudio', NULL),
+(238, 'Profissional de cinema', NULL),
+(239, 'Profissional de comércio exterior', NULL),
+(240, 'Profissional de educação física', NULL),
+(241, 'Profissional de efeitos especiais', NULL),
+(242, 'Profissional de hotelaria', NULL),
+(243, 'Profissional de informática', NULL),
+(244, 'Profissional de linguística', NULL),
+(245, 'Profissional de logística', NULL),
+(246, 'Profissional de manutenção industrial', NULL),
+(247, 'Profissional de marketing', NULL),
+(248, 'Profissional de rádio e tv', NULL),
+(249, 'Profissional de reciclagem', NULL),
+(250, 'Profissional de recursos humanos', NULL),
+(251, 'Profissional de relacionamento com investidores RI', NULL),
+(252, 'Profissional de relações internacionais', NULL),
+(253, 'Profissional de relações públicas', NULL),
+(254, 'Profissional de tecnologia de laticínios', NULL),
+(255, 'Programador', NULL),
+(256, 'Programador de Computador', NULL),
+(257, 'ProgramadorPHP', NULL),
+(258, 'Programador Java', NULL),
+(259, 'Programador C#', NULL),
+(260, 'Programador .NET', NULL),
+(261, 'Programador ASP', NULL),
+(262, 'Programador VB', NULL),
+(263, 'Programador Pascal - Delphi', NULL),
+(264, 'ProgramadorJavascript', NULL),
+(265, 'Programador HTML 5', NULL),
+(266, 'Programador Cobol', NULL),
+(267, 'Programador C++', NULL),
+(268, 'Projetista mecânico', NULL),
+(269, 'Promotor de eventos', NULL),
+(270, 'Promotor de vendas', NULL),
+(271, 'Promotor público/de justiça', NULL),
+(272, 'Protesista', NULL),
+(273, 'Protético dentário', NULL),
+(274, 'Psicólogo', NULL),
+(275, 'Psicomotricista', NULL),
+(276, 'Psicopedagogo', NULL),
+(277, 'Psiquiatra', NULL),
+(278, 'Publicitário', NULL),
+(279, 'Quadrinista', NULL),
+(280, 'Químico', NULL),
+(281, 'Químico farmacêutico', NULL),
+(282, 'Quiropraxista', NULL),
+(283, 'Quitandeiro', NULL),
+(284, 'Radialista', NULL),
+(285, 'Radialista programador', NULL),
+(286, 'Radiologista', NULL),
+(287, 'Radiooperador de vôo', NULL),
+(288, 'Radioterapêutico', NULL),
+(289, 'Rebarbador de metal', NULL),
+(290, 'Recepcionista', NULL),
+(291, 'Recreador', NULL),
+(292, 'Redator', NULL),
+(293, 'Regente', NULL),
+(294, 'Relações públicas', NULL),
+(295, 'Remador', NULL),
+(296, 'Repórter', NULL),
+(297, 'Repositor', NULL),
+(298, 'Representante comercial', NULL),
+(299, 'Restaurador', NULL),
+(300, 'Retificador', NULL),
+(301, 'Reumatologista', NULL),
+(302, 'Revendedor', NULL),
+(303, 'Revisor', NULL),
+(304, 'Roteirista', NULL),
+(305, 'Sacoleira', NULL),
+(306, 'Salgadeira', NULL),
+(307, 'Salva-vidas', NULL),
+(308, 'Sapateiro', NULL),
+(309, 'Sargento', NULL),
+(310, 'Saxofonista', NULL),
+(311, 'Secretária', NULL),
+(312, 'Seguidor de compras', NULL),
+(313, 'Segurança particular', NULL),
+(314, 'Selecionador de pessoal', NULL),
+(315, 'Senador', NULL),
+(316, 'Separador', NULL),
+(317, 'Seringueiro', NULL),
+(318, 'Serralheiro', NULL),
+(319, 'Servente-de-obras', NULL),
+(320, 'Serventuário', NULL),
+(321, 'Sexólogo', NULL),
+(322, 'Síndico', NULL),
+(323, 'Skatista', NULL),
+(324, 'Sociólogo', NULL),
+(325, 'Soldado', NULL),
+(326, 'Soldador', NULL),
+(327, 'Somelier', NULL),
+(328, 'Sonoplasta', NULL),
+(329, 'Subprefeito', NULL),
+(330, 'Supervisor', NULL),
+(331, 'Surfista', NULL),
+(332, 'Sushiman', NULL),
+(333, 'Tabelião', NULL),
+(334, 'Taifeiro', NULL),
+(335, 'Tapeceiro', NULL),
+(336, 'Tatuador', NULL),
+(337, 'Taxidermista/Embalsamador', NULL),
+(338, 'Taxista', NULL),
+(339, 'Tecelão', NULL),
+(340, 'Técnico de gesso', NULL),
+(341, 'Técnico de som', NULL),
+(342, 'Técnico em agropecuária', NULL),
+(343, 'Técnico em arquivo', NULL),
+(344, 'Técnico em aviação', NULL),
+(345, 'Técnico em desporto', NULL),
+(346, 'Técnico em documentação', NULL),
+(347, 'Técnico em edificações', NULL),
+(348, 'Técnico em hardware', NULL),
+(349, 'Técnico em higiene dentária', NULL),
+(350, 'Técnico em óptica', NULL),
+(351, 'Técnico em radiologia', NULL),
+(352, 'Técnico em rede', NULL),
+(353, 'Técnico em segurança do trabalho', NULL),
+(354, 'Técnico em taquigrafia', NULL),
+(355, 'Técnico em tratamento de água', NULL),
+(356, 'Técnico tributarista', NULL),
+(357, 'Tecnólogo em automação industrial', NULL),
+(358, 'Tecnólogo em Ciências das plantas medicinais', NULL),
+(359, 'Tecnólogo em desenvolvimento social', NULL),
+(360, 'Tecnólogo em esporte e lazer', NULL),
+(361, 'Tecnólogo em geoprocessamento', NULL),
+(362, 'Tecnólogo em irrigação e drenagem', NULL),
+(363, 'Tecnólogo em jogos digitais', NULL),
+(364, 'Tecnólogo em navegação fluvial', NULL),
+(365, 'Tecnólogo em negócios imobiliários', NULL),
+(366, 'Tecnólogo em papel e celulose', NULL),
+(367, 'Tecnólogo em processos químicos', NULL),
+(368, 'Tecnólogo em produção de bebidas', NULL),
+(369, 'Tecnólogo em produção moveleira', NULL),
+(370, 'Tecnólogo em produção Sucroalcooleira', NULL),
+(371, 'Tecnólogo em recursos pesqueiros', NULL),
+(372, 'Tecnólogo em rochas ornamentais', NULL),
+(373, 'Tecnólogo em sistemas da informação', NULL),
+(374, 'Tecnólogo em sistemas para internet', NULL),
+(375, 'Tecnólogo em silvicultura', NULL),
+(376, 'Tecnólogo em tecnologia da madeira', NULL),
+(377, 'Telefonista', NULL),
+(378, 'Telegrafista', NULL),
+(379, 'Tenente', NULL),
+(380, 'Tenista', NULL),
+(381, 'Teólogo', NULL),
+(382, 'Terapeuta floral', NULL),
+(383, 'Terapeuta Holístico', NULL),
+(384, 'Terapeuta ocupacional', NULL),
+(385, 'Tesoureiro', NULL),
+(386, 'Timoneiro', NULL),
+(387, 'Tintureiro', NULL),
+(388, 'Topógrafo', NULL),
+(389, 'Torneiro mecânico', NULL),
+(390, 'Torreiro/Torrista', NULL),
+(391, 'Tosador', NULL),
+(392, 'Toxicologista', NULL),
+(393, 'Tradutor', NULL),
+(394, 'Transcritor', NULL),
+(395, 'Transportador', NULL),
+(396, 'Traumatologista', NULL),
+(397, 'Treinador', NULL),
+(398, 'Triatleta', NULL),
+(399, 'Trilheiro ou músico de cinema', NULL),
+(400, 'Trompetista', NULL),
+(401, 'Turismólogo', NULL),
+(402, 'Ufólogo', NULL),
+(403, 'Urbanista', NULL),
+(404, 'Urologista', NULL),
+(405, 'Velejador', NULL),
+(406, 'Vendedor', NULL),
+(407, 'Ventríloquo', NULL),
+(408, 'Vereador', NULL),
+(409, 'Veterinário', NULL),
+(410, 'Vigia parlamentar', NULL),
+(411, 'Vigilante noturno/diurno', NULL),
+(412, 'Violonista', NULL),
+(413, 'Vistoriador de sinistros', NULL),
+(414, 'Viveirista', NULL),
+(415, 'Webdesigner', NULL),
+(416, 'Webmaster', NULL),
+(417, 'Windsurfer', NULL),
+(418, 'Xilógrafo', NULL),
+(419, 'Zelador', NULL),
+(420, 'Zootecnista', NULL),
+(421, 'Acompanhante', NULL),
+(422, 'Açougueiro', NULL),
+(423, 'Acupunturista', NULL),
+(424, 'Adestrador de animais', NULL),
+(425, 'Administrador', NULL),
+(426, 'Administrador de banco de dados DBA', NULL),
+(427, 'Administrador de redes', NULL),
+(428, 'Administrador público', NULL),
+(429, 'Advogado', NULL),
+(430, 'Aeromoça', NULL),
+(431, 'Aeronauta', NULL),
+(432, 'Aeroviário', NULL),
+(433, 'Afiador de ferramentas', NULL),
+(434, 'Agente comunitário de saúde', NULL),
+(435, 'Agente de combate à endemias', NULL),
+(436, 'Agente de defesa sanitária', NULL),
+(437, 'Agente de defesa sanitária animal', NULL),
+(438, 'Agente de viagens', NULL),
+(439, 'Agente funerário', NULL),
+(440, 'Agente penitenciário', NULL),
+(441, 'Agricultor', NULL),
+(442, 'Agrimensor', NULL),
+(443, 'Agrônomo', NULL),
+(444, 'Ajudante de produção', NULL),
+(445, 'Alergologista', NULL),
+(446, 'Alfaiate', NULL),
+(447, 'Almirante', NULL),
+(448, 'Almoxarife', NULL),
+(449, 'Alpinista', NULL),
+(450, 'Ambientalista', NULL),
+(451, 'Ambulante', NULL),
+(452, 'Amolador de ferramentas', NULL),
+(453, 'Analista de sistemas', NULL),
+(454, 'Anestesiologista', NULL),
+(455, 'Angiologista', NULL),
+(456, 'Antropólogo', NULL),
+(457, 'Apicultor', NULL),
+(458, 'Apontador de mão-de-obra', NULL),
+(459, 'Apresentador', NULL),
+(460, 'Árbitro e mediador', NULL),
+(461, 'Argumentista', NULL),
+(462, 'Armador', NULL),
+(463, 'Armeiro', NULL),
+(464, 'Arqueólogo', NULL),
+(465, 'Arquiteto', NULL),
+(466, 'Arquivista', NULL),
+(467, 'Arranjador musical', NULL),
+(468, 'Arrumadeira', NULL),
+(469, 'Artesão', NULL),
+(470, 'Artista de circo', NULL),
+(471, 'Artista plástico', NULL),
+(472, 'Artista/Técnico em espetáculos de diversões', NULL),
+(473, 'Ascensorista', NULL),
+(474, 'Assessor de imprensa', NULL),
+(475, 'Assessor parlamentar', NULL),
+(476, 'Assistente administrativo', NULL),
+(477, 'Assistente de câmera', NULL),
+(478, 'Assistente de direção', NULL),
+(479, 'Assistente de produção', NULL),
+(480, 'Assistente social', NULL),
+(481, 'Astrofísico', NULL),
+(482, 'Astrólogo', NULL),
+(483, 'Astronauta', NULL),
+(484, 'Astrônomo', NULL),
+(485, 'Atendente', NULL),
+(486, 'Atleta de arremesso de peso', NULL),
+(487, 'Atleta de canoagem', NULL),
+(488, 'Atleta de nado sincronizado', NULL),
+(489, 'Atleta de tiro com arco', NULL),
+(490, 'Ator', NULL),
+(491, 'Atuário', NULL),
+(492, 'Auditor', NULL),
+(493, 'Auxiliar administrativo', NULL),
+(494, 'Auxiliar de reprografia', NULL),
+(495, 'Auxiliar de serviços gerais', NULL),
+(496, 'Avalista', NULL),
+(497, 'Aviador', NULL),
+(498, 'Babá', NULL),
+(499, 'Babysitter', NULL),
+(500, 'Bailarina', NULL),
+(501, 'Baixista', NULL),
+(502, 'Balconista', NULL),
+(503, 'Bancário', NULL),
+(504, 'Barbeiro', NULL),
+(505, 'Barman', NULL),
+(506, 'Bartender', NULL),
+(507, 'Baterista', NULL),
+(508, 'Bedel', NULL),
+(509, 'Berçarista', NULL),
+(510, 'Bibliotecário', NULL),
+(511, 'Biblioteconomista', NULL),
+(512, 'Biólogo', NULL),
+(513, 'Biomédico', NULL),
+(514, 'Bioquímico', NULL),
+(515, 'Biotecnólogo', NULL),
+(516, 'Bóia-fria', NULL),
+(517, 'Bombeiro', NULL),
+(518, 'Borracheiro', NULL),
+(519, 'Boticário', NULL),
+(520, 'Boxeador', NULL),
+(521, 'Brigadeiro', NULL),
+(522, 'Broker/Corretor da bolsa de valores', NULL),
+(523, 'Cabeleireiro', NULL),
+(524, 'Cabo', NULL),
+(525, 'Caça-talentos/Olheiro', NULL),
+(526, 'Cadeirinha', NULL),
+(527, 'Cadista', NULL),
+(528, 'Caixa', NULL),
+(529, 'Caldeireiro', NULL),
+(530, 'Cambista', NULL),
+(531, 'Camelô', NULL),
+(532, 'Cameraman', NULL),
+(533, 'Caminhoneiro', NULL),
+(534, 'Cancerologista ou Oncologista', NULL),
+(535, 'Cantor', NULL),
+(536, 'Capataz', NULL),
+(537, 'Capelão', NULL),
+(538, 'Capitão', NULL),
+(539, 'Capoeirista', NULL),
+(540, 'Cardiologista', NULL),
+(541, 'Carnavalesco', NULL),
+(542, 'Carpinteiro', NULL),
+(543, 'Cartazeiro', NULL),
+(544, 'Carteiro', NULL),
+(545, 'Cartógrafo', NULL),
+(546, 'Cartunista', NULL),
+(547, 'Catador de carangueijos', NULL),
+(548, 'Catador de material reciclável', NULL),
+(549, 'Cenógrafo', NULL),
+(550, 'Cenotécnico', NULL),
+(551, 'Ceramista', NULL),
+(552, 'Cerimonialista', NULL),
+(553, 'Chapeiro', NULL),
+(554, 'Chargista', NULL),
+(555, 'Chaveiro', NULL),
+(556, 'Chefe de cozinha', NULL),
+(557, 'Ciclista', NULL),
+(558, 'Cientista', NULL),
+(559, 'Cientista da informação e documentação', NULL),
+(560, 'Cientista de alimentos', NULL),
+(561, 'Cientista político', NULL),
+(562, 'Cientista social', NULL),
+(563, 'Cineasta', NULL),
+(564, 'Cinegrafista', NULL),
+(565, 'Cinematográfo', NULL),
+(566, 'Cirurgião bucal', NULL),
+(567, 'Cirurgião dentista', NULL),
+(568, 'Clap loader', NULL),
+(569, 'Clarinetista', NULL),
+(570, 'Classificador contábil', NULL),
+(571, 'Clínico geral', NULL),
+(572, 'Co-piloto', NULL),
+(573, 'Coach', NULL),
+(574, 'Cobaia Médica', NULL),
+(575, 'Cobrador de ônibus', NULL),
+(576, 'Cobrador de pedágio', NULL),
+(577, 'Coloproctologista', NULL),
+(578, 'Comandante', NULL),
+(579, 'Comerciante', NULL),
+(580, 'Comissário de bordo', NULL),
+(581, 'Compositor', NULL),
+(582, 'Comprador', NULL),
+(583, 'Confeiteiro', NULL),
+(584, 'Conferente de carga e descarga', NULL),
+(585, 'Conferente de expedição', NULL),
+(586, 'Conferente de recebimento', NULL),
+(587, 'Construtor', NULL),
+(588, 'Consultor', NULL),
+(589, 'Consultor de moda', NULL),
+(590, 'Consultor de radiestesia', NULL),
+(591, 'Contábil', NULL),
+(592, 'Contabilista', NULL),
+(593, 'Contador', NULL),
+(594, 'Contatólogo', NULL),
+(595, 'Continuista', NULL),
+(596, 'Contra regra', NULL),
+(597, 'Contramestre em transporte marítimo', NULL),
+(598, 'Controlador de vôo', NULL),
+(599, 'Controller', NULL),
+(600, 'Coordenador', NULL),
+(601, 'Copeiro', NULL),
+(602, 'Coreógrafo', NULL),
+(603, 'Coronel', NULL),
+(604, 'Corredor de atletismo', NULL),
+(605, 'Corregedor de justiça', NULL),
+(606, 'Corretor da bolsa de valores', NULL),
+(607, 'Corretor de imóveis', NULL),
+(608, 'Corretor de seguros', NULL),
+(609, 'Cortador de cana-de-açucar', NULL),
+(610, 'Costureira', NULL),
+(611, 'Coveiro/Sepultador', NULL),
+(612, 'Cozinheira', NULL),
+(613, 'Crítico', NULL),
+(614, 'Cumim', NULL),
+(615, 'Dançarino', NULL),
+(616, 'Datilógrafo', NULL),
+(617, 'Dedetizador', NULL),
+(618, 'Defensor Público', NULL),
+(619, 'Degustador', NULL),
+(620, 'Delegado', NULL),
+(621, 'Dentista', NULL),
+(622, 'Deputado', NULL),
+(623, 'Dermatologista', NULL),
+(624, 'Desembargador de justiça', NULL),
+(625, 'Desenhista', NULL),
+(626, 'Designer de interiores', NULL),
+(627, 'Designer de jóia', NULL),
+(628, 'Designer de moda', NULL),
+(629, 'Designer de produto ou desenhista industrial', NULL),
+(630, 'Designer gráfico', NULL),
+(631, 'Despachante', NULL),
+(632, 'Diagramador', NULL),
+(633, 'Dialoguista', NULL),
+(634, 'Diarista', NULL),
+(635, 'Digitador', NULL),
+(636, 'Diplomata', NULL),
+(637, 'Diretor de cinema', NULL),
+(638, 'Diretor de fotografia', NULL),
+(639, 'Diretor de produção', NULL),
+(640, 'DJ', NULL),
+(641, 'Dogueiro', NULL),
+(642, 'Dublador', NULL),
+(643, 'Dublê', NULL),
+(644, 'Ecólogo', NULL),
+(645, 'Economista', NULL),
+(646, 'Economista doméstico', NULL),
+(647, 'Editor', NULL),
+(648, 'Editor de mesa de corte', NULL),
+(649, 'Educador', NULL),
+(650, 'Educador integrado à saúde pública', NULL),
+(651, 'Eletricista', NULL),
+(652, 'Eletricista de automóveis', NULL),
+(653, 'Embaixador', NULL),
+(654, 'Embalador', NULL),
+(655, 'Embalsamador', NULL),
+(656, 'Empacotador', NULL),
+(657, 'Empregado doméstico', NULL),
+(658, 'Empresário', NULL),
+(659, 'Encanador', NULL),
+(660, 'Encarregado de manutenção predial', NULL),
+(661, 'Endocrinologista', NULL),
+(662, 'Endodontista', NULL),
+(663, 'Enfermeiro', NULL),
+(664, 'Engenheiro acústico', NULL),
+(665, 'Engenheiro aeronáutico', NULL),
+(666, 'Engenheiro agrícola', NULL),
+(667, 'Engenheiro agrimensor', NULL),
+(669, 'Engenheiro ambiental', NULL),
+(670, 'Engenheiro cartográfico', NULL),
+(671, 'Engenheiro civil', NULL),
+(672, 'Engenheiro de alimentos', NULL),
+(673, 'Engenheiro de aquicultura', NULL),
+(674, 'Engenheiro de computação', NULL),
+(675, 'Engenheiro de controle e automação', NULL),
+(676, 'Engenheiro de energia', NULL),
+(677, 'Engenheiro de ergonomia', NULL),
+(678, 'Engenheiro de horticultura', NULL),
+(679, 'Engenheiro de iluminação', NULL),
+(680, 'Engenheiro de manufatura', NULL),
+(681, 'Engenheiro de materiais', NULL),
+(682, 'Engenheiro de minas', NULL),
+(683, 'Engenheiro de petróleo', NULL),
+(684, 'Engenheiro de processos', NULL),
+(685, 'Engenheiro de produção agroindustrial', NULL),
+(686, 'Engenheiro de produto ou produção', NULL),
+(687, 'Engenheiro de projetos', NULL),
+(688, 'Engenheiro de segurança do trabalho', NULL),
+(689, 'Engenheiro de som', NULL),
+(690, 'Engenheiro de supply chain ou logística', NULL),
+(691, 'Engenheiro de telecomunicações', NULL),
+(692, 'Engenheiro de transportes', NULL),
+(693, 'Engenheiro elétrico', NULL),
+(694, 'Engenheiro físico', NULL),
+(695, 'Engenheiro florestal', NULL),
+(696, 'Engenheiro industrial', NULL),
+(697, 'Engenheiro mecânico', NULL),
+(698, 'Engenheiro mecatrônico', NULL),
+(699, 'Engenheiro metalúrgico', NULL),
+(700, 'Engenheiro naval', NULL),
+(701, 'Engenheiro petroquímico', NULL),
+(702, 'Engenheiro químico', NULL),
+(703, 'Engenheiro sanitarista', NULL),
+(704, 'Engenheiro têxtil', NULL),
+(705, 'Engraxate', NULL),
+(706, 'Enólogo', NULL),
+(707, 'Entalhador', NULL),
+(708, 'Epidemiólogo', NULL),
+(709, 'Escoteiro', NULL),
+(710, 'Escritor', NULL),
+(711, 'Escriturário', NULL),
+(712, 'Escrivão', NULL),
+(713, 'Escultor', NULL),
+(714, 'Esgrimista', NULL),
+(715, 'Especialista em agronegócios', NULL),
+(716, 'Espeleologista', NULL),
+(717, 'Estampador de tecidos', NULL),
+(718, 'Estatístico', NULL),
+(719, 'Esteticista', NULL),
+(720, 'Estilista', NULL),
+(721, 'Estivador', NULL),
+(722, 'Estofador', NULL),
+(723, 'Estoquista', NULL),
+(724, 'Farmacêutico', NULL),
+(725, 'Faturista', NULL),
+(726, 'Faxineiro', NULL),
+(727, 'Feirante', NULL),
+(728, 'Ferramenteiro', NULL),
+(729, 'Ferreiro', NULL),
+(730, 'Ferroviário', NULL),
+(731, 'Figurante', NULL),
+(732, 'Figurinista', NULL),
+(733, 'Filósofo', NULL),
+(734, 'Fiscal', NULL),
+(735, 'Físico', NULL),
+(736, 'Físico nuclear', NULL),
+(737, 'Fisiculturista', NULL),
+(738, 'Fisioterapeuta', NULL),
+(739, 'Flanelinha', NULL),
+(740, 'Flautista', NULL),
+(741, 'Florista', NULL),
+(742, 'Fonoaudiólogo', NULL),
+(743, 'Forneiro', NULL),
+(744, 'Fotógrafo', NULL),
+(745, 'Frentista', NULL),
+(746, 'Fresador', NULL),
+(747, 'Fundidor', NULL),
+(748, 'Fundidor de placa de gesso', NULL),
+(749, 'Funileiro', NULL),
+(750, 'Gagsman', NULL),
+(751, 'Gandula', NULL),
+(752, 'Garçom', NULL),
+(753, 'Gari', NULL),
+(754, 'Garimpeiro', NULL),
+(755, 'Gastroenterologista', NULL),
+(756, 'Gastrônomo', NULL),
+(757, 'General', NULL),
+(758, 'Geofísico', NULL),
+(759, 'Geógrafo', NULL),
+(760, 'Geólogo', NULL),
+(761, 'Geradorista', NULL),
+(762, 'Gerente de banco', NULL),
+(763, 'Gerente de inovações ou novos negócios', NULL),
+(764, 'Gerente de riscos em seguros', NULL),
+(765, 'Gerente de vendas', NULL),
+(766, 'Geriatra', NULL),
+(767, 'Gestor ambiental', NULL),
+(768, 'Gestor de qualidade', NULL),
+(769, 'Gestor de recursos humanos', NULL),
+(770, 'Gestor de tecnologia da informação', NULL),
+(771, 'Engenheiro agrônomo', NULL);
 
 -- --------------------------------------------------------
 
 --
--- Estrutura para tabela `profissao_usuario`
+-- Table structure for table `profissao_usuario`
 --
 
 CREATE TABLE `profissao_usuario` (
   `id` int(11) NOT NULL,
-  `fk_profissao` int(11) DEFAULT NULL,
-  `fk_usuario` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `fk_usuario` int(11) NOT NULL,
+  `fk_profissao` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Fazendo dump de dados para tabela `profissao_usuario`
+-- Dumping data for table `profissao_usuario`
 --
 
-INSERT INTO `profissao_usuario` (`id`, `fk_profissao`, `fk_usuario`) VALUES
-(1, 1, 20),
-(2, 1, 20),
-(3, 1, 24),
-(4, 1, 26);
+INSERT INTO `profissao_usuario` (`id`, `fk_usuario`, `fk_profissao`) VALUES
+(1, 2, 243),
+(2, 3, 352),
+(3, 2, 255);
 
 -- --------------------------------------------------------
 
 --
--- Estrutura para tabela `tipo_acesso`
+-- Table structure for table `servico`
+--
+
+CREATE TABLE `servico` (
+  `id` int(11) NOT NULL,
+  `nome` varchar(100) NOT NULL,
+  `fk_categoria` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `servico`
+--
+
+INSERT INTO `servico` (`id`, `nome`, `fk_categoria`) VALUES
+(1, 'Artesanato', 1),
+(2, 'Trico', 1),
+(3, 'Crochê', 1),
+(4, 'Outos', 1),
+(5, 'Fotografia', 2),
+(6, 'Filmagem', 2),
+(7, 'Sonorização', 2),
+(8, 'Produção', 2),
+(9, 'Conversao LP para CD', 2),
+(10, 'Conversão VHS para DVD/Blu Ray', 2),
+(11, 'Recuperação de K7/VHS', 2),
+(12, 'Estúdio de Música', 2),
+(13, 'Sistema de Audio, video Automação', 2),
+(14, 'Outros', 2),
+(15, 'Cabeleleiro', 3),
+(16, 'Manicure', 3),
+(17, 'Pedicure', 3),
+(18, 'Massagem', 3),
+(19, 'Podólogo', 3),
+(20, 'Esteticista', 3),
+(21, 'Barbeiro', 3),
+(22, 'Depilação', 3),
+(23, 'Designer de Sombrancelhas', 3),
+(24, 'Outros', 3),
+(25, 'Pastas, Camistas', 4),
+(26, 'Canetas, Chaveiros', 4),
+(27, 'Adesivos', 4),
+(28, 'Outros', 4),
+(29, 'Comunicação Visual', 5),
+(30, 'Identidade Visual', 5),
+(31, 'Faixas', 5),
+(32, 'Letreiros', 5),
+(33, 'Grafiteiro', 5),
+(34, 'Marketing Digital', 5),
+(35, 'Outros', 5),
+(36, 'Costureira', 6),
+(37, 'Silk Screen', 6),
+(38, 'Alfaiate', 6),
+(39, 'Manutenção de Roupa', 6),
+(40, 'Pequenos Reparos', 6),
+(41, 'Outros', 6),
+(42, 'Persianas', 7),
+(43, 'Toldos', 7),
+(44, 'Papel de Parede', 7),
+(45, 'Cortinas', 7),
+(46, 'Tapetes', 7),
+(47, 'Caspetes', 7),
+(48, 'Designer de Interiores', 7),
+(49, 'Decorador', 7),
+(50, 'Paisagismo', 7),
+(51, 'Decorador', 7),
+(52, 'Jardinagem', 7),
+(53, 'Outros', 7),
+(54, 'Aula Particular', 8),
+(55, 'Aula de Reforço', 8),
+(56, 'Aula de Inglês', 8),
+(57, 'Aula de Alemão', 8),
+(58, 'Aula de Espanhol', 8),
+(59, 'Aula de Italiano', 8),
+(60, 'Aula de Instrumentos Musicais', 8),
+(61, 'Aula Particular de Ballet', 8),
+(62, 'Arte', 8),
+(63, 'Outros', 8),
+(64, 'Consertos em Geral', 9),
+(65, 'Outros', 9),
+(66, 'Conserto em Geral', 10),
+(67, 'Manutenção em Geral', 10),
+(68, 'Outros', 10),
+(69, 'Festas em Geral', 11),
+(70, 'Coffe Break', 11),
+(71, 'Coquetel', 11),
+(72, 'Churrasco', 11),
+(73, 'Organização de Eventos', 11),
+(74, 'Sonorização', 11),
+(75, 'Comes e Bebes', 11),
+(76, 'Mestre de Cerimônia', 11),
+(77, 'Fotógrafo', 11),
+(78, 'Músico', 11),
+(79, 'Locação de Cadeiras, Mesas, Utensílios', 11),
+(80, 'Animador de Festas', 11),
+(81, 'Assessor de Casamento', 11),
+(82, 'Bartender', 11),
+(83, 'Cantos de Cerimonias', 11),
+(84, 'Confeiteiro', 11),
+(85, 'Conzinheiro', 11),
+(86, 'Decoração Para Eventos', 11),
+(87, 'Outros', 11),
+(88, 'Doces e Salgados', 12),
+(89, 'Bolos', 12),
+(90, 'Jantares', 12),
+(91, 'Comida Vegetariana', 12),
+(92, 'Churrasco', 12),
+(93, 'Outros', 12),
+(94, 'Impressão de Panfletos', 13),
+(95, 'Cartões de Visita', 13),
+(96, 'Convites', 13),
+(97, 'Impressos', 13),
+(98, 'Etiquetas', 13),
+(99, 'Logotipos', 13),
+(100, 'Arte Graficas', 13),
+(101, 'Cartunista', 13),
+(102, 'Outros', 13),
+(103, 'Programador', 14),
+(104, 'Web Designer', 14),
+(105, 'Analista de Sistemas', 14),
+(106, 'Equipamentos em Geral', 14),
+(107, 'Web Sites', 14),
+(108, 'Consultoria', 14),
+(109, 'Desenvolvimento de Sistemas', 14),
+(110, 'Redes e Cabeamento', 14),
+(111, 'Conserto de Computadores', 14),
+(112, 'Outros', 14),
+(113, 'Geradores', 15),
+(114, 'Veículos em Geral', 15),
+(115, 'Cadeiras, Mesas e Utensílios', 15),
+(116, 'Banheiro Químico', 15),
+(117, 'Segurança', 15),
+(118, 'Garçom', 15),
+(119, 'Som Para Eventos', 15),
+(120, 'Máquinas de Jogos', 15),
+(121, 'Quadras em Geral', 15),
+(122, 'Casa de Praia', 15),
+(123, 'Sítios em Geral', 15),
+(124, 'Salões em Geral', 15),
+(125, 'Outros', 15),
+(126, 'Reparação em Geral', 16),
+(127, 'Conserto em Geral', 16),
+(128, 'Reforma em Geral', 16),
+(129, 'Pintura em Geral', 16),
+(130, 'Eletricista', 16),
+(131, 'Encanador', 16),
+(132, 'Pedreiro', 16),
+(133, 'Telhadista', 16),
+(134, 'Pisos', 16),
+(135, 'Gesseiro', 16),
+(136, 'Dry Wall', 16),
+(137, 'Rufos e Calhas', 16),
+(138, 'Aparelhos de Ginástica', 16),
+(139, 'Outros', 16),
+(140, 'Conserto de Automoveis', 17),
+(141, 'Conserto de Motocicletas', 17),
+(142, 'Conserto de Motores', 17),
+(143, 'Outros', 17),
+(144, 'Marcenaria', 18),
+(145, 'Montagem', 18),
+(146, 'Móveis Encomendados', 18),
+(147, 'Restauração', 18),
+(148, 'Tapeçaria', 18),
+(149, 'Estofador', 18),
+(150, 'Outros', 18),
+(151, 'Médico', 19),
+(152, 'Advogado', 19),
+(153, 'Engenheiro', 19),
+(154, 'Arquiteto', 19),
+(155, 'Programador', 19),
+(156, 'Web Designer', 19),
+(157, 'Dentista', 19),
+(158, 'Fisioterapeuta', 19),
+(159, 'Massagista', 19),
+(160, 'Designer Comunicação Visual', 19),
+(161, 'Contador', 19),
+(162, 'Personal Trainer', 19),
+(163, 'Personal Stylist', 19),
+(164, 'Personal Organizer', 19),
+(165, 'Outros', 19),
+(166, 'Instalação em Geral', 20),
+(167, 'Conserto em Geral', 20),
+(168, 'Montagem de Câmara Fria', 20),
+(169, 'Outros', 20),
+(170, 'Automotivo', 21),
+(171, 'Residencial', 21),
+(172, 'Pessoal', 21),
+(173, 'Outros', 21),
+(174, 'Diarista', 22),
+(175, 'Faxina', 22),
+(176, 'Limpeza em Geral', 22),
+(177, 'Lavagem de Roupa', 22),
+(178, 'Passar de Roupa', 22),
+(179, 'Cuidador', 22),
+(180, 'Babá', 22),
+(181, 'Outros', 22),
+(182, 'Som Para Eventos', 23),
+(183, 'Som Automotivo', 23),
+(184, 'Instalação de Home Theater', 23),
+(185, 'Outros', 23),
+(186, 'Tradutor', 24),
+(187, 'Tradutor e Intérprete', 24),
+(188, 'Traduções Simultâneas', 24),
+(189, 'Outros', 24),
+(190, 'Mudança', 25),
+(191, 'Ônibus Escolar', 25),
+(192, 'Motorista', 25),
+(193, 'Outros', 25),
+(194, 'Hospedagem Em Casa de Familia', 26),
+(195, 'Hotel', 26),
+(196, 'Motel', 26),
+(197, 'Pousada', 26),
+(198, 'Outros', 26),
+(199, 'Predial', 27),
+(200, 'Tapetes e Carpetes', 27),
+(201, 'Residencial', 27),
+(202, 'Piscina', 27),
+(203, 'Fachadas', 27),
+(204, 'Automotiva', 27),
+(205, 'Pós-Obra', 27),
+(206, 'Caixa D''Agua', 27),
+(207, 'Movéis', 27),
+(208, 'Outros', 27),
+(209, 'Correias Transportadoras', 28),
+(210, 'Borracharia', 28),
+(211, 'Pneus', 28),
+(212, 'Borracha em Geral', 28),
+(213, 'Outros', 28),
+(214, 'Impermeabilização', 29),
+(215, 'Cilindro', 29),
+(216, 'Piso', 29),
+(217, 'Azulejo', 29),
+(218, 'Forros', 29),
+(219, 'Outros', 29),
+(220, 'Telefonia', 30),
+(221, 'Radios e Comunicação', 30),
+(222, 'Teleconferência', 30),
+(223, 'Instalação de Redes de Computadores', 30),
+(224, 'Instalação e Manutenção de Câmeras', 30),
+(225, 'Instalação e Manutenção de Interfones', 30),
+(226, 'Instalação de Cental Telefonica/PABX', 30),
+(227, 'Outros', 30),
+(228, 'Projeto de Jardinagem', 31),
+(229, 'Limpeza e Manutenção de Jardim', 31),
+(230, 'Plantio de Árvore', 31),
+(231, 'Fetilização de Terrenos', 31),
+(232, 'Poda de Árvore', 31),
+(233, 'Adubação Química', 31),
+(234, 'Outros', 31),
+(235, 'Hidraúlica', 32),
+(236, 'Pintura', 32),
+(237, 'Eletrica', 32),
+(238, 'Alvenaria', 32),
+(239, 'Telhadista', 32),
+(240, 'Pedreiro', 32),
+(241, 'Dry Wall', 32),
+(242, 'Azulejista', 32),
+(243, 'Serralheiro', 32),
+(244, 'Outros', 32),
+(245, 'Terapia', 33),
+(246, 'Fisioterapia e RPG', 33),
+(247, 'Tratamento Odontológico', 33),
+(248, 'Clínicas em Geral', 33),
+(249, 'Outros', 33),
+(250, 'Instalação de Rede de Proteção', 34),
+(251, 'Instalação de Tela Mosqueteira', 34),
+(252, 'Instalação de Cerca Elética', 34),
+(253, 'Instalação de Câmera de Segurança', 34),
+(254, 'Instalação de Alarmes', 34),
+(255, 'Monitoramento', 34),
+(256, 'serviço de Segurança', 34),
+(257, 'serviço de Escolta', 34),
+(258, 'Segurança do Trabalho', 34),
+(259, 'Porteiro', 34),
+(260, 'Outros', 34),
+(261, 'Veterinário', 35),
+(262, 'Veterinário em Domicílio', 35),
+(263, 'Banho e Tosa', 35),
+(264, 'Banho e Tosa me Domicílio', 35),
+(265, 'Dog Walker', 35),
+(266, 'Outros', 35),
+(267, 'Outros', 36);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tipo_acesso`
 --
 
 CREATE TABLE `tipo_acesso` (
@@ -5779,7 +6883,7 @@ CREATE TABLE `tipo_acesso` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Fazendo dump de dados para tabela `tipo_acesso`
+-- Dumping data for table `tipo_acesso`
 --
 
 INSERT INTO `tipo_acesso` (`id`, `descricao`) VALUES
@@ -5790,12 +6894,12 @@ INSERT INTO `tipo_acesso` (`id`, `descricao`) VALUES
 -- --------------------------------------------------------
 
 --
--- Estrutura para tabela `usuario`
+-- Table structure for table `usuario`
 --
 
 CREATE TABLE `usuario` (
   `id` int(11) NOT NULL,
-  `nome` varchar(100) CHARACTER SET utf8 NOT NULL,
+  `nome` varchar(100) NOT NULL,
   `email` varchar(100) NOT NULL,
   `senha` varchar(100) NOT NULL,
   `ativo` char(1) NOT NULL,
@@ -5806,76 +6910,92 @@ CREATE TABLE `usuario` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Fazendo dump de dados para tabela `usuario`
+-- Dumping data for table `usuario`
 --
 
 INSERT INTO `usuario` (`id`, `nome`, `email`, `senha`, `ativo`, `nivel_acesso`, `foto`, `tipo_usuario`, `fk_tipo_acesso`) VALUES
-(1, 'Marcilio Silva', 'marcilio@gmail.com', '123456', '1', '1', NULL, '1', 1),
-(2, 'God Silva', 'gold@gmail.com', '123456', '1', '0', NULL, '0', 2),
-(3, 'Gold2 Silva', 'gold2@gmail.com', '123456', '1', '1', NULL, '0', 2),
-(4, 'Gold3 Silva', 'gold3@gmail.com', '123456', '1', '1', NULL, '0', 2),
-(5, 'Gold4 Silva', 'gold4@gmail.com', '123456', '1', '2', NULL, '0', 2),
-(6, 'Gold5 Silva', 'gold5@gmail.com', '123456', '1', '2', NULL, '0', 2),
-(7, 'Fulano silva', 'fulano@gmail.com', '123456', '1', '1', NULL, '2', 1),
-(8, 'teste', 'teste@teste.com', '123456', '1', '1', NULL, '1', 1),
-(9, 'Prestador', 'prestador@gmail.com', '123456', '1', '1', NULL, '1', 3),
-(10, 'Alex', 'alex@teste.com', '123456', '1', '1', NULL, '1', 1),
-(11, 'Alex', 'alex@teste.com', '123456', '1', '1', NULL, '1', 1),
-(12, 'Alex', 'alex@teste.com', '123456', '1', '1', NULL, '1', 1),
-(13, 'Ricardo', 'alex2@teste.com', '123456', '1', '1', NULL, '1', 1),
-(14, 'Alex ', 'alex3@teste.com', '123456', '1', '1', NULL, '1', 1),
-(15, 'Joao', 'alex0@teste.com', '123456', '1', '1', NULL, '2', 1),
-(16, 'Silva', 'alex4@teste.com', '123456', '1', '1', NULL, '1', 1),
-(17, 'Alex', 'alex5@teste.com', '123456', '1', '1', NULL, '2', 1),
-(18, 'Alex Ricardo', 'alex2@gmail.com', '123456', '1', '1', NULL, '1', 3),
-(19, 'Alex', 'alex.ricardo1999@hotmail.com', '123456', '1', '1', NULL, '1', 1),
-(20, 'Alex', 'ricardo@teste.com', '123456', '1', '1', NULL, '1', 3),
-(21, 'Alex', 'alex@teste.com5', '123456', '1', '1', NULL, '1', 1),
-(22, 'Francisco', 'f@teste.com', '123456', '1', '1', 'img_avatar.png', '1', 1),
-(23, 'Marcilio José', 'marcilio2@gmail.com', '123456', '1', '1', NULL, '1', 1),
-(24, 'Alex', 'alex@teste.com2', '123456', '1', '1', NULL, '1', 3),
-(25, 'Marcilio JosÃ©', 'alex56@teste.com', '123456', '1', '1', NULL, '1', 1),
-(26, 'Silva', 'alex526@teste.com', '123456', '1', '1', NULL, '1', 3);
+(1, 'God Silva', 'gold@gmail.com', '123456', '1', '0', NULL, '0', 2),
+(2, 'Prestador1', 'prestador1@gmail.com', '123456', '1', '1', 'img_avatar.png', '1', 3),
+(3, 'prestador2', 'prestador2@gmail.com', '123456', '1', '1', 'img_avatar.png', '1', 3),
+(4, 'Cliente1', 'cliente1@gmail.com', '123456', '1', '1', 'img_avatar.png', '1', 1);
+
+-- --------------------------------------------------------
 
 --
--- Índices de tabelas apagadas
+-- Table structure for table `usuario_servico`
+--
+
+CREATE TABLE `usuario_servico` (
+  `id` int(11) NOT NULL,
+  `descricao` varchar(255) NOT NULL,
+  `fk_usuario` int(11) NOT NULL,
+  `fk_servico` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `usuario_servico`
+--
+
+INSERT INTO `usuario_servico` (`id`, `descricao`, `fk_usuario`, `fk_servico`) VALUES
+(1, 'teste', 2, 103),
+(2, 'teste', 3, 104),
+(3, 'tests', 2, 110);
+
+--
+-- Indexes for dumped tables
 --
 
 --
--- Índices de tabela `cidade`
+-- Indexes for table `categoria_servico`
+--
+ALTER TABLE `categoria_servico`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `cidade`
 --
 ALTER TABLE `cidade`
   ADD PRIMARY KEY (`id`),
   ADD KEY `FKedwmmd3jtkssgrwyugrindb7j` (`estado`);
 
 --
--- Índices de tabela `dado_pessoal`
+-- Indexes for table `cidade_atuacao_servico`
+--
+ALTER TABLE `cidade_atuacao_servico`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `FKbmfsut4yfm2u4vfqvg0l58tk3` (`fk_cidade`),
+  ADD KEY `FKfmfxw22a66uccj61ak75qhbaw` (`fk_usuarioServico`);
+
+--
+-- Indexes for table `dado_pessoal`
 --
 ALTER TABLE `dado_pessoal`
   ADD PRIMARY KEY (`id`),
   ADD KEY `FK5hmgct1my2xgbydokvhrtkufo` (`fk_usuario`);
 
 --
--- Índices de tabela `endereco`
+-- Indexes for table `endereco`
 --
 ALTER TABLE `endereco`
   ADD PRIMARY KEY (`id`),
+  ADD KEY `FKb5igrjkabotyomtpno64ctvfq` (`cidade`),
+  ADD KEY `FK6sc1akd9rxpytcdgf0gsokstv` (`estado`),
   ADD KEY `FK7j7a7vcyqtyafh08k5d1wybbk` (`fk_usuario`);
 
 --
--- Índices de tabela `estado`
+-- Indexes for table `estado`
 --
 ALTER TABLE `estado`
   ADD PRIMARY KEY (`id`);
 
 --
--- Índices de tabela `profissao`
+-- Indexes for table `profissao`
 --
 ALTER TABLE `profissao`
   ADD PRIMARY KEY (`id`);
 
 --
--- Índices de tabela `profissao_usuario`
+-- Indexes for table `profissao_usuario`
 --
 ALTER TABLE `profissao_usuario`
   ADD PRIMARY KEY (`id`),
@@ -5883,108 +7003,166 @@ ALTER TABLE `profissao_usuario`
   ADD KEY `FKbcvkccsdk753a3ov20r5lr90g` (`fk_usuario`);
 
 --
--- Índices de tabela `tipo_acesso`
+-- Indexes for table `servico`
+--
+ALTER TABLE `servico`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `FKr9mj3d5hunjb9lsh5dtu1e53l` (`fk_categoria`);
+
+--
+-- Indexes for table `tipo_acesso`
 --
 ALTER TABLE `tipo_acesso`
   ADD PRIMARY KEY (`id`);
 
 --
--- Índices de tabela `usuario`
+-- Indexes for table `usuario`
 --
 ALTER TABLE `usuario`
   ADD PRIMARY KEY (`id`),
   ADD KEY `FKnd5dh1sobio945c8e93lowv34` (`fk_tipo_acesso`);
 
 --
--- AUTO_INCREMENT de tabelas apagadas
+-- Indexes for table `usuario_servico`
+--
+ALTER TABLE `usuario_servico`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `FKbio5dtvb9vwudltnygabdcoyu` (`fk_servico`),
+  ADD KEY `FKrr708fol3rmgpifijs2t7a0dd` (`fk_usuario`);
+
+--
+-- AUTO_INCREMENT for dumped tables
 --
 
 --
--- AUTO_INCREMENT de tabela `cidade`
+-- AUTO_INCREMENT for table `categoria_servico`
+--
+ALTER TABLE `categoria_servico`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
+--
+-- AUTO_INCREMENT for table `cidade`
 --
 ALTER TABLE `cidade`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5565;
-
 --
--- AUTO_INCREMENT de tabela `dado_pessoal`
+-- AUTO_INCREMENT for table `cidade_atuacao_servico`
+--
+ALTER TABLE `cidade_atuacao_servico`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+--
+-- AUTO_INCREMENT for table `dado_pessoal`
 --
 ALTER TABLE `dado_pessoal`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
-
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
--- AUTO_INCREMENT de tabela `endereco`
+-- AUTO_INCREMENT for table `endereco`
 --
 ALTER TABLE `endereco`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
-
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
--- AUTO_INCREMENT de tabela `estado`
+-- AUTO_INCREMENT for table `estado`
 --
 ALTER TABLE `estado`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
-
 --
--- AUTO_INCREMENT de tabela `profissao`
+-- AUTO_INCREMENT for table `profissao`
 --
 ALTER TABLE `profissao`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=772;
 --
--- AUTO_INCREMENT de tabela `profissao_usuario`
+-- AUTO_INCREMENT for table `profissao_usuario`
 --
 ALTER TABLE `profissao_usuario`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
-
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
--- AUTO_INCREMENT de tabela `tipo_acesso`
+-- AUTO_INCREMENT for table `servico`
+--
+ALTER TABLE `servico`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=268;
+--
+-- AUTO_INCREMENT for table `tipo_acesso`
 --
 ALTER TABLE `tipo_acesso`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
-
 --
--- AUTO_INCREMENT de tabela `usuario`
+-- AUTO_INCREMENT for table `usuario`
 --
 ALTER TABLE `usuario`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+--
+-- AUTO_INCREMENT for table `usuario_servico`
+--
+ALTER TABLE `usuario_servico`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+--
+-- Constraints for dumped tables
+--
 
 --
--- Restrições para dumps de tabelas
---
-
---
--- Restrições para tabelas `cidade`
+-- Constraints for table `cidade`
 --
 ALTER TABLE `cidade`
-  ADD CONSTRAINT `FKedwmmd3jtkssgrwyugrindb7j` FOREIGN KEY (`estado`) REFERENCES `estado` (`id`);
+  ADD CONSTRAINT `FKedwmmd3jtkssgrwyugrindb7j` FOREIGN KEY (`estado`) REFERENCES `estado` (`id`),
+  ADD CONSTRAINT `cidade_ibfk_1` FOREIGN KEY (`estado`) REFERENCES `estado` (`id`);
 
 --
--- Restrições para tabelas `dado_pessoal`
+-- Constraints for table `cidade_atuacao_servico`
+--
+ALTER TABLE `cidade_atuacao_servico`
+  ADD CONSTRAINT `FKbmfsut4yfm2u4vfqvg0l58tk3` FOREIGN KEY (`fk_cidade`) REFERENCES `cidade` (`id`),
+  ADD CONSTRAINT `FKfmfxw22a66uccj61ak75qhbaw` FOREIGN KEY (`fk_usuarioServico`) REFERENCES `usuario_servico` (`id`),
+  ADD CONSTRAINT `cidade_atuacao_servico_ibfk_1` FOREIGN KEY (`fk_cidade`) REFERENCES `cidade` (`id`),
+  ADD CONSTRAINT `cidade_atuacao_servico_ibfk_2` FOREIGN KEY (`fk_usuarioServico`) REFERENCES `usuario_servico` (`id`);
+
+--
+-- Constraints for table `dado_pessoal`
 --
 ALTER TABLE `dado_pessoal`
   ADD CONSTRAINT `FK5hmgct1my2xgbydokvhrtkufo` FOREIGN KEY (`fk_usuario`) REFERENCES `usuario` (`id`),
   ADD CONSTRAINT `dado_pessoal_ibfk_1` FOREIGN KEY (`fk_usuario`) REFERENCES `usuario` (`id`);
 
 --
--- Restrições para tabelas `endereco`
+-- Constraints for table `endereco`
 --
 ALTER TABLE `endereco`
+  ADD CONSTRAINT `FK6sc1akd9rxpytcdgf0gsokstv` FOREIGN KEY (`estado`) REFERENCES `estado` (`id`),
   ADD CONSTRAINT `FK7j7a7vcyqtyafh08k5d1wybbk` FOREIGN KEY (`fk_usuario`) REFERENCES `usuario` (`id`),
-  ADD CONSTRAINT `endereco_ibfk_1` FOREIGN KEY (`fk_usuario`) REFERENCES `usuario` (`id`);
+  ADD CONSTRAINT `FKb5igrjkabotyomtpno64ctvfq` FOREIGN KEY (`cidade`) REFERENCES `cidade` (`id`),
+  ADD CONSTRAINT `endereco_ibfk_1` FOREIGN KEY (`cidade`) REFERENCES `cidade` (`id`),
+  ADD CONSTRAINT `endereco_ibfk_2` FOREIGN KEY (`estado`) REFERENCES `estado` (`id`),
+  ADD CONSTRAINT `endereco_ibfk_3` FOREIGN KEY (`fk_usuario`) REFERENCES `usuario` (`id`);
 
 --
--- Restrições para tabelas `profissao_usuario`
+-- Constraints for table `profissao_usuario`
 --
 ALTER TABLE `profissao_usuario`
   ADD CONSTRAINT `FKbcvkccsdk753a3ov20r5lr90g` FOREIGN KEY (`fk_usuario`) REFERENCES `usuario` (`id`),
-  ADD CONSTRAINT `FKdf1nd8ulxu496nh3si0lqef6n` FOREIGN KEY (`fk_profissao`) REFERENCES `profissao` (`id`);
+  ADD CONSTRAINT `FKdf1nd8ulxu496nh3si0lqef6n` FOREIGN KEY (`fk_profissao`) REFERENCES `profissao` (`id`),
+  ADD CONSTRAINT `profissao_usuario_ibfk_1` FOREIGN KEY (`fk_usuario`) REFERENCES `usuario` (`id`),
+  ADD CONSTRAINT `profissao_usuario_ibfk_2` FOREIGN KEY (`fk_profissao`) REFERENCES `profissao` (`id`);
 
 --
--- Restrições para tabelas `usuario`
+-- Constraints for table `servico`
+--
+ALTER TABLE `servico`
+  ADD CONSTRAINT `FKr9mj3d5hunjb9lsh5dtu1e53l` FOREIGN KEY (`fk_categoria`) REFERENCES `categoria_servico` (`id`),
+  ADD CONSTRAINT `servico_ibfk_1` FOREIGN KEY (`fk_categoria`) REFERENCES `categoria_servico` (`id`);
+
+--
+-- Constraints for table `usuario`
 --
 ALTER TABLE `usuario`
   ADD CONSTRAINT `FKnd5dh1sobio945c8e93lowv34` FOREIGN KEY (`fk_tipo_acesso`) REFERENCES `tipo_acesso` (`id`),
   ADD CONSTRAINT `usuario_ibfk_1` FOREIGN KEY (`fk_tipo_acesso`) REFERENCES `tipo_acesso` (`id`);
-COMMIT;
+
+--
+-- Constraints for table `usuario_servico`
+--
+ALTER TABLE `usuario_servico`
+  ADD CONSTRAINT `FKbio5dtvb9vwudltnygabdcoyu` FOREIGN KEY (`fk_servico`) REFERENCES `servico` (`id`),
+  ADD CONSTRAINT `FKrr708fol3rmgpifijs2t7a0dd` FOREIGN KEY (`fk_usuario`) REFERENCES `usuario` (`id`),
+  ADD CONSTRAINT `usuario_servico_ibfk_1` FOREIGN KEY (`fk_usuario`) REFERENCES `usuario` (`id`),
+  ADD CONSTRAINT `usuario_servico_ibfk_2` FOREIGN KEY (`fk_servico`) REFERENCES `servico` (`id`);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
