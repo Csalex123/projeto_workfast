@@ -11,12 +11,15 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import br.com.ifpe.workfast.model.CategoriaServico;
 import br.com.ifpe.workfast.model.CategoriaServicoDao;
+import br.com.ifpe.workfast.model.Cidade;
+import br.com.ifpe.workfast.model.CidadeDao;
 import br.com.ifpe.workfast.model.DadosPessoais;
 import br.com.ifpe.workfast.model.DadosPessoaisDao;
 import br.com.ifpe.workfast.model.Endereco;
 import br.com.ifpe.workfast.model.EnderecoDao;
 import br.com.ifpe.workfast.model.Estado;
 import br.com.ifpe.workfast.model.EstadoDao;
+import br.com.ifpe.workfast.model.Profissao;
 import br.com.ifpe.workfast.model.Usuario;
 
 @Controller
@@ -59,7 +62,15 @@ public class ClienteController {
 
 	// metodo para redirecionar para o perfil do cliente
 	@RequestMapping("adicionarEndereco")
-	public String adicionarEndereco() {
+	public String adicionarEndereco(Model model, Model modelEstado, Model modelCidade) {
+		
+		EstadoDao daoEstado = new EstadoDao();
+		CidadeDao daoCidade = new CidadeDao();
+		List<Estado> listaEstado = daoEstado.listar();
+		List<Cidade> listaCidade= daoCidade.listar();
+		modelEstado.addAttribute("listaEstado",listaEstado);
+		modelCidade.addAttribute("listaCidade",listaCidade);
+		
 		return "cliente/adicionarEndereco";
 
 	}
@@ -94,11 +105,17 @@ public class ClienteController {
 	// Método que pegara os dados do endereço para enviar para uma página de
 	// edicação
 	@RequestMapping("editarEnderecoCliente")
-	public String edit(@RequestParam("id") Integer id, Model model) {
+	public String edit(@RequestParam("id") Integer id, Model model,  Model modelEstado, Model modelCidade) {
 
 		EnderecoDao dao = new EnderecoDao();
 		Endereco endereco = dao.buscarPorId(id);
-
+		EstadoDao daoEstado = new EstadoDao();
+		CidadeDao daoCidade = new CidadeDao();
+		List<Estado> listaEstado = daoEstado.listar();
+		List<Cidade> listaCidade= daoCidade.listar();
+		
+		modelEstado.addAttribute("listaEstado",listaEstado);
+		modelCidade.addAttribute("listaCidade",listaCidade);
 		model.addAttribute("endereco", endereco);
 
 		return "cliente/alterarEndereco";

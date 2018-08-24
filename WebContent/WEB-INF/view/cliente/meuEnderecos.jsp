@@ -143,16 +143,16 @@
 									<td>${endereco.numeroCasa}</td>
 					
 									<td>
-										<a href="editarEnderecoCliente?id=${endereco.id}"><button class="btn btn-primary" data-toggle="tooltip"
+										<button onclick="editar(${endereco.id})" class="btn btn-primary" data-toggle="tooltip"
 											data-placement="top"  title="Editar Endereço">
 										 <i class="fas fa-edit"></i>
-										</button></a>
+										</button>
 
-										<a href="deleteEnderecoCliente?id=${endereco.id}"><button class="btn btn-danger" class="item"
+										<button onclick="excluir(${endereco.id})" class="btn btn-danger" class="item"
 											data-toggle="tooltip" data-placement="top"
 											title="Apagar Endereço">
 											<i class="fas fa-trash-alt"></i>
-										</button></a>
+										</button>
 									</td>
 									
 								</tr>
@@ -170,7 +170,42 @@
 		</div>
 	</div>
 
+	<script>
+    function excluir(id) {
+			swal({
+			  title: "Você tem certeza?",
+			  text: "Uma vez deletado, você não poderá recuperar esta endereço",
+			  icon: "warning",
+			  buttons: true,
+			  dangerMode: true,
+			})
+			.then((willDelete) => {
+			  if (willDelete) {  
+				window.location = "deleteEnderecoCliente?id="+id;
+			  }
+	
+			});  
+	}
 
+    
+	function editar(id) {
+		swal({
+		  title: "Você tem certeza?",
+		  text: "Você será redirecionado para página de edição",
+		  icon: "info",
+		  buttons: true,
+		  dangerMode: true,
+		})
+		.then((willDelete) => {
+		  if (willDelete) {  
+			window.location = "editarEnderecoCliente?id="+id;
+		  }
+	
+		});  
+	}
+    </script>
+    
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
 	<!-- Jquery JS-->
 	<script

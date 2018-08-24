@@ -164,27 +164,58 @@
 					<section>
 					<h2 style="text-align: center;">Alterar Endereço</h2>
 					<br>
-					
-						<c:if test="${not empty mensagem}">
-							<br><div class="alert alert-success alert-dismissible">
-								<button type="button" class="close" data-dismiss="alert">&times;</button>
-								${mensagem}
-							</div><br>
-						</c:if>
-					<br>
+
+					<c:if test="${not empty mensagem}">
+						<br>
+						<div class="alert alert-success alert-dismissible">
+							<button type="button" class="close" data-dismiss="alert">&times;</button>
+							${mensagem}
+						</div>
+						<br>
+					</c:if> <br>
 
 					<form action="atulizarEndereco" method="post">
-						
-						<input type="hidden" name="id" value="${endereco.id}">
-						<input type="hidden" value="${usuarioLogado.id}" name="usuario">
+
+						<input type="hidden" name="id" value="${endereco.id}"> <input
+							type="hidden" value="${usuarioLogado.idUsuario}" name="usuario">
 
 						<div class="row form-group">
 							<div class="col col-md-3">
 								<label for="select" class="form-control-label">Cep:</label>
 							</div>
 							<div class="col-12 col-md-5">
-								<input type="text" required="" value="${endereco.cep}" maxlength="8" name="cep" id="cep"
+								<input type="text" required="" value="${endereco.cep}"
+									maxlength="8" name="cep" id="cep" class="form-control">
+							</div>
+						</div>
+
+						<!-- estado -->
+						<div class="row form-group">
+							<div class="col col-md-3">
+								<label for="select" class=" form-control-label">Estado:</label>
+							</div>
+							<div class="col-12 col-md-5">
+								<select required="required" id="estado" name="estado"
 									class="form-control">
+									<option value="">Selecione um estado</option>
+									<c:forEach items="${listaEstado}" var="obj">
+
+										<option id="${obj.uf}" value="${obj.idEstado}">${obj.nome}</option>
+									</c:forEach>
+
+								</select>
+							</div>
+						</div>
+
+						<!-- Filtro de Cidade -->
+						<div class="row form-group">
+							<div class="col col-md-3">
+								<label for="select" class=" form-control-label">Cidade:</label>
+							</div>
+							<div class="col-12 col-md-5">
+								
+								<select name="cidade" id="cidade" class="form-control">
+								</select>
 							</div>
 						</div>
 
@@ -194,8 +225,8 @@
 								<label for="select" class=" form-control-label">Rua:</label>
 							</div>
 							<div class="col-12 col-md-5">
-								<input type="text" name="rua" value="${endereco.rua}" id="rua" required=""
-									maxlength="45" class="form-control">
+								<input type="text" name="rua" value="${endereco.rua}" id="rua"
+									required="" maxlength="45" class="form-control">
 							</div>
 						</div>
 
@@ -205,30 +236,13 @@
 								<label for="select" class=" form-control-label">Bairro:</label>
 							</div>
 							<div class="col-12 col-md-5">
-								<input type="text" name="bairro" value="${endereco.bairro}" required="" maxlength="45"
-									id="bairro" class="form-control">
+								<input type="text" name="bairro" value="${endereco.bairro}"
+									required="" maxlength="45" id="bairro" class="form-control">
 							</div>
 						</div>
 
-						<div class="row form-group">
-							<div class="col col-md-3">
-								<label for="select" class=" form-control-label">Cidade:</label>
-							</div>
-							<div class="col-12 col-md-5">
-								<input type="text" name="cidade" required="" value="${endereco.cidade}" maxlength="45"
-									id="cidade" class="form-control">
-							</div>
-						</div>
+					
 
-						<div class="row form-group">
-							<div class="col col-md-3">
-								<label for="select" class=" form-control-label">Estado:</label>
-							</div>
-							<div class="col-12 col-md-5">
-								<input type="text" name="uf" required="" value="${endereco.uf}" maxlength="15" id="uf"
-									class="form-control">
-							</div>
-						</div>
 
 						<div class="row form-group">
 							<div class="col col-md-3">
@@ -236,7 +250,8 @@
 									da Casa:</label>
 							</div>
 							<div class="col-12 col-md-5">
-								<input type="text" name="numeroCasa" value="${endereco.numeroCasa}" required="" maxlength="6"
+								<input type="text" name="numeroCasa"
+									value="${endereco.numeroCasa}" required="" maxlength="6"
 									class="form-control">
 							</div>
 						</div>
@@ -246,7 +261,8 @@
 								<label for="select" class=" form-control-label">Complemento:</label>
 							</div>
 							<div class="col-12 col-md-5">
-								<input type="text" name="complemento" value="${endereco.complemento}" required="" maxlength="45"
+								<input type="text" name="complemento"
+									value="${endereco.complemento}" required="" maxlength="45"
 									class="form-control">
 							</div>
 						</div>
@@ -256,14 +272,14 @@
 								<button type="submit" class="btn btn-primary">Alterar</button>
 							</div>
 						</div>
-						<br><br>
+						<br>
+						<br>
 					</form>
 				</div>
 			</div>
 
 			</section>
-			<br>
-			<br>
+			<br> <br>
 		</div>
 	</div>
 	</div>
@@ -271,7 +287,43 @@
 
 
 
+<script>
 
+var selectOption = document.getElementById("estado");
+selectOption.addEventListener('change', function(){
+	$('#cidade').html("");
+   var id = $(this).val();
+  
+   //encaminhando os valores do formulario para ser processadas 
+     $.post('filtrarCidade', {
+        idEstado:id
+        
+      }, function(dadosJSON){
+    	  var linhas = '';
+    	  linhas += "<option value='' >Selecione </option>";
+			
+
+			$(dadosJSON).each(function (i) {
+			
+				linhas += "<option value='"+dadosJSON[i].idCidade+"'>"+dadosJSON[i].nome+"</option>";
+			
+			});
+			$('#cidade').html(linhas);
+            
+      });
+
+   
+    
+  return false;// impedindo o encaminhamento
+  
+
+
+   
+});
+   
+
+	
+</script>
 
 
 
@@ -320,6 +372,112 @@
 	<script src="<%=request.getContextPath()%>/resources/js/main.js"></script>
 
 
+<script type="text/javascript">
+$(document).ready(
+		function() {
 
+			function limpa_formulário_cep() {
+				// Limpa valores do formulário de cep.
+				$("#endereco").val("");
+				$("#bairro").val("");
+				$("#cidade").val("");
+				$("#uf").val("");
+
+			}
+
+			//Quando o campo cep perde o foco.
+			$("#cep")
+					.blur(
+							function() {
+
+								//Nova variável "cep" somente com dígitos.
+								var cep = $(this).val()
+										.replace(/\D/g, '');
+								
+
+								//Verifica se campo cep possui valor informado.
+								if (cep != "") {
+
+									//Expressão regular para validar o CEP.
+									var validacep = /^[0-9]{8}$/;
+
+									//Valida o formato do CEP.
+									if (validacep.test(cep)) {
+
+										//Preenche os campos com "..." enquanto consulta webservice.
+										$("#endereco").val(
+												"...");
+										$("#bairro").val("...");
+										$("#cidade").val("...");
+										$("#estado").val("...");
+
+										//Consulta o webservice viacep.com.br/
+										$
+												.getJSON(
+														"https://viacep.com.br/ws/"
+																+ cep
+																+ "/json/?callback=?",
+														function(
+																dados) {
+
+															if (!("erro" in dados)) {
+																//Atualiza os campos com os valores da consulta.
+																$(
+																		"#endereco")
+																		.val(
+																				dados.logradouro);
+																$(
+																		"#bairro")
+																		.val(
+																				dados.bairro);
+																var est = document.getElementById(""+dados.uf+"").innerHTML; 
+																var id = document.getElementById(""+dados.uf+"").value;
+																
+																$(
+																"#estado")
+																.val($('option:contains('+est+')').val()
+																		);
+																
+																$.post('filtrarCidade', {
+														            idEstado:id
+														            
+														          }, function(dadosJSON){
+														        	  var linhas = '';
+														        	  linhas += "<option value='' >Selecione </option>";
+																		
+
+																		$(dadosJSON).each(function (i) {
+																		
+																			linhas += "<option value='"+dadosJSON[i].idCidade+"'>"+dadosJSON[i].nome+"</option>";
+																		
+																		});
+																		$('#cidade').html(linhas);
+																		$("#cidade")
+																		.val($('option:contains('+dados.localidade+')').val()
+																				);
+														                
+														          });
+
+															} //end if.
+															else {
+																//CEP pesquisado não foi encontrado.
+																limpa_formulário_cep();
+																alert("CEP não encontrado.");
+															}
+														});
+									} //end if.
+									else {
+										//cep é inválido.
+										limpa_formulário_cep();
+										alert("Formato de CEP inválido.");
+									}
+								} //end if.
+								else {
+									//cep sem valor, limpa formulário.
+									limpa_formulário_cep();
+								}
+							});
+		});
+</script>
 </body>
 </html>

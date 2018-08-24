@@ -197,6 +197,46 @@
 		</div>
 
 	</div>
+	
+		<script>
+		
+		//Falta implementar
+	function bloquear(id) {
+		swal({
+		  title: "Você tem certeza?",
+		  text: "Você bloqueará este prestador de serviço do sistema",
+		  icon: "error",
+		  buttons: true,
+		  dangerMode: true,
+		})
+		.then((willDelete) => {
+		  if (willDelete) {  
+			window.location = "bloquearUsuario?id="+id;
+		  }
+
+		});  
+}
+	
+	
+	function desbloquear(id) {
+		swal({
+		  title: "Você tem certeza?",
+		  text: "Você desbloquerá este prestador de serviço do sistema",
+		  icon: "error",
+		  buttons: true,
+		  dangerMode: true,
+		})
+		.then((willDelete) => {
+		  if (willDelete) {  
+			window.location = "bloquearUsuario?id="+id;
+		  }
+
+		});  
+}
+	</script>
+	
+	<!-- Plugin de alr -->
+	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
 	<!-- Jquery JS-->
 	<script

@@ -18,7 +18,6 @@ public class Cidade {
 	@Column(name="id")
 	private int idCidade;
 	
-	
 	@Column
 	private String nome;
 	

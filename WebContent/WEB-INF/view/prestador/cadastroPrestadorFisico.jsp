@@ -211,10 +211,7 @@
 											name="estado" class="form-control">
 											<option value="">Selecione</option>
 											<c:forEach items="${listaEstado}" var="obj">
-
 												<option id="${obj.uf}" value="${obj.idEstado}">${obj.nome}</option>
-
-
 											</c:forEach>
 
 										</select>
@@ -395,8 +392,7 @@
 		
 	</script>
 	<script type="text/javascript">
-		$(document)
-				.ready(
+		$(document).ready(
 						function() {
 
 							function limpa_formulário_cep() {

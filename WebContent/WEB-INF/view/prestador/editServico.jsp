@@ -224,12 +224,13 @@
 						</div>
 					</div>
 					
-					<div class="form-group text-center">
-									<button class="btn btn-primary" data-toggle="tooltip"
-										data-placement="top" id="btnAlterar" title="Salvar">Alterar</button>
-								</div>
+					
+						<div class="form-group text-center">
+									<button  class="btn btn-primary" data-toggle="tooltip"
+											data-placement="top" id="btnAlterar" title="Salvar">Alterar Serviço</button>
+						</div>
 
-               
+               	
 				</div>
 
 			</div>
@@ -404,9 +405,17 @@
 			// var array = checados.join(',');
 			
             if(idServico == null || idServico == ""){
-            	alert("Selecione um servico.");
+            	swal({
+          		  title: "Selecione um serviço!",
+          		  icon: "error",
+          		  button: "Entendi",
+          		});
             }else if(descricao == null || descricao == ""){
-            	alert("Informe uma descrição do servico.")
+            	swal({
+            		  title: "Informe uma descrição do serviço.",
+            		  icon: "error",
+            		  button: "Entendi",
+            		});
             }else{
             	//encaminhando os valores do formulario para ser processadas 
     			$.post('updateUsuarioServico', {
@@ -419,9 +428,12 @@
     				temp : JSON.stringify(cidadesAtuacao)
 
     			}, function(dadosJSON) {
-
-    				alert("Servico Alterado com sucesso!");
-    				window.location = dadosJSON;
+					
+    				swal("Servico Alterado com sucesso!", "Clique no botão 'Ok' para continuar!", "success")
+					.then((value) => {
+						window.location = dadosJSON;
+					}); 
+    				
 
     			});
 	
@@ -436,7 +448,7 @@
 	
 
 	
-
+	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
 	<!-- Jquery JS-->
 	<script

@@ -103,18 +103,14 @@
 											<td>
 												<div class="table-data-feature">
                                                     
-                                                      <a href="editarCategoriaServico?id=${categoria.idCategoriaServico}" class="item" data-toggle="tooltip"
-														data-placement="top" title="Editar">
-														<i class="zmdi zmdi-edit"></i>
-													  </a>
+                                                    
+                                                    <button onclick="editar(${categoria.idCategoriaServico})" class="item" data-toggle="tooltip"
+														data-placement="top" title="Editar"><i class="zmdi zmdi-edit"></i></button>
                                                     &nbsp;
 													
-
-													<a href="deleteCategoriaServico?id=${categoria.idCategoriaServico}" class="item" data-toggle="tooltip"
-														data-placement="top" title="Excluir">
-														<i class="zmdi zmdi-delete"></i>
-													</a>
-
+													<button onclick="excluir(${categoria.idCategoriaServico})" class="item" data-toggle="tooltip"
+														data-placement="top" title="Excluir"><i class="zmdi zmdi-delete"></i></button>
+														
 
 												</div>
 											</td>
@@ -155,6 +151,44 @@
         </div>
 
     </div>
+    
+     <script>
+    function excluir(id) {
+			swal({
+			  title: "Você tem certeza?",
+			  text: "Uma vez deletado, você não poderá recuperar esta subcategoria",
+			  icon: "warning",
+			  buttons: true,
+			  dangerMode: true,
+			})
+			.then((willDelete) => {
+			  if (willDelete) {  
+				window.location = "deleteCategoriaServico?id="+id;
+			  }
+	
+			});  
+	}
+
+    
+	function editar(id) {
+		swal({
+		  title: "Você tem certeza?",
+		  text: "Você será redirecionado para página de edição",
+		  icon: "info",
+		  buttons: true,
+		  dangerMode: true,
+		})
+		.then((willDelete) => {
+		  if (willDelete) {  
+			window.location = "editarCategoriaServico?id="+id;
+		  }
+	
+		});  
+	}
+    </script>
+    
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    
      <!-- Jquery JS-->
     <script src="<%=request.getContextPath()%>/resources/vendor/jquery-3.2.1.min.js"></script>
     <!-- Bootstrap JS-->

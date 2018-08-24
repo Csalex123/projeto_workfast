@@ -75,10 +75,10 @@
                                 
                                                           
                                     <li>
-                                        <a href="telaServico">Novo</a>
+                                        <a href="telaServico">Categoria</a>
                                     </li>
                                     <li>
-                                        <a href="telaCategoriaServico">Categoria</a>
+                                        <a href="telaCategoriaServico">Subcategoria</a>
                                     </li>
                                    
                                 </ul>
@@ -251,10 +251,10 @@
                                 
                                                           
                                     <li>
-                                        <a href="telaServico">Novo</a>
+                                        <a href="telaServico">Categoria</a>
                                     </li>
                                     <li>
-                                        <a href="telaCategoriaServico">Categoria</a>
+                                        <a href="telaCategoriaServico">subcategoria</a>
                                     </li>
                                    
                                 </ul>

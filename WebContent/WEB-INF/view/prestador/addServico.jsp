@@ -80,6 +80,19 @@
 <script type="text/javascript"
 	src="<%=request.getContextPath()%>/resources/js/prestador/cadastroPrestadorFisico.js"></script>
 
+<style>
+.swal-footer {
+		background-color: rgb(245, 248, 250);
+		margin-top: 32px;
+		border-top: 1px solid #E9EEF1;
+		overflow: hidden;
+	}
+
+	.swal-button {
+		  border: 1px solid #3e549a;
+		  text-shadow: 0px -1px 0px rgba(0, 0, 0, 0.3);
+		}
+</style>
 
 </head>
 
@@ -338,9 +351,18 @@
 			// var array = checados.join(',');
 			
             if(idServico == null || idServico == ""){
-            	alert("Selecione um servico.");
+            	swal({
+            		  title: "Selecione um serviço!",
+            		  icon: "error",
+            		  button: "Entendi",
+            		});
+      
             }else if(descricao == null || descricao == ""){
-            	alert("Informe uma descrição do servico.")
+            	swal({
+          		  title: "Informe uma descrição do serviço.",
+          		  icon: "error",
+          		  button: "Entendi",
+          		});
             }else{
             	//encaminhando os valores do formulario para ser processadas 
     			$.post('saveServico', {
@@ -351,11 +373,12 @@
 
     			}, function(dadosJSON) {
     				if(dadosJSON == true){
-    					alert("Voce ja esta vinculado(a) com esse serviço!");
+    					swal("Voce ja está vinculado(a) com esse serviço!");
     				}else{
-    					 alert("Serviço cadastrado com sucesso!");
-    	    				window.location = "ExibirServicos";	
-    					
+    					swal("Serviço cadastrado!", "Clique no botão 'Ok' para continuar!", "success")
+    					.then((value) => {
+    						window.location = "ExibirServicos";
+    					}); 	    			
     				}
     				
                    
@@ -369,7 +392,8 @@
 		});
 	</script>
 	
-
+	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+	
 	<!-- Jquery JS-->
 	<script
 		src="<%=request.getContextPath()%>/resources/vendor/jquery-3.2.1.min.js"></script>

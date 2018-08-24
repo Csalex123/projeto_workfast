@@ -153,31 +153,23 @@
 											<td>
 												<div class="table-data-feature">
 													
-																										
-
-													
-													<a href="servicosEdit?id=${servicosPrestador.idUsuarioServico}" class="item" data-toggle="tooltip"
+													  <button onclick="editar(${servicosPrestador.idUsuarioServico})" class="item" data-toggle="tooltip"
 														data-placement="top" title="Editar">
-														<i class="zmdi zmdi-edit"></i>
-													  </a>
+															<i class="zmdi zmdi-edit"></i>
+													</button>
 
 													
 
-													<a href="servicoDelete?id=${servicosPrestador.idUsuarioServico}"  class="item" data-toggle="tooltip"
+													<button onclick="excluir(${servicosPrestador.idUsuarioServico})" class="item botao_excluir" data-toggle="tooltip"
 															data-placement="top" title="Excluir">
 															<i class="zmdi zmdi-delete"></i>
-													</a>
-
-													
-
+													</button>
 
 												</div>
 											</td>
 
 										</tr>
 										<tr class="spacer"></tr>
-
-
              			  </c:forEach>					
              		 	</tbody>
 						</table>
@@ -205,7 +197,43 @@
 	<script type="text/javascript">
 	$(document).ready(function(){
 		  $('select').click();
+		  
+		  
+		  
 	  });
+	
+	function excluir(id) {
+ 				swal({
+					  title: "Você tem certeza?",
+					  text: "Uma vez deletado, você não poderá recuperar este serviço",
+					  icon: "warning",
+					  buttons: true,
+					  dangerMode: true,
+					})
+					.then((willDelete) => {
+					  if (willDelete) {  
+						window.location = "servicoDelete?id="+id;
+					  }
+			
+					});  
+	}
+	
+	function editar(id) {
+			swal({
+			  title: "Você tem certeza?",
+			  text: "Você será redirecionado para página de edição",
+			  icon: "info",
+			  buttons: true,
+			  dangerMode: true,
+			})
+			.then((willDelete) => {
+			  if (willDelete) {  
+				window.location = "servicosEdit?id="+id;
+			  }
+	
+			});  
+}
+	
 	function carregarCidades(idUsuarioServico){
 		$
 		.post(
@@ -234,6 +262,8 @@
 
 	}
 	</script>
+	
+	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
 	<!-- Jquery JS-->
 	<script

@@ -101,18 +101,14 @@
 
 											<td>
 												<div class="table-data-feature">
-                                                    
-                                                      <a href="editarProfissao?id=${profissao.idProfissao}" class="item" data-toggle="tooltip"
-														data-placement="top" title="Editar">
-														<i class="zmdi zmdi-edit"></i>
+                                                      	
+														<button onclick="editar(${profissao.idProfissao})" class="item" data-toggle="tooltip"
+														data-placement="top" title="Editar"><i class="zmdi zmdi-edit"></i></button>
 													  </a>
                                                     &nbsp;
 													
-
-													<a href="deleteProfissao?id=${profissao.idProfissao}" class="item" data-toggle="tooltip"
-														data-placement="top" title="Excluir">
-														<i class="zmdi zmdi-delete"></i>
-													</a>
+													<button onclick="excluir(${profissao.idProfissao})" class="item" data-toggle="tooltip"
+														data-placement="top" title="Excluir"><i class="zmdi zmdi-delete"></i></button>
 
 
 												</div>
@@ -154,6 +150,43 @@
         </div>
 
     </div>
+    <script>
+    function excluir(id) {
+			swal({
+			  title: "Você tem certeza?",
+			  text: "Uma vez deletado, você não poderá recuperar esta profissão",
+			  icon: "warning",
+			  buttons: true,
+			  dangerMode: true,
+			})
+			.then((willDelete) => {
+			  if (willDelete) {  
+				window.location = "deleteProfissao?id="+id;
+			  }
+	
+			});  
+}
+
+    
+function editar(id) {
+	swal({
+	  title: "Você tem certeza?",
+	  text: "Você será redirecionado para página de edição",
+	  icon: "info",
+	  buttons: true,
+	  dangerMode: true,
+	})
+	.then((willDelete) => {
+	  if (willDelete) {  
+		window.location = "editarProfissao?id="+id;
+	  }
+
+	});  
+}
+    </script>
+    
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    
      <!-- Jquery JS-->
     <script src="<%=request.getContextPath()%>/resources/vendor/jquery-3.2.1.min.js"></script>
     <!-- Bootstrap JS-->
