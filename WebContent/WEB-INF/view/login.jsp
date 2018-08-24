@@ -68,7 +68,7 @@
 						<label for="email">E-mail:</label> <input type="text"
 							class="form-control" id="inputLogin"
 							placeholder="Digite  seu e-mail" name="email"
-							value="${usuario.email}" maxlength="20" required="required"
+							value="${usuario.email}" maxlength="60" required="required"
 							tabindex="1">
 					</div>
 

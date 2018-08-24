@@ -108,6 +108,14 @@ create table cidade_atuacao_servico(
     
 );
 
+create table estagios(
+ id int AUTO_INCREMENT PRIMARY KEY,
+ 1estagio bit not null DEFAULT false,
+ 2estagio bit not null DEFAULT false,
+ 3estagio bit not null DEFAULT false,
+ 4estagio bit not null DEFAULT false
+);
+
 
 // insert
 
