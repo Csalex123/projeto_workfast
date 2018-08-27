@@ -4,11 +4,15 @@ import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.google.gson.Gson;
 
 import br.com.ifpe.workfast.model.Cidade;
 import br.com.ifpe.workfast.model.CidadeDao;
@@ -53,20 +57,53 @@ public class indexController {
 	}
 
 	// Método para validar cpf do banco de dados
-	@RequestMapping("procurar_cpf")
+	@RequestMapping("procurar_cpfCnpjCliente")
 	@ResponseBody
-	public String cpfDisponivel(@RequestParam("cpfCnpj") String cpf, DadosPessoaisDao usuario) {
-		Boolean disponivel = usuario.buscarPorCpf(cpf) == null;
+	public String cpfCnpjCLineteDisponivel(@RequestParam("cpfCnpj") String cpf) {
+		DadosPessoaisDao dao = new DadosPessoaisDao();
+		Boolean disponivel = false;
+		if(dao.buscarPorCpfCnpjCliente(cpf) == null) {
+			disponivel = true;
+		}
 		return disponivel.toString();
 	}
 
 	// Método para validar cpf do banco de dados
-	@RequestMapping("procurar_rg")
+	@RequestMapping("procurar_rgIeCliente")
 	@ResponseBody
-	public String procurar_rg(@RequestParam("rgIe") String rg, DadosPessoaisDao usuario) {
-		Boolean disponivel = usuario.buscarPorRG(rg) == null;
+	public String procurar_rgIeCliente(@RequestParam("rgIe") String rg) {
+		DadosPessoaisDao dao = new DadosPessoaisDao();
+		Boolean disponivel = false;
+		if(dao.buscarPorRgIeCliente(rg) == null) {
+			disponivel = true;
+		}
 		return disponivel.toString();
 	}
+
+	
+	// Método para validar cpf do banco de dados
+		@RequestMapping("procurar_cpfCnpjPrestador")
+		@ResponseBody
+		public String cpfCnpjPrestadorDisponivel(@RequestParam("cpfCnpj") String cpf) {
+			DadosPessoaisDao dao = new DadosPessoaisDao();
+			Boolean disponivel=false;
+			if(dao.buscarPorCpfCnpjPrestador(cpf) == null) {
+				disponivel=true;
+			}
+			return disponivel.toString();
+		}
+
+		// Método para validar cpf do banco de dados
+		@RequestMapping("procurar_rgIePrestador")
+		@ResponseBody
+		public String procurar_rgIePrestador(@RequestParam("rgIe") String rg) {
+			DadosPessoaisDao dao = new DadosPessoaisDao();
+			Boolean disponivel = false;
+			if(dao.buscarPorRgIePrestador(rg) == null) {
+				disponivel = true;
+			}
+			return disponivel.toString();
+		}
 
 	// Método para chamar a página de login
 	@RequestMapping("entrar")
@@ -91,11 +128,14 @@ public class indexController {
 	}
 
 	// Método para efetuar o login
-	@RequestMapping("efetuarLogin")
-	public String efetuarLogin(Usuario usuario, HttpSession session, Model model, Model modelEstado, Model modelCidade) {
+	@RequestMapping(value = "efetuarLogin", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+	public @ResponseBody String efetuarLogin(@RequestParam("email") String email,@RequestParam("senha") String senha, HttpSession session) {
 
 		UsuarioDao dao = new UsuarioDao();
 		DadosPessoaisDao dao2 = new DadosPessoaisDao();
+		Usuario usuario = new Usuario();
+		usuario.setEmail(email);
+		usuario.setSenha(senha);
 
 		Usuario usuarioLogado = dao.buscarUsuario(usuario);
 
@@ -110,14 +150,18 @@ public class indexController {
 					session.setAttribute("usuarioLogado", usuarioLogado);
 
 					if (dados == null) {
+						
 						if (usuarioLogado.getTipo_usuario().equals("1")) {
-							return "cliente/cadastroClienteFisico";
+							return new Gson().toJson("cadastroClienteFisico");
+							
 						} else {
-							return "cliente/cadastroClienteJuridico";
+							return new Gson().toJson("cadastroClienteJuridico");
+							
 						}
 					}
 
-					return "cliente/index";
+					return new Gson().toJson("paginaInicialCliente");
+					
 
 				} else if (usuarioLogado.getTipo_acesso().getDescricao().equals(TipoAcesso.getTipoPrestador())) {
 					session.setAttribute("usuarioLogado", usuarioLogado);
@@ -125,38 +169,34 @@ public class indexController {
 					if (dados == null) {
 
 						if (usuarioLogado.getTipo_usuario().equals("1")) {
-							ProfissaoDao daoProfissao = new ProfissaoDao();
-							EstadoDao daoEstado = new EstadoDao();
-							CidadeDao daoCidade = new CidadeDao();
-							List<Profissao> listaProfissao = daoProfissao.listar();
-							List<Estado> listaEstado = daoEstado.listar();
-							List<Cidade> listaCidade= daoCidade.listar();
-							model.addAttribute("listaProfissao", listaProfissao);
-							modelEstado.addAttribute("listaEstado",listaEstado);
-							modelCidade.addAttribute("listaCidade",listaCidade);
-							return "forward:primeiroAcessoFisico";
+							
+							
+							return new Gson().toJson("cadastroPrestadorFisico");
+						
 						} else {
-							return "prestador/cadastroPrestadorJuridico";
+						
+							return new Gson().toJson("cadastroPrestadorJuridico");
 						}
 					}
-					return "prestador/index";
+					return new Gson().toJson("paginaInicialPrestador");
+					
 				} else if (usuarioLogado.getTipo_acesso().getDescricao().equals(TipoAcesso.getTipoAdministrador())) {
 					session.setAttribute("usuarioLogado", usuarioLogado);
-					return "administrador/index";
+					return new Gson().toJson("paginaInicial");
 				}
 
 			} else {
 
-				model.addAttribute("msg", "Seu acesso ao sistema esta bloqueado temporariamente!");
-
-				return "login";
+				//model.addAttribute("msg", "Seu acesso ao sistema esta bloqueado temporariamente!");
+                
+				return new Gson().toJson("blocked");
 
 			}
 
 		}
-		model.addAttribute("msg", "Não foi encontrado o usuário com o login e senha informados.");
+		//model.addAttribute("msg", "Não foi encontrado o usuário com o login e senha informados.");
 
-		return "login";
+		return new Gson().toJson("notFoud");
 	}
 
 	// metodo para encerra a sessao do usuario no sistema

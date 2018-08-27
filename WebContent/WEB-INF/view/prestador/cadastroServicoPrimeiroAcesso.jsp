@@ -79,6 +79,7 @@
 <!-- Código JavaScript desta Página(Página de cadastro) -->
 <script type="text/javascript"
 	src="<%=request.getContextPath()%>/resources/js/prestador/cadastroPrestadorFisico.js"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
 
 </head>
@@ -312,7 +313,13 @@
 
     			}, function(dadosJSON) {
 
-    				window.location = dadosJSON;
+    				 swal("Serviço cadastrado com sucesso.","","success")
+		        	  .then((value) => {
+		        	    swal("Pronto!","Você será redirecionado para pagina Inical!","success").then((value) => {
+		        	    	window.location = dadosJSON;
+		        	    });
+		        	  });
+    				
 
     			});
 	

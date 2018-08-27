@@ -20,30 +20,29 @@ import br.com.ifpe.workfast.model.EnderecoDao;
 import br.com.ifpe.workfast.model.Estado;
 import br.com.ifpe.workfast.model.EstadoDao;
 import br.com.ifpe.workfast.model.Profissao;
+import br.com.ifpe.workfast.model.ProfissaoDao;
 import br.com.ifpe.workfast.model.Usuario;
 
 @Controller
 public class ClienteController {
 	// metodo para redirecionar para pagina inicial
 	@RequestMapping("paginaInicialCliente")
-	public String paginaInical(Model modelEstado, Model modelCategoria, Model modelEndereco, HttpServletRequest request) {
+	public String paginaInical(Model modelEstado, Model modelCategoria, Model modelEndereco,
+			HttpServletRequest request) {
 		Usuario usuario = (Usuario) request.getSession().getAttribute("usuarioLogado");
 
-		
 		EstadoDao daoEstado = new EstadoDao();
 		EnderecoDao dao = new EnderecoDao();
 		CategoriaServicoDao daoCategoria = new CategoriaServicoDao();
 		List<Endereco> endereco = dao.listarEnderecoCliente(usuario.getIdUsuario());
 
-		
 		List<Estado> listaEstado = daoEstado.listar();
 		List<CategoriaServico> listaCategoria = daoCategoria.listar();
-		
+
 		modelEndereco.addAttribute("listaEndereco", endereco);
 		modelEstado.addAttribute("listaEstado", listaEstado);
 		modelCategoria.addAttribute("listaCategoria", listaCategoria);
-		
-		
+
 		return "cliente/index";
 	}
 
@@ -63,14 +62,14 @@ public class ClienteController {
 	// metodo para redirecionar para o perfil do cliente
 	@RequestMapping("adicionarEndereco")
 	public String adicionarEndereco(Model model, Model modelEstado, Model modelCidade) {
-		
+
 		EstadoDao daoEstado = new EstadoDao();
 		CidadeDao daoCidade = new CidadeDao();
 		List<Estado> listaEstado = daoEstado.listar();
-		List<Cidade> listaCidade= daoCidade.listar();
-		modelEstado.addAttribute("listaEstado",listaEstado);
-		modelCidade.addAttribute("listaCidade",listaCidade);
-		
+		List<Cidade> listaCidade = daoCidade.listar();
+		modelEstado.addAttribute("listaEstado", listaEstado);
+		modelCidade.addAttribute("listaCidade", listaCidade);
+
 		return "cliente/adicionarEndereco";
 
 	}
@@ -105,17 +104,17 @@ public class ClienteController {
 	// Método que pegara os dados do endereço para enviar para uma página de
 	// edicação
 	@RequestMapping("editarEnderecoCliente")
-	public String edit(@RequestParam("id") Integer id, Model model,  Model modelEstado, Model modelCidade) {
+	public String edit(@RequestParam("id") Integer id, Model model, Model modelEstado, Model modelCidade) {
 
 		EnderecoDao dao = new EnderecoDao();
 		Endereco endereco = dao.buscarPorId(id);
 		EstadoDao daoEstado = new EstadoDao();
 		CidadeDao daoCidade = new CidadeDao();
 		List<Estado> listaEstado = daoEstado.listar();
-		List<Cidade> listaCidade= daoCidade.listar();
-		
-		modelEstado.addAttribute("listaEstado",listaEstado);
-		modelCidade.addAttribute("listaCidade",listaCidade);
+		List<Cidade> listaCidade = daoCidade.listar();
+
+		modelEstado.addAttribute("listaEstado", listaEstado);
+		modelCidade.addAttribute("listaCidade", listaCidade);
 		model.addAttribute("endereco", endereco);
 
 		return "cliente/alterarEndereco";
@@ -182,4 +181,29 @@ public class ClienteController {
 		return "cliente/5_estagio";
 
 	}
+
+	// Método para encaminhar para o cadastro de primeiro acesso do tipo fisico
+	@RequestMapping("cadastroClienteFisico")
+	public String cadastroClienteFisico(Model model) {
+
+		EstadoDao dao = new EstadoDao();
+		List<Estado> lista = dao.listar();
+		model.addAttribute("listaEstado", lista);
+		return "cliente/cadastroClienteFisico";
+
+	}
+	
+	// Método para encaminhar para o cadastro de primeiro acesso do tipo juridico
+		@RequestMapping("cadastroClienteJuridico")
+		public String cadastroClienteJuridico(Model model, Model model2) {
+
+			ProfissaoDao dao = new ProfissaoDao();
+			List<Profissao> lista = dao.listar();
+			EstadoDao daoEstado = new EstadoDao();
+			List<Estado> listaEstado = daoEstado.listar();
+			model2.addAttribute("listaEstado", listaEstado);
+			model.addAttribute("listaAtaucao", lista);
+			return "cliente/cadastroClienteJuridico";
+
+		}
 }

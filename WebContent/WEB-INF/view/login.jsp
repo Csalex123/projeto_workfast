@@ -16,8 +16,8 @@
 	content="1012288331395-k24u9pj63e593k273179pbtrigshvj2p.apps.googleusercontent.com">
 
 <!-- Fonte Google -->
-<link href="https://fonts.googleapis.com/css?family=PT+Serif"
-	rel="stylesheet">
+ <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+ 
 
 <!-- Jquery -->
 <script
@@ -28,8 +28,6 @@
 <!-- Jquery validate -->
 <script type="text/javascript"
 	src="<%=request.getContextPath()%>/resources/js/jquery.validate.min.js"></script>
-<script type="text/javascript"
-	src="<%=request.getContextPath()%>/resources/js/localization/messages_pt_BR.js"></script>
 
 
 <!-- Código JavaScript desta Página(Página de login) -->
@@ -39,7 +37,7 @@
 <!-- Código css desta Página(Página de cadastro) -->
 <link rel="stylesheet" type="text/css"
 	href="<%=request.getContextPath()%>/resources/css/entrar.css" />
-
+	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
 </head>
 <body>
@@ -62,7 +60,7 @@
 			<div class="panel-body">
 
 
-				<form action="efetuarLogin" method="post" id="form_login">
+				<form action="#" id="form_login">
 
 					<div class="form-group">
 						<label for="email">E-mail:</label> <input type="text"
@@ -204,7 +202,50 @@
 
 		</div>
 	</div>
+	<script type="text/javascript">
+ $(document).ready(function(){
+	 $("#form_login").submit(function() {
 
+		 var email = $("#inputLogin").val();
+	     
+		 var senha = $("#inputSenha").val();
+         
+		 if(email != "" && senha != ""){
+	          $.post("efetuarLogin",{
+		            email:email,
+		            senha:senha,
+		            
+		          }, function(data){
+		             
+		             
+		             if(data == "blocked"){
+		            	 
+		            	 swal("Acesso bloqueado!", "Seu acesso ao sistema esta bloqueado temporariamente!", "error");
+		            	 
+		            	 		            		
+			
+		             }else if(data == "notFoud"){
+		            	 
+		            	 swal("Erro ao efetuar o login!", "Usuário não encontrado", "error");
+		            	 
+							
+		            	 
+		             }else{
+		            	 window.location = data;
+		             }
+		             
+		          });
+
+		      
+		        
+		         
+		       
+			 
+		 }
+		 return false;
+      });
+ });
+</script>
 
 </body>
 </html>

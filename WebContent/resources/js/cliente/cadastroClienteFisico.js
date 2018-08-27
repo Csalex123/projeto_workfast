@@ -12,7 +12,7 @@
 							maxlength: 14,
 							minlength: 14,
 							remote:{
-								url:"procurar_cpf",
+								url:"procurar_cpfCnpjCliente",
 								type:"get",
 								data:{
 									cpfCnpj: function(){
@@ -26,10 +26,10 @@
 
 						rgIe:{
 							required: true,
-							maxlength: 13,
-							minlength: 12,
+							maxlength: 9,
+							minlength: 9,
 							remote:{
-								url:"procurar_rg",
+								url:"procurar_rgIeCliente",
 								type:"get",
 								data:{
 									rgIe: function(){
@@ -76,8 +76,8 @@
 						
 						rgIe:{
 							required: "<span class='glyphicon glyphicon-asterisk'></span> Este campo é obrigatório.",
-							minlength: "O RG deve ter  9 digitos.",
-							maxlength: "O RG deve ter  9 digitos.",
+							minlength: "O RG deve ter  7 digitos.",
+							maxlength: "O RG deve ter  7 digitos.",
 							remote: "<span class='glyphicon glyphicon-remove'></span> Este RG já está cadastrado no sistema."
 							
 						},
@@ -121,7 +121,7 @@
 			 
 			 $("#celular").mask("(99) 9 9999-9999"); 
 			 
-			 $('#rgIe').mask('99.999.999-9')
+			 $('#rgIe').mask('9.999.999')
 		
 
 		});

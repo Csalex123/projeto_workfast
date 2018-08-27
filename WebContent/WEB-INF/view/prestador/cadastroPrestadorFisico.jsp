@@ -1,213 +1,248 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html lang="pt-BR">
+	pageEncoding="ISO-8859-1"%>
 
-<head>
+<!-- Importando a biblioteca Taglib -->
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<!-- Required meta tags-->
 
-<meta name="viewport"
-	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>WorkFast</title>
 
-
-<!-- Title Page-->
-<title>WorkFast - Area do Prestador</title>
-
-<!-- Fontfaces CSS-->
-<link href="<%=request.getContextPath()%>/resources/css/font-face.css"
-	rel="stylesheet" media="all">
-<link
-	href="<%=request.getContextPath()%>/resources/vendor/font-awesome-4.7/css/font-awesome.min.css"
-	rel="stylesheet" media="all">
-<link
-	href="<%=request.getContextPath()%>/resources/vendor/font-awesome-5/css/fontawesome-all.min.css"
-	rel="stylesheet" media="all">
-<link
-	href="<%=request.getContextPath()%>/resources/vendor/mdi-font/css/material-design-iconic-font.min.css"
-	rel="stylesheet" media="all">
-
-<!-- Bootstrap CSS-->
-<link
-	href="<%=request.getContextPath()%>/resources/vendor/bootstrap-4.1/bootstrap.min.css"
-	rel="stylesheet" media="all">
-
-<!-- Vendor CSS-->
-<link
-	href="<%=request.getContextPath()%>/resources/vendor/animsition/animsition.min.css"
-	rel="stylesheet" media="all">
-<link
-	href="<%=request.getContextPath()%>/resources/vendor/bootstrap-progressbar/bootstrap-progressbar-3.3.4.min.css"
-	rel="stylesheet" media="all">
-<link
-	href="<%=request.getContextPath()%>/resources/vendor/wow/animate.css"
-	rel="stylesheet" media="all">
-<link
-	href="<%=request.getContextPath()%>/resources/vendor/css-hamburgers/hamburgers.min.css"
-	rel="stylesheet" media="all">
-<link
-	href="<%=request.getContextPath()%>/resources/vendor/slick/slick.css"
-	rel="stylesheet" media="all">
-<link
-	href="<%=request.getContextPath()%>/resources/vendor/select2/select2.min.css"
-	rel="stylesheet" media="all">
-<link
-	href="<%=request.getContextPath()%>/resources/vendor/perfect-scrollbar/perfect-scrollbar.css"
-	rel="stylesheet" media="all">
+<!-- Boostrap via CDN -->
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 
 
-<!-- Bootstrap CSS-->
-<link
-	href="<%=request.getContextPath()%>/resources/vendor/bootstrap.min.css"
-	rel="stylesheet" media="all">
-
-
-<!-- Main CSS-->
-<link
-	href="<%=request.getContextPath()%>/resources/css/theme-prestador.css"
-	rel="stylesheet" media="all">
+<!-- Fonte Google -->
+<link href="https://fonts.googleapis.com/css?family=PT+Serif"
+	rel="stylesheet">
 
 <!-- Jquery -->
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
+<!-- Jquery Mask -->
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.10/jquery.mask.js"></script>
 
 <!-- Jquery validate -->
 <script type="text/javascript"
 	src="<%=request.getContextPath()%>/resources/js/jquery.validate.min.js"></script>
+<script type="text/javascript"
+	src="<%=request.getContextPath()%>/resources/js/localization/messages_pt_BR.js"></script>
 
-<!-- CÃ³digo JavaScript desta PÃ¡gina(PÃ¡gina de cadastro) -->
+
+<!-- Código JavaScript desta Página(Página de cadastro) -->
 <script type="text/javascript"
 	src="<%=request.getContextPath()%>/resources/js/prestador/cadastroPrestadorFisico.js"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
+<!-- Código css desta Página(Página de cadastro) -->
+<link rel="stylesheet" type="text/css"
+	href="<%=request.getContextPath()%>/resources/css/cadastro.css" />
+<script type="text/javascript">
+
+$(document).ready(function(){
+	$("#form_cadastroCliente").submit(function() {
+	     
+		 if($("input[required='required']").val() != "" && $("select[required='required']").val() != "" ){
+	          
+			   var area = "";  
+			   var celular = $("#celular").val();
+	           var cpfCnpj= $("#cpfCnpj").val();
+	           var dataNascimento= $("#dataNascimento").val();
+	           var nomeFantasia= "";
+	           var razaoSocial= "";
+	           var rgIe= $("#rgIe").val();
+	           var sexo= $("#sexo").val();
+	           var telefone= $("#telefone").val();
+	           var idUsuario= "${usuarioLogado.idUsuario}";
+	           var tipoUsuario= "${usuarioLogado.tipo_usuario}";
+	           var bairro= $("#bairro").val();
+	           var cep= $("#cep").val();
+	           var idCidade= $("#cidade").val();
+	           var complemento = $("#complemento").val();
+	           var idEstado= $("#estado").val();
+	           var numeroCasa= $("#numero").val();
+	           var rua= $("#endereco").val();
+	           
+			 $.post('salvarDadosPrimeiroAcessoPrestador',{
+		           
+				 idUsuario:idUsuario,
+				 cpfCnpj:cpfCnpj,
+				 dataNascimento:dataNascimento,
+				 nomeFantasia:nomeFantasia,
+		         razaoSocial:razaoSocial,
+		         rgIe:rgIe,
+		         sexo:sexo,
+		         telefone:telefone,
+		         celular:celular,
+		         bairro:bairro,
+		         cep:cep,
+		         idCidade:idCidade,
+		         complemento:complemento,
+		         idEstado:idEstado,
+		         numeroCasa:numeroCasa,
+		         rua:rua,
+		         area:area,
+		         tipo:tipoUsuario,
+		          
+		          }, function(data){
+		             
+		        	  swal("Dados cadastrados com sucesso.","","success")
+		        	  .then((value) => {
+		        	    swal("Quase lá! Você sera redirecionado para 2 etapa do cadastro.","Cadastro do servico e a vinculação da area aonde vai ser atuado!").then((value) => {
+		        	    	 window.location = data;
+		        	    });
+		        	  });
+		              
+		             
+		          });
+
+			 
+		 }
+		return false;
+	  });
+});
+
+</script>
 </head>
-<body class="animsition">
-	<div class="page-wrapper">
 
-		<div class="container">
-			<div class="login-wrap">
-				<div class="login-content" style="width: 600px;">
+<div class="page-wrapper">
 
-					<div class="login-logo">
-						<a href="#"> <img
-							src="<%=request.getContextPath()%>/resources/img/logo_workfast.png"
-							class="img-responsive">
+	<div class="container">
+		<div class="login-wrap">
+			<div class="login-content" style="width: 600px; margin:0 auto; float: none;">
 
-						</a>
+				<div class="login-logo">
+					<a href="#"> <img
+						src="<%=request.getContextPath()%>/resources/img/logo_workfast.png"
+						class="img-responsive">
+
+					</a>
+				</div><br>
+				
+				<div style="margin-bottom: 20px;">
+						<center>Olá ${usuarioLogado.nome}! Antes de ter acesso ao
+							sistema informe algumas informações no formulario abaixo.</center>
+				</div>
+
+				<!-- Formulário de cadastro-->
+
+				<div class="login-form">
+					<form id="form_cadastroCliente" >
+						<div class="row">	
+						<div class="col-md-12 col-lg-12">
+							<div class="form-group" >
+								<label>Profissão</label> <select required="required" id="atuacao"
+											name="area" class="form-control">
+											<option value="">Selecione</option>
+											<c:forEach items="${listaAtaucao}" var="obj">
+												<option id="${obj.idProfissao}" value="${obj.idProfissao}">${obj.nome}</option>
+											</c:forEach>
+
+										</select>
+							</div>
+						</div>
 					</div>
-					<div style="margin-bottom: 20px;">
-						<center>OlÃ¡, ${usuarioLogado.nome}! Antes de ter acesso
-							ao sistema informe algumas informaÃ§Ãµes no formulario abaixo.</center>
-					</div>
-					<div class="login-form">
-						<form
-							action="cadastrarDadosPrimeiroAcesso?idTipoAcesso=${usuarioLogado.tipo_acesso.idTipoAcesso}"
-							method="post">
-							<input type="hidden" value="${usuarioLogado.idUsuario}"
-								name="usuario"> <input type="hidden" value=""
-								name="nomeFantasia"> <input type="hidden" value=""
-								name="razaoSocial">
-
+							
+                     <div class="row">
+						<div class="col-md-6 col-lg-6" >
 							<div class="form-group">
-								<label>EspecializaÃ§Ã£o</label> <select required="required"
-									id="profissao" name="profissao" class="form-control">
+								<label for="cpf">CPF:</label> <input type="text"
+									class="form-control" id="cpfCnpj" placeholder="Digite seu cpf"
+									name="cpfCnpj">
+							</div>
+						</div>
+
+						<div class="col-md-6 col-lg-6" >
+							<div class="form-group">
+								<label for="rg">RG:</label> <input type="text"
+									class="form-control" id="rgIe" placeholder="Digite  seu RG"
+									name="rgIe">
+					        </div>
+					    </div>
+					</div>
+
+					<div class="row">
+						<div class="col-md-6 col-lg-6">
+								<div class="form-group">
+									<label for="data_nascimento">Data de Nascimento:</label> <input
+										type="text" class="form-control" id="dataNascimento"
+										placeholder="00/00/0000" required="required" name="dataNascimento">
+								</div>
+							</div>
+						
+
+
+						<div  class="col-md-6 col-lg-6">
+							<div class="form-group">
+								<label for="sexo">Sexo:</label> <select
+									id="sexo" required="required" name="sexo" class="form-control">
 									<option value="">Selecione</option>
-									<c:forEach items="${listaProfissao}" var="obj">
-
-										<option value="${obj.idProfissao}">${obj.nome}</option>
-
-
-									</c:forEach>
-
+									<option value="1">Masculino</option>
+									<option value="2">Feminino</option>
 								</select>
 							</div>
-							<div class="row">
-								<div class="col-md-6 col-lg-6">
-									<div class="form-group">
-										<label>CPF</label> <input required="" id="cpf"
-											class="au-input au-input--full" type="text" name="cpfCnpj"
-											placeholder="Digite seu cpf">
-									</div>
+						</div>
+					</div>
 
-								</div>
-								<div class="col-md-6 col-lg-6">
-									<div class="form-group">
-										<label>RG</label> <input required="" id="rg"
-											class="au-input au-input--full" type="text" name="rgIe"
-											placeholder="Digite seu rg">
-									</div>
-								</div>
+
+                    <div class="row">
+						<div class="col-md-6 col-lg-6" >
+							<div class="form-group" >
+								<label for="telefone">Número Telefone fixo :</label> <input
+									type="text" class="form-control" id="telefone"
+									placeholder="(00) 0000-0000" name="telefone">
 							</div>
+						</div>
 
-							<div class="row">
-								<div class="col-md-6 col-lg-6">
-									<div class="form-group">
-										<label>Sexo</label> <select id="sexo" name="sexo"
-											class="form-control">
-											<option value="">Selecione o seu sexo</option>
-											<option value="1">Masculino</option>
-											<option value="2">Feminino</option>
-										</select>
-									</div>
-
-								</div>
-								<div class="col-md-6 col-lg-6">
-									<div class="form-group">
-										<label>Data de Nascimento</label> <input id="dtNascimento"
-											class="au-input au-input--full" type="text"
-											name="dataNascimento" placeholder="00/00/0000">
-									</div>
-								</div>
+						<div class="col-md-6 col-lg-6">
+							<div class="form-group" >
+								<label for="celular">Número Celular :</label> <input type="text"
+									class="form-control" id="celular" required="required"
+									placeholder="(00) 9 0000-0000" name="celular">
 							</div>
-							<hr>
-							<div class="row">
-								<div class="col-md-6 col-lg-6">
-									<div class="form-group">
-										<label>Telefone</label> <input id="telefone"
-											class="au-input au-input--full" type="text" name="telefone"
-											placeholder="(00) 0000-0000">
-									</div>
-
-								</div>
-								<div class="col-md-6 col-lg-6">
-									<div class="form-group">
-										<label>Celular</label> <input id="celular"
-											class="au-input au-input--full" type="text" name="celular"
-											placeholder="(00) 90000-0000">
-									</div>
-								</div>
-							</div>
-
-
-							<hr>
-							<div class="form-group">
-								<label>Cep</label> <input id="cep"
-									class="au-input au-input--full" type="text" name="cep"
+						</div>
+					</div>
+					
+					<div class="row">	
+						<div class="col-md-12 col-lg-12">
+							<div class="form-group" >
+								<label>Cep</label> <input id="cep" required="required"
+									class="form-control" type="text" name="cep"
 									placeholder="Digite seu CEP">
 							</div>
-							<div class="row">
-								<div class="col-md-6 col-lg-6">
-
-									<div class="form-group">
-										<label>EndereÃ§o</label> <input id="endereco"
-											class="au-input au-input--full" type="text" name="rua"
+						</div>
+					</div>
+						
+					<div class="row">
+						<div class="col-md-6 col-lg-6" >
+							<div class="form-group">
+								<label>Endereço</label> <input id="endereco" required="required"
+											class="form-control" type="text" name="rua"
 											placeholder="Digite seu endereco">
-									</div>
-
-								</div>
-								<div class="col-md-6 col-lg-6">
-									<div class="form-group">
-										<label>Bairro</label> <input id="bairro"
-											class="au-input au-input--full" type="text" name="bairro"
-											placeholder="Digite seu bairro">
-									</div>
-								</div>
 							</div>
-
-							<div class="row">
-								<div class="col-md-6 col-lg-6">
-									<div class="form-group">
-										<label>Estado</label> <select required="required" id="estado"
+						</div>
+						
+						<div class="col-md-6 col-lg-6" >
+							<div class="form-group">
+								<label>Bairro</label> <input id="bairro" required="required"
+											class="form-control" type="text" name="bairro"
+											placeholder="Digite seu bairro">
+							</div>
+						</div>
+					</div>
+						
+					<div class="row">	
+						<div class="col-md-6 col-lg-6" >
+							<div class="form-group">
+								<label>Estado</label> <select required="required" id="estado"
 											name="estado" class="form-control">
 											<option value="">Selecione</option>
 											<c:forEach items="${listaEstado}" var="obj">
@@ -215,295 +250,210 @@
 											</c:forEach>
 
 										</select>
-									</div>
-
-								</div>
-								<div class="col-md-6 col-lg-6">
-
-									<div class="form-group">
-										<label>Cidade</label> <select required="required" id="cidade"
-											name="cidade" class="form-control">
+							</div>
+						</div>
+						
+						<div class="col-md-6 col-lg-6" >
+							<div class="form-group">
+								<label>Cidade</label> <select required="required" id="cidade"
+											class="form-control" name="cidade" class="form-control">
 											
 
 										</select>
-									</div>
-								</div>
 							</div>
-							<div class="row">
-								<div class="col-md-6 col-lg-6">
-									<div class="form-group">
-										<label>Numero</label> <input id="cep"
-											class="au-input au-input--full" type="text" name="numeroCasa"
-											placeholder="Digite o numero">
-									</div>
-								</div>
-								<div class="col-md-6 col-lg-6">
-
-									<div class="form-group">
-										<label>Complemento</label> <input id="complemento"
-											class="au-input au-input--full" type="text"
-											name="complemento" placeholder="Digite seu complemento">
-									</div>
-								</div>
-
-
-							</div>
-
-
-
-							<button class="au-btn au-btn--block au-btn--green m-b-20"
-								type="submit">Cadastrar</button>
-
-						</form>
-
+						</div>
 					</div>
-				</div>
+					<div class="row">
+						<div class="col-md-6 col-lg-6" >
+							<div class="form-group" >
+								<label>Numero</label> <input id="numero" required="required"
+											class="form-control" type="text" name="numeroCasa"
+											placeholder="Digite o numero">
+							</div>
+						</div>
+							
+						<div class="col-md-6 col-lg-6">
+							<div class="form-group" >
+								<label>Complemento</label> <input id="complemento"
+											class="form-control" type="text"
+											name="complemento" placeholder="Digite seu complemento">
+							</div>
+						</div>
+					</div>
+						
+                     <div class="row">
+						<div class="col-md-12 col-lg-12"><br>
+							<button style="width: 100%" type="submit" id="button_cadastrar"
+								class="btn btn-primary">
+								<span class="glyphicon glyphicon-ok"></span> Cadastrar
+							</button>
+						</div>
+					 </div>
 
+
+
+					</form>
+
+				</div>
 			</div>
 		</div>
-
-
 	</div>
+</div>
 
-	<!-- Jquery JS-->
-	<script type="text/javascript">
+
+	<script type="text/javascript">	
+ $(document).ready(function(){
 	
-	var selectOption = document.getElementById("estado");
-    selectOption.addEventListener('change', function(){
-    	$('#cidade').html("");
-       var id = $(this).val();
-      
-       //encaminhando os valores do formulario para ser processadas 
-         $.post('filtrarCidade', {
-            idEstado:id
-            
-          }, function(dadosJSON){
-        	  var linhas = '';
-        	  linhas += "<option value='' >Selecione </option>";
-				
+	 var selectOption = document.getElementById("estado");
+	    selectOption.addEventListener('change', function(){
+	    	$('#cidade').html("");
+	       var id = $(this).val();
+	      
+	       //encaminhando os valores do formulario para ser processadas 
+	         $.post('filtrarCidade', {
+	            idEstado:id
+	            
+	          }, function(dadosJSON){
+	        	  var linhas = '';
+	        	  linhas += "<option value='' >Selecione </option>";
+					
 
-				$(dadosJSON).each(function (i) {
-				
-					linhas += "<option value='"+dadosJSON[i].idCidade+"'>"+dadosJSON[i].nome+"</option>";
-				
-				});
-				$('#cidade').html(linhas);
-                
-          });
+					$(dadosJSON).each(function (i) {
+					
+						linhas += "<option value='"+dadosJSON[i].idCidade+"'>"+dadosJSON[i].nome+"</option>";
+					
+					});
+					$('#cidade').html(linhas);
+	                
+	          });
 
-       
-        
-      return false;// impedindo o encaminhamento
-      
-
-
-       
-    });
+	       
+	        
+	      return false;// impedindo o encaminhamento
+	      
 
 
-	
-	</script>
-	<script
-		src="<%=request.getContextPath()%>/resources/vendor/jquery-3.2.1.min.js"></script>
-	<!-- Bootstrap JS-->
-	<script
-		src="<%=request.getContextPath()%>/resources/vendor/bootstrap-4.1/popper.min.js"></script>
-	<script
-		src="<%=request.getContextPath()%>/resources/vendor/bootstrap-4.1/bootstrap.min.js"></script>
-	<!-- Vendor JS       -->
-	<script
-		src="<%=request.getContextPath()%>/resources/vendor/slick/slick.min.js">
-		
-	</script>
-	<script
-		src="<%=request.getContextPath()%>/resources/vendor/wow/wow.min.js"></script>
-	<script
-		src="<%=request.getContextPath()%>/resources/vendor/animsition/animsition.min.js"></script>
-	<script
-		src="<%=request.getContextPath()%>/resources/vendor/bootstrap-progressbar/bootstrap-progressbar.min.js">
-		
-	</script>
-	<script
-		src="<%=request.getContextPath()%>/resources/vendor/counter-up/jquery.waypoints.min.js"></script>
-	<script
-		src="<%=request.getContextPath()%>/resources/vendor/counter-up/jquery.counterup.min.js">
-		
-	</script>
-	<script
-		src="<%=request.getContextPath()%>/resources/vendor/circle-progress/circle-progress.min.js"></script>
-	<script
-		src="<%=request.getContextPath()%>/resources/vendor/perfect-scrollbar/perfect-scrollbar.js"></script>
-	<script
-		src="<%=request.getContextPath()%>/resources/vendor/chartjs/Chart.bundle.min.js"></script>
-	<script
-		src="<%=request.getContextPath()%>/resources/vendor/select2/select2.min.js">
-		
-	</script>
-
-	<!-- Main JS-->
-	<script src="<%=request.getContextPath()%>/resources/js/main.js"></script>
+	       
+	    });
 
 
-	<script type="text/javascript"
-		src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.0/jquery.mask.js"></script>
+					function limpa_formulário_cep() {
+						// Limpa valores do formulário de cep.
+						$("#endereco").val("");
+						$("#bairro").val("");
+						$("#cidade").val("");
+						$("#uf").val("");
 
-	<script type="text/javascript">
-		$(document).ready(function() {
-			
-			
-			
-			var $campoCpf = $("#cpf");
-			$campoCpf.mask('000.000.000-00', {
-				reverse : true
-			});
+					}
 
-			var $campoRg = $("#rg");
-			$campoRg.mask('0.000.000', {
-				reverse : true
-			});
+					//Quando o campo cep perde o foco.
+					$("#cep")
+							.blur(
+									function() {
 
-			var $campoData = $("#dtNascimento");
-			$campoData.mask('00/00/0000', {
-				reverse : true
-			});
+										//Nova variável "cep" somente com dígitos.
+										var cep = $(this).val()
+												.replace(/\D/g, '');
+										
 
-			var $campoDataM = $("#celular");
-			$campoDataM.mask('(00) 00000-0000', {
-				reverse : true
-			});
+										//Verifica se campo cep possui valor informado.
+										if (cep != "") {
 
-			var $campoTelefone = $("#telefone");
-			$campoTelefone.mask('(00) 0000-0000', {
-				reverse : true
-			});
+											//Expressão regular para validar o CEP.
+											var validacep = /^[0-9]{8}$/;
 
-			var $campoCep = $("#cep");
-			$campoCep.mask('00.000-000', {
-				reverse : true
-			});
-			
-			
-			
-		});
-		
-		 		
+											//Valida o formato do CEP.
+											if (validacep.test(cep)) {
 
-		
-		
-	</script>
-	<script type="text/javascript">
-		$(document).ready(
-						function() {
+												//Preenche os campos com "..." enquanto consulta webservice.
+												$("#endereco").val(
+														"...");
+												$("#bairro").val("...");
+												$("#cidade").val("...");
+												$("#estado").val("...");
 
-							function limpa_formulÃ¡rio_cep() {
-								// Limpa valores do formulÃ¡rio de cep.
-								$("#endereco").val("");
-								$("#bairro").val("");
-								$("#cidade").val("");
-								$("#uf").val("");
+												//Consulta o webservice viacep.com.br/
+												$
+														.getJSON(
+																"https://viacep.com.br/ws/"
+																		+ cep
+																		+ "/json/?callback=?",
+																function(
+																		dados) {
 
-							}
-
-							//Quando o campo cep perde o foco.
-							$("#cep")
-									.blur(
-											function() {
-
-												//Nova variÃ¡vel "cep" somente com dÃ­gitos.
-												var cep = $(this).val()
-														.replace(/\D/g, '');
-												
-
-												//Verifica se campo cep possui valor informado.
-												if (cep != "") {
-
-													//ExpressÃ£o regular para validar o CEP.
-													var validacep = /^[0-9]{8}$/;
-
-													//Valida o formato do CEP.
-													if (validacep.test(cep)) {
-
-														//Preenche os campos com "..." enquanto consulta webservice.
-														$("#endereco").val(
-																"...");
-														$("#bairro").val("...");
-														$("#cidade").val("...");
-														$("#estado").val("...");
-
-														//Consulta o webservice viacep.com.br/
-														$
-																.getJSON(
-																		"https://viacep.com.br/ws/"
-																				+ cep
-																				+ "/json/?callback=?",
-																		function(
-																				dados) {
-
-																			if (!("erro" in dados)) {
-																				//Atualiza os campos com os valores da consulta.
-																				$(
-																						"#endereco")
-																						.val(
-																								dados.logradouro);
-																				$(
-																						"#bairro")
-																						.val(
-																								dados.bairro);
-																				var est = document.getElementById(""+dados.uf+"").innerHTML; 
-																				var id = document.getElementById(""+dados.uf+"").value;
+																	if (!("erro" in dados)) {
+																		//Atualiza os campos com os valores da consulta.
+																		$(
+																				"#endereco")
+																				.val(
+																						dados.logradouro);
+																		$(
+																				"#bairro")
+																				.val(
+																						dados.bairro);
+																		var est = document.getElementById(""+dados.uf+"").innerHTML; 
+																		var id = document.getElementById(""+dados.uf+"").value;
+																		
+																		$(
+																		"#estado")
+																		.val($('option:contains('+est+')').val()
+																				);
+																		
+																		$.post('filtrarCidade', {
+																            idEstado:id
+																            
+																          }, function(dadosJSON){
+																        	  var linhas = '';
+																        	  linhas += "<option value='' >Selecione </option>";
 																				
-																				$(
-																				"#estado")
-																				.val($('option:contains('+est+')').val()
+
+																				$(dadosJSON).each(function (i) {
+																				
+																					linhas += "<option value='"+dadosJSON[i].idCidade+"'>"+dadosJSON[i].nome+"</option>";
+																				
+																				});
+																				$('#cidade').html(linhas);
+																				$("#cidade")
+																				.val($('option:contains('+dados.localidade+')').val()
 																						);
-																				
-																				$.post('filtrarCidade', {
-																		            idEstado:id
-																		            
-																		          }, function(dadosJSON){
-																		        	  var linhas = '';
-																		        	  linhas += "<option value='' >Selecione </option>";
-																						
+																                
+																          });
 
-																						$(dadosJSON).each(function (i) {
-																						
-																							linhas += "<option value='"+dadosJSON[i].idCidade+"'>"+dadosJSON[i].nome+"</option>";
-																						
-																						});
-																						$('#cidade').html(linhas);
-																						$("#cidade")
-																						.val($('option:contains('+dados.localidade+')').val()
-																								);
-																		                
-																		          });
+																		
+																		
+																		
+																		
+																		 
 
-																				
-																				
-																				
-																				
-																				 
+																	} //end if.
+																	else {
+																		//CEP pesquisado não foi encontrado.
+																		limpa_formulário_cep();
+																		 swal("Cep não encontrado!", "O cep informado não foi encontrado", "error");
+																	}
+																});
+											} //end if.
+											else {
+												//cep é inválido.
+												limpa_formulário_cep();
+												
+												swal("Formato Invalido!", "Formato do cep informado não é valido.", "error");
+											}
+										} //end if.
+										else {
+											//cep sem valor, limpa formulário.
+											limpa_formulário_cep();
+										}
+									});
+				
 
-																			} //end if.
-																			else {
-																				//CEP pesquisado nÃ£o foi encontrado.
-																				limpa_formulÃ¡rio_cep();
-																				alert("CEP nÃ£o encontrado.");
-																			}
-																		});
-													} //end if.
-													else {
-														//cep Ã© invÃ¡lido.
-														limpa_formulÃ¡rio_cep();
-														alert("Formato de CEP invÃ¡lido.");
-													}
-												} //end if.
-												else {
-													//cep sem valor, limpa formulÃ¡rio.
-													limpa_formulÃ¡rio_cep();
-												}
-											});
-						});
-	</script>
+	 //------
+	
+ });
+ 
+</script>
+
+
 
 
 </body>

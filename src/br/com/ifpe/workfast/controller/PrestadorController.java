@@ -25,6 +25,8 @@ import br.com.ifpe.workfast.model.DadosPessoais;
 import br.com.ifpe.workfast.model.DadosPessoaisDao;
 import br.com.ifpe.workfast.model.Endereco;
 import br.com.ifpe.workfast.model.EnderecoDao;
+import br.com.ifpe.workfast.model.Estado;
+import br.com.ifpe.workfast.model.EstadoDao;
 import br.com.ifpe.workfast.model.Profissao;
 import br.com.ifpe.workfast.model.ProfissaoDao;
 import br.com.ifpe.workfast.model.Servico;
@@ -316,9 +318,28 @@ public class PrestadorController {
 	}
 
 	// metodo para redirecionar para pagina de cadastro primerio acesso: tipo fisico
-	@RequestMapping("primeiroAcessoFisico")
-	public String primeiroAcessoFisico() {
+	@RequestMapping("cadastroPrestadorFisico")
+	public String primeiroAcessoFisico(Model model, Model model2) {
+		ProfissaoDao dao = new ProfissaoDao();
+		List<Profissao> lista = dao.listar();
+		EstadoDao daoEstado = new EstadoDao();
+		List<Estado> listaEstado = daoEstado.listar();
+		model2.addAttribute("listaEstado", listaEstado);
+		model.addAttribute("listaAtaucao", lista);
+		
 		return "prestador/cadastroPrestadorFisico";
+	}
+
+	@RequestMapping("cadastroPrestadorJuridico")
+	public String primeiroAcessoJuridico(Model model, Model model2) {
+		ProfissaoDao dao = new ProfissaoDao();
+		List<Profissao> lista = dao.listar();
+		EstadoDao daoEstado = new EstadoDao();
+		List<Estado> listaEstado = daoEstado.listar();
+		model2.addAttribute("listaEstado", listaEstado);
+		model.addAttribute("listaAtaucao", lista);
+		
+		return "prestador/cadastroPrestadorJuridico";
 	}
 
 	@RequestMapping("editarDadosPrestadorFisico")

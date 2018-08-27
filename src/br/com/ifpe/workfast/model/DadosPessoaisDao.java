@@ -9,10 +9,10 @@ import javax.persistence.Query;
 public class DadosPessoaisDao {
 
 	private static final String PERSISTENCE_UNIT = "workfast";
-	
 
-	//Método para buscar verificar se o usuario já tem os dados pessoais cadastrados
-	public DadosPessoais buscarDadosPessoaisUsuario(int idUsuario){
+	// Método para buscar verificar se o usuario já tem os dados pessoais
+	// cadastrados
+	public DadosPessoais buscarDadosPessoaisUsuario(int idUsuario) {
 
 		DadosPessoais obj = null;
 
@@ -22,18 +22,18 @@ public class DadosPessoaisDao {
 		query = manager.createQuery("FROM DadosPessoais WHERE usuario.idUsuario = :paramId");
 		query.setParameter("paramId", idUsuario);
 
-		try{
+		try {
 			obj = (DadosPessoais) query.getSingleResult();
-		}catch(NoResultException nre){
+		} catch (NoResultException nre) {
 			return null;
 		}
-		
+
 		manager.close();
 		factory.close();
 		return obj;
-		
+
 	}
-	
+
 	// Método para incluir os dadosPessoais do usuario
 	public void salvar(DadosPessoais dadosPessoais) {
 		EntityManagerFactory factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT);
@@ -44,7 +44,7 @@ public class DadosPessoaisDao {
 		manager.close();
 		factory.close();
 	}
-	
+
 	public void alterar(DadosPessoais dados) {
 
 		EntityManagerFactory factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT);
@@ -57,54 +57,109 @@ public class DadosPessoaisDao {
 		manager.close();
 		factory.close();
 	}
-	
-	//Método para buscar verificar se o cpf já existe no banco de dados
-			public DadosPessoais buscarPorCpf(String cpf){
 
-				DadosPessoais obj = null;
+	// Método para buscar verificar se o cpf já existe no banco de dados
+	public DadosPessoais buscarPorCpfCnpjCliente(String cpf) {
 
-				EntityManagerFactory factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT);
-				EntityManager manager = factory.createEntityManager();
-				Query query = null;
-				
-				query = manager.createQuery("FROM DadosPessoais WHERE cpfCnpj = :paramCpf");
-				query.setParameter("paramCpf", cpf);
+		DadosPessoais obj = null;
 
-				try{
-					obj = (DadosPessoais) query.getSingleResult();
-				}catch(NoResultException nre){
-					return null;
-				}
-				
-				manager.close();
-				factory.close();
-				return obj;
-				
-			}
-			
-			//Método para buscar verificar se o RG já existe no banco de dados
-			public DadosPessoais buscarPorRG(String rg){
+		EntityManagerFactory factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT);
+		EntityManager manager = factory.createEntityManager();
+		Query query = null;
 
-				DadosPessoais obj = null;
+		query = manager.createQuery(
+				"FROM DadosPessoais dp WHERE dp.cpfCnpj = :paramCpf AND dp.usuario.tipo_acesso.idTipoAcesso = :paramTipo");
+		query.setParameter("paramCpf", cpf);
+		query.setParameter("paramTipo", 1);
 
-				EntityManagerFactory factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT);
-				EntityManager manager = factory.createEntityManager();
-				Query query = null;
-				
-				query = manager.createQuery("FROM DadosPessoais WHERE rgIe = :paramRg");
-				query.setParameter("paramRg", rg);
+		try {
+			obj = (DadosPessoais) query.getSingleResult();
+		} catch (NoResultException nre) {
+			return null;
+		}
 
-				try{
-					obj = (DadosPessoais) query.getSingleResult();
-				}catch(NoResultException nre){
-					return null;
-				}
-				
-				manager.close();
-				factory.close();
-				return obj;
-				
-			}
-	
-	
+		manager.close();
+		factory.close();
+		return obj;
+
+	}
+
+	// Método para buscar verificar se o RG já existe no banco de dados
+	public DadosPessoais buscarPorRgIeCliente(String rg) {
+
+		DadosPessoais obj = null;
+
+		EntityManagerFactory factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT);
+		EntityManager manager = factory.createEntityManager();
+		Query query = null;
+
+		query = manager.createQuery(
+				"FROM DadosPessoais dp WHERE dp.rgIe = :paramRg AND dp.usuario.tipo_acesso.idTipoAcesso = :paramTipo");
+		query.setParameter("paramRg", rg);
+		query.setParameter("paramTipo", 1);
+
+		try {
+			obj = (DadosPessoais) query.getSingleResult();
+		} catch (NoResultException nre) {
+			return null;
+		}
+
+		manager.close();
+		factory.close();
+		return obj;
+
+	}
+
+	// Método para buscar verificar se o cpf já existe no banco de dados
+	public DadosPessoais buscarPorCpfCnpjPrestador(String cpf) {
+
+		DadosPessoais obj = null;
+
+		EntityManagerFactory factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT);
+		EntityManager manager = factory.createEntityManager();
+		Query query = null;
+
+		query = manager.createQuery(
+				"FROM DadosPessoais dp WHERE dp.cpfCnpj = :paramCpf AND dp.usuario.tipo_acesso.idTipoAcesso = :paramTipo");
+		query.setParameter("paramCpf", cpf);
+		query.setParameter("paramTipo", 3);
+
+		try {
+			obj = (DadosPessoais) query.getSingleResult();
+		} catch (NoResultException nre) {
+			return null;
+		}
+
+		manager.close();
+		factory.close();
+		return obj;
+
+	}
+
+	// Método para buscar verificar se o RG já existe no banco de dados
+	public DadosPessoais buscarPorRgIePrestador(String rg) {
+
+		DadosPessoais obj = null;
+
+		EntityManagerFactory factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT);
+		EntityManager manager = factory.createEntityManager();
+		Query query = null;
+
+		query = manager.createQuery(
+				"FROM DadosPessoais dp WHERE dp.rgIe = :paramRg AND dp.usuario.tipo_acesso.idTipoAcesso = :paramTipo");
+		query.setParameter("paramRg", rg);
+		query.setParameter("paramTipo", 3);
+
+		try {
+			obj = (DadosPessoais) query.getSingleResult();
+		} catch (NoResultException nre) {
+			return null;
+		}
+
+		manager.close();
+		factory.close();
+		return obj;
+
+	}
+
 }

@@ -18,7 +18,7 @@
 							maxlength: 18,
 							minlength: 18,
 							remote:{
-								url:"procurar_cpfCnpjCliente",
+								url:"procurar_cpfCnpjPrestador",
 								type:"get",
 								data:{
 									cpfCnpj: function(){
@@ -33,7 +33,7 @@
 							maxlength: 13,
 							minlength: 12,
 							remote:{
-								url:"procurar_rgIeCliente",
+								url:"procurar_rgIePrestador",
 								type:"get",
 								data:{
 									rgIe: function(){
@@ -80,10 +80,8 @@
 						},
 						
 						rgIe:{
-							required: "<span class='glyphicon glyphicon-asterisk'></span> Este campo é obrigatório.",
 							minlength: "O Inscrição estadual deve ter no mínimo 8 caracteres.",
 							maxlength: "O Inscrição estadual deve ter no máximo 8 caracteres.",
-							remote: "<span class='glyphicon glyphicon-remove'></span> Este IE já está cadastrado no sistema."
 							
 						},
 						

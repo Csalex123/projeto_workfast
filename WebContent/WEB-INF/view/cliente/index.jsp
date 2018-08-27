@@ -61,12 +61,11 @@
                                 
                                 <!-- Filtro de estado -->
                                 <div class="row form-group">
-                                    <div class="col col-md-3">
-                                       <label for="select" class=" form-control-label">Estado:</label>
-                                        </div>
-                                            <div class="col-12 col-md-5">
+                                    
+                                            <div class="col-lg-4 col-md-3">
+                                             <label for="select" class=" form-control-label"></label>
                                                 <select name="estado" id="estado" class="form-control">
-                                                        <option value="">Selecione um Estado</option>
+                                                        <option value="">Estado</option>
                                                         
 															<c:forEach items="${listaEstado}" var="obj">
 				
@@ -76,32 +75,17 @@
 															</c:forEach>
                                                 </select>
                                             </div>
-                                     </div>
-                                <!-- Fim do Filtro de estado -->
-
-
-                                <!-- Filtro de Cidade -->
-                                <div class="row form-group">
-                                    <div class="col col-md-3">
-                                       <label for="select" class=" form-control-label">Cidade:</label>
-                                        </div>
-                                            <div class="col-12 col-md-5">
+                                            <div class="col-lg-4 col-md-3">
+                                              <label for="select" class=" form-control-label"></label>
                                                 <select name="cidade" id="cidade" class="form-control">
-                                                       
+                                                       <option value="">Cidade</option>
                                                        
                                                 </select>
                                             </div>
-                                     </div>
-                                <!-- Fim do Filtro de cidade -->
-
-                                <!-- Filtro de Faixa de preço -->
-                                <div class="row form-group">
-                                    <div class="col col-md-3">
-                                       <label for="select" class=" form-control-label">Categoria</label>
-                                        </div>
-                                            <div class="col-12 col-md-5">
+                                            <div class="col-lg-4 col-md-3">
+                                             <label for="select" class=" form-control-label"></label>
                                                 <select name="categoria" id="categoria" class="form-control">
-                                                        <option value="">Selecione uma categoria</option>
+                                                        <option value="">Categoria de Serviço</option>
                                                         <c:forEach items="${listaCategoria}" var="obj">
 				
 																<option value="${obj.idCategoriaServico}">${obj.nome}</option>
@@ -110,71 +94,31 @@
 															</c:forEach>
                                                 </select>
                                             </div>
-                                     </div>
-                                <!-- Fim do Filtro de preço-->
-
-                                <!-- Filtro de Profissão -->
-                                <div class="row form-group">
-                                    <div class="col col-md-3">
-                                       <label for="select" class=" form-control-label">Servico</label>
-                                        </div>
-                                            <div class="col-12 col-md-5">
+                                            <div class="col-lg-12 col-md-12">
+                                               <label for="select" class=" form-control-label"></label>
                                                 <select name="servicos" id="servicos" class="form-control">
-                                                        
+                                                      <option value="">Serviços</option>  
                                                 </select>
                                             </div>
+                                            <div class="col-lg-12 col-md-12">
+                                            <br>
+                                               <button style="float:right;" id="limparFiltro" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="Limpar">Limpar filtro </button>
+                                            </div>
                                      </div>
-                                <!-- Fim do Filtro de profissão-->
-                                <div class="row form-group">
-                                    <div class="col col-md-3">
-                                        <button type="button" class="btn btn-primary">
-                                        <i class="zmdi zmdi-search"></i>&nbsp; Filtrar</button>
-                                    </div>
-                                 </div>
-
+                                
                             </section> 
                         </div>
                     </div>
 
+              
                     <!-- Conteiner de listagem de candidatos -->
-                    <div class="container-fluid" style="margin-top: 30px;">
-                        <div class="fontawesome-list-wrap">
-                            <section >
-                                <div class="table-responsive table-responsive-data2">
-                                    <table class="table table-data2">
-                                        <thead>
-                                            <tr>
-                                                <th>Foto</th>
-                                                <th>Nome</th>
-                                                <th>Profissão</th>
-                                                
-                                                <th></th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr >
-                                            <td>
-                                                <img style="width: 80px; height: 60px;" src="<%=request.getContextPath()%>/resources/img/icon_cliente/icone_mecanico.png" class="img-responsive" />
-                                            </td>
-                                                <td><a href="#">Diego Passos</a></td>
-                                                <td >Mecânico</td>
-                  
-                                                <td>
-                                                    <a href="PrimeiroEstagio"><button class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="Contratar">Contratar <i class="fa fa-handshake-o "></i></button></a>
-                                                    <button class="btn btn-danger" class="item" data-toggle="tooltip" data-placement="top" title="Chat">Chat <i class="zmdi zmdi-comment-more"></i></button>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                             </section>    
-                        </div>
+                    <div id="filtro" >
                     </div>
 
 
 					
 							<section >
-				                <div class="container-fluid">
+				                <div class="container-fluid" style="margin-top: 30%;">
 				                    <div class="row">
 				                        <div class="col-md-12">
 				                            <div class="copyright">
@@ -190,6 +134,147 @@
 	
 
    <script type="text/javascript">
+   var idEstado = null;
+   var idCidade = null;
+   var idCategoria = null;
+   var idServico = null;
+   
+   
+   function popularFiltro(idEstado,idCidade,idCategoria,idServico){
+	 
+	   $('#filtro').html(' ').fadeOut(200);
+	   $.post('listarFiltro', {
+           idEstado:idEstado,
+           idCidade:idCidade,
+           idCategoria:idCategoria,
+           idServico:idServico,
+        	   
+       }, function(dadosJSON){
+     	  var linhas = " ";
+     	  
+				if(dadosJSON.length > 0){
+					$(dadosJSON).each(function (i) {
+						linhas += '<div class="container mt-3 " >';
+						linhas += '<div class="media border p-3 shadow p-3 mb-5 bg-white rounded" style="background-color:white;">';
+						linhas += '<div class="media-left media-top" style="margin-top:30px;">';
+						linhas += ' <img class="media-object" style="width:90px; " src="/workfast/resources/img/icon/avatar-04.jpg" class="img-responsive">';
+						linhas += '</div>';
+						linhas += '<div class="media-body">';
+						 if(dadosJSON[i].tipo == '1'){
+							 linhas += '<center><h4 class="media-heading">'+dadosJSON[i].usuario+'</h4></center>';
+			            	 
+			           }else if(dadosJSON[i].tipo == '2'){
+			        	   linhas += '<center ><h4 class="media-heading" >'+dadosJSON[i].nomeFantasia+'</h4></center>';
+			        	   
+			           }
+						 linhas += '<br>';
+						 linhas += '<div style="margin-left:10px;" class="table-responsive table-responsive-data2">'
+							 linhas += ' <table class="table table-data2" style="background-color:#DCDCDC;">';
+							        linhas += '<thead>';
+							           linhas += '<tr>';
+							               linhas += '<th>'+dadosJSON[i].categoria+'</th>';
+							               linhas += '<th>'+dadosJSON[i].servico+'</th>';
+							               linhas += '<th>'+dadosJSON[i].localizacao+'</th>';
+							           linhas += '</tr>';
+							         linhas += '<thead>';
+							         linhas += '<tbody>';
+							           linhas += '<tr>';
+							              linhas += '<td colspan="3">';
+						      
+							              linhas += '<p>'+dadosJSON[i].descricaoServico+'</p>';
+							              
+							              linhas += '</td>';
+							              linhas += '</tr>' ;
+							              linhas += '<tr>'; 
+								              linhas += '<td colspan="3" >';
+								                linhas += '<div style="float:right;"><a href="PrimeiroEstagio"><button class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="Contratar">Contratar <i class="fa fa-handshake-o "></i></button></a>&nbsp;&nbsp;<button class="btn btn-danger" class="item" data-toggle="tooltip" data-placement="top" title="Chat">Chat <i class="zmdi zmdi-comment-more"></i></button></div>';
+								                
+								              linhas += '</td>'; 
+							              linhas += '</tr>'; 
+							         linhas += '</tbody>';
+							       linhas += '</table>';
+							linhas += '</div>';
+						linhas += '</div>';
+						linhas += '</div>';
+						linhas += '</div>';
+						linhas += '<hr>';
+						
+						
+						
+					       	
+					       	  
+						
+					});
+					$('#filtro').html(linhas).fadeIn(1200);
+					
+				}else{
+					$('#filtro').html('<br><br><center><span>Nenhum Prestador encontrado!</span></center>').fadeIn(1200);
+				}
+
+				
+             
+       });
+
+   }
+   
+   $(document).ready(function(){
+	   popularFiltro(idEstado,idCidade,idCategoria,idServico);
+	   
+   });
+   var selectOption = document.getElementById("limparFiltro");
+   selectOption.addEventListener('click', function(){
+	   $("#estado").val($("#estado option[value='Estado']").val());
+	   $("#cidade").val($("#cidade option[value='Cidade']").val());
+	   $("#categoria").val($("#categoria option[value='Categoria de Serviço']").val());
+	   $("#servicos").val($("#servicos option[value='Serviços']").val());
+	   idEstado = null;
+	   idCidade = null;
+	   idCategoria = null;
+	   idServico = null;
+	   popularFiltro(null,null,null,null);
+   });
+   var selectOption = document.getElementById("estado");
+   selectOption.addEventListener('change', function(){
+   	$('#cidade').html("");
+      var id = $(this).val();
+     
+      //encaminhando os valores do formulario para ser processadas 
+        $.post('filtrarCidade', {
+           idEstado:id
+           
+         }, function(dadosJSON){
+       	  var linhas = '';
+       	  linhas += "<option value='' >Cidade </option>";
+				
+
+				$(dadosJSON).each(function (i) {
+				
+					linhas += "<option value='"+dadosJSON[i].idCidade+"'>"+dadosJSON[i].nome+"</option>";
+				
+				});
+				$('#cidade').html(linhas);
+               
+         });
+
+      
+       
+        idEstado = id;
+        popularFiltro(idEstado,idCidade,idCategoria,idServico);
+     return false;// impedindo o encaminhamento
+     
+    
+       
+      
+   });
+   
+   var selectOption = document.getElementById("cidade");
+   selectOption.addEventListener('change', function(){
+	   var id = $(this).val();
+	   idCidade = id;
+       popularFiltro(idEstado,idCidade,idCategoria,idServico);
+   });
+
+   
    var selectOption = document.getElementById("categoria");
 	selectOption
 			.addEventListener(
@@ -208,7 +293,7 @@
 										},
 										function(dadosJSON) {
 											var linhas = '';
-											linhas += "<option value='' >Selecione </option>";
+											linhas += "<option value='' >Serviços </option>";
 
 											$(dadosJSON)
 													.each(
@@ -222,42 +307,21 @@
 											$('#servicos').html(linhas);
 
 										});
-
+						idCategoria = id;
+				        popularFiltro(idEstado,idCidade,idCategoria,idServico);
 						return false;// impedindo o encaminhamento
 
 					});
-
-   var selectOption = document.getElementById("estado");
-   selectOption.addEventListener('change', function(){
-   	$('#cidade').html("");
-      var id = $(this).val();
-     
-      //encaminhando os valores do formulario para ser processadas 
-        $.post('filtrarCidade', {
-           idEstado:id
-           
-         }, function(dadosJSON){
-       	  var linhas = '';
-       	  linhas += "<option value='' >Selecione </option>";
-				
-
-				$(dadosJSON).each(function (i) {
-				
-					linhas += "<option value='"+dadosJSON[i].idCidade+"'>"+dadosJSON[i].nome+"</option>";
-				
-				});
-				$('#cidade').html(linhas);
-               
-         });
+	
+	var selectOption = document.getElementById("servicos");
+	   selectOption.addEventListener('change', function(){
+		   var id = $(this).val();
+		   idServico = id;
+	       popularFiltro(idEstado,idCidade,idCategoria,idServico);
+	   });
 
       
-       
-     return false;// impedindo o encaminhamento
-     
-
-
-      
-   });
+   
    </script>
 
     <!-- Jquery JS-->

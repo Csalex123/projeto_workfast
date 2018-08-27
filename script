@@ -61,12 +61,12 @@ create table dado_pessoal(
 id int AUTO_INCREMENT PRIMARY KEY,
 nomeFantasia varchar(100) null,
 razaoSocial varchar(100) null,
-cpfCnpj varchar(15) not null,
-rgIe varchar(15) null,  
+cpfCnpj varchar(30) not null,
+rgIe varchar(30) null,  
 sexo char(1) null,
 dataNascimento date null,
-telefone varchar(20) null,
-celular varchar(20) null,
+telefone varchar(25) null,
+celular varchar(25) null,
 fk_usuario int not null,
 FOREIGN KEY(fk_usuario) REFERENCES usuario (id)
 );
@@ -6112,780 +6112,331 @@ INSERT INTO servico (nome, fk_categoria) VALUES
 
 
 
-INSERT INTO `profissao` (`id`, `nome`) VALUES
-(1, 'Fonoaudiologo'),
-(2, 'Baba'),
-(3, 'Gestor público'),
-(4, 'Ginasta artística'),
-(5, 'Ginasta rítmica'),
-(6, 'Ginecologista'),
-(7, 'Gourmet'),
-(8, 'Governador'),
-(9, 'Governanta'),
-(10, 'Grafologista'),
-(11, 'Gravurista'),
-(12, 'Guarda ou policial rodoviário'),
-(13, 'Guarda roupeiro'),
-(14, 'Guardador de veículos'),
-(15, 'Guia turistico'),
-(16, 'Guincheiro'),
-(17, 'Guitarrista'),
-(18, 'Harpista'),
-(19, 'Headhunter'),
-(20, 'Hematologista'),
-(21, 'Historiador'),
-(22, 'Homeopata'),
-(23, 'Hostess'),
-(24, 'Ilustrador'),
-(25, 'Implantodontista'),
-(26, 'Impressor'),
-(27, 'Imunologista'),
-(28, 'Infectologista'),
-(29, 'Inspetor'),
-(30, 'Instalador de linha telefônica'),
-(31, 'Instalador de painéis'),
-(32, 'Instrumentador cirúrgico'),
-(33, 'Instrumentista musical'),
-(34, 'Instrutor'),
-(35, 'Intérprete'),
-(36, 'Intérprete de Bíblias'),
-(37, 'Intérprete e tradutor de língua de sinais'),
-(38, 'Investigador de Polícia'),
-(39, 'Investigador particular'),
-(40, 'Jangadeiro'),
-(41, 'Jardineiro'),
-(42, 'Jogador de badminton'),
-(43, 'Jogador de basquete'),
-(44, 'Jogador de bocha'),
-(45, 'Jogador de boliche'),
-(46, 'Jogador de futebol'),
-(47, 'Jogador de golfe'),
-(48, 'Jogador de handebol'),
-(49, 'Jogador de hóquei'),
-(50, 'Jogador de tênis de mesa'),
-(51, 'Jogador de vôlei'),
-(52, 'Jóquei'),
-(53, 'Jornaleiro'),
-(54, 'Jornalista'),
-(55, 'Judoca'),
-(56, 'Juiz de direito'),
-(57, 'Juiz de futebol'),
-(58, 'Juiz ou árbitro de futebol'),
-(59, 'Karateca'),
-(60, 'Kite-surfer'),
-(61, 'Laboratorista'),
-(62, 'Lactarista hospitalar'),
-(63, 'Lamboteiro'),
-(64, 'Lancheiro'),
-(65, 'Lanterneiro'),
-(66, 'Lapidário'),
-(67, 'Lavador'),
-(68, 'Lavador de veículos'),
-(69, 'Leão de chácara'),
-(70, 'Leiloeiro'),
-(71, 'Leiteiro'),
-(72, 'Lenhador'),
-(73, 'Letrista'),
-(74, 'Levantador de peso'),
-(75, 'Líder comunitário'),
-(76, 'Limpador de vidros'),
-(77, 'Lixeiro/Coletor de lixo'),
-(78, 'Locutor'),
-(79, 'Lubrificador de máquinas'),
-(80, 'Lutador de jiu-jitsu'),
-(81, 'Lutador de karatê'),
-(82, 'Lutador de kung fu'),
-(83, 'Lutador de luta livre'),
-(84, 'Lutador de taekwondo'),
-(85, 'Luthier'),
-(86, 'Mãe social'),
-(87, 'Maestro'),
-(88, 'Mágico'),
-(89, 'Maitre'),
-(90, 'Major'),
-(91, 'Manicure'),
-(92, 'Manobrista'),
-(93, 'Maquiador'),
-(94, 'Maquinista'),
-(95, 'Marcador de luz'),
-(96, 'Marceneiro'),
-(97, 'Marechal'),
-(98, 'Marinheiro'),
-(99, 'Marketeiro'),
-(100, 'Massagista'),
-(101, 'Massoterapeuta'),
-(102, 'Matemático'),
-(103, 'Mecânico'),
-(104, 'Mecânico de vôo'),
-(105, 'Mecanógrafo'),
-(106, 'Médico'),
-(107, 'Médico cirurgião'),
-(108, 'Médico geneticista'),
-(109, 'Médico legista'),
-(110, 'Médico nuclear'),
-(111, 'Médico cardiologista'),
-(112, 'Médico pediatra'),
-(113, 'Médico clinico'),
-(114, 'Médico oftalmologista'),
-(115, 'Médico do trabalho'),
-(116, 'Meeiro'),
-(117, 'Mensageiro'),
-(118, 'Meredeira'),
-(119, 'Mergulhador'),
-(120, 'Mestre cervejeiro'),
-(121, 'Mestre-de-obras'),
-(122, 'Metalúrgico'),
-(123, 'Meteorologista'),
-(124, 'Microfonista'),
-(125, 'Militar da Aeronáutica'),
-(126, 'Militar da Marinha'),
-(127, 'Militar do Exército'),
-(128, 'Ministro'),
-(129, 'Modelista'),
-(130, 'Modelo'),
-(131, 'Moldador'),
-(132, 'Moldureiro'),
-(133, 'Moleiro'),
-(134, 'Montador'),
-(135, 'Montador de negativos'),
-(136, 'Motofrete'),
-(137, 'Motorista'),
-(138, 'Mototaxista'),
-(139, 'Museólogo'),
-(140, 'Músico'),
-(141, 'Musicoterapeuta'),
-(142, 'Nadador'),
-(143, 'Naturólogo'),
-(144, 'Navegador'),
-(145, 'Necromaquiador'),
-(146, 'Nefrologista'),
-(147, 'Neonatologista'),
-(148, 'Neurocirurgião'),
-(149, 'Neurologista'),
-(150, 'Notário'),
-(151, 'Numerólogo'),
-(152, 'Nutricionista'),
-(153, 'Nutrologista'),
-(154, 'Obstetra'),
-(155, 'Oceanógrafo'),
-(156, 'Oculista'),
-(157, 'Odontologista estético'),
-(158, 'Odontologista legal'),
-(159, 'Odontologista preventivo e social'),
-(160, 'Odontopediatra'),
-(161, 'Office-boy'),
-(162, 'Oficial de justiça'),
-(163, 'Oftalmologista'),
-(164, 'Ombudsman'),
-(165, 'Operador de bombas'),
-(166, 'Operador de telemarketing'),
-(167, 'Operador de vídeo'),
-(168, 'Optometrista'),
-(169, 'Orçamentista'),
-(170, 'Orientador educacional'),
-(171, 'Ortesista'),
-(172, 'Ortodontista'),
-(173, 'Ortopedista'),
-(174, 'Ortoptista'),
-(175, 'Otorrinolaringologista'),
-(176, 'Ourives'),
-(177, 'Paginador'),
-(178, 'Paisagista'),
-(179, 'Panfleteiro'),
-(180, 'Panificador/Padeiro'),
-(181, 'Paparazzo'),
-(182, 'Papiloscopista'),
-(183, 'Pára-quedista'),
-(184, 'Paramédico'),
-(185, 'Parteira tradicional'),
-(186, 'Passador'),
-(187, 'Pastilheiro'),
-(188, 'Patinador'),
-(189, 'Patologista'),
-(190, 'Patologista oral'),
-(191, 'Peão de rodeiro'),
-(192, 'Pecuarista'),
-(193, 'Pedagogo'),
-(194, 'Pediatra'),
-(195, 'Pedicure'),
-(196, 'Pedreiro'),
-(197, 'Peixeiro'),
-(198, 'Penhorista'),
-(199, 'Percursionista'),
-(200, 'Perfumista'),
-(201, 'Perfusionista'),
-(202, 'Perito criminal'),
-(203, 'Perito judicial'),
-(204, 'Personal stylist'),
-(205, 'Personal trainer'),
-(206, 'Pescador'),
-(207, 'Pesquisador'),
-(208, 'Petroleiro'),
-(209, 'Pianista'),
-(210, 'Piloto automobilístico'),
-(211, 'Piloto de avião'),
-(212, 'Pintor'),
-(213, 'Pizzaiolo'),
-(214, 'Plastimodelista'),
-(215, 'Pneumologista'),
-(216, 'Podólogo'),
-(217, 'Policial civil'),
-(218, 'Policial federal'),
-(219, 'Policial militar'),
-(220, 'Polidor de produção'),
-(221, 'Político'),
-(222, 'Porteiro'),
-(223, 'Portuário'),
-(224, 'Prático'),
-(225, 'Prefeito'),
-(226, 'Prensista'),
-(227, 'Preparador de máquinas'),
-(228, 'Presidente da República'),
-(229, 'Procurador de justiça'),
-(230, 'Produtor de audio visual'),
-(231, 'Produtor de eventos'),
-(232, 'Produtor de multimídia'),
-(233, 'Produtor editorial'),
-(234, 'Produtor fonográfico'),
-(235, 'Produtor musical'),
-(236, 'Professor'),
-(237, 'Profissional de áudio'),
-(238, 'Profissional de cinema'),
-(239, 'Profissional de comércio exterior'),
-(240, 'Profissional de educação física'),
-(241, 'Profissional de efeitos especiais'),
-(242, 'Profissional de hotelaria'),
-(243, 'Profissional de informática'),
-(244, 'Profissional de linguística'),
-(245, 'Profissional de logística'),
-(246, 'Profissional de manutenção industrial'),
-(247, 'Profissional de marketing'),
-(248, 'Profissional de rádio e tv'),
-(249, 'Profissional de reciclagem'),
-(250, 'Profissional de recursos humanos'),
-(251, 'Profissional de relacionamento com investidores RI'),
-(252, 'Profissional de relações internacionais'),
-(253, 'Profissional de relações públicas'),
-(254, 'Profissional de tecnologia de laticínios'),
-(255, 'Programador'),
-(256, 'Programador de Computador'),
-(257, 'ProgramadorPHP'),
-(258, 'Programador Java'),
-(259, 'Programador C#'),
-(260, 'Programador .NET'),
-(261, 'Programador ASP'),
-(262, 'Programador VB'),
-(263, 'Programador Pascal - Delphi'),
-(264, 'ProgramadorJavascript'),
-(265, 'Programador HTML 5'),
-(266, 'Programador Cobol'),
-(267, 'Programador C++'),
-(268, 'Projetista mecânico'),
-(269, 'Promotor de eventos'),
-(270, 'Promotor de vendas'),
-(271, 'Promotor público/de justiça'),
-(272, 'Protesista'),
-(273, 'Protético dentário'),
-(274, 'Psicólogo'),
-(275, 'Psicomotricista'),
-(276, 'Psicopedagogo'),
-(277, 'Psiquiatra'),
-(278, 'Publicitário'),
-(279, 'Quadrinista'),
-(280, 'Químico'),
-(281, 'Químico farmacêutico'),
-(282, 'Quiropraxista'),
-(283, 'Quitandeiro'),
-(284, 'Radialista'),
-(285, 'Radialista programador'),
-(286, 'Radiologista'),
-(287, 'Radiooperador de vôo'),
-(288, 'Radioterapêutico'),
-(289, 'Rebarbador de metal'),
-(290, 'Recepcionista'),
-(291, 'Recreador'),
-(292, 'Redator'),
-(293, 'Regente'),
-(294, 'Relações públicas'),
-(295, 'Remador'),
-(296, 'Repórter'),
-(297, 'Repositor'),
-(298, 'Representante comercial'),
-(299, 'Restaurador'),
-(300, 'Retificador'),
-(301, 'Reumatologista'),
-(302, 'Revendedor'),
-(303, 'Revisor'),
-(304, 'Roteirista'),
-(305, 'Sacoleira'),
-(306, 'Salgadeira'),
-(307, 'Salva-vidas'),
-(308, 'Sapateiro'),
-(309, 'Sargento'),
-(310, 'Saxofonista'),
-(311, 'Secretária'),
-(312, 'Seguidor de compras'),
-(313, 'Segurança particular'),
-(314, 'Selecionador de pessoal'),
-(315, 'Senador'),
-(316, 'Separador'),
-(317, 'Seringueiro'),
-(318, 'Serralheiro'),
-(319, 'Servente-de-obras'),
-(320, 'Serventuário'),
-(321, 'Sexólogo'),
-(322, 'Síndico'),
-(323, 'Skatista'),
-(324, 'Sociólogo'),
-(325, 'Soldado'),
-(326, 'Soldador'),
-(327, 'Somelier'),
-(328, 'Sonoplasta'),
-(329, 'Subprefeito'),
-(330, 'Supervisor'),
-(331, 'Surfista'),
-(332, 'Sushiman'),
-(333, 'Tabelião'),
-(334, 'Taifeiro'),
-(335, 'Tapeceiro'),
-(336, 'Tatuador'),
-(337, 'Taxidermista/Embalsamador'),
-(338, 'Taxista'),
-(339, 'Tecelão'),
-(340, 'Técnico de gesso'),
-(341, 'Técnico de som'),
-(342, 'Técnico em agropecuária'),
-(343, 'Técnico em arquivo'),
-(344, 'Técnico em aviação'),
-(345, 'Técnico em desporto'),
-(346, 'Técnico em documentação'),
-(347, 'Técnico em edificações'),
-(348, 'Técnico em hardware'),
-(349, 'Técnico em higiene dentária'),
-(350, 'Técnico em óptica'),
-(351, 'Técnico em radiologia'),
-(352, 'Técnico em rede'),
-(353, 'Técnico em segurança do trabalho'),
-(354, 'Técnico em taquigrafia'),
-(355, 'Técnico em tratamento de água'),
-(356, 'Técnico tributarista'),
-(357, 'Tecnólogo em automação industrial'),
-(358, 'Tecnólogo em Ciências das plantas medicinais'),
-(359, 'Tecnólogo em desenvolvimento social'),
-(360, 'Tecnólogo em esporte e lazer'),
-(361, 'Tecnólogo em geoprocessamento'),
-(362, 'Tecnólogo em irrigação e drenagem'),
-(363, 'Tecnólogo em jogos digitais'),
-(364, 'Tecnólogo em navegação fluvial'),
-(365, 'Tecnólogo em negócios imobiliários'),
-(366, 'Tecnólogo em papel e celulose'),
-(367, 'Tecnólogo em processos químicos'),
-(368, 'Tecnólogo em produção de bebidas'),
-(369, 'Tecnólogo em produção moveleira'),
-(370, 'Tecnólogo em produção Sucroalcooleira'),
-(371, 'Tecnólogo em recursos pesqueiros'),
-(372, 'Tecnólogo em rochas ornamentais'),
-(373, 'Tecnólogo em sistemas da informação'),
-(374, 'Tecnólogo em sistemas para internet'),
-(375, 'Tecnólogo em silvicultura'),
-(376, 'Tecnólogo em tecnologia da madeira'),
-(377, 'Telefonista'),
-(378, 'Telegrafista'),
-(379, 'Tenente'),
-(380, 'Tenista'),
-(381, 'Teólogo'),
-(382, 'Terapeuta floral'),
-(383, 'Terapeuta Holístico'),
-(384, 'Terapeuta ocupacional'),
-(385, 'Tesoureiro'),
-(386, 'Timoneiro'),
-(387, 'Tintureiro'),
-(388, 'Topógrafo'),
-(389, 'Torneiro mecânico'),
-(390, 'Torreiro/Torrista'),
-(391, 'Tosador'),
-(392, 'Toxicologista'),
-(393, 'Tradutor'),
-(394, 'Transcritor'),
-(395, 'Transportador'),
-(396, 'Traumatologista'),
-(397, 'Treinador'),
-(398, 'Triatleta'),
-(399, 'Trilheiro ou músico de cinema'),
-(400, 'Trompetista'),
-(401, 'Turismólogo'),
-(402, 'Ufólogo'),
-(403, 'Urbanista'),
-(404, 'Urologista'),
-(405, 'Velejador'),
-(406, 'Vendedor'),
-(407, 'Ventríloquo'),
-(408, 'Vereador'),
-(409, 'Veterinário'),
-(410, 'Vigia parlamentar'),
-(411, 'Vigilante noturno/diurno'),
-(412, 'Violonista'),
-(413, 'Vistoriador de sinistros'),
-(414, 'Viveirista'),
-(415, 'Webdesigner'),
-(416, 'Webmaster'),
-(417, 'Windsurfer'),
-(418, 'Xilógrafo'),
-(419, 'Zelador'),
-(420, 'Zootecnista'),
-(421, 'Acompanhante'),
-(422, 'Açougueiro'),
-(423, 'Acupunturista'),
-(424, 'Adestrador de animais'),
-(425, 'Administrador'),
-(426, 'Administrador de banco de dados DBA'),
-(427, 'Administrador de redes'),
-(428, 'Administrador público'),
-(429, 'Advogado'),
-(430, 'Aeromoça'),
-(431, 'Aeronauta'),
-(432, 'Aeroviário'),
-(433, 'Afiador de ferramentas'),
-(434, 'Agente comunitário de saúde'),
-(435, 'Agente de combate à endemias'),
-(436, 'Agente de defesa sanitária'),
-(437, 'Agente de defesa sanitária animal'),
-(438, 'Agente de viagens'),
-(439, 'Agente funerário'),
-(440, 'Agente penitenciário'),
-(441, 'Agricultor'),
-(442, 'Agrimensor'),
-(443, 'Agrônomo'),
-(444, 'Ajudante de produção'),
-(445, 'Alergologista'),
-(446, 'Alfaiate'),
-(447, 'Almirante'),
-(448, 'Almoxarife'),
-(449, 'Alpinista'),
-(450, 'Ambientalista'),
-(451, 'Ambulante'),
-(452, 'Amolador de ferramentas'),
-(453, 'Analista de sistemas'),
-(454, 'Anestesiologista'),
-(455, 'Angiologista'),
-(456, 'Antropólogo'),
-(457, 'Apicultor'),
-(458, 'Apontador de mão-de-obra'),
-(459, 'Apresentador'),
-(460, 'Árbitro e mediador'),
-(461, 'Argumentista'),
-(462, 'Armador'),
-(463, 'Armeiro'),
-(464, 'Arqueólogo'),
-(465, 'Arquiteto'),
-(466, 'Arquivista'),
-(467, 'Arranjador musical'),
-(468, 'Arrumadeira'),
-(469, 'Artesão'),
-(470, 'Artista de circo'),
-(471, 'Artista plástico'),
-(472, 'Artista/Técnico em espetáculos de diversões'),
-(473, 'Ascensorista'),
-(474, 'Assessor de imprensa'),
-(475, 'Assessor parlamentar'),
-(476, 'Assistente administrativo'),
-(477, 'Assistente de câmera'),
-(478, 'Assistente de direção'),
-(479, 'Assistente de produção'),
-(480, 'Assistente social'),
-(481, 'Astrofísico'),
-(482, 'Astrólogo'),
-(483, 'Astronauta'),
-(484, 'Astrônomo'),
-(485, 'Atendente'),
-(486, 'Atleta de arremesso de peso'),
-(487, 'Atleta de canoagem'),
-(488, 'Atleta de nado sincronizado'),
-(489, 'Atleta de tiro com arco'),
-(490, 'Ator'),
-(491, 'Atuário'),
-(492, 'Auditor'),
-(493, 'Auxiliar administrativo'),
-(494, 'Auxiliar de reprografia'),
-(495, 'Auxiliar de serviços gerais'),
-(496, 'Avalista'),
-(497, 'Aviador'),
-(498, 'Babá'),
-(499, 'Babysitter'),
-(500, 'Bailarina'),
-(501, 'Baixista'),
-(502, 'Balconista'),
-(503, 'Bancário'),
-(504, 'Barbeiro'),
-(505, 'Barman'),
-(506, 'Bartender'),
-(507, 'Baterista'),
-(508, 'Bedel'),
-(509, 'Berçarista'),
-(510, 'Bibliotecário'),
-(511, 'Biblioteconomista'),
-(512, 'Biólogo'),
-(513, 'Biomédico'),
-(514, 'Bioquímico'),
-(515, 'Biotecnólogo'),
-(516, 'Bóia-fria'),
-(517, 'Bombeiro'),
-(518, 'Borracheiro'),
-(519, 'Boticário'),
-(520, 'Boxeador'),
-(521, 'Brigadeiro'),
-(522, 'Broker/Corretor da bolsa de valores'),
-(523, 'Cabeleireiro'),
-(524, 'Cabo'),
-(525, 'Caça-talentos/Olheiro'),
-(526, 'Cadeirinha'),
-(527, 'Cadista'),
-(528, 'Caixa'),
-(529, 'Caldeireiro'),
-(530, 'Cambista'),
-(531, 'Camelô'),
-(532, 'Cameraman'),
-(533, 'Caminhoneiro'),
-(534, 'Cancerologista ou Oncologista'),
-(535, 'Cantor'),
-(536, 'Capataz'),
-(537, 'Capelão'),
-(538, 'Capitão'),
-(539, 'Capoeirista'),
-(540, 'Cardiologista'),
-(541, 'Carnavalesco'),
-(542, 'Carpinteiro'),
-(543, 'Cartazeiro'),
-(544, 'Carteiro'),
-(545, 'Cartógrafo'),
-(546, 'Cartunista'),
-(547, 'Catador de carangueijos'),
-(548, 'Catador de material reciclável'),
-(549, 'Cenógrafo'),
-(550, 'Cenotécnico'),
-(551, 'Ceramista'),
-(552, 'Cerimonialista'),
-(553, 'Chapeiro'),
-(554, 'Chargista'),
-(555, 'Chaveiro'),
-(556, 'Chefe de cozinha'),
-(557, 'Ciclista'),
-(558, 'Cientista'),
-(559, 'Cientista da informação e documentação'),
-(560, 'Cientista de alimentos'),
-(561, 'Cientista político'),
-(562, 'Cientista social'),
-(563, 'Cineasta'),
-(564, 'Cinegrafista'),
-(565, 'Cinematográfo'),
-(566, 'Cirurgião bucal'),
-(567, 'Cirurgião dentista'),
-(568, 'Clap loader'),
-(569, 'Clarinetista'),
-(570, 'Classificador contábil'),
-(571, 'Clínico geral'),
-(572, 'Co-piloto'),
-(573, 'Coach'),
-(574, 'Cobaia Médica'),
-(575, 'Cobrador de ônibus'),
-(576, 'Cobrador de pedágio'),
-(577, 'Coloproctologista'),
-(578, 'Comandante'),
-(579, 'Comerciante'),
-(580, 'Comissário de bordo'),
-(581, 'Compositor'),
-(582, 'Comprador'),
-(583, 'Confeiteiro'),
-(584, 'Conferente de carga e descarga'),
-(585, 'Conferente de expedição'),
-(586, 'Conferente de recebimento'),
-(587, 'Construtor'),
-(588, 'Consultor'),
-(589, 'Consultor de moda'),
-(590, 'Consultor de radiestesia'),
-(591, 'Contábil'),
-(592, 'Contabilista'),
-(593, 'Contador'),
-(594, 'Contatólogo'),
-(595, 'Continuista'),
-(596, 'Contra regra'),
-(597, 'Contramestre em transporte marítimo'),
-(598, 'Controlador de vôo'),
-(599, 'Controller'),
-(600, 'Coordenador'),
-(601, 'Copeiro'),
-(602, 'Coreógrafo'),
-(603, 'Coronel'),
-(604, 'Corredor de atletismo'),
-(605, 'Corregedor de justiça'),
-(606, 'Corretor da bolsa de valores'),
-(607, 'Corretor de imóveis'),
-(608, 'Corretor de seguros'),
-(609, 'Cortador de cana-de-açucar'),
-(610, 'Costureira'),
-(611, 'Coveiro/Sepultador'),
-(612, 'Cozinheira'),
-(613, 'Crítico'),
-(614, 'Cumim'),
-(615, 'Dançarino'),
-(616, 'Datilógrafo'),
-(617, 'Dedetizador'),
-(618, 'Defensor Público'),
-(619, 'Degustador'),
-(620, 'Delegado'),
-(621, 'Dentista'),
-(622, 'Deputado'),
-(623, 'Dermatologista'),
-(624, 'Desembargador de justiça'),
-(625, 'Desenhista'),
-(626, 'Designer de interiores'),
-(627, 'Designer de jóia'),
-(628, 'Designer de moda'),
-(629, 'Designer de produto ou desenhista industrial'),
-(630, 'Designer gráfico'),
-(631, 'Despachante'),
-(632, 'Diagramador'),
-(633, 'Dialoguista'),
-(634, 'Diarista'),
-(635, 'Digitador'),
-(636, 'Diplomata'),
-(637, 'Diretor de cinema'),
-(638, 'Diretor de fotografia'),
-(639, 'Diretor de produção'),
-(640, 'DJ'),
-(641, 'Dogueiro'),
-(642, 'Dublador'),
-(643, 'Dublê'),
-(644, 'Ecólogo'),
-(645, 'Economista'),
-(646, 'Economista doméstico'),
-(647, 'Editor'),
-(648, 'Editor de mesa de corte'),
-(649, 'Educador'),
-(650, 'Educador integrado à saúde pública'),
-(651, 'Eletricista'),
-(652, 'Eletricista de automóveis'),
-(653, 'Embaixador'),
-(654, 'Embalador'),
-(655, 'Embalsamador'),
-(656, 'Empacotador'),
-(657, 'Empregado doméstico'),
-(658, 'Empresário'),
-(659, 'Encanador'),
-(660, 'Encarregado de manutenção predial'),
-(661, 'Endocrinologista'),
-(662, 'Endodontista'),
-(663, 'Enfermeiro'),
-(664, 'Engenheiro acústico'),
-(665, 'Engenheiro aeronáutico'),
-(666, 'Engenheiro agrícola'),
-(667, 'Engenheiro agrimensor'),
-(771, 'Engenheiro agrônomo'),
-(669, 'Engenheiro ambiental'),
-(670, 'Engenheiro cartográfico'),
-(671, 'Engenheiro civil'),
-(672, 'Engenheiro de alimentos'),
-(673, 'Engenheiro de aquicultura'),
-(674, 'Engenheiro de computação'),
-(675, 'Engenheiro de controle e automação'),
-(676, 'Engenheiro de energia'),
-(677, 'Engenheiro de ergonomia'),
-(678, 'Engenheiro de horticultura'),
-(679, 'Engenheiro de iluminação'),
-(680, 'Engenheiro de manufatura'),
-(681, 'Engenheiro de materiais'),
-(682, 'Engenheiro de minas'),
-(683, 'Engenheiro de petróleo'),
-(684, 'Engenheiro de processos'),
-(685, 'Engenheiro de produção agroindustrial'),
-(686, 'Engenheiro de produto ou produção'),
-(687, 'Engenheiro de projetos'),
-(688, 'Engenheiro de segurança do trabalho'),
-(689, 'Engenheiro de som'),
-(690, 'Engenheiro de supply chain ou logística'),
-(691, 'Engenheiro de telecomunicações'),
-(692, 'Engenheiro de transportes'),
-(693, 'Engenheiro elétrico'),
-(694, 'Engenheiro físico'),
-(695, 'Engenheiro florestal'),
-(696, 'Engenheiro industrial'),
-(697, 'Engenheiro mecânico'),
-(698, 'Engenheiro mecatrônico'),
-(699, 'Engenheiro metalúrgico'),
-(700, 'Engenheiro naval'),
-(701, 'Engenheiro petroquímico'),
-(702, 'Engenheiro químico'),
-(703, 'Engenheiro sanitarista'),
-(704, 'Engenheiro têxtil'),
-(705, 'Engraxate'),
-(706, 'Enólogo'),
-(707, 'Entalhador'),
-(708, 'Epidemiólogo'),
-(709, 'Escoteiro'),
-(710, 'Escritor'),
-(711, 'Escriturário'),
-(712, 'Escrivão'),
-(713, 'Escultor'),
-(714, 'Esgrimista'),
-(715, 'Especialista em agronegócios'),
-(716, 'Espeleologista'),
-(717, 'Estampador de tecidos'),
-(718, 'Estatístico'),
-(719, 'Esteticista'),
-(720, 'Estilista'),
-(721, 'Estivador'),
-(722, 'Estofador'),
-(723, 'Estoquista'),
-(724, 'Farmacêutico'),
-(725, 'Faturista'),
-(726, 'Faxineiro'),
-(727, 'Feirante'),
-(728, 'Ferramenteiro'),
-(729, 'Ferreiro'),
-(730, 'Ferroviário'),
-(731, 'Figurante'),
-(732, 'Figurinista'),
-(733, 'Filósofo'),
-(734, 'Fiscal'),
-(735, 'Físico'),
-(736, 'Físico nuclear'),
-(737, 'Fisiculturista'),
-(738, 'Fisioterapeuta'),
-(739, 'Flanelinha'),
-(740, 'Flautista'),
-(741, 'Florista'),
-(742, 'Fonoaudiólogo'),
-(743, 'Forneiro'),
-(744, 'Fotógrafo'),
-(745, 'Frentista'),
-(746, 'Fresador'),
-(747, 'Fundidor'),
-(748, 'Fundidor de placa de gesso'),
-(749, 'Funileiro'),
-(750, 'Gagsman'),
-(751, 'Gandula'),
-(752, 'Garçom'),
-(753, 'Gari'),
-(754, 'Garimpeiro'),
-(755, 'Gastroenterologista'),
-(756, 'Gastrônomo'),
-(757, 'General'),
-(758, 'Geofísico'),
-(759, 'Geógrafo'),
-(760, 'Geólogo'),
-(761, 'Geradorista'),
-(762, 'Gerente de banco'),
-(763, 'Gerente de inovações ou novos negócios'),
-(764, 'Gerente de riscos em seguros'),
-(765, 'Gerente de vendas'),
-(766, 'Geriatra'),
-(767, 'Gestor ambiental'),
-(768, 'Gestor de qualidade'),
-(769, 'Gestor de recursos humanos'),
-(770, 'Gestor de tecnologia da informação');
 
-  
-  
+INSERT INTO profissao (nome, id) VALUES ('ADMINISTRADOR ', 1);
+INSERT INTO profissao (nome, id) VALUES ('ADMINISTRADOR DE EDIFICIO ', 2);
+INSERT INTO profissao (nome, id) VALUES ('ADMINISTRADOR DE EXPLORACAO AGRICOLA ', 3);
+INSERT INTO profissao (nome, id) VALUES ('ADMINISTRADORES ', 4);
+INSERT INTO profissao (nome, id) VALUES ('ADVOGADO ', 5);
+INSERT INTO profissao (nome, id) VALUES ('ADVOGADO DIREITO DO TRABALHO ', 6);
+INSERT INTO profissao (nome, id) VALUES ('AGENCIADOR DE PROPAGANDA ', 7);
+INSERT INTO profissao (nome, id) VALUES ('AGENTE ADMINISTRATIVO ', 8);
+INSERT INTO profissao (nome, id) VALUES ('AGENTE DE COMPRAS ', 9);
+INSERT INTO profissao (nome, id) VALUES ('AGENTE DE VENDA DE SERVICOS AS EMPRESAS ', 10);
+INSERT INTO profissao (nome, id) VALUES ('AGENTE DE VIAGEM ', 11);
+INSERT INTO profissao (nome, id) VALUES ('AGENTE PUBLICITARIO ', 12);
+INSERT INTO profissao (nome, id) VALUES ('AGENTE TECNICO DE VENDAS ', 13);
+INSERT INTO profissao (nome, id) VALUES ('AGENTES ADMINISTRATIVOS ', 14);
+INSERT INTO profissao (nome, id) VALUES ('AGENTES DE ADMINISTRACAO DE EMPRESAS PUBLICAS E PRIVADAS ', 15);
+INSERT INTO profissao (nome, id) VALUES ('ALMOXARIFE ', 16);
+INSERT INTO profissao (nome, id) VALUES ('ANALISTA DE CARGOS E SALARIOS ', 17);
+INSERT INTO profissao (nome, id) VALUES ('ANALISTA DE COMERCIALIZACAO ', 18);
+INSERT INTO profissao (nome, id) VALUES ('ANALISTA DE COMUNICACA 8234    ANALISTA DE CREDITO E COBRANCA ', 19);
+INSERT INTO profissao (nome, id) VALUES ('ANALISTA DE IMPORTACAO E EXPORTACAO ', 20);
+INSERT INTO profissao (nome, id) VALUES ('ANALISTA DE OCUPACAO ', 21);
+INSERT INTO profissao (nome, id) VALUES ('ANALISTA DE ORGANIZACAO E METODOS ', 22);
+INSERT INTO profissao (nome, id) VALUES ('ANALISTA DE PESQUISA DE MERCADO ', 23);
+INSERT INTO profissao (nome, id) VALUES ('ANALISTA DE RECURSOS HUMANOS ', 24);
+INSERT INTO profissao (nome, id) VALUES ('ANALISTA DE SEGUROS ', 25);
+INSERT INTO profissao (nome, id) VALUES ('ANALISTA DE SISTEMAS ', 26);
+INSERT INTO profissao (nome, id) VALUES ('ANALISTA DE SUPORTE DE SISTEMA ', 27);
+INSERT INTO profissao (nome, id) VALUES ('APONTADOR DE MAO DE OBRA ', 28);
+INSERT INTO profissao (nome, id) VALUES ('APONTADOR DE PRODUCAO ', 29);
+INSERT INTO profissao (nome, id) VALUES ('ARQUITETO ', 30);
+INSERT INTO profissao (nome, id) VALUES ('ARQUIVISTA ', 31);
+INSERT INTO profissao (nome, id) VALUES ('ASSISTENTE ADMINISTRATIVO ', 32);
+INSERT INTO profissao (nome, id) VALUES ('ASSISTENTE DE PATRIMONIO ', 33);
+INSERT INTO profissao (nome, id) VALUES ('ASSISTENTE DE VENDAS FINANCEIRO ', 34);
+INSERT INTO profissao (nome, id) VALUES ('ASSISTENTE SOCIAL ', 35);
+INSERT INTO profissao (nome, id) VALUES ('ATENDETE DE ENFERMAGEM ', 36);
+INSERT INTO profissao (nome, id) VALUES ('ATLETA PROFISSIONAL DE FUTEBOL ', 37);
+INSERT INTO profissao (nome, id) VALUES ('AUDITOR CONTABIL ', 38);
+INSERT INTO profissao (nome, id) VALUES ('AUDITOR GERAL ', 39);
+INSERT INTO profissao (nome, id) VALUES ('AUXILIAR DE ALMOXARIFADO ', 40);
+INSERT INTO profissao (nome, id) VALUES ('AUXILIAR DE BIBLIOTECA ', 41);
+INSERT INTO profissao (nome, id) VALUES ('AUXILIAR DE CONTABILIDADE ', 42);
+INSERT INTO profissao (nome, id) VALUES ('AUXILIAR DE ENFERMAGEM ', 43);
+INSERT INTO profissao (nome, id) VALUES ('AUXILIAR DE ESCRITORIO ', 44);
+INSERT INTO profissao (nome, id) VALUES ('AUXILIAR DE FARMACIA ', 45);
+INSERT INTO profissao (nome, id) VALUES ('AUXILIAR DE IMPORTACAO E EXPORTACAO ', 46);
+INSERT INTO profissao (nome, id) VALUES ('AUXILIAR DE LABORATORIO DE ANALISES CLINICAS ', 47);
+INSERT INTO profissao (nome, id) VALUES ('AUXILIAR DE LABORATORIO DE ANALISES FISICOQUIMICAS ', 48);
+INSERT INTO profissao (nome, id) VALUES ('AUXILIAR DE PESSOAL ', 49);
+INSERT INTO profissao (nome, id) VALUES ('AUXILIAR DE SEGUROS ', 50);
+INSERT INTO profissao (nome, id) VALUES ('AUXILIAR DE SERVICOS JURIDICOS ', 51);
+INSERT INTO profissao (nome, id) VALUES ('AUXILIARES DE CONTABILIDADE ', 52);
+INSERT INTO profissao (nome, id) VALUES ('AUXILIARES DE ESCRITORIO ', 53);
+INSERT INTO profissao (nome, id) VALUES ('BABA ', 54);
+INSERT INTO profissao (nome, id) VALUES ('BARMAN ', 55);
+INSERT INTO profissao (nome, id) VALUES ('BIBLIOTECARIO ', 56);
+INSERT INTO profissao (nome, id) VALUES ('BIOLOGISTA ', 57);
+INSERT INTO profissao (nome, id) VALUES ('BIOQUIMICO ', 58);
+INSERT INTO profissao (nome, id) VALUES ('CABELEIREIRO ', 59);
+INSERT INTO profissao (nome, id) VALUES ('CARTEIRO ', 60);
+INSERT INTO profissao (nome, id) VALUES ('CHEFE DE ADMINISTRATIVOS ', 61);
+INSERT INTO profissao (nome, id) VALUES ('CHEFE DE ALMOXARIFADO ', 62);
+INSERT INTO profissao (nome, id) VALUES ('CHEFE DE CONTABILIDADE ', 63);
+INSERT INTO profissao (nome, id) VALUES ('CHEFE DE CONTABILIDADE E FINANCAS ', 64);
+INSERT INTO profissao (nome, id) VALUES ('CHEFE DE CONTAS A PAGAR ', 65);
+INSERT INTO profissao (nome, id) VALUES ('CHEFE DE CONTROLE DE PATRIMONIO ', 66);
+INSERT INTO profissao (nome, id) VALUES ('CHEFE DE ESCRITORIO ', 67);
+INSERT INTO profissao (nome, id) VALUES ('CHEFE DE ESCRITORIO CONTABILIDADE ', 68);
+INSERT INTO profissao (nome, id) VALUES ('CHEFE DE ESCRITORIO CREDITO E COBRANCA ', 69);
+INSERT INTO profissao (nome, id) VALUES ('CHEFE DE ESCRITORIO ORCAMENTO ', 70);
+INSERT INTO profissao (nome, id) VALUES ('CHEFE DE ESCRITORIO PESSOAL ', 71);
+INSERT INTO profissao (nome, id) VALUES ('CHEFE DE ESCRITORIO SERVICOS GERAIS ', 72);
+INSERT INTO profissao (nome, id) VALUES ('CHEFE DE ESCRITORIO TESOURARIA ', 73);
+INSERT INTO profissao (nome, id) VALUES ('CHEFE DE RECEPCAO HOTEL ', 74);
+INSERT INTO profissao (nome, id) VALUES ('CHEFE DE SERVICO DE TRANSPORTE RODOVIARIO ', 75);
+INSERT INTO profissao (nome, id) VALUES ('CHEFE DE SERVICOS DE TELECOMUNICACOES ', 76);
+INSERT INTO profissao (nome, id) VALUES ('CIRURGIAO ', 77);
+INSERT INTO profissao (nome, id) VALUES ('CIRURGIAO DENTISTA ', 78);
+INSERT INTO profissao (nome, id) VALUES ('CODIFICADOR DE DADOS ', 79);
+INSERT INTO profissao (nome, id) VALUES ('COMERCIANTE VAREJISTA ', 80);
+INSERT INTO profissao (nome, id) VALUES ('COMISSARIO DE BORDO AERONAVES ', 81);
+INSERT INTO profissao (nome, id) VALUES ('COMPRADOR COMERCIO ATACADISTA E VAREJISTA ', 82);
+INSERT INTO profissao (nome, id) VALUES ('CONDUTOR DE CAMINHAO BASCULANTE ', 83);
+INSERT INTO profissao (nome, id) VALUES ('CONDUTORES DE AUTOMOVEIS ', 84);
+INSERT INTO profissao (nome, id) VALUES ('CONSULTOR JURIDICO ', 85);
+INSERT INTO profissao (nome, id) VALUES ('CONTADOR ', 86);
+INSERT INTO profissao (nome, id) VALUES ('CONTRAMESTRE DE EMBARCACAO ', 87);
+INSERT INTO profissao (nome, id) VALUES ('CONTRAMESTRE INDUSTRIA TEXTIL ', 88);
+INSERT INTO profissao (nome, id) VALUES ('COORDENADOR DE ENSINO ', 89);
+INSERT INTO profissao (nome, id) VALUES ('CORRESPONDENTE COMERCIAL ', 90);
+INSERT INTO profissao (nome, id) VALUES ('COZINHEIRO CHEFE ', 91);
+INSERT INTO profissao (nome, id) VALUES ('CRONOANALISTA ', 92);
+INSERT INTO profissao (nome, id) VALUES ('DATILOGRAFO ', 93);
+INSERT INTO profissao (nome, id) VALUES ('DEMONSTRADOR ', 94);
+INSERT INTO profissao (nome, id) VALUES ('DESENHISTA ', 95);
+INSERT INTO profissao (nome, id) VALUES ('DESENHISTA PROJETISTA ', 96);
+INSERT INTO profissao (nome, id) VALUES ('DESENHISTA TECNICO ', 97);
+INSERT INTO profissao (nome, id) VALUES ('DESPACHANTE ', 98);
+INSERT INTO profissao (nome, id) VALUES ('DIAGRAMADOR ', 99);
+INSERT INTO profissao (nome, id) VALUES ('DIGITADOR ', 100);
+INSERT INTO profissao (nome, id) VALUES ('DIRETOR DE EMPRESA ', 101);
+INSERT INTO profissao (nome, id) VALUES ('DIRETOR DE EMPRESA DE COMERCIO VAREJISTA ', 102);
+INSERT INTO profissao (nome, id) VALUES ('DIRETOR DE EMPRESA DE COMUNICACOES ', 103);
+INSERT INTO profissao (nome, id) VALUES ('DIRETOR DE EMPRESA DE CONSTRUCAO CIVIL ', 104);
+INSERT INTO profissao (nome, id) VALUES ('DIRETOR DE EMPRESA DE PRESTACAO DE SERVICOS ', 105);
+INSERT INTO profissao (nome, id) VALUES ('DIRETOR DE EMPRESA DE SERVICOS CLINICOS E HOSPITALARES ', 106);
+INSERT INTO profissao (nome, id) VALUES ('DIRETOR DE EMPRESA FINANCEIRA ', 107);
+INSERT INTO profissao (nome, id) VALUES ('DIRETOR DE EMPRESA MANUFATUREIRA ', 108);
+INSERT INTO profissao (nome, id) VALUES ('DIRETOR DE ESTABELECIMENTO DE ENSINO ', 109);
+INSERT INTO profissao (nome, id) VALUES ('DIRETOR DE ESTABELECIMENTO DE ENSINO SUPERIOR ', 110);
+INSERT INTO profissao (nome, id) VALUES ('DIRETORES DE EMPRESAS ', 111);
+INSERT INTO profissao (nome, id) VALUES ('ECONOMISTA ', 112);
+INSERT INTO profissao (nome, id) VALUES ('ECONOMISTA MERCADOLOGIA ', 113);
+INSERT INTO profissao (nome, id) VALUES ('ECONOMISTA PROGRAMACAO ECONOMICO FINANCEIRA ', 114);
+INSERT INTO profissao (nome, id) VALUES ('ECONOMISTAS ', 115);
+INSERT INTO profissao (nome, id) VALUES ('EDITOR DE LIVROS ', 116);
+INSERT INTO profissao (nome, id) VALUES ('ENCARREGADO DE DIGITACAO E OPERACAO ', 117);
+INSERT INTO profissao (nome, id) VALUES ('ENFERMEIRO ', 118);
+INSERT INTO profissao (nome, id) VALUES ('ENFERMEIRO DO TRABALHO ', 119);
+INSERT INTO profissao (nome, id) VALUES ('ENFERMEIROS ', 120);
+INSERT INTO profissao (nome, id) VALUES ('ENGENHEIRO AERONAUTICO ', 121);
+INSERT INTO profissao (nome, id) VALUES ('ENGENHEIRO AGRONOMO ', 122);
+INSERT INTO profissao (nome, id) VALUES ('ENGENHEIRO CIVIL ', 123);
+INSERT INTO profissao (nome, id) VALUES ('ENGENHEIRO DE CONTROLE DE QUALIDADE ', 124);
+INSERT INTO profissao (nome, id) VALUES ('ENGENHEIRO DE MANUTENCAO ELETRICIDADE E ELETRONICA ', 125);
+INSERT INTO profissao (nome, id) VALUES ('ENGENHEIRO DE MINAS ', 126);
+INSERT INTO profissao (nome, id) VALUES ('ENGENHEIRO DE ORGANIZACAO E METODOS ', 127);
+INSERT INTO profissao (nome, id) VALUES ('ENGENHEIRO DE SEGURANCA DO TRABALHO ', 128);
+INSERT INTO profissao (nome, id) VALUES ('ENGENHEIRO DE TELECOMUNICACOES ', 129);
+INSERT INTO profissao (nome, id) VALUES ('ENGENHEIRO DE TRAFEGO ', 130);
+INSERT INTO profissao (nome, id) VALUES ('ENGENHEIRO ELETRICISTA ', 131);
+INSERT INTO profissao (nome, id) VALUES ('ENGENHEIRO ELETRONICO ', 132);
+INSERT INTO profissao (nome, id) VALUES ('ENGENHEIRO MECANICO ', 133);
+INSERT INTO profissao (nome, id) VALUES ('ENGENHEIRO QUIMICO ', 134);
+INSERT INTO profissao (nome, id) VALUES ('ENGENHEIROS ', 135);
+INSERT INTO profissao (nome, id) VALUES ('ESCRITURARIO ', 136);
+INSERT INTO profissao (nome, id) VALUES ('ESCRIVAO ', 137);
+INSERT INTO profissao (nome, id) VALUES ('ESTATISTICO ', 138);
+INSERT INTO profissao (nome, id) VALUES ('ESTETICISTA ', 139);
+INSERT INTO profissao (nome, id) VALUES ('FARMACEUTICO ', 140);
+INSERT INTO profissao (nome, id) VALUES ('FISIOTERAPEUTA ', 141);
+INSERT INTO profissao (nome, id) VALUES ('FONOAUDIOLOGO ', 142);
+INSERT INTO profissao (nome, id) VALUES ('FUNCIONARIO PUBLICO ESTADUAL SUPERIOR ', 143);
+INSERT INTO profissao (nome, id) VALUES ('FUNCIONARIO PUBLICO FEDERAL SUPERIOR ', 144);
+INSERT INTO profissao (nome, id) VALUES ('FUNCIONARIO PUBLICO MUNICIPAL SUPERIOR ', 145);
+INSERT INTO profissao (nome, id) VALUES ('FUNCIONARIO PUBLICO SUPERIOR ', 146);
+INSERT INTO profissao (nome, id) VALUES ('GEOLOGO ', 147);
+INSERT INTO profissao (nome, id) VALUES ('GERENTE ADMINISTRATIVO ', 148);
+INSERT INTO profissao (nome, id) VALUES ('GERENTE COMERCIAL ', 149);
+INSERT INTO profissao (nome, id) VALUES ('GERENTE DE BANCO ', 150);
+INSERT INTO profissao (nome, id) VALUES ('GERENTE DE BAR ', 151);
+INSERT INTO profissao (nome, id) VALUES ('GERENTE DE COMPRA ', 152);
+INSERT INTO profissao (nome, id) VALUES ('GERENTE DE  EMPRESAS ', 153);
+INSERT INTO profissao (nome, id) VALUES ('GERENTE DE HOTEL ', 154);
+INSERT INTO profissao (nome, id) VALUES ('GERENTE DE INFORMATICA ', 155);
+INSERT INTO profissao (nome, id) VALUES ('GERENTE DE LOJA ', 156);
+INSERT INTO profissao (nome, id) VALUES ('GERENTE DE MARKETING ', 157);
+INSERT INTO profissao (nome, id) VALUES ('GERENTE DE OPERACAO ', 158);
+INSERT INTO profissao (nome, id) VALUES ('GERENTE DE PESQUISA E DESENVOLVIMENTO ', 159);
+INSERT INTO profissao (nome, id) VALUES ('GERENTE DE PESSOAL ', 160);
+INSERT INTO profissao (nome, id) VALUES ('GERENTE DE PLANEJAMENTO ', 161);
+INSERT INTO profissao (nome, id) VALUES ('GERENTE DE POSTAL E TELECOMUNICACOES ', 162);
+INSERT INTO profissao (nome, id) VALUES ('GERENTE DE PRODUCAO ', 163);
+INSERT INTO profissao (nome, id) VALUES ('GERENTE DE PROPAGANDA ', 164);
+INSERT INTO profissao (nome, id) VALUES ('GERENTE DE RESTAURANTE ', 165);
+INSERT INTO profissao (nome, id) VALUES ('GERENTE DE RH ', 166);
+INSERT INTO profissao (nome, id) VALUES ('GERENTE DE TRANSPORTE ', 167);
+INSERT INTO profissao (nome, id) VALUES ('GERENTE DE VENDAS ', 168);
+INSERT INTO profissao (nome, id) VALUES ('GERENTE EXECUTIVO ', 169);
+INSERT INTO profissao (nome, id) VALUES ('GERENTE FINANCEIRO ', 170);
+INSERT INTO profissao (nome, id) VALUES ('GERENTE OPERACIONAL ', 171);
+INSERT INTO profissao (nome, id) VALUES ('INSPETOR DE PRODUCAO ', 172);
+INSERT INTO profissao (nome, id) VALUES ('INSPETOR DE QUALIDADE ', 173);
+INSERT INTO profissao (nome, id) VALUES ('INSPETOR DE	SERVICOS DE TRANSPORTE ', 174);
+INSERT INTO profissao (nome, id) VALUES ('INSPETOR TECNICO DE VENDAS ', 175);
+INSERT INTO profissao (nome, id) VALUES ('INSTRUTOR DE APRENDIZAGEM E TREINAMENTO ', 176);
+INSERT INTO profissao (nome, id) VALUES ('JORNALISTA ', 177);
+INSERT INTO profissao (nome, id) VALUES ('LABORATORISTA ANALISES CLINICAS ', 178);
+INSERT INTO profissao (nome, id) VALUES ('LABORATORISTA INDUSTRIAL ', 179);
+INSERT INTO profissao (nome, id) VALUES ('LOCUTOR ', 180);
+INSERT INTO profissao (nome, id) VALUES ('MAITRE ', 181);
+INSERT INTO profissao (nome, id) VALUES ('MEDICO ', 182);
+INSERT INTO profissao (nome, id) VALUES ('MEDICO ANESTESISTA ', 183);
+INSERT INTO profissao (nome, id) VALUES ('MEDICO CARDIOLOGISTA ', 184);
+INSERT INTO profissao (nome, id) VALUES ('MEDICO DO TRABALHO ', 185);
+INSERT INTO profissao (nome, id) VALUES ('MEDICO GINECOLOGISTA ', 186);
+INSERT INTO profissao (nome, id) VALUES ('MEDICO ORTOPEDISTA ', 187);
+INSERT INTO profissao (nome, id) VALUES ('MEDICO PEDIATRA ', 188);
+INSERT INTO profissao (nome, id) VALUES ('MEDICO PSIQUIATRA ', 189);
+INSERT INTO profissao (nome, id) VALUES ('MEDICO VETERINARIO ', 190);
+INSERT INTO profissao (nome, id) VALUES ('MESTRE CONTRUCAO CIVIL ', 191);
+INSERT INTO profissao (nome, id) VALUES ('MESTRE INDUSTRIAL ', 192);
+INSERT INTO profissao (nome, id) VALUES ('MOTOCICLISTA TRANSPORTE DE MERCADORIAS ', 193);
+INSERT INTO profissao (nome, id) VALUES ('MOTORISTA ', 194);
+INSERT INTO profissao (nome, id) VALUES ('MOTORISTA DE CAMINHAO ', 195);
+INSERT INTO profissao (nome, id) VALUES ('MOTORISTA DE FURGAO OU VEICULO SIMILAR ', 196);
+INSERT INTO profissao (nome, id) VALUES ('MOTORISTA DE ONIBUS ', 197);
+INSERT INTO profissao (nome, id) VALUES ('MOTORISTA DE TAXI ', 198);
+INSERT INTO profissao (nome, id) VALUES ('MUSICO ', 199);
+INSERT INTO profissao (nome, id) VALUES ('NUTRICIONISTA ', 200);
+INSERT INTO profissao (nome, id) VALUES ('OPERADOR DE CAMERA DE TELEVISAO ', 201);
+INSERT INTO profissao (nome, id) VALUES ('OPERADOR DE COMPUTADOR ', 202);
+INSERT INTO profissao (nome, id) VALUES ('OPERADOR DE EQUIPAMENTOS DE ENTRADA DE DADOS ', 203);
+INSERT INTO profissao (nome, id) VALUES ('OPERADOR DE ESTACAO DE RADIO ', 204);
+INSERT INTO profissao (nome, id) VALUES ('OPERADOR DE MAQUINAS E VEICULOS ', 205);
+INSERT INTO profissao (nome, id) VALUES ('OPERADOR DE MICRO ', 206);
+INSERT INTO profissao (nome, id) VALUES ('OPERADOR DE PRODUTOS FINANCEIROS ', 207);
+INSERT INTO profissao (nome, id) VALUES ('OPERADOR DE RAIOS X ', 208);
+INSERT INTO profissao (nome, id) VALUES ('OPERADOR DE TELEMARKETING ', 209);
+INSERT INTO profissao (nome, id) VALUES ('ORIENTADOR EDUCACIONAL ', 210);
+INSERT INTO profissao (nome, id) VALUES ('OURIVES ', 211);
+INSERT INTO profissao (nome, id) VALUES ('PEDAGOGO ', 212);
+INSERT INTO profissao (nome, id) VALUES ('PILOTO ', 213);
+INSERT INTO profissao (nome, id) VALUES ('PINTOR ', 214);
+INSERT INTO profissao (nome, id) VALUES ('PRODUTOR DE RADIO E TELEVISAO ', 215);
+INSERT INTO profissao (nome, id) VALUES ('PROFESSOR DE 1A A 4A SERIE ENSINO DE 1O GRAU ', 216);
+INSERT INTO profissao (nome, id) VALUES ('PROFESSOR DE ADMINISTRACAO ENSINO SUPERIOR ', 217);
+INSERT INTO profissao (nome, id) VALUES ('PROFESSOR DE ALUNOS COM DEFICENCIAS MENTAIS ', 218);
+INSERT INTO profissao (nome, id) VALUES ('PROFESSOR DE BIOLOGIA ENSINO DE 2O GRAU ', 219);
+INSERT INTO profissao (nome, id) VALUES ('PROFESSOR DE CIENCIAS NATURAIS ENSINO DE 1O GRAU ', 220);
+INSERT INTO profissao (nome, id) VALUES ('PROFESSOR DE COMUNICACAO ', 221);
+INSERT INTO profissao (nome, id) VALUES ('PROFESSOR DE CONTABILIDADE ENSINO SUPERIOR ', 222);
+INSERT INTO profissao (nome, id) VALUES ('PROFESSOR DE DIDATICA ENSINO SUPERIOR ', 223);
+INSERT INTO profissao (nome, id) VALUES ('PROFESSOR DE DIREITO ', 224);
+INSERT INTO profissao (nome, id) VALUES ('PROFESSOR DE ECONOMIA ', 225);
+INSERT INTO profissao (nome, id) VALUES ('PROFESSOR DE EDUCACAO FISICA ', 226);
+INSERT INTO profissao (nome, id) VALUES ('PROFESSOR DE ENFERMAGEM ', 227);
+INSERT INTO profissao (nome, id) VALUES ('PROFESSOR DE ENSINO PRE ESCOLAR ', 228);
+INSERT INTO profissao (nome, id) VALUES ('PROFESSOR DE ESTATISTICA ', 229);
+INSERT INTO profissao (nome, id) VALUES ('PROFESSOR DE ESTUDOS SOCIAIS ENSINO DE 1O GRAU ', 230);
+INSERT INTO profissao (nome, id) VALUES ('PROFESSOR DE FISICA ', 231);
+INSERT INTO profissao (nome, id) VALUES ('PROFESSOR DE FISIOTERAPIA ENSINO SUPERIOR ', 232);
+INSERT INTO profissao (nome, id) VALUES ('PROFESSOR DE HISTORIA ', 233);
+INSERT INTO profissao (nome, id) VALUES ('PROFESSOR DE INGLES ', 234);
+INSERT INTO profissao (nome, id) VALUES ('PROFESSOR DE LINGUA PORTUGUESA ', 235);
+INSERT INTO profissao (nome, id) VALUES ('PROFESSOR DE LINGUAS ESTRANGEIRAS ', 236);
+INSERT INTO profissao (nome, id) VALUES ('PROFESSOR DE MATEMATICA ', 237);
+INSERT INTO profissao (nome, id) VALUES ('PROFESSOR DE ORIENTACAO EDUCACIONAL ENSINO SUPERIOR ', 238);
+INSERT INTO profissao (nome, id) VALUES ('PROFESSOR DE PEDAGOGIA ', 239);
+INSERT INTO profissao (nome, id) VALUES ('PROFESSOR DE PORTUGUES E LITERATURA ', 240);
+INSERT INTO profissao (nome, id) VALUES ('PROFESSOR DE PRATICA DE ENSINO ENSINO SUPERIOR ', 241);
+INSERT INTO profissao (nome, id) VALUES ('PROFESSOR DE PSICOLOGIA ', 242);
+INSERT INTO profissao (nome, id) VALUES ('PROFESSOR DE QUIMICA ', 243);
+INSERT INTO profissao (nome, id) VALUES ('PROFESSOR DE SOCIOLOGIA ', 244);
+INSERT INTO profissao (nome, id) VALUES ('PROFESSOR DE TECNOLOGIA ', 245);
+INSERT INTO profissao (nome, id) VALUES ('PROFESSORES ', 246);
+INSERT INTO profissao (nome, id) VALUES ('PROFESSORES DE BIOLOGIA ', 247);
+INSERT INTO profissao (nome, id) VALUES ('PROFESSORES DE CIENCIAS HUMANAS ', 248);
+INSERT INTO profissao (nome, id) VALUES ('PROFESSORES DE ENSINO DE 2O GRAU ', 249);
+INSERT INTO profissao (nome, id) VALUES ('PROFESSORES DE ENSINO DE PRIMEIRO GRAU ', 250);
+INSERT INTO profissao (nome, id) VALUES ('PROFESSORES DE ENSINO ESPECIAL ', 251);
+INSERT INTO profissao (nome, id) VALUES ('PROFESSORES DE ENSINO PRE ESCOLAR ', 252);
+INSERT INTO profissao (nome, id) VALUES ('PROFESSORES DE ENSINO SUPERIOR ', 253);
+INSERT INTO profissao (nome, id) VALUES ('PROFESSORES DE PEDAGOGIA ', 254);
+INSERT INTO profissao (nome, id) VALUES ('PROFESSSOR DE GEOGRAFIA ', 255);
+INSERT INTO profissao (nome, id) VALUES ('PROGRAMADOR DE COMPUTADOR ', 256);
+INSERT INTO profissao (nome, id) VALUES ('PROPAGANDISTA DE PRODUTOS DE LABORATORIO ', 257);
+INSERT INTO profissao (nome, id) VALUES ('PSICOLOGO ', 258);
+INSERT INTO profissao (nome, id) VALUES ('QUIMICO ', 259);
+INSERT INTO profissao (nome, id) VALUES ('QUIMICO ANALISTA ', 260);
+INSERT INTO profissao (nome, id) VALUES ('QUIMICO INDUSTRIAL ', 261);
+INSERT INTO profissao (nome, id) VALUES ('RECEPCIONISTA ', 262);
+INSERT INTO profissao (nome, id) VALUES ('REDATOR ', 263);
+INSERT INTO profissao (nome, id) VALUES ('RELACOES PUBLICAS ', 264);
+INSERT INTO profissao (nome, id) VALUES ('REPORTER ', 265);
+INSERT INTO profissao (nome, id) VALUES ('REPRESENTANTE COMERCIAL ', 266);
+INSERT INTO profissao (nome, id) VALUES ('SECRETARIO ', 267);
+INSERT INTO profissao (nome, id) VALUES ('SECRETARIO BILINGUE ', 268);
+INSERT INTO profissao (nome, id) VALUES ('SECRETARIO EXECUTIVO ', 269);
+INSERT INTO profissao (nome, id) VALUES ('SERVENTUARIOS DA JUSTICA ', 270);
+INSERT INTO profissao (nome, id) VALUES ('SOCIOLOGO ', 271);
+INSERT INTO profissao (nome, id) VALUES ('SUPERVISOR DE COMPRAS ', 272);
+INSERT INTO profissao (nome, id) VALUES ('SUPERVISOR DE VENDAS COMERCIO ATACADISTA ', 273);
+INSERT INTO profissao (nome, id) VALUES ('SUPERVISOR DE VENDAS COMERCIO VAREJISTA ', 274);
+INSERT INTO profissao (nome, id) VALUES ('SUPERVISOR EDUCACIONAL ', 275);
+INSERT INTO profissao (nome, id) VALUES ('SUPERVISORES DE COMPRAS E COMPRADORES ', 276);
+INSERT INTO profissao (nome, id) VALUES ('SUPERVISORES DE VENDAS ', 277);
+INSERT INTO profissao (nome, id) VALUES ('TECNICO ', 278);
+INSERT INTO profissao (nome, id) VALUES ('TECNICO AGRICOLA ', 279);
+INSERT INTO profissao (nome, id) VALUES ('TECNICO AGROPECUARIO ', 280);
+INSERT INTO profissao (nome, id) VALUES ('TECNICO DE ADMINISTRACAO ', 281);
+INSERT INTO profissao (nome, id) VALUES ('TECNICO DE CONTABILIDADE ', 282);
+INSERT INTO profissao (nome, id) VALUES ('TECNICO DE ENFERMAGEM ', 283);
+INSERT INTO profissao (nome, id) VALUES ('TECNICO DE LABORATORIO ', 284);
+INSERT INTO profissao (nome, id) VALUES ('TECNICO DE MANUTENCAO ELETRICA ', 285);
+INSERT INTO profissao (nome, id) VALUES ('TECNICO DE MANUTENCAO ELETRONICA ', 286);
+INSERT INTO profissao (nome, id) VALUES ('TECNICO DE OBRAS CIVIS ', 287);
+INSERT INTO profissao (nome, id) VALUES ('TECNICO DE PLANEJAMENTO DE PRODUCAO ', 288);
+INSERT INTO profissao (nome, id) VALUES ('TECNICO DE SEGURANCA DO TRABALHO ', 289);
+INSERT INTO profissao (nome, id) VALUES ('TECNICO DE SEGUROS ', 290);
+INSERT INTO profissao (nome, id) VALUES ('TECNICO DE TELECOMUNICACOES ', 291);
+INSERT INTO profissao (nome, id) VALUES ('TECNICO ELETRONICO ', 292);
+INSERT INTO profissao (nome, id) VALUES ('TECNICO MECANICO ', 293);
+INSERT INTO profissao (nome, id) VALUES ('TECNICO MECANICO MAQUINAS ', 294);
+INSERT INTO profissao (nome, id) VALUES ('TECNICO METALURGICO ', 295);
+INSERT INTO profissao (nome, id) VALUES ('TECNICO QUIMICO ', 296);
+INSERT INTO profissao (nome, id) VALUES ('TECNICOS DE BIOLOGIA  ', 297);
+INSERT INTO profissao (nome, id) VALUES ('TECNICOS DE ELETRICIDADE ', 298);
+INSERT INTO profissao (nome, id) VALUES ('TECNICOS DE ENFERMAGEM ', 299);
+INSERT INTO profissao (nome, id) VALUES ('TECNICOS DE OBRAS CIVIS ', 300);
+INSERT INTO profissao (nome, id) VALUES ('TERAPEUTA OCUPACIONAL ', 301);
+INSERT INTO profissao (nome, id) VALUES ('TOPOGRAFO ', 302);
+INSERT INTO profissao (nome, id) VALUES ('TRABALHADORES DAS PROFISSOES CIENTIFICAS ', 303);
+INSERT INTO profissao (nome, id) VALUES ('TRABALHADORES DE COMERCIO ', 304);
+INSERT INTO profissao (nome, id) VALUES ('TRABALHADORES DE SERVICOS ADMINISTRATIVOS ', 305);
+INSERT INTO profissao (nome, id) VALUES ('TRABALHADORES DE SERVICOS DE CONTABILIDADE ', 306);
+INSERT INTO profissao (nome, id) VALUES ('TRABALHADORES DE SERVICOS DE TURISMO ', 307);
+INSERT INTO profissao (nome, id) VALUES ('VENDEDOR A DOMICILIO ', 308);
+INSERT INTO profissao (nome, id) VALUES ('VENDEDOR AMBULANTE ', 309);
+INSERT INTO profissao (nome, id) VALUES ('VENDEDOR DE COMERCIO ATACADISTA ', 310);
+INSERT INTO profissao (nome, id) VALUES ('VENDEDOR DE COMERCIO VAREJISTA ', 311);
+INSERT INTO profissao (nome, id) VALUES ('VENDEDOR PRACISTA ', 312);
+INSERT INTO profissao (nome, id) VALUES ('VENDEDORES DE COMERCIO ATACADISTA E VAREJISTA ', 313);
+INSERT INTO profissao (nome, id) VALUES ('VENDEDORES PRACISTAS ', 314);
+INSERT INTO profissao (nome, id) VALUES ('INFORMATICA ', 315);
+INSERT INTO profissao (nome, id) VALUES ('ZOOTECNISTA', 316);
+INSERT INTO profissao (nome, id) VALUES ('TECNICO EM INFORMATICA PARA INTERNET', 317);
+INSERT INTO profissao (nome, id) VALUES ('TECNICO EM INFORMATICA', 318);
+INSERT INTO profissao (nome, id) VALUES ('DESENVOLVIMENTO DE SISTEMA', 319);
+INSERT INTO profissao (nome, id) VALUES ('OUTROS', 320);
+
+
+
+
 
 
 

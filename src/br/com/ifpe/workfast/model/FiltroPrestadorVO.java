@@ -9,10 +9,16 @@ public class FiltroPrestadorVO {
 	private String foto;
 	private String nomeFantasia;
 	private String localizacao;
+	private Integer idUsuario;
+	private Integer idUsuarioServico;
+	private String tipo;
+	private String descricaoServico;
 	
 
+
+
 	public FiltroPrestadorVO(String servico, String categoria, String usuario, String foto, String nomeFantasia,
-			String localizacao) {
+			String localizacao, Integer idUsuario, Integer idUsuarioServico, String tipo, String descricaoServico) {
 		super();
 		this.servico = servico;
 		this.categoria = categoria;
@@ -20,6 +26,10 @@ public class FiltroPrestadorVO {
 		this.foto = foto;
 		this.nomeFantasia = nomeFantasia;
 		this.localizacao = localizacao;
+		this.idUsuario = idUsuario;
+		this.idUsuarioServico = idUsuarioServico;
+		this.tipo = tipo;
+		this.descricaoServico = descricaoServico;
 	}
 
 
@@ -81,6 +91,51 @@ public class FiltroPrestadorVO {
 	public void setLocalizacao(String localizacao) {
 		this.localizacao = localizacao;
 	}
+
+
+	public Integer getIdUsuario() {
+		return idUsuario;
+	}
+
+
+	public void setIdUsuario(Integer idUsuario) {
+		this.idUsuario = idUsuario;
+	}
+
+
+	public Integer getIdUsuarioServico() {
+		return idUsuarioServico;
+	}
+
+
+	public void setIdUsuarioServico(Integer idUsuarioServico) {
+		this.idUsuarioServico = idUsuarioServico;
+	}
+
+
+	public String getTipo() {
+		return tipo;
+	}
+
+
+	public void setTipo(String tipo) {
+		this.tipo = tipo;
+	}
+
+
+	public String getDescricaoServico() {
+		return descricaoServico;
+	}
+
+
+	public void setDescricaoServico(String descricaoServico) {
+		this.descricaoServico = descricaoServico;
+	}
+	
+	
+	
+	
+	
 
 	
 
