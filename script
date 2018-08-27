@@ -108,13 +108,20 @@ create table cidade_atuacao_servico(
     
 );
 
-create table estagios(
- id int AUTO_INCREMENT PRIMARY KEY,
- 1estagio bit not null DEFAULT false,
- 2estagio bit not null DEFAULT false,
- 3estagio bit not null DEFAULT false,
- 4estagio bit not null DEFAULT false
+create table solicitacao_contrato(
+    id int AUTO_INCREMENT PRIMARY KEY,
+    dataPedido datetime DEFAULT CURRENT_TIMESTAMP,
+    fk_cliente int NOT null,
+    fk_prestadorServico int NOT null,
+    fk_endereco int NOT null,
+    status_solicitacao char(1) NOT null,
+    convite char(1) NOT null,
+    FOREIGN KEY(fk_cliente) REFERENCES usuario (id),
+    FOREIGN KEY(fk_prestadorServico) REFERENCES usuario_servico (id),
+    FOREIGN KEY(fk_endereco) REFERENCES endereco (id)
+    
 );
+
 
 
 // insert

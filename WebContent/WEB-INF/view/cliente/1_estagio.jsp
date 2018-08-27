@@ -62,6 +62,7 @@
 	href="<%=request.getContextPath()%>/resources/vendor/bootstrap.min.css"
 	rel="stylesheet" media="all">
 
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
 <!-- Main CSS-->
 <link
@@ -217,6 +218,7 @@
 		<div class="section__content section__content--p30">
 
 			<div class="container-fluid">
+			  
 
 				<div class="fontawesome-list-wrap">
 					<section>
@@ -232,7 +234,7 @@
 
 					</section>
 
-					<section>
+					<section id="solicitacao">
 						<h2 style="text-align: center;">Cadastro de Endereço</h2>
 						<br>
 						<p>Você irá preencher o seu endereço para o prestador de
@@ -347,7 +349,35 @@
 					<button type="button" class="close" data-dismiss="modal">&times;</button>
 				</div>
 				<div class="modal-body">
-					<p>Os endereços vai vim aqui.</p>
+					<table class="table table-striped">
+						<thead>
+							<tr>
+							    <th>Estado</th>
+								<th>Cidade</th>
+								<th>Endereço</th>
+								<th>Numero da casa</th>
+								<th></th>
+								
+							</tr>
+						</thead>
+						<tbody>
+						   <c:forEach items="${listaEndereco}" var="obj">
+						   <tr>
+								<td>${obj.estado.nome}</td>
+								<td>${obj.cidade.nome}</td>
+								<td>${obj.rua}</td>
+								<td>${obj.numeroCasa}</td>
+								<td><button type="button" onclick="solicitarPedido(${obj.id})" class="btn btn-primary">Primary</button></td>
+							</tr>
+				
+																
+				
+				
+						  </c:forEach>
+							
+							
+						</tbody>
+					</table>
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-primary" data-dismiss="modal">Fechar</button>
@@ -356,6 +386,34 @@
 
 		</div>
 	</div>
+	
+	
+	<script type="text/javascript">
+	 var idUsuario = "${usuarioLogado.idUsuario}";
+	 var idUsuarioServico = "${idUsuarioServico}";
+	 
+	 function solicitarPedido(idEndereco){
+		 
+		//encaminhando os valores do formulario para ser processadas 
+			$.post('enviarSolicitacaoContrato', {
+				idUsuario : idUsuario,
+				idUsuarioServico : idUsuarioServico,
+				idEndereco : idEndereco,
+
+			}, function(dadosJSON) {
+
+				if(dadosJSON == "enviado"){
+					$('#myModal').modal('hide');
+					 
+					 swal("Solicitação enviada com sucesso.","","success");
+				   	  
+					 $('#solicitacao').html('<center>Solicitação enviada com sucesso!</br>Aguardando aprovação do Prestador.</center>');
+				}
+			});
+		 
+		 
+	 }
+	</script>
 
 	<!-- Jquery JS-->
 	<script

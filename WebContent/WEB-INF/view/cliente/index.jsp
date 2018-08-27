@@ -187,7 +187,7 @@
 							              linhas += '</tr>' ;
 							              linhas += '<tr>'; 
 								              linhas += '<td colspan="3" >';
-								                linhas += '<div style="float:right;"><a href="PrimeiroEstagio"><button class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="Contratar">Contratar <i class="fa fa-handshake-o "></i></button></a>&nbsp;&nbsp;<button class="btn btn-danger" class="item" data-toggle="tooltip" data-placement="top" title="Chat">Chat <i class="zmdi zmdi-comment-more"></i></button></div>';
+								                linhas += '<div style="float:right;"><a href="PrimeiroEstagio?id='+dadosJSON[i].idUsuarioServico+'"><button class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="Contratar">Contratar <i class="fa fa-handshake-o "></i></button></a>&nbsp;&nbsp;<button class="btn btn-danger" class="item" data-toggle="tooltip" data-placement="top" title="Chat">Chat <i class="zmdi zmdi-comment-more"></i></button></div>';
 								                
 								              linhas += '</td>'; 
 							              linhas += '</tr>'; 

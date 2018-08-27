@@ -4,10 +4,15 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.google.gson.Gson;
 
 import br.com.ifpe.workfast.model.CategoriaServico;
 import br.com.ifpe.workfast.model.CategoriaServicoDao;
@@ -21,7 +26,10 @@ import br.com.ifpe.workfast.model.Estado;
 import br.com.ifpe.workfast.model.EstadoDao;
 import br.com.ifpe.workfast.model.Profissao;
 import br.com.ifpe.workfast.model.ProfissaoDao;
+import br.com.ifpe.workfast.model.SolicitacaoContrato;
+import br.com.ifpe.workfast.model.SolicitacaoContratoDao;
 import br.com.ifpe.workfast.model.Usuario;
+import br.com.ifpe.workfast.model.UsuarioServico;
 
 @Controller
 public class ClienteController {
@@ -144,9 +152,43 @@ public class ClienteController {
 
 	// Método para abrir o primeiro estágio do pedido
 	@RequestMapping("PrimeiroEstagio")
-	public String PrimeiroEstagioPedido() {
+	public String PrimeiroEstagioPedido(@RequestParam("id") Integer idUsuarioServico, Model model, Model model2,
+			HttpServletRequest request) {
+
+		Usuario usuario = (Usuario) request.getSession().getAttribute("usuarioLogado");
+		EnderecoDao dao = new EnderecoDao();
+		List<Endereco> lista = dao.listarEnderecoCliente(usuario.getIdUsuario());
+		model2.addAttribute("idUsuarioServico", idUsuarioServico);
+		model.addAttribute("listaEndereco", lista);
 
 		return "cliente/1_estagio";
+
+	}
+
+	// Método para abrir o segundo estágio do pedido
+	@RequestMapping(value = "enviarSolicitacaoContrato", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+	public @ResponseBody String cadastrarSolicitacaoContrato(@RequestParam("idUsuario") Integer idUsuario,
+			@RequestParam("idEndereco") Integer idEndereco,
+			@RequestParam("idUsuarioServico") Integer idUsuarioServico) {
+		Usuario usuario = new Usuario();
+		usuario.setIdUsuario(idUsuario);
+		Endereco endereco = new Endereco();
+		endereco.setId(idEndereco);
+		UsuarioServico usuarioServico = new UsuarioServico();
+		usuarioServico.setIdUsuarioServico(idUsuarioServico);
+		
+		SolicitacaoContrato solicitacao = new SolicitacaoContrato();
+		solicitacao.setEndereco(endereco);
+		solicitacao.setUsuario(usuario);
+		solicitacao.setUsuarioServico(usuarioServico);
+		solicitacao.setStatus("1");
+		solicitacao.setConvite("0");
+		
+		
+		SolicitacaoContratoDao dao = new SolicitacaoContratoDao();
+		dao.salvar(solicitacao);
+
+		return new Gson().toJson("enviado");
 
 	}
 
@@ -192,18 +234,18 @@ public class ClienteController {
 		return "cliente/cadastroClienteFisico";
 
 	}
-	
+
 	// Método para encaminhar para o cadastro de primeiro acesso do tipo juridico
-		@RequestMapping("cadastroClienteJuridico")
-		public String cadastroClienteJuridico(Model model, Model model2) {
+	@RequestMapping("cadastroClienteJuridico")
+	public String cadastroClienteJuridico(Model model, Model model2) {
 
-			ProfissaoDao dao = new ProfissaoDao();
-			List<Profissao> lista = dao.listar();
-			EstadoDao daoEstado = new EstadoDao();
-			List<Estado> listaEstado = daoEstado.listar();
-			model2.addAttribute("listaEstado", listaEstado);
-			model.addAttribute("listaAtaucao", lista);
-			return "cliente/cadastroClienteJuridico";
+		ProfissaoDao dao = new ProfissaoDao();
+		List<Profissao> lista = dao.listar();
+		EstadoDao daoEstado = new EstadoDao();
+		List<Estado> listaEstado = daoEstado.listar();
+		model2.addAttribute("listaEstado", listaEstado);
+		model.addAttribute("listaAtaucao", lista);
+		return "cliente/cadastroClienteJuridico";
 
-		}
+	}
 }
