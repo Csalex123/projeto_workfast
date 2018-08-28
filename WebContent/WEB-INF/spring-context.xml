@@ -32,7 +32,8 @@ http://www.springframework.org/schema/context/spring-context-3.0.xsd">
 			  <bean class="br.com.ifpe.workfast.converters.EstadoConverter" /> 
 			  <bean class="br.com.ifpe.workfast.converters.CidadeConverter" />  
 			  <bean class="br.com.ifpe.workfast.converters.CategoriaServicoConverter" />  
-			  <bean class="br.com.ifpe.workfast.converters.UsuarioServicoConverter" />  					  			   
+			  <bean class="br.com.ifpe.workfast.converters.UsuarioServicoConverter" /> 
+			  <bean class="br.com.ifpe.workfast.converters.EnderecoConverter" />  					  			   
 			</list>
 			</property>
 		</bean>

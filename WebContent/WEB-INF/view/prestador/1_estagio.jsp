@@ -136,10 +136,7 @@
 	rel="stylesheet" media="all">
 	
 
- <!-- Maps API Javascript -->
-<script src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
-
- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+ 
 
 </head>
 
@@ -333,8 +330,18 @@
 	</div>
 
 	</div>
+	
+
+
+
+ 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+ 
+ 	<!-- Maps API Javascript -->
+   <script src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
+	
 	<!-- Mapa JS-->
 	<script src="<%=request.getContextPath()%>/resources/js/prestador/mapa.js"></script>
+	
 
 	<!-- Jquery JS-->
 	<script
