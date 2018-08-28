@@ -29,6 +29,9 @@ public class SolicitacaoContrato {
 	@Column
 	private String convite;
 	
+	@Column
+	private String estagio;
+	
 	@ManyToOne
 	@JoinColumn(name = "fk_cliente")
 	private Usuario usuario;
@@ -96,6 +99,16 @@ public class SolicitacaoContrato {
 	public void setEndereco(Endereco endereco) {
 		this.endereco = endereco;
 	}
+
+	public String getEstagio() {
+		return estagio;
+	}
+
+	public void setEstagio(String estagio) {
+		this.estagio = estagio;
+	}
+	
+	
 	
 	
 	

@@ -116,6 +116,7 @@ create table solicitacao_contrato(
     fk_endereco int NOT null,
     status_solicitacao char(1) NOT null,
     convite char(1) NOT null,
+    estagio char(1) not null,
     FOREIGN KEY(fk_cliente) REFERENCES usuario (id),
     FOREIGN KEY(fk_prestadorServico) REFERENCES usuario_servico (id),
     FOREIGN KEY(fk_endereco) REFERENCES endereco (id)

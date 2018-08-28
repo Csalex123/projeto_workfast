@@ -1,5 +1,6 @@
 package br.com.ifpe.workfast.controller;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -149,7 +150,20 @@ public class ClienteController {
 		model.addAttribute("mensagemRemocao", "Endereco Removido com Sucesso");
 		return "forward:meuEnderecos";
 	}
+	// Método para abrir o primeiro estágio do pedido
+		@RequestMapping("solicitacaoServico")
+		public String solicitacaoServico(@RequestParam("id") Integer idUsuarioServico, Model model, Model model2,
+				HttpServletRequest request) {
 
+			Usuario usuario = (Usuario) request.getSession().getAttribute("usuarioLogado");
+			EnderecoDao dao = new EnderecoDao();
+			List<Endereco> lista = dao.listarEnderecoCliente(usuario.getIdUsuario());
+			model2.addAttribute("idUsuarioServico", idUsuarioServico);
+			model.addAttribute("listaEndereco", lista);
+
+			return "cliente/solicitacaoServico";
+
+		}
 	// Método para abrir o primeiro estágio do pedido
 	@RequestMapping("PrimeiroEstagio")
 	public String PrimeiroEstagioPedido(@RequestParam("id") Integer idUsuarioServico, Model model, Model model2,
@@ -176,6 +190,7 @@ public class ClienteController {
 		endereco.setId(idEndereco);
 		UsuarioServico usuarioServico = new UsuarioServico();
 		usuarioServico.setIdUsuarioServico(idUsuarioServico);
+		Date data = new Date();
 		
 		SolicitacaoContrato solicitacao = new SolicitacaoContrato();
 		solicitacao.setEndereco(endereco);
@@ -183,12 +198,19 @@ public class ClienteController {
 		solicitacao.setUsuarioServico(usuarioServico);
 		solicitacao.setStatus("1");
 		solicitacao.setConvite("0");
+		solicitacao.setDataPedido(data);
+		solicitacao.setEstagio("1");
 		
 		
 		SolicitacaoContratoDao dao = new SolicitacaoContratoDao();
-		dao.salvar(solicitacao);
+		if(dao.existeVinculacao(idUsuario, idUsuarioServico, idEndereco) == true) {
+			return new Gson().toJson("false");
+		}else {
+			dao.salvar(solicitacao);
 
-		return new Gson().toJson("enviado");
+			return new Gson().toJson("true");
+		}
+		
 
 	}
 
