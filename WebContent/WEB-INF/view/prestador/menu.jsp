@@ -42,7 +42,7 @@
                             </a>
                             <ul class="list-unstyled navbar__sub-list js-sub-list">
                                 <li>
-                                    <a href="Propostas">
+                                    <a href="">
                                         <i class="fas fa-pencil "></i>Propostas</a>
                                 </li>
                                 <li>
@@ -177,7 +177,7 @@
                             </a>
                             <ul class="list-unstyled navbar__sub-list js-sub-list">
                                 <li>
-                                    <a href="Propostas">
+                                    <a href="">
                                         <i class="fas fa-pencil "></i>Propostas</a>
                                 </li>
                                 <li>

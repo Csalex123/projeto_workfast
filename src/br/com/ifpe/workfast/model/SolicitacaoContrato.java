@@ -32,6 +32,9 @@ public class SolicitacaoContrato {
 	@Column
 	private String estagio;
 	
+	@Column
+	private String mensagem;
+	
 	@ManyToOne
 	@JoinColumn(name = "fk_cliente")
 	private Usuario usuario;
@@ -107,6 +110,16 @@ public class SolicitacaoContrato {
 	public void setEstagio(String estagio) {
 		this.estagio = estagio;
 	}
+
+	public String getMensagem() {
+		return mensagem;
+	}
+
+	public void setMensagem(String mensagem) {
+		this.mensagem = mensagem;
+	}
+	
+	
 	
 	
 	

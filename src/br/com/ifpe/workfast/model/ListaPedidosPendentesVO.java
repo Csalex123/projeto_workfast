@@ -16,13 +16,14 @@ public class ListaPedidosPendentesVO {
 	private String cidade;
 	private String estado;
 	private String convite;
+	private String descricao;
 	private Date data;
 	
 	
 	
 	public ListaPedidosPendentesVO(Integer idProposta, Integer idPrestadorServico, String nome,
 			String nomeFantasia, String tipoUsuario, String servico, String rua, String numeroCasa, String cep,
-			String cidade, String estado, String convite) {
+			String cidade, String estado, String descricao, String convite) {
 		super();
 		this.idProposta = idProposta;
 		this.idPrestadorServico = idPrestadorServico;
@@ -35,6 +36,8 @@ public class ListaPedidosPendentesVO {
 		this.cep = cep;
 		this.cidade = cidade;
 		this.estado = estado;
+		this.descricao = descricao;
+		
 		this.convite = convite;
 		
 		
@@ -118,6 +121,14 @@ public class ListaPedidosPendentesVO {
 	public void setData(Date data) {
 		this.data = data;
 	}
+	public String getDescricao() {
+		return descricao;
+	}
+	public void setDescricao(String descricao) {
+		this.descricao = descricao;
+	}
+	
+	
 	
 	
 

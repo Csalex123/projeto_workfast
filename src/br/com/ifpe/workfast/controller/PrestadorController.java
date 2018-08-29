@@ -32,6 +32,7 @@ import br.com.ifpe.workfast.model.Profissao;
 import br.com.ifpe.workfast.model.ProfissaoDao;
 import br.com.ifpe.workfast.model.Servico;
 import br.com.ifpe.workfast.model.ServicoDao;
+import br.com.ifpe.workfast.model.SolicitacaoContrato;
 import br.com.ifpe.workfast.model.SolicitacaoContratoDao;
 import br.com.ifpe.workfast.model.Usuario;
 import br.com.ifpe.workfast.model.UsuarioDao;
@@ -133,11 +134,16 @@ public class PrestadorController {
 	// metodo para redirecionar para pagina de Serviço finalizados
 	@RequestMapping("Propostas")
 	public String propostas() {
+		
+		
 		return "prestador/proposta";
 	}
 
 	@RequestMapping("PrimeiraEtapa")
-	public String primeiroEtapa() {
+	public String primeiroEtapa(@RequestParam("cas") Integer idSolicitacao, Model model) {
+		SolicitacaoContratoDao dao = new SolicitacaoContratoDao();
+		ListaPedidosPendentesVO solicitacao = dao.buscarPedidoPendente(idSolicitacao);
+		model.addAttribute("proposta", solicitacao);
 		return "prestador/1_estagio";
 	}
 

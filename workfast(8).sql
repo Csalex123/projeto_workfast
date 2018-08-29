@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Aug 28, 2018 at 08:29 
+-- Generation Time: Aug 29, 2018 at 04:54 
 -- Server version: 10.1.13-MariaDB
 -- PHP Version: 7.0.8
 
@@ -6451,15 +6451,16 @@ CREATE TABLE `solicitacao_contrato` (
   `fk_endereco` int(11) NOT NULL,
   `status_solicitacao` char(1) COLLATE utf8_unicode_ci NOT NULL,
   `convite` char(1) COLLATE utf8_unicode_ci NOT NULL,
-  `estagio` char(1) COLLATE utf8_unicode_ci NOT NULL
+  `estagio` char(1) COLLATE utf8_unicode_ci NOT NULL,
+  `mensagem` varchar(255) COLLATE utf8_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `solicitacao_contrato`
 --
 
-INSERT INTO `solicitacao_contrato` (`id`, `dataPedido`, `fk_cliente`, `fk_prestadorServico`, `fk_endereco`, `status_solicitacao`, `convite`, `estagio`) VALUES
-(1, '2018-08-28 14:21:51', 6, 1, 5, '1', '0', '1');
+INSERT INTO `solicitacao_contrato` (`id`, `dataPedido`, `fk_cliente`, `fk_prestadorServico`, `fk_endereco`, `status_solicitacao`, `convite`, `estagio`, `mensagem`) VALUES
+(10, '2018-08-29 05:51:07', 6, 1, 5, '1', '0', '1', 'teste');
 
 -- --------------------------------------------------------
 
@@ -6694,7 +6695,7 @@ ALTER TABLE `servico`
 -- AUTO_INCREMENT for table `solicitacao_contrato`
 --
 ALTER TABLE `solicitacao_contrato`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 --
 -- AUTO_INCREMENT for table `tipo_acesso`
 --

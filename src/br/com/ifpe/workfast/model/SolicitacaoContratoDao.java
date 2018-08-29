@@ -63,6 +63,52 @@ public class SolicitacaoContratoDao {
 
 	}
 	
+	public ListaPedidosPendentesVO buscarPedidoPendente(Integer id) {
+
+		EntityManagerFactory factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT);
+		EntityManager manager = factory.createEntityManager();
+		TypedQuery<ListaPedidosPendentesVO> query = null;
+		
+		StringBuilder consulta = new StringBuilder();
+		
+		consulta.append(" select new br.com.ifpe.workfast.model.ListaPedidosPendentesVO(");
+		
+		consulta.append(" sc.idSolicitacaoContrato as idProposta,");
+		consulta.append(" us.idUsuarioServico as idPrestadorServico, ");
+		consulta.append(" us.usuario.nome as nomeCliente, ");
+		consulta.append(" dp.nomeFantasia as nomeFantasia, ");
+		consulta.append(" us.usuario.tipo_usuario as tipoUsuario,");
+		consulta.append(" us.servico.nome as nomeServico, ");
+		consulta.append(" ed.rua as endereco, ");
+		consulta.append(" ed.numeroCasa as numeroCasa, ");
+		consulta.append(" ed.cep as cep, ");
+		consulta.append(" ed.cidade.nome as cidade, ");
+		consulta.append(" ed.estado.nome as estado, ");
+		consulta.append(" sc.mensagem as mensagem, ");
+		consulta.append(" sc.convite as proposta) ");
+		
+	    
+		consulta.append(" from SolicitacaoContrato sc join sc.usuarioServico us, DadosPessoais dp, Endereco ed ");
+		consulta.append(" where dp.usuario = sc.usuario AND ed.usuario = sc.usuario AND sc.status = :paramStatus AND sc.estagio = :paramEstagio AND sc.idSolicitacaoContrato = :paramId");
+		query = manager.createQuery(consulta.toString(),ListaPedidosPendentesVO.class);
+		query.setParameter("paramId", id); 
+		query.setParameter("paramStatus", "1");
+		query.setParameter("paramEstagio", "1");
+		List<ListaPedidosPendentesVO> registros = query.getResultList(); 
+		
+		ListaPedidosPendentesVO obj = null;
+		
+		if (!registros.isEmpty()) {
+			obj = (ListaPedidosPendentesVO) registros.get(0);
+		}
+		
+		manager.close();
+		factory.close();
+		return obj;	 
+		
+	}
+
+	
 	public List<ListaPedidosPendentesVO> listarPedidosPendentesCliente(Integer id) {
 
 		EntityManagerFactory factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT);
@@ -84,6 +130,7 @@ public class SolicitacaoContratoDao {
 		consulta.append(" ed.cep as cep, ");
 		consulta.append(" ed.cidade.nome as cidade, ");
 		consulta.append(" ed.estado.nome as estado, ");
+		consulta.append(" sc.mensagem as mensagem, ");
 		consulta.append(" sc.convite as proposta) ");
 		
 	    
@@ -121,6 +168,7 @@ public class SolicitacaoContratoDao {
 		consulta.append(" ed.cep as cep, ");
 		consulta.append(" ed.cidade.nome as cidade, ");
 		consulta.append(" ed.estado.nome as estado, ");
+		consulta.append(" sc.mensagem as mensagem, ");
 		consulta.append(" sc.convite as proposta) ");
 		
 	    

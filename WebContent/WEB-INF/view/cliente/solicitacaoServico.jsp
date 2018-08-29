@@ -261,7 +261,7 @@
 								<td>${obj.rua}</td>
 								<td>${obj.numeroCasa}</td>
 								<td>${obj.cep}</td>
-								<td><button type="button" onclick="solicitarPedido(${obj.id})" class="btn btn-primary">Solicitar</button></td>
+								<td><button type="button" id="solicitar" class="btn btn-primary" onclick="solicitarPedido(${obj.id})" data-whatever="${obj.cidade.nome} - ${obj.rua} - ${obj.numeroCasa}"  >Solicitar</button></td>
 							</tr>
 				
 																
@@ -285,37 +285,122 @@
 			</div>
 		</div>
 	</div>
+	
+ <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Enviar Proposta</h5>
+        <button type="button" onclick="limparCampo();" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="form-group">
+            <label for="recipient-name" id="endereco" class="col-form-label1"></label>
+            
+          </div>
+          <div class="form-group">
+            <label for="message-text" class="col-form-label">Mensagem:</label>
+            <textarea class="form-control" id="mensagem"></textarea>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary"  data-dismiss="modal">Fechar</button>
+        <button type="button" id ="enviarPedido" class="btn btn-primary">Enviar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+	
 
 	
 	
 	
 	<script type="text/javascript">
+	
+	
 	 var idUsuario = "${usuarioLogado.idUsuario}";
 	 var idUsuarioServico = "${idUsuarioServico}";
+	 var idEndereco = "";
 	 
-	 function solicitarPedido(idEndereco){
-		 
-		//encaminhando os valores do formulario para ser processadas 
-			$.post('enviarSolicitacaoContrato', {
+     function solicitarPedido(id){
+    	 
+    	 
+    	 $.post('pedidoSolicitado', {
 				idUsuario : idUsuario,
 				idUsuarioServico : idUsuarioServico,
-				idEndereco : idEndereco,
+				idEndereco : id,
+				
 
 			}, function(dadosJSON) {
 
-				if(dadosJSON == "true"){
+				if(dadosJSON == true){
+					idEndereco = id;
+					$('#endereco').html($('#solicitar').data('whatever'))
+					$('#exampleModal').modal('show');
 					
-					 
-					 swal("Solicitação enviada com sucesso.","","success");
-				   	  
-					 $('#solicitacao').html('<center>Solicitação enviada com sucesso!</br>Aguardando aprovação do Prestador.</center>');
+				    	
+					
 				}else{
-					 swal("Você já solicitou esse servico para o endereço escolhido.","Consulte no menu ['Meus Pedidos']","warning");
+					
+					 swal("Você já solicitou esse serviço para o endereço escolhido.","Consulte no menu ['Meus Pedidos']","warning");
 				}
 			});
-		 
-		 
+		
+		
 	 }
+     
+    	 
+	 function limparCampo(){
+		 $('#mensagem').val(" ");
+	 }
+	 
+	 $("#enviarPedido").click(function() {
+		
+     var mensagem = $('#mensagem').val();
+		 
+		 if($('#mensagem').val() == null || $('#mensagem').val() == ""){
+		     
+			 swal("Digite a mensagem para ser enviada.","","warning");
+		 }else{
+			 
+			//encaminhando os valores do formulario para ser processadas 
+				$.post('enviarSolicitacaoContrato', {
+					idUsuario : idUsuario,
+					idUsuarioServico : idUsuarioServico,
+					idEndereco : idEndereco,
+					mensagem:mensagem,
+
+				}, function(dadosJSON) {
+
+					if(dadosJSON == "true"){
+						
+						 
+						 swal("Solicitação enviada com sucesso.","","success");
+						 limparCampo();
+						 $('#exampleModal').modal('hide');
+						 $('#solicitacao').html('<center>Solicitação enviada com sucesso!</br>Aguardando aprovação do Prestador.</center>');
+					
+					}else{
+						
+						 swal("Você já solicitou esse serviço para o endereço escolhido.","Consulte no menu ['Meus Pedidos']","warning");
+					}
+				});
+			 
+			 
+		 }
+		 
+	 });
+	 
+	 
+	 
+	 
+	 
+	 
 	</script>
 
 	<!-- Jquery JS-->

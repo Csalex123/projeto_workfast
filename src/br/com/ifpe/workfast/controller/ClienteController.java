@@ -212,7 +212,8 @@ public class ClienteController {
 	@RequestMapping(value = "enviarSolicitacaoContrato", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
 	public @ResponseBody String cadastrarSolicitacaoContrato(@RequestParam("idUsuario") Integer idUsuario,
 			@RequestParam("idEndereco") Integer idEndereco,
-			@RequestParam("idUsuarioServico") Integer idUsuarioServico) {
+			@RequestParam("idUsuarioServico") Integer idUsuarioServico,
+			@RequestParam("mensagem") String mensagem) {
 		Usuario usuario = new Usuario();
 		usuario.setIdUsuario(idUsuario);
 		Endereco endereco = new Endereco();
@@ -229,6 +230,7 @@ public class ClienteController {
 		solicitacao.setConvite("0");
 		solicitacao.setDataPedido(data);
 		solicitacao.setEstagio("1");
+		solicitacao.setMensagem(mensagem);
 
 		SolicitacaoContratoDao dao = new SolicitacaoContratoDao();
 		if (dao.existeVinculacao(idUsuario, idUsuarioServico, idEndereco) == true) {
@@ -240,6 +242,24 @@ public class ClienteController {
 		}
 
 	}
+	
+	// Método para abrir o segundo estágio do pedido
+		@RequestMapping(value = "pedidoSolicitado", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+		public @ResponseBody String pedidoSolicitado(@RequestParam("idUsuario") Integer idUsuario,
+				@RequestParam("idEndereco") Integer idEndereco,
+				@RequestParam("idUsuarioServico") Integer idUsuarioServico) {
+			
+
+			SolicitacaoContratoDao dao = new SolicitacaoContratoDao();
+			if (dao.existeVinculacao(idUsuario, idUsuarioServico, idEndereco) == true) {
+				return new Gson().toJson("false");
+			} else {
+				return new Gson().toJson("true");
+			}
+			
+
+		}
+
 
 	// Método para abrir o segundo estágio do pedido
 	@RequestMapping("SegundoEstagio")

@@ -100,25 +100,19 @@
 		
 		<section>
 		<div class="section__content section__content--p30">
-			<div class="container-fluid">
+			
 				
-				<div class="row" style="padding-bottom: 50%;" id="propostas">
+				<div class="container" style="padding-bottom: 50%;" style="background-color:white;" >
+				   <p><h3>Proposta de Serviços</h3></p>
+				   <br>
+				   <div id="propostas" >
 				   
-				   
-				   <div class="media">
-				    <div class="media-left">
-				      <img src="/workfast/resources/img/icon/avatar-02.jpg"  class="media-object" style="width:60px">
-				    </div>
-				    <div class="media-body">
-				      <h4 class="media-heading">Left-aligned</h4>
-				      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-				    </div>
-				  </div>
-				  <hr>
+				   </div>
+				  
 				   
 				   
 				</div>
-			</div>
+			
 		</div>
 		</section>
 
@@ -152,24 +146,49 @@
 	          
 	        	   
 	       }, function(dadosJSON){
-	    	   alert(dadosJSON);
+	    	   
 	     	  var linhas = " ";
 	     	  
 					if(dadosJSON.length > 0){$(dadosJSON).each(function (i) {
 						
-							linhas += '<div class="media" >';
-							  linhas += '<div class="media-left">';
-							    linhas += '<img src="/workfast/resources/img/icon/avatar-02.jpg" class="media-object" style="width:60px">';
+							linhas += '<div class="media shadow-sm p-3 mb-5 bg-white rounded" style="background-color:white; padding-top:1px; padding-left:1px; padding-right:1px;" >';
+							  linhas += '<div class="media-left" >';
+							    linhas += '<img src="/workfast/resources/img/icon/avatar-05.jpg" class="media-object" style="width:90px">';
 							  linhas += '</div>';
-							  linhas += '<div class="media-body">';
+							  linhas += '<div class="media-body" style="margin-left:15px;">';
 							    if(dadosJSON[i].tipoUsuario == '1'){
-							    	linhas += '<h4 class="media-heading">'+dadosJSON[i].nome+'</h4>';
+							    	linhas += '<h4 style="margin-top: -5px;" class="media-heading">'+dadosJSON[i].nome+'</h4>';
 							    }
 							    if(dadosJSON[i].tipoUsuario == '2'){
-							    	linhas += '<h4 class="media-heading">'+dadosJSON[i].nomeFantasia+'</h4>';
+							    	linhas += '<h4 style="margin-bottom: 5px;" class="media-heading">'+dadosJSON[i].nomeFantasia+'</h4>';
 							    }
-							     
-							     linhas += '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>';
+							    linhas += '<div class="table-responsive" style="margin-top:10px;">';
+							    linhas += '<table class="table table-condensed >';
+							    
+							    linhas += '<tbody>';
+								    linhas += '<tr>';
+									    linhas += '<td colspan ="4"><label style="font-size:12px;"><b>Serviço</b></label><br>'+dadosJSON[i].servico+'</td>';
+									linhas += '</tr>';
+									linhas += '<tr>';
+									    linhas += '<td><label style="font-size:12px;"><b>Cidade</b></label><br>'+dadosJSON[i].cidade+'</td>';
+									    linhas += '<td><label style="font-size:12px;"><b>Endereço</b></label><br>'+dadosJSON[i].rua+'</td>';
+									    linhas += '<td><label style="font-size:12px;"><b>Numero Casa</b></label><br>'+dadosJSON[i].numeroCasa+'</td>';
+								    linhas += '</tr>';
+								    linhas += '<tr>';
+								    linhas += '<td colspan ="4"><label style="font-size:12px;"><b>Mensagem</b></label><br>'+dadosJSON[i].descricao+'</td>';
+								    linhas += '</tr>';
+								    linhas += '<tr>';
+								      linhas += '<td colspan ="4" ><div style="float:right;"><a href="PrimeiraEtapa?cas='+dadosJSON[i].idProposta+'"><button class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="Contratar">Veja mais <i class="fa fa-handshake-o "></i></button></a></div></td>';
+								    linhas += '</tr>';
+								    
+							    linhas += '</tbody>';
+							    
+							    
+							    linhas += '</table>';
+							    
+							    linhas += '</div>';
+							    
+							    
 							linhas += '</div>';
 						linhas += '</div>';
 							

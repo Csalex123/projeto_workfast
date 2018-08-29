@@ -170,7 +170,15 @@
 
                             <section >
                                 <h2 style="text-align: center;">Informações do Cliente</h2><br>
-                                <p> Neste estágio você terá acesso ao endereço do cliente. Será disponível também para você um mapa, e este mapa traçará uma rota: do seu endereço até a residência do cliente <b>Marcílio</b>. </p><br>
+                                <p> Neste estágio você terá acesso ao endereço do cliente. Será disponível também para você um mapa, e este mapa traçará uma rota: do seu endereço até a residência do cliente
+                                  <c:if test="${proposta.tipoUsuario == '1'}">
+									 <b>${proposta.nome}</b>  
+							      </c:if>
+							      <c:if test="${proposta.tipoUsuario == '2'}">
+									 <b>${proposta.nomeFantsia}</b>  
+							      </c:if>
+                                 .</p>
+                                 <br>
 
                                 <h4 style="text-align: center;"> Endereço do cliente</h4><br>
 
@@ -180,7 +188,7 @@
                                        <label  class=" form-control-label">CEP:</label>
                                         </div>
                                             <div class="col-12 col-md-5">
-                                                    542111-22
+                                                    ${proposta.cep}
                                         </div>       
                                 </div>
 
@@ -189,7 +197,7 @@
                                        <label  class=" form-control-label">Estado:</label>
                                         </div>
                                             <div class="col-12 col-md-5">
-                                                    Pernambuco
+                                                   ${proposta.estado}
                                         </div>       
                                 </div>
 
@@ -199,7 +207,7 @@
                                        <label  class=" form-control-label">Cidade:</label>
                                         </div>
                                             <div class="col-12 col-md-5">
-                                                    Jaboatão
+                                                    ${proposta.cidade}
                                         </div>       
                                 </div>
 
@@ -219,7 +227,7 @@
                                        <label  class=" form-control-label">Rua:</label>
                                         </div>
                                             <div class="col-12 col-md-5">
-                                                    Rua de Jaboatão 
+                                                   ${proposta.rua} 
                                         </div>       
                                 </div>
 
@@ -228,7 +236,7 @@
                                        <label  class=" form-control-label">Número da casa:</label>
                                         </div>
                                             <div class="col-12 col-md-5">
-                                                    122
+                                                   ${proposta.numeroCasa}
                                         </div>       
                                 </div>
 
