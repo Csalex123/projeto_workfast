@@ -71,10 +71,8 @@
 
 
 
-<!-- Adicionando JQuery -->
-<script src="https://code.jquery.com/jquery-3.2.1.min.js"
-	integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
-	crossorigin="anonymous"></script>
+ <script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
 <script type="text/javascript">
 	$(document).ready(
@@ -150,6 +148,8 @@
 <style type="text/css">
 * {
 	box-sizing: border-box;
+	
+	
 }
 
 #progress {
@@ -206,6 +206,14 @@
 #progress li.active:after {
 	border-left-color: #23468c;
 }
+
+table th{
+ width:250px;
+}
+
+table td{
+ width:250px;
+}
 </style>
 </head>
 
@@ -222,57 +230,92 @@
 
 				<div class="fontawesome-list-wrap">
 					<section>
-						<h3 style="text-align: center;">Progresso do pedido</h3>
+						<h3 style="text-align: center;">Pedidos Pendentes</h3>
 						<br>
-						<ul id="progress">
-							<li class="active"></span>Endereço</li>
-							<li>Informações</li>
-							<li>Contrato</li>
-							<li>Efetuando</li>
-							<li>Finalizado</li>
-						</ul>
+						
+						
 
 					</section>
 
 					<section id="solicitacao">
-						<h2 style="text-align: center;">Cadastro de Endereço</h2>
-						<br>
-						<p>Você irá escolher um dos seus endereço cadastrados para que o Prestador saiba onde que você reside. Apos disso, você ficará no aguardo da confirmação do Prestador. Caso o prestador aceite a sua solicitação, irá 
-							prosseguir para a segunda etapa do processo de solicitação: <b>Informações</b>.</p>
-						<br>
+					  <c:forEach items="${listaPendentes}" var="obj">
 						<div class="table-responsive">
-						<table class="table table-striped table-condensed">
+						<table class="table table-striped table-condensed ">
 						<thead>
 							<tr>
-							    <th>Estado</th>
-								<th>Cidade</th>
-								<th>Endereço</th>
-								<th>Numero</th>
-								<th>CEP</th>
+							    <th>Prestador</th>
+								<th>Serviço</th>
+								<th>Data</th>	
+								<th>Proposta</th>
 								<th></th>
 								
 							</tr>
 						</thead>
 						<tbody>
-						   <c:forEach items="${listaEndereco}" var="obj">
+						 
 						   <tr>
-								<td>${obj.estado.nome}</td>
-								<td>${obj.cidade.nome}</td>
-								<td>${obj.rua}</td>
-								<td>${obj.numeroCasa}</td>
-								<td>${obj.cep}</td>
-								<td><button type="button" onclick="solicitarPedido(${obj.id})" class="btn btn-primary">Solicitar</button></td>
+						      <c:if test="${obj.tipoUsuario == '1'}">
+									 <td>${obj.nome}</td>  
+							  </c:if>
+							  
+							  <c:if test="${obj.tipoUsuario == '2'}">
+									 <td>${obj.nomeFantasia}</td>  
+							  </c:if>
+						      
+								
+								<td>${obj.servico}</td>
+								<td></td>
+								
+								
+								
+								<c:choose>
+								<c:when test="${obj.convite == '0'}">
+								<td>Aguardando aprovação</td>
+								</c:when>
+								<c:otherwise>
+								<td>Pedido Aceito</td>
+								</c:otherwise>
+								</c:choose>
+								
+								<td rowspan="2" style="text-align: center; vertical-align: middle;" ><button type="button" onclick="encaminhar(${obj.idProposta});" class="btn btn-primary">Ver Detalhes</button></td>
 							</tr>
+							<tr>
+                            <td colspan="4" >Endereço<br>
+                            <div  class="table-responsive">
+                             <table class="table table-condensed table-bordered">
+                               <thead>
+                                
+                               </thead>
+                               <tbody>
+	                             
+	                             <tr>
+	                               <td>${obj.cidade}</td>
+	                               <td>${obj.rua}</td>
+	                               <td>${obj.numeroCasa}</td>
+	                               <td>${obj.cep}</td>
+	                             </tr>
+	                             
+                               </tbody>
+                               
+                               
+                              </table>
+                            
+                            </div>
+                            </td>
+                           
+                            </tr>
 				
 																
 				
 				
-						  </c:forEach>
+						 
 							
 							
 						</tbody>
 					</table>
 					</div>
+					<hr>
+					 </c:forEach>
 
 						
 						<br> <br> <br>
@@ -290,30 +333,21 @@
 	
 	
 	<script type="text/javascript">
-	 var idUsuario = "${usuarioLogado.idUsuario}";
-	 var idUsuarioServico = "${idUsuarioServico}";
+	
 	 
-	 function solicitarPedido(idEndereco){
-		 
-		//encaminhando os valores do formulario para ser processadas 
-			$.post('enviarSolicitacaoContrato', {
-				idUsuario : idUsuario,
-				idUsuarioServico : idUsuarioServico,
-				idEndereco : idEndereco,
-
-			}, function(dadosJSON) {
-
-				if(dadosJSON == "true"){
-					
-					 
-					 swal("Solicitação enviada com sucesso.","","success");
-				   	  
-					 $('#solicitacao').html('<center>Solicitação enviada com sucesso!</br>Aguardando aprovação do Prestador.</center>');
-				}else{
-					 swal("Você já solicitou esse servico para o endereço escolhido.","Consulte no menu ['Meus Pedidos']","warning");
-				}
-			});
-		 
+	 function encaminhar(idSolitacao){
+		
+		 $.post('detalheSolicitacao', {
+			 
+			 cas:idSolitacao
+	           
+	        	   
+	       }, function(dadosJSON){
+	    	   
+	          window.location = dadosJSON;
+	          
+	       });
+		  
 		 
 	 }
 	</script>

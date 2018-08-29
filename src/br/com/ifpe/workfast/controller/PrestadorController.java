@@ -27,10 +27,12 @@ import br.com.ifpe.workfast.model.Endereco;
 import br.com.ifpe.workfast.model.EnderecoDao;
 import br.com.ifpe.workfast.model.Estado;
 import br.com.ifpe.workfast.model.EstadoDao;
+import br.com.ifpe.workfast.model.ListaPedidosPendentesVO;
 import br.com.ifpe.workfast.model.Profissao;
 import br.com.ifpe.workfast.model.ProfissaoDao;
 import br.com.ifpe.workfast.model.Servico;
 import br.com.ifpe.workfast.model.ServicoDao;
+import br.com.ifpe.workfast.model.SolicitacaoContratoDao;
 import br.com.ifpe.workfast.model.Usuario;
 import br.com.ifpe.workfast.model.UsuarioDao;
 import br.com.ifpe.workfast.model.UsuarioProfissao;
@@ -44,65 +46,75 @@ public class PrestadorController {
 	// metodo para redirecionar para pagina inicial
 	@RequestMapping("paginaInicialPrestador")
 	public String paginaInical() {
+
 		return "prestador/index";
+	}
+
+	// metodo para mostrar solicitacões
+	@RequestMapping(value = "buscarSolicitacoes", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+	public @ResponseBody String buscarSolicitacoesIndex(@RequestParam("cas") Integer idUsuario, Model model) {
+        
+		SolicitacaoContratoDao dao = new SolicitacaoContratoDao();
+		List<ListaPedidosPendentesVO> lista = dao.listarPedidosPrestador(idUsuario);
+		
+		return new Gson().toJson(lista);
 	}
 
 	// metodo para redirecionar para pagina especializacao
 	@RequestMapping("paginaEspecializacao")
-	public String paginaEspecializacao(Model model,HttpServletRequest request ) {
+	public String paginaEspecializacao(Model model, HttpServletRequest request) {
 		Usuario usuario = (Usuario) request.getSession().getAttribute("usuarioLogado");
 		UsuarioProfissaoDao dao = new UsuarioProfissaoDao();
 		List<UsuarioProfissao> lista = dao.listarProfissaoUsuario(usuario.getIdUsuario());
 		model.addAttribute("listaProfissaoUsuario", lista);
-		
+
 		return "prestador/especializacao";
 	}
 
 	// metodo para redirecionar para pagina especializacao
-		@RequestMapping("adicionarProfissao")
-		public String adicionarProfissao(Model model) {
-			
-			ProfissaoDao dao = new ProfissaoDao();
-			List<Profissao> lista = dao.listar();
-			model.addAttribute("listaProfissao", lista);
-			
-			return "prestador/addProfissao";
-		}
-		
-		@RequestMapping(value = "saveProfissaoUsuario", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-		public @ResponseBody String saveProfissaoUsuario(@RequestParam("idProfissao") Integer idProfissao,
-				 @RequestParam("idUsuario") Integer idUsuario) {
+	@RequestMapping("adicionarProfissao")
+	public String adicionarProfissao(Model model) {
 
-			Usuario usuario = new Usuario();
-			Profissao profissao = new Profissao();
-			usuario.setIdUsuario(idUsuario);
-			profissao.setIdProfissao(idProfissao);
+		ProfissaoDao dao = new ProfissaoDao();
+		List<Profissao> lista = dao.listar();
+		model.addAttribute("listaProfissao", lista);
 
-			UsuarioProfissao usuarioProfissao = new UsuarioProfissao();
-			usuarioProfissao.setProfissao(profissao);
-			usuarioProfissao.setUsuario(usuario);
-			
+		return "prestador/addProfissao";
+	}
 
-			UsuarioProfissaoDao dao = new UsuarioProfissaoDao();
+	@RequestMapping(value = "saveProfissaoUsuario", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+	public @ResponseBody String saveProfissaoUsuario(@RequestParam("idProfissao") Integer idProfissao,
+			@RequestParam("idUsuario") Integer idUsuario) {
 
-			boolean existe = dao.existeVinculacao(idUsuario, idProfissao);
-			if (!existe) {
-				dao.salvar(usuarioProfissao);
-			}
+		Usuario usuario = new Usuario();
+		Profissao profissao = new Profissao();
+		usuario.setIdUsuario(idUsuario);
+		profissao.setIdProfissao(idProfissao);
 
-			return new Gson().toJson(existe);
+		UsuarioProfissao usuarioProfissao = new UsuarioProfissao();
+		usuarioProfissao.setProfissao(profissao);
+		usuarioProfissao.setUsuario(usuario);
 
-		}
-		@RequestMapping("deleteUsuarioProfissao")
-		public String delete(@RequestParam("id") Integer id, Model model) {
+		UsuarioProfissaoDao dao = new UsuarioProfissaoDao();
 
-			UsuarioProfissaoDao dao = new UsuarioProfissaoDao();
-			dao.remover(id);
-			model.addAttribute("msg", "Profissão removido com Sucesso");
-			
-			return "forward:paginaEspecializacao";
+		boolean existe = dao.existeVinculacao(idUsuario, idProfissao);
+		if (!existe) {
+			dao.salvar(usuarioProfissao);
 		}
 
+		return new Gson().toJson(existe);
+
+	}
+
+	@RequestMapping("deleteUsuarioProfissao")
+	public String delete(@RequestParam("id") Integer id, Model model) {
+
+		UsuarioProfissaoDao dao = new UsuarioProfissaoDao();
+		dao.remover(id);
+		model.addAttribute("msg", "Profissão removido com Sucesso");
+
+		return "forward:paginaEspecializacao";
+	}
 
 	/* ------------------------------- Serviço ----------------------------- */
 
@@ -155,9 +167,9 @@ public class PrestadorController {
 		Usuario usuario = (Usuario) request.getSession().getAttribute("usuarioLogado");
 
 		UsuarioServicoDao dao = new UsuarioServicoDao();
-		
+
 		List<UsuarioServico> listaUsuarioServico = dao.listarServicosUsuario(usuario.getIdUsuario());
-		
+
 		modelServico.addAttribute("listaUsuarioServico", listaUsuarioServico);
 
 		return "prestador/servicos";
@@ -187,7 +199,8 @@ public class PrestadorController {
 	// metodo para editar servicos
 	@RequestMapping("servicosEdit")
 	public String servicosEdit(@RequestParam("id") Integer idUsuarioServico, Model modelServico, Model modelCategoria,
-			Model modelCidadesServicos, Model modelCidades, Model modelEstado, Model lista, HttpServletRequest request) {
+			Model modelCidadesServicos, Model modelCidades, Model modelEstado, Model lista,
+			HttpServletRequest request) {
 
 		Usuario usuario = (Usuario) request.getSession().getAttribute("usuarioLogado");
 
@@ -204,8 +217,7 @@ public class PrestadorController {
 		List<CategoriaServico> listaCategoria = dao.listar();
 
 		CidadeAtuacaoServicoDao daoCidadesServico = new CidadeAtuacaoServicoDao();
-		List<CidadeAtuacaoServico> listaCidadesServico = daoCidadesServico
-				.buscarPorIdUsuarioServico(idUsuarioServico);
+		List<CidadeAtuacaoServico> listaCidadesServico = daoCidadesServico.buscarPorIdUsuarioServico(idUsuarioServico);
 		ArrayList<String> listaIdCidades = new ArrayList<String>();
 		for (int i = 0; i < listaCidadesServico.size(); i++) {
 			listaIdCidades.add(listaCidadesServico.get(i).getCidade().getIdCidade() + "");
@@ -217,14 +229,15 @@ public class PrestadorController {
 		modelEstado.addAttribute("endereco", enderecoPrestador);
 		modelServico.addAttribute("usuarioServico", usuarioServico);
 		modelCidadesServicos.addAttribute("listaCidadesServico", listaIdCidades);
-		
+
 		return "prestador/editServico";
 	}
-	
+
 	@RequestMapping(value = "updateUsuarioServico", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-	public @ResponseBody String updateServico(@RequestParam("idUsuarioServico") Integer idUsuarioServico,@RequestParam("idCategoria") Integer idCategoria, @RequestParam("idServico") Integer idServico,
+	public @ResponseBody String updateServico(@RequestParam("idUsuarioServico") Integer idUsuarioServico,
+			@RequestParam("idCategoria") Integer idCategoria, @RequestParam("idServico") Integer idServico,
 			@RequestParam("descricao") String descricao, @RequestParam("idUsuario") Integer idUsuario,
-			@RequestParam("idsCidades") List<String> cidades,@RequestParam("temp") String[] temp) {
+			@RequestParam("idsCidades") List<String> cidades, @RequestParam("temp") String[] temp) {
 
 		CategoriaServico categoria = new CategoriaServico();
 		categoria.setIdCategoriaServico(idCategoria);
@@ -241,72 +254,59 @@ public class PrestadorController {
 		usuarioServico.setDescricao(descricao);
 
 		UsuarioServicoController controller = new UsuarioServicoController();
-        controller.update(usuarioServico);
+		controller.update(usuarioServico);
 		CidadeAtuacaoServicoDao dao2 = new CidadeAtuacaoServicoDao();
 		CidadeAtuacaoServico atuacao;
 		List<Cidade> listaCidades = new ArrayList<Cidade>();
-		
-		
-		
-		for(int i = 0; i<temp.length;i++) {
+
+		for (int i = 0; i < temp.length; i++) {
 			int x = 0;
 			String idTemp = temp[i].replaceAll("[^0-9]", "");
-			
-			for(int j = 0;j<cidades.size();j++) {
-			
+
+			for (int j = 0; j < cidades.size(); j++) {
+
 				String id = cidades.get(j).replaceAll("[^0-9]", "");
-				if(idTemp.equals(id)) {
+				if (idTemp.equals(id)) {
 					cidades.remove(j);
 					x++;
 				}
-				
+
 			}
-			if(x==0) {
-				atuacao = dao2.buscarCidade(idUsuarioServico,Integer.parseInt(idTemp));
-				if(atuacao != null) {
+			if (x == 0) {
+				atuacao = dao2.buscarCidade(idUsuarioServico, Integer.parseInt(idTemp));
+				if (atuacao != null) {
 					dao2.remover(atuacao.getIdAtuacaoServico());
 				}
 			}
-			
+
 		}
-		
-		if(cidades.size()>0) {
+
+		if (cidades.size() > 0) {
 			Cidade cidade;
-			for(int i = 0 ; i<cidades.size(); i++) {
+			for (int i = 0; i < cidades.size(); i++) {
 				cidade = new Cidade();
 				cidade.setIdCidade(Integer.parseInt(cidades.get(i).replaceAll("[^0-9]", "")));
 				listaCidades.add(cidade);
 			}
-			atuacao=new CidadeAtuacaoServico();
+			atuacao = new CidadeAtuacaoServico();
 			atuacao.setUsuarioServico(usuarioServico);
 			dao2.salvar(atuacao, listaCidades);
 		}
-		
-		
-			
-						
-
 
 		return new Gson().toJson("ExibirServicos");
 
 	}
-	
+
 	@RequestMapping(value = "listarCidades", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
 	public @ResponseBody String listarCidades(@RequestParam("idUsuarioServico") Integer idUsuarioServico) {
-
 
 		CidadeAtuacaoServicoDao dao2 = new CidadeAtuacaoServicoDao();
 
 		List<CidadeAtuacaoServico> listaCidades = dao2.buscarPorIdUsuarioServico(idUsuarioServico);
 
-
-
 		return new Gson().toJson(listaCidades);
 
 	}
-
-	
-	
 
 	/* ----------------- Fim Serviço --------------------------------------- */
 
@@ -326,7 +326,7 @@ public class PrestadorController {
 		List<Estado> listaEstado = daoEstado.listar();
 		model2.addAttribute("listaEstado", listaEstado);
 		model.addAttribute("listaAtaucao", lista);
-		
+
 		return "prestador/cadastroPrestadorFisico";
 	}
 
@@ -338,7 +338,7 @@ public class PrestadorController {
 		List<Estado> listaEstado = daoEstado.listar();
 		model2.addAttribute("listaEstado", listaEstado);
 		model.addAttribute("listaAtaucao", lista);
-		
+
 		return "prestador/cadastroPrestadorJuridico";
 	}
 

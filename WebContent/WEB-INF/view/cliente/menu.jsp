@@ -33,13 +33,16 @@
 
                             <ul class="navbar-mobile-sub__list list-unstyled js-sub-list">
                                 <li>
-                                    <a href="#"><i class="fa fa-exclamation" aria-hidden="true"></i> Pedidos Pendentes</a>
+                                    <a href="servicoSolicitadosPendentes?cas=${usuarioLogado.idUsuario}"><i class="fa fa-exclamation" aria-hidden="true"></i>Pedidos Pendentes</a>
                                 </li>
                                 <li>
-                                    <a href="#"><i class="fa fa-times" aria-hidden="true"></i> Pedidos Cancelados</a>
+                                    <a style="font-size: 15px;" href="#"><i class="fa fa-clock" aria-hidden="true"></i>Pedidos em Andamento</a>
                                 </li>
                                 <li>
-                                    <a href="#"><i class="fa fa-check" aria-hidden="true"></i> Pedidos Finalizados</a>
+                                    <a href="#"><i class="fa fa-times" aria-hidden="true"></i>Pedidos Cancelados</a>
+                                </li>
+                                <li>
+                                    <a href="#"><i class="fa fa-check" aria-hidden="true"></i>Pedidos Finalizados</a>
                                 </li>
                             </ul>
                         </li>
@@ -82,7 +85,10 @@
                                 
                             <ul class="navbar-mobile-sub__list list-unstyled js-sub-list">
                                 <li>
-                                    <a href="#"><i class="fa fa-exclamation" aria-hidden="true"></i>&nbsp;&nbsp;Pedidos Pendentes</a>
+                                    <a href="servicoSolicitadosPendentes?cas=${usuarioLogado.idUsuario}"><i class="fa fa-exclamation" aria-hidden="true"></i>Pedidos Pendentes</a>
+                                </li>
+                                <li >
+                                    <a style="font-size: 15px;" href="#"><i class="fa fa-clock" aria-hidden="true" ></i>Pedidos em Andamento</a>
                                 </li>
                                 <li>
                                     <a href="#"><i class="fa fa-times" aria-hidden="true"></i>Pedidos Cancelados</a>

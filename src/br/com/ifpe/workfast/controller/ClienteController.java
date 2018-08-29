@@ -25,6 +25,7 @@ import br.com.ifpe.workfast.model.Endereco;
 import br.com.ifpe.workfast.model.EnderecoDao;
 import br.com.ifpe.workfast.model.Estado;
 import br.com.ifpe.workfast.model.EstadoDao;
+import br.com.ifpe.workfast.model.ListaPedidosPendentesVO;
 import br.com.ifpe.workfast.model.Profissao;
 import br.com.ifpe.workfast.model.ProfissaoDao;
 import br.com.ifpe.workfast.model.SolicitacaoContrato;
@@ -150,23 +151,23 @@ public class ClienteController {
 		model.addAttribute("mensagemRemocao", "Endereco Removido com Sucesso");
 		return "forward:meuEnderecos";
 	}
-	// Método para abrir o primeiro estágio do pedido
-		@RequestMapping("solicitacaoServico")
-		public String solicitacaoServico(@RequestParam("id") Integer idUsuarioServico, Model model, Model model2,
-				HttpServletRequest request) {
-
-			Usuario usuario = (Usuario) request.getSession().getAttribute("usuarioLogado");
-			EnderecoDao dao = new EnderecoDao();
-			List<Endereco> lista = dao.listarEnderecoCliente(usuario.getIdUsuario());
-			model2.addAttribute("idUsuarioServico", idUsuarioServico);
-			model.addAttribute("listaEndereco", lista);
-
-			return "cliente/solicitacaoServico";
+	
+	// Método para abrir lista de servicos solicitados pendentes
+		@RequestMapping("servicoSolicitadosPendentes")
+		public String listaServicoSolicitadosPendentes(@RequestParam("cas") Integer idUsuario, Model model) {
+            
+			
+			SolicitacaoContratoDao dao = new SolicitacaoContratoDao();
+			List<ListaPedidosPendentesVO> listaPendentes = dao.listarPedidosPendentesCliente(idUsuario);
+			model.addAttribute("listaPendentes", listaPendentes);
+		   
+			return "cliente/solicitacoesPendentes";
 
 		}
+
 	// Método para abrir o primeiro estágio do pedido
-	@RequestMapping("PrimeiroEstagio")
-	public String PrimeiroEstagioPedido(@RequestParam("id") Integer idUsuarioServico, Model model, Model model2,
+	@RequestMapping("solicitacaoServico")
+	public String solicitacaoServico(@RequestParam("id") Integer idUsuarioServico, Model model, Model model2,
 			HttpServletRequest request) {
 
 		Usuario usuario = (Usuario) request.getSession().getAttribute("usuarioLogado");
@@ -175,6 +176,34 @@ public class ClienteController {
 		model2.addAttribute("idUsuarioServico", idUsuarioServico);
 		model.addAttribute("listaEndereco", lista);
 
+		return "cliente/solicitacaoServico";
+
+	}
+	
+	// verificar estagios da solicitacao
+	@RequestMapping(value = "detalheSolicitacao", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+	public @ResponseBody String verificandoDetalheSolicitacao(@RequestParam("cas") Integer idSolicitacao, Model model) {
+
+		String encaminhar = "";
+		SolicitacaoContratoDao dao = new SolicitacaoContratoDao();
+		SolicitacaoContrato solicitacao = dao.buscarPorId(idSolicitacao);
+		
+		if(solicitacao.getEstagio().equals("1") && solicitacao.getStatus().equals("1")) {
+			
+			encaminhar = "PrimeiroEstagio";
+			
+		}
+		
+		return new Gson().toJson(encaminhar);
+        
+		
+
+	}
+
+	// Método para abrir o primeiro estágio do pedido
+	@RequestMapping("PrimeiroEstagio")
+	public String PrimeiroEstagioPedido( Model model) {
+        
 		return "cliente/1_estagio";
 
 	}
@@ -191,7 +220,7 @@ public class ClienteController {
 		UsuarioServico usuarioServico = new UsuarioServico();
 		usuarioServico.setIdUsuarioServico(idUsuarioServico);
 		Date data = new Date();
-		
+
 		SolicitacaoContrato solicitacao = new SolicitacaoContrato();
 		solicitacao.setEndereco(endereco);
 		solicitacao.setUsuario(usuario);
@@ -200,17 +229,15 @@ public class ClienteController {
 		solicitacao.setConvite("0");
 		solicitacao.setDataPedido(data);
 		solicitacao.setEstagio("1");
-		
-		
+
 		SolicitacaoContratoDao dao = new SolicitacaoContratoDao();
-		if(dao.existeVinculacao(idUsuario, idUsuarioServico, idEndereco) == true) {
+		if (dao.existeVinculacao(idUsuario, idUsuarioServico, idEndereco) == true) {
 			return new Gson().toJson("false");
-		}else {
+		} else {
 			dao.salvar(solicitacao);
 
 			return new Gson().toJson("true");
 		}
-		
 
 	}
 
