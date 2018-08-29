@@ -46,7 +46,7 @@
                                         <i class="fas fa-pencil "></i>Propostas</a>
                                 </li>
                                 <li>
-                                    <a href="ServicosPendentes">
+                                    <a href="ServicosEmAberto?cas=${usuarioLogado.idUsuario}">
                                         <i class="far fa-thumb-tack"></i>Em aberto</a>
                                 </li>
                                 <li>
@@ -181,7 +181,7 @@
                                         <i class="fas fa-pencil "></i>Propostas</a>
                                 </li>
                                 <li>
-                                    <a href="ServicosPendentes">
+                                    <a href="ServicosEmAberto">
                                         <i class="far fa-thumb-tack"></i>Em aberto</a>
                                 </li>
                                 <li>

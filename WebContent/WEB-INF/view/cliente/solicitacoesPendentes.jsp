@@ -273,7 +273,13 @@ table td{
 								<td>Aguardando aprovação</td>
 								</c:when>
 								<c:otherwise>
-								<td>Pedido Aceito</td>
+								  <c:if test="${obj.estagio == '2'}">
+		                             <td><b style="color: #B8860B">Entrando em acordo(chat)</b> </td>
+								  </c:if>
+								  
+								   <c:if test="${obj.estagio == '3'}">
+                                       <td><b style="color: #B8860B">Aguardando aprovação do Contrato</b> </td>
+								   </c:if>
 								</c:otherwise>
 								</c:choose>
 								

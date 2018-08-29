@@ -16,14 +16,19 @@ public class ListaPedidosPendentesVO {
 	private String cidade;
 	private String estado;
 	private String convite;
-	private String descricao;
+	private String mensagem;
+	private String bairro;
+	private String complemento;
+	private String foto;
+	private String estagio;
+	private String status;
 	private Date data;
 	
 	
 	
 	public ListaPedidosPendentesVO(Integer idProposta, Integer idPrestadorServico, String nome,
 			String nomeFantasia, String tipoUsuario, String servico, String rua, String numeroCasa, String cep,
-			String cidade, String estado, String descricao, String convite) {
+			String cidade, String estado, String mensagem, String bairro, String complemento, String foto, String estagio, String status, String convite) {
 		super();
 		this.idProposta = idProposta;
 		this.idPrestadorServico = idPrestadorServico;
@@ -36,8 +41,12 @@ public class ListaPedidosPendentesVO {
 		this.cep = cep;
 		this.cidade = cidade;
 		this.estado = estado;
-		this.descricao = descricao;
-		
+		this.mensagem = mensagem;
+		this.bairro = bairro;
+		this.complemento = complemento;
+		this.foto = foto;
+		this.estagio = estagio;
+		this.status = status;
 		this.convite = convite;
 		
 		
@@ -121,12 +130,46 @@ public class ListaPedidosPendentesVO {
 	public void setData(Date data) {
 		this.data = data;
 	}
-	public String getDescricao() {
-		return descricao;
+	public String getMensagem() {
+		return mensagem;
 	}
-	public void setDescricao(String descricao) {
-		this.descricao = descricao;
+	public void setMensagem(String mensagem) {
+		this.mensagem = mensagem;
 	}
+	public String getBairro() {
+		return bairro;
+	}
+	public void setBairro(String bairro) {
+		this.bairro = bairro;
+	}
+	public String getComplemento() {
+		return complemento;
+	}
+	public void setComplemento(String complemento) {
+		this.complemento = complemento;
+	}
+	public String getFoto() {
+		return foto;
+	}
+	public void setFoto(String foto) {
+		this.foto = foto;
+	}
+	public String getEstagio() {
+		return estagio;
+	}
+	public void setEstagio(String estagio) {
+		this.estagio = estagio;
+	}
+	public String getStatus() {
+		return status;
+	}
+	public void setStatus(String status) {
+		this.status = status;
+	}
+	
+	
+	
+	
 	
 	
 	

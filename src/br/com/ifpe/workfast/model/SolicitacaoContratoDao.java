@@ -40,8 +40,9 @@ public class SolicitacaoContratoDao {
 		return obj;
 	}
 
-	public boolean existeVinculacao(int idUsuario, int idUsuarioServico, int idEndereco) {
+	public SolicitacaoContrato existeVinculacao(int idUsuario, int idUsuarioServico, int idEndereco) {
 
+		SolicitacaoContrato obj = null;
 		EntityManagerFactory factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT);
 		EntityManager manager = factory.createEntityManager();
 		Query query = null;
@@ -52,17 +53,19 @@ public class SolicitacaoContratoDao {
 		query.setParameter("paramEndereco", idEndereco);
 
 		try {
-			query.getSingleResult();
+			obj = (SolicitacaoContrato) query.getSingleResult();
 		} catch (NoResultException nre) {
-			return false;
+			return obj;
 		}
 
 		manager.close();
 		factory.close();
-		return true;
+		return obj;
 
 	}
 	
+	// metodo para retornar proposta que esta aguardando aprovacao do prestador 
+	// esse metodo vai listar as informções do cliente no primeiro estagio na area do prestador
 	public ListaPedidosPendentesVO buscarPedidoPendente(Integer id) {
 
 		EntityManagerFactory factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT);
@@ -75,9 +78,9 @@ public class SolicitacaoContratoDao {
 		
 		consulta.append(" sc.idSolicitacaoContrato as idProposta,");
 		consulta.append(" us.idUsuarioServico as idPrestadorServico, ");
-		consulta.append(" us.usuario.nome as nomeCliente, ");
+		consulta.append(" sc.usuario.nome as nomeCliente, ");
 		consulta.append(" dp.nomeFantasia as nomeFantasia, ");
-		consulta.append(" us.usuario.tipo_usuario as tipoUsuario,");
+		consulta.append(" sc.usuario.tipo_usuario as tipoUsuario,");
 		consulta.append(" us.servico.nome as nomeServico, ");
 		consulta.append(" ed.rua as endereco, ");
 		consulta.append(" ed.numeroCasa as numeroCasa, ");
@@ -85,6 +88,11 @@ public class SolicitacaoContratoDao {
 		consulta.append(" ed.cidade.nome as cidade, ");
 		consulta.append(" ed.estado.nome as estado, ");
 		consulta.append(" sc.mensagem as mensagem, ");
+		consulta.append(" ed.bairro as bairro, ");
+		consulta.append(" ed.complemento as complemento, ");
+		consulta.append(" sc.usuario.foto as foto, ");
+		consulta.append(" sc.estagio as estagio, ");
+		consulta.append(" sc.status as status, ");
 		consulta.append(" sc.convite as proposta) ");
 		
 	    
@@ -108,7 +116,7 @@ public class SolicitacaoContratoDao {
 		
 	}
 
-	
+	//metodo para listar servicos pendentes aguardando aprovação do prestors na area do cliente
 	public List<ListaPedidosPendentesVO> listarPedidosPendentesCliente(Integer id) {
 
 		EntityManagerFactory factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT);
@@ -131,15 +139,22 @@ public class SolicitacaoContratoDao {
 		consulta.append(" ed.cidade.nome as cidade, ");
 		consulta.append(" ed.estado.nome as estado, ");
 		consulta.append(" sc.mensagem as mensagem, ");
+		consulta.append(" ed.bairro as bairro, ");
+		consulta.append(" ed.complemento as complemento, ");
+		consulta.append(" us.usuario.foto as foto, ");
+		consulta.append(" sc.estagio as estagio, ");
+		consulta.append(" sc.status as status, ");
 		consulta.append(" sc.convite as proposta) ");
 		
 	    
 		consulta.append(" from SolicitacaoContrato sc join sc.usuarioServico us, DadosPessoais dp, Endereco ed ");
-		consulta.append(" where dp.usuario = us.usuario AND ed.usuario = sc.usuario AND sc.status = :paramStatus AND sc.estagio = :paramEstagio AND sc.usuario.idUsuario = :paramId");
+		consulta.append(" where dp.usuario = us.usuario AND ed.usuario = sc.usuario AND sc.status = :paramStatus AND (sc.estagio = :paramEstagio1 OR (sc.estagio = :paramEstagio2 OR sc.estagio = :paramEstagio3) ) AND sc.usuario.idUsuario = :paramId");
 		query = manager.createQuery(consulta.toString(),ListaPedidosPendentesVO.class);
 		query.setParameter("paramId", id);
 		query.setParameter("paramStatus", "1");
-		query.setParameter("paramEstagio", "1");
+		query.setParameter("paramEstagio1", "1");
+		query.setParameter("paramEstagio2", "2");
+		query.setParameter("paramEstagio3", "3");
 		List<ListaPedidosPendentesVO> lista = query.getResultList();
 		manager.close();
 		factory.close();
@@ -147,6 +162,7 @@ public class SolicitacaoContratoDao {
 		return lista;
 	}
 	
+	//metodo para listar pedidos de servicos do cliente na index
 	public List<ListaPedidosPendentesVO> listarPedidosPrestador(Integer id) {
 
 		EntityManagerFactory factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT);
@@ -161,7 +177,7 @@ public class SolicitacaoContratoDao {
 		consulta.append(" us.idUsuarioServico as idPrestadorServico, ");
 		consulta.append(" sc.usuario.nome as nomeCliente, ");
 		consulta.append(" dp.nomeFantasia as nomeFantasia, ");
-		consulta.append(" us.usuario.tipo_usuario as tipoUsuario,");
+		consulta.append(" sc.usuario.tipo_usuario as tipoUsuario,");
 		consulta.append(" us.servico.nome as nomeServico, ");
 		consulta.append(" ed.rua as endereco, ");
 		consulta.append(" ed.numeroCasa as numeroCasa, ");
@@ -169,6 +185,11 @@ public class SolicitacaoContratoDao {
 		consulta.append(" ed.cidade.nome as cidade, ");
 		consulta.append(" ed.estado.nome as estado, ");
 		consulta.append(" sc.mensagem as mensagem, ");
+		consulta.append(" ed.bairro as bairro, ");
+		consulta.append(" ed.complemento as complemento, ");
+		consulta.append(" sc.usuario.foto as foto, ");
+		consulta.append(" sc.estagio as estagio, ");
+		consulta.append(" sc.status as status, ");
 		consulta.append(" sc.convite as proposta) ");
 		
 	    
@@ -183,6 +204,64 @@ public class SolicitacaoContratoDao {
 		factory.close();
 
 		return lista;
+	}
+	
+	//metodo para listar pedidos de servicos em abertos na area do prestador | status = 1/estagio = 2 e status = 1/estagio = 3  ==> em aberto
+		public List<ListaPedidosPendentesVO> listarPedidosPrestadorEmAberto(Integer id) {
+
+			EntityManagerFactory factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT);
+			EntityManager manager = factory.createEntityManager();
+			TypedQuery<ListaPedidosPendentesVO> query = null;
+			
+			StringBuilder consulta = new StringBuilder();
+			
+			consulta.append(" select new br.com.ifpe.workfast.model.ListaPedidosPendentesVO(");
+			
+			consulta.append(" sc.idSolicitacaoContrato as idProposta,");
+			consulta.append(" us.idUsuarioServico as idPrestadorServico, ");
+			consulta.append(" sc.usuario.nome as nomeCliente, ");
+			consulta.append(" dp.nomeFantasia as nomeFantasia, ");
+			consulta.append(" sc.usuario.tipo_usuario as tipoUsuario,");
+			consulta.append(" us.servico.nome as nomeServico, ");
+			consulta.append(" ed.rua as endereco, ");
+			consulta.append(" ed.numeroCasa as numeroCasa, ");
+			consulta.append(" ed.cep as cep, ");
+			consulta.append(" ed.cidade.nome as cidade, ");
+			consulta.append(" ed.estado.nome as estado, ");
+			consulta.append(" sc.mensagem as mensagem, ");
+			consulta.append(" ed.bairro as bairro, ");
+			consulta.append(" ed.complemento as complemento, ");
+			consulta.append(" sc.usuario.foto as foto, ");
+			consulta.append(" sc.estagio as estagio, ");
+			consulta.append(" sc.status as status, ");
+			consulta.append(" sc.convite as proposta) ");
+			
+		    
+			consulta.append(" from SolicitacaoContrato sc join sc.usuarioServico us, DadosPessoais dp, Endereco ed ");
+			consulta.append(" where dp.usuario = sc.usuario AND ed.usuario = sc.usuario AND sc.status = :paramStatus1 AND (sc.estagio = :paramEstagio1 OR sc.estagio = :paramEstagio2) AND sc.usuarioServico.usuario.idUsuario = :paramId");
+			query = manager.createQuery(consulta.toString(),ListaPedidosPendentesVO.class);
+			query.setParameter("paramId", id);
+			query.setParameter("paramStatus1", "1");
+			query.setParameter("paramEstagio1", "2");
+			query.setParameter("paramEstagio2", "3");
+			List<ListaPedidosPendentesVO> lista = query.getResultList();
+			manager.close();
+			factory.close();
+
+			return lista;
+		}
+	
+	public void update(SolicitacaoContrato obj) {
+
+		EntityManagerFactory factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT);
+		EntityManager manager = factory.createEntityManager();
+
+		manager.getTransaction().begin();
+		manager.merge(obj);
+		manager.getTransaction().commit();
+
+		manager.close();
+		factory.close();
 	}
 
 }

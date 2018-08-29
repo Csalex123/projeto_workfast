@@ -129,13 +129,15 @@
 	href="<%=request.getContextPath()%>/resources/vendor/bootstrap.min.css"
 	rel="stylesheet" media="all">
 
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
 <!-- Main CSS-->
 <link
 	href="<%=request.getContextPath()%>/resources/css/theme-prestador.css"
 	rel="stylesheet" media="all">
 	
-
+<!-- Adicionando JQuery -->
+<script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
  
 
 </head>
@@ -171,13 +173,16 @@
                             <section >
                                 <h2 style="text-align: center;">Informações do Cliente</h2><br>
                                 <p> Neste estágio você terá acesso ao endereço do cliente. Será disponível também para você um mapa, e este mapa traçará uma rota: do seu endereço até a residência do cliente
+                                
                                   <c:if test="${proposta.tipoUsuario == '1'}">
 									 <b>${proposta.nome}</b>  
 							      </c:if>
 							      <c:if test="${proposta.tipoUsuario == '2'}">
 									 <b>${proposta.nomeFantsia}</b>  
 							      </c:if>
-                                 .</p>
+							      
+							     . Haverá uma botão para aceitar o pedido("Aceitar Pedido") que lhe foi ofertado, caso 
+							     você aceite, você será redirecionado para a segunda etapa do pedido. Lá haverá mais informações</p>
                                  <br>
 
                                 <h4 style="text-align: center;"> Endereço do cliente</h4><br>
@@ -185,7 +190,7 @@
 
                                 <div class="row form-group">
                                     <div class="col col-md-3">
-                                       <label  class=" form-control-label">CEP:</label>
+                                       <label  class=" form-control-label"><b>CEP:</b></label>
                                         </div>
                                             <div class="col-12 col-md-5">
                                                     ${proposta.cep}
@@ -194,7 +199,7 @@
 
                                 <div class="row form-group">
                                     <div class="col col-md-3">
-                                       <label  class=" form-control-label">Estado:</label>
+                                       <label  class=" form-control-label"><b>Estado:</b></label>
                                         </div>
                                             <div class="col-12 col-md-5">
                                                    ${proposta.estado}
@@ -204,7 +209,7 @@
 
                                 <div class="row form-group">
                                     <div class="col col-md-3">
-                                       <label  class=" form-control-label">Cidade:</label>
+                                       <label  class=" form-control-label"><b>Cidade:</b></label>
                                         </div>
                                             <div class="col-12 col-md-5">
                                                     ${proposta.cidade}
@@ -214,17 +219,17 @@
 
                                 <div class="row form-group">
                                     <div class="col col-md-3">
-                                       <label  class=" form-control-label">Bairro:</label>
+                                       <label  class=" form-control-label"><b>Bairro:</b></label>
                                         </div>
                                             <div class="col-12 col-md-5">
-                                                    Bairro de Jaboatão 
+                                                   ${proposta.bairro} 
                                         </div>       
                                 </div>
 
 
                                  <div class="row form-group">
                                     <div class="col col-md-3">
-                                       <label  class=" form-control-label">Rua:</label>
+                                       <label  class=" form-control-label"><b>Rua:</b></label>
                                         </div>
                                             <div class="col-12 col-md-5">
                                                    ${proposta.rua} 
@@ -233,7 +238,7 @@
 
                                 <div class="row form-group">
                                     <div class="col col-md-3">
-                                       <label  class=" form-control-label">Número da casa:</label>
+                                       <label  class=" form-control-label"><b>Número da casa:</b></label>
                                         </div>
                                             <div class="col-12 col-md-5">
                                                    ${proposta.numeroCasa}
@@ -243,10 +248,17 @@
 
                                 <div class="row form-group">
                                     <div class="col col-md-3">
-                                       <label  class=" form-control-label">Complemento:</label>
+                                       <label  class=" form-control-label"><b>Complemento:</b></label>
                                         </div>
                                             <div class="col-12 col-md-5">
-                                                    casa
+                                            
+                                            <c:if test="${proposta.complemento != null || proposta.complemento != '' }">
+												 ${proposta.complemento}   
+										     </c:if>
+										     <c:if test="${proposta.complemento == null || proposta.complemento == '' }">
+												 Complemento não informado!
+									         </c:if>
+                                                   
                                         </div>       
                                 </div>
 
@@ -309,9 +321,9 @@
                                 <!-- Fim do Filtro de profissão-->
                                 <div class="row form-group"  style="float: right;">
                                     <div class="col col-md-3">
-                                       <a href="SegundaEtapa"> <button type="button" class="btn btn-primary">
-                                        &nbsp;<i class="fas fa-forward"></i> Avançar</button>
-                                    </div></a>
+                                       <button type="button" id="btnAceitar" class="btn btn-primary">
+                                        &nbsp;<i class="fas fa-forward"></i> Aceitar Peidido</button>
+                                    </div>
                                  </div>
 
                             </section><br><br>
@@ -338,6 +350,68 @@
 	</div>
 
 	</div>
+	<script type="text/javascript">
+	var cas = "${proposta.idProposta}";
+	 
+	 $("#btnAceitar").click(function() {
+		 
+		 
+		 swal({
+			  title: "Você tem certeza que quer aceitar esse pedido?",
+			  text: "",
+			  icon: "warning",
+			  buttons:true,
+			  dangerMode: true,
+			})
+			.then((willDelete) => {
+			 
+			  if (willDelete) {
+				  
+				  $.post('aceitarPedido', {
+					  cas : cas,
+										
+
+					}, function(dadosJSON) {
+
+						swal("Pedido Aceito!", {
+						      icon: "success",
+						    }).then((value) => {
+						    	 swal("Para ver o progresso do pedido aceito, vá no menu [ Solicitações ] na opção [ [ Em aberto ] ] ").then((value) => {
+						    		   $.post('verificarEstagios', {
+										  cas : cas,
+									   },function(dadosJSON) {
+											window.location = dadosJSON;
+									   });
+						    	 });
+						 });
+						
+					});
+				  
+				  
+				  
+				  
+				
+				
+			    
+			   
+			    
+			  } 
+			  
+			});
+		 
+		 
+	 
+	 
+	 
+	 });
+   
+   	 
+   	 
+   	
+		
+		
+	 
+	</script>
 	
 
 

@@ -175,7 +175,7 @@
 									    linhas += '<td><label style="font-size:12px;"><b>Numero Casa</b></label><br>'+dadosJSON[i].numeroCasa+'</td>';
 								    linhas += '</tr>';
 								    linhas += '<tr>';
-								    linhas += '<td colspan ="4"><label style="font-size:12px;"><b>Mensagem</b></label><br>'+dadosJSON[i].descricao+'</td>';
+								    linhas += '<td colspan ="4"><label style="font-size:12px;"><b>Mensagem</b></label><br>'+dadosJSON[i].mensagem+'</td>';
 								    linhas += '</tr>';
 								    linhas += '<tr>';
 								      linhas += '<td colspan ="4" ><div style="float:right;"><a href="PrimeiraEtapa?cas='+dadosJSON[i].idProposta+'"><button class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="Contratar">Veja mais <i class="fa fa-handshake-o "></i></button></a></div></td>';

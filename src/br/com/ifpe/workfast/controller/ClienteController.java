@@ -151,19 +151,18 @@ public class ClienteController {
 		model.addAttribute("mensagemRemocao", "Endereco Removido com Sucesso");
 		return "forward:meuEnderecos";
 	}
-	
-	// Método para abrir lista de servicos solicitados pendentes
-		@RequestMapping("servicoSolicitadosPendentes")
-		public String listaServicoSolicitadosPendentes(@RequestParam("cas") Integer idUsuario, Model model) {
-            
-			
-			SolicitacaoContratoDao dao = new SolicitacaoContratoDao();
-			List<ListaPedidosPendentesVO> listaPendentes = dao.listarPedidosPendentesCliente(idUsuario);
-			model.addAttribute("listaPendentes", listaPendentes);
-		   
-			return "cliente/solicitacoesPendentes";
 
-		}
+	// Método para abrir lista de servicos solicitados pendentes
+	@RequestMapping("servicoSolicitadosPendentes")
+	public String listaServicoSolicitadosPendentes(@RequestParam("cas") Integer idUsuario, Model model) {
+
+		SolicitacaoContratoDao dao = new SolicitacaoContratoDao();
+		List<ListaPedidosPendentesVO> listaPendentes = dao.listarPedidosPendentesCliente(idUsuario);
+		model.addAttribute("listaPendentes", listaPendentes);
+
+		return "cliente/solicitacoesPendentes";
+
+	}
 
 	// Método para abrir o primeiro estágio do pedido
 	@RequestMapping("solicitacaoServico")
@@ -179,7 +178,7 @@ public class ClienteController {
 		return "cliente/solicitacaoServico";
 
 	}
-	
+
 	// verificar estagios da solicitacao
 	@RequestMapping(value = "detalheSolicitacao", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
 	public @ResponseBody String verificandoDetalheSolicitacao(@RequestParam("cas") Integer idSolicitacao, Model model) {
@@ -187,23 +186,21 @@ public class ClienteController {
 		String encaminhar = "";
 		SolicitacaoContratoDao dao = new SolicitacaoContratoDao();
 		SolicitacaoContrato solicitacao = dao.buscarPorId(idSolicitacao);
-		
-		if(solicitacao.getEstagio().equals("1") && solicitacao.getStatus().equals("1")) {
-			
+
+		if (solicitacao.getEstagio().equals("1") && solicitacao.getStatus().equals("1")) {
+
 			encaminhar = "PrimeiroEstagio";
-			
+
 		}
-		
+
 		return new Gson().toJson(encaminhar);
-        
-		
 
 	}
 
 	// Método para abrir o primeiro estágio do pedido
 	@RequestMapping("PrimeiroEstagio")
-	public String PrimeiroEstagioPedido( Model model) {
-        
+	public String PrimeiroEstagioPedido(Model model) {
+
 		return "cliente/1_estagio";
 
 	}
@@ -211,8 +208,7 @@ public class ClienteController {
 	// Método para abrir o segundo estágio do pedido
 	@RequestMapping(value = "enviarSolicitacaoContrato", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
 	public @ResponseBody String cadastrarSolicitacaoContrato(@RequestParam("idUsuario") Integer idUsuario,
-			@RequestParam("idEndereco") Integer idEndereco,
-			@RequestParam("idUsuarioServico") Integer idUsuarioServico,
+			@RequestParam("idEndereco") Integer idEndereco, @RequestParam("idUsuarioServico") Integer idUsuarioServico,
 			@RequestParam("mensagem") String mensagem) {
 		Usuario usuario = new Usuario();
 		usuario.setIdUsuario(idUsuario);
@@ -233,33 +229,30 @@ public class ClienteController {
 		solicitacao.setMensagem(mensagem);
 
 		SolicitacaoContratoDao dao = new SolicitacaoContratoDao();
-		if (dao.existeVinculacao(idUsuario, idUsuarioServico, idEndereco) == true) {
-			return new Gson().toJson("false");
-		} else {
-			dao.salvar(solicitacao);
+		dao.salvar(solicitacao);
 
-			return new Gson().toJson("true");
+		return new Gson().toJson("sent");
+		
+		
+
+	}
+
+	// Método para abrir o segundo estágio do pedido
+	@RequestMapping(value = "pedidoSolicitado", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+	public @ResponseBody String pedidoSolicitado(@RequestParam("idUsuario") Integer idUsuario,
+			@RequestParam("idEndereco") Integer idEndereco,
+			@RequestParam("idUsuarioServico") Integer idUsuarioServico) {
+
+		SolicitacaoContratoDao dao = new SolicitacaoContratoDao();
+		SolicitacaoContrato obj = dao.existeVinculacao(idUsuario, idUsuarioServico, idEndereco);
+		if ( obj == null){
+			return new Gson().toJson("notExist");
+		} else {
+			
+			return new Gson().toJson("exist");
 		}
 
 	}
-	
-	// Método para abrir o segundo estágio do pedido
-		@RequestMapping(value = "pedidoSolicitado", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-		public @ResponseBody String pedidoSolicitado(@RequestParam("idUsuario") Integer idUsuario,
-				@RequestParam("idEndereco") Integer idEndereco,
-				@RequestParam("idUsuarioServico") Integer idUsuarioServico) {
-			
-
-			SolicitacaoContratoDao dao = new SolicitacaoContratoDao();
-			if (dao.existeVinculacao(idUsuario, idUsuarioServico, idEndereco) == true) {
-				return new Gson().toJson("false");
-			} else {
-				return new Gson().toJson("true");
-			}
-			
-
-		}
-
 
 	// Método para abrir o segundo estágio do pedido
 	@RequestMapping("SegundoEstagio")

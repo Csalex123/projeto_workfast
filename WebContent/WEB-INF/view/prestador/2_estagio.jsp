@@ -168,20 +168,64 @@
                                 </section>
 
                             <section >
-                                  <h2 style="text-align: center;">Informações do Serviço</h2><br>
-                                <p> Aqui você terá um fórum para se comunicar com o cliente para tirar a suas dúvidas sobre o serviço que ele vai querer.</p><br>
+                            <sectio>
+                               <h2 style="text-align: center;">Informações do Serviço</h2><br>
+                                <center><p> Aqui você terá um fórum para se comunicar com o cliente para tirar a suas dúvidas sobre o serviço que ele vai querer.</p></center><br>
 
                                 <h4 style="text-align: center;"> chat</h4><br>
-        
-                            
-
-                 
-                                <!-- Fim do Filtro de profissão-->
-                                <div class="row form-group"  style="float: right;">
-                                    <div class="col col-md-3">
-                                        <a href="TerceiraEtapa"><button type="button" class="btn btn-primary">
-                                        &nbsp;<i class="fas fa-forward"></i> Avançar</button>
-                                    </div></a>
+                            </sectio>
+                                
+                                
+                                
+                                
+                                <div class="container mt-3" style="left:10px; top:20px; height: 400px; z-index:1; overflow: auto; padding-bottom: 300px;">
+								  
+								  <div class="media border p-3">
+								    <img src="/workfast/resources/img/icon/avatar-03.jpg"  class="mr-3 mt-3 rounded-circle" style="width:60px;">
+								    <div class="media-body">
+								      <h4>John Doe <small><i>Posted on February 19, 2016</i></small></h4>
+								      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>      
+								    </div>
+								  </div>
+								  <hr>
+								   <div class="media border p-3">
+								    <div class="media-body">
+								      <h4>John Doe <small><i>Posted on February 19, 2016</i></small></h4>
+								      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>      
+								    </div>
+								    <img src="/workfast/resources/img/icon/avatar-01.jpg"  class="ml-3 mt-3 rounded-circle" style="width:60px;">
+								  </div>
+								  
+								 
+								  
+								</div>
+								
+                                <div class="row ">
+                                    <div class="col col-md-10">
+                                       <div class="form-group">
+										  <label for="mensagem">Mensagem:</label>
+										  <textarea class="form-control" rows="3" id="mensagem"></textarea>
+										</div>
+                                    </div>
+                                    <div class="col col-md-2">
+                                       <div class="form-group">
+										  <label for="mensagem"> &nbsp;</label>
+										   <button type="button" class="btn btn-primary" style="width:100%; height: 100%;">
+                                               &nbsp;<i class="fas fa-forward"></i> Enviar</button>
+								       </div>
+                                      
+                                    </div>
+                                 </div>
+                                  <div class="row ">
+                                    
+                                    <div class="col col-md-12">
+                                       <div class="form-group">
+										  <label for="mensagem"> &nbsp;</label>
+										   <button type="button" class="btn btn-primary" style="width:100%; height: 100%;">
+                                               &nbsp;<i class="fas fa-forward"></i> Ir ao contrato</button>
+								       </div>
+                                      
+                                    </div>
                                  </div>
 
                             </section><br><br>

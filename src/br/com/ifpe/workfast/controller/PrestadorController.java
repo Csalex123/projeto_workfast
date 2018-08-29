@@ -54,10 +54,10 @@ public class PrestadorController {
 	// metodo para mostrar solicitacões
 	@RequestMapping(value = "buscarSolicitacoes", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
 	public @ResponseBody String buscarSolicitacoesIndex(@RequestParam("cas") Integer idUsuario, Model model) {
-        
+
 		SolicitacaoContratoDao dao = new SolicitacaoContratoDao();
 		List<ListaPedidosPendentesVO> lista = dao.listarPedidosPrestador(idUsuario);
-		
+
 		return new Gson().toJson(lista);
 	}
 
@@ -118,10 +118,33 @@ public class PrestadorController {
 	}
 
 	/* ------------------------------- Serviço ----------------------------- */
+	// verificar estagios da solicitacao
+	@RequestMapping(value = "verificarEstagios", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+	public @ResponseBody String verificandoDetalheSolicitacao(@RequestParam("cas") Integer idSolicitacao, Model model) {
+
+		String encaminhar = "";
+		SolicitacaoContratoDao dao = new SolicitacaoContratoDao();
+		SolicitacaoContrato solicitacao = dao.buscarPorId(idSolicitacao);
+        
+		// encaminhado para o segundo estagio
+		if (solicitacao.getEstagio().equals("2") && solicitacao.getStatus().equals("1")) {
+
+			encaminhar = "SegundaEtapa";
+
+		}
+
+		return new Gson().toJson(encaminhar);
+
+	}
 
 	// metodo para redirecionar para pagina de Serviço pendentes
-	@RequestMapping("ServicosPendentes")
-	public String servicosPendente() {
+	@RequestMapping("ServicosEmAberto")
+	public String servicosPendente(@RequestParam("cas") Integer idUsuario, Model model) {
+
+		SolicitacaoContratoDao dao = new SolicitacaoContratoDao();
+		List<ListaPedidosPendentesVO> listaEmAberto = dao.listarPedidosPrestadorEmAberto(idUsuario);
+		model.addAttribute("listaEmAberto", listaEmAberto);
+
 		return "prestador/servico_aberto";
 	}
 
@@ -134,9 +157,20 @@ public class PrestadorController {
 	// metodo para redirecionar para pagina de Serviço finalizados
 	@RequestMapping("Propostas")
 	public String propostas() {
-		
-		
+
 		return "prestador/proposta";
+	}
+
+	// metodo para o prestador aceitar o pedido escolhido
+	@RequestMapping(value = "aceitarPedido", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+	public @ResponseBody String aceitarPedido(@RequestParam("cas") Integer idSolicitacao) {
+
+		SolicitacaoContratoDao dao = new SolicitacaoContratoDao();
+		SolicitacaoContrato obj = dao.buscarPorId(idSolicitacao);
+		obj.setEstagio("2");
+		obj.setConvite("1");
+		dao.update(obj);
+		return new Gson().toJson("verificarEstagios");
 	}
 
 	@RequestMapping("PrimeiraEtapa")

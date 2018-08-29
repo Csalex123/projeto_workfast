@@ -338,7 +338,7 @@
 
 			}, function(dadosJSON) {
 
-				if(dadosJSON == true){
+				if(dadosJSON == "notExist"){
 					idEndereco = id;
 					$('#endereco').html($('#solicitar').data('whatever'))
 					$('#exampleModal').modal('show');
@@ -377,7 +377,7 @@
 
 				}, function(dadosJSON) {
 
-					if(dadosJSON == "true"){
+					if(dadosJSON == "sent"){
 						
 						 
 						 swal("Solicitação enviada com sucesso.","","success");
@@ -385,9 +385,6 @@
 						 $('#exampleModal').modal('hide');
 						 $('#solicitacao').html('<center>Solicitação enviada com sucesso!</br>Aguardando aprovação do Prestador.</center>');
 					
-					}else{
-						
-						 swal("Você já solicitou esse serviço para o endereço escolhido.","Consulte no menu ['Meus Pedidos']","warning");
 					}
 				});
 			 
