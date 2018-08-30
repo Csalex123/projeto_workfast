@@ -139,6 +139,7 @@
 	rel="stylesheet" media="all">
 	
 
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
 </head>
 
@@ -184,21 +185,7 @@
                                 <div id="chat" class="container mt-3" style="left:10px; top:20px; height: 400px; z-index:1; overflow: auto; padding-bottom: 300px;">
 								  
 								  
-								  <div class="media border p-3">
-								    <img src="/workfast/resources/img/icon/avatar-03.jpg"  class="mr-3 mt-3 rounded-circle" style="width:60px;">
-								    <div class="media-body">
-								      <h4>John Doe <small><i>Posted on February 19, 2016</i></small></h4>
-								      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>      
-								    </div>
-								  </div>
-								  <hr>
-								   <div class="media border p-3">
-								    <div class="media-body">
-								      <h4>John Doe <small><i>Posted on February 19, 2016</i></small></h4>
-								      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>      
-								    </div>
-								    <img src="/workfast/resources/img/icon/avatar-01.jpg"  class="ml-3 mt-3 rounded-circle" style="width:60px;">
-								  </div>
+								  
 								  
 								 
 								  
@@ -214,7 +201,7 @@
                                     <div class="col col-md-2">
                                        <div class="form-group">
 										  <label for="mensagem"> &nbsp;</label>
-										   <button type="button" class="btn btn-primary" style="width:100%; height: 100%;">
+										   <button type="button" id="enviarMensagem" class="btn btn-primary" style="width:100%; height: 100%;">
                                                &nbsp;<i class="fas fa-forward"></i> Enviar</button>
 								       </div>
                                       
@@ -225,7 +212,7 @@
                                     <div class="col col-md-12">
                                        <div class="form-group">
 										  <label for="mensagem"> &nbsp;</label>
-										   <a href="TerceiraEtapa?cas=${proposta.idProposta}"></a><button type="button" class="btn btn-primary" style="width:100%; height: 100%;">
+										   <a href="TerceiraEtapa?cas=${proposta.idSolicitacaoContrato}"></a><button type="button" class="btn btn-primary" style="width:100%; height: 100%;">
                                                &nbsp;<i class="fas fa-forward"></i> Ir ao contrato</button></a>
 								       </div>
                                       
@@ -258,8 +245,8 @@
 	</div>
 	
 	<script type="text/javascript">
-	var idProposta = "${proposta.idProposta}";
-    var idCliente = "${proposta.idCliente}";
+	var idProposta = "${proposta.idSolicitacaoContrato}";
+    var idCliente = "${proposta.usuario.idUsuario}";
     var idPrestador = "${usuarioLogado.idUsuario}";
      
 	function popularChat(idProposta,idCliente,idPrestador){
@@ -278,7 +265,45 @@
 					if(dadosJSON.length > 0){
 						
 						$(dadosJSON).each(function (i) {
-								linhas += '<hr>';
+							
+							if(dadosJSON[i].enviadoPor == "${usuarioLogado.idUsuario}"){
+								
+								linhas += ' <div class="media border p-3">';
+									linhas += ' <div class="media-body">';
+									 if(dadosJSON[i].tipoUsuarioPrestador == '1'){
+										 linhas += '  <h4>'+dadosJSON[i].nomePrestador+' <small><i>Agosto 30, 2018</i></small></h4>';
+									 }else if(dadosJSON[i].tipoUsuarioPrestador == '2'){
+										 linhas += '  <h4>'+dadosJSON[i].nomeFantasiaPrestador+' <small><i>Agosto 30, 2018</i></small></h4>';
+									 }
+									
+									linhas += '  <p>'+dadosJSON[i].mensagem+'</p>';
+									linhas += ' </div>';
+									linhas += '<img src="/workfast/resources/img/icon/avatar-01.jpg"  class="ml-3 mt-3 rounded-circle" style="width:60px;">';
+								
+								linhas += ' </div>';
+								linhas += ' <br>';
+							}else{
+								
+
+								linhas += ' <div class="media border p-3">';
+								linhas += '<img src="/workfast/resources/img/icon/avatar-03.jpg"  class="ml-3 mt-3 rounded-circle" style="width:60px;">';
+									linhas += ' <div class="media-body">';
+									 if(dadosJSON[i].tipoUsuarioCliente == '1'){
+										
+										 linhas += '  <h4>'+dadosJSON[i].nomeCliente+' <small><i>Agosto 30, 2018</i></small></h4>';
+									 }else if(dadosJSON[i].tipoUsuarioCliente == '2'){
+										
+										 linhas += '  <h4>'+dadosJSON[i].nomeFantasiaCliente+' <small><i>Agosto 30, 2018</i></small></h4>';
+									 }
+									
+									linhas += '  <p>'+dadosJSON[i].mensagem+'</p>';
+									linhas += ' </div>';
+									
+								
+								linhas += ' </div>';
+								linhas += ' <br>';
+							}
+								
 							
 						});
 						$('#chat').html(linhas).fadeIn(1200);
@@ -297,6 +322,30 @@
 		   popularChat(idProposta,idCliente,idPrestador);
 		   
 	   });
+	  
+	  $("#enviarMensagem").on('click',function(){
+		  if($('#mensagem').val() == null || $('#mensagem').val() == ""){
+			  swal("Digite uma mensagem.","","warning");
+			  
+		  }else{
+			  var msg = $('#mensagem').val();
+			  $.post('enviarMensagemChatPrestador', {
+		           msg:msg,
+		           idPrestador:idPrestador,
+		           idCliente:idCliente,
+		           idProposta:idProposta,
+		           
+		        	   
+		       }, function(dadosJSON){
+		    	   
+		    	   if(dadosJSON == "send"){
+		    		   popularChat(idProposta,idCliente,idPrestador);
+		    		   $('#mensagem').val('');
+		    	   }
+		       });
+		  }
+		  
+	  });
 
 	</script>
 

@@ -132,7 +132,7 @@ public class SolicitacaoContratoDao {
 		consulta.append(" sc.idSolicitacaoContrato as idProposta,");
 		consulta.append(" us.usuario.idUsuario as idPrestador, ");
 		consulta.append(" sc.usuario.idUsuario as idCliente, ");
-		consulta.append(" sc.usuario.nome as nomeCliente, ");
+		consulta.append(" us.usuario.nome as nomeCliente, ");
 		consulta.append(" dp.nomeFantasia as nomeFantasia, ");
 		consulta.append(" sc.usuario.tipo_usuario as tipoUsuario,");
 		consulta.append(" us.servico.nome as nomeServico, ");

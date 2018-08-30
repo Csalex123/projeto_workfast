@@ -13,10 +13,12 @@ public class ChatVO {
 	private String tipoUsuarioCliente;
 	private String mensagem;
 	private String fotoPrestador;
+	private int enviadoPor;
 	private String fotoCliente;
+	
 	public ChatVO(Integer idProposta, Integer idPrestador, Integer idCliente, String nomeCLiente,
 			String nomeFantasiaCliente, String nomePrestador, String nomeFantasiaPrestador, String tipoUsuarioPrestador,
-			String tipoUsuarioCliente, String mensagem, String fotoPrestador, String fotoCliente) {
+			String tipoUsuarioCliente, String mensagem, String fotoPrestador, int enviadoPor, String fotoCliente) {
 		super();
 		this.idProposta = idProposta;
 		this.idPrestador = idPrestador;
@@ -29,6 +31,7 @@ public class ChatVO {
 		this.tipoUsuarioCliente = tipoUsuarioCliente;
 		this.mensagem = mensagem;
 		this.fotoPrestador = fotoPrestador;
+		this.enviadoPor = enviadoPor;
 		this.fotoCliente = fotoCliente;
 	}
 	public Integer getIdProposta() {
@@ -103,6 +106,14 @@ public class ChatVO {
 	public void setFotoCliente(String fotoCliente) {
 		this.fotoCliente = fotoCliente;
 	}
+	public int getEnviadoPor() {
+		return enviadoPor;
+	}
+	public void setEnviadoPor(int enviadoPor) {
+		this.enviadoPor = enviadoPor;
+	}
+	
+	
 	
 	
 	

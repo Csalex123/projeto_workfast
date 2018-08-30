@@ -17,6 +17,8 @@ import com.google.gson.Gson;
 
 import br.com.ifpe.workfast.model.CategoriaServico;
 import br.com.ifpe.workfast.model.CategoriaServicoDao;
+import br.com.ifpe.workfast.model.ChatSolicitacao;
+import br.com.ifpe.workfast.model.ChatSolicitacaoDao;
 import br.com.ifpe.workfast.model.Cidade;
 import br.com.ifpe.workfast.model.CidadeDao;
 import br.com.ifpe.workfast.model.DadosPessoais;
@@ -246,7 +248,7 @@ public class ClienteController {
 				&& solicitacao.getConvite().equals("1")) {
 
 			encaminhar = "QuintoEstagio";
-		}else {
+		} else {
 			encaminhar = "paginaInicialCliente";
 		}
 
@@ -313,7 +315,7 @@ public class ClienteController {
 	@RequestMapping("SegundoEstagio")
 	public String SegundoEstagioPedido(@RequestParam("cas") Integer idSolicitacao, Model model) {
 		SolicitacaoContratoDao dao = new SolicitacaoContratoDao();
-		ListaPedidosPendentesVO solicitacao = dao.buscarPedidoPendente(idSolicitacao);
+		SolicitacaoContrato solicitacao = dao.buscarPorId(idSolicitacao);
 		model.addAttribute("proposta", solicitacao);
 		return "cliente/2_estagio";
 
@@ -367,4 +369,33 @@ public class ClienteController {
 		return "cliente/cadastroClienteJuridico";
 
 	}
+
+	// chat
+	@RequestMapping(value = "enviarMensagemChatCliente", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+	public @ResponseBody String enviarMensagem(@RequestParam("msg") String mensagem,
+			@RequestParam("idCliente") Integer idCliente, @RequestParam("idPrestador") Integer idPrestador,
+			@RequestParam("idProposta") Integer idProposta) {
+
+		Usuario userSend = new Usuario();
+		Usuario userReceive = new Usuario();
+		userSend.setIdUsuario(idCliente);
+		userReceive.setIdUsuario(idPrestador);
+
+		SolicitacaoContrato proposta = new SolicitacaoContrato();
+		proposta.setIdSolicitacaoContrato(idProposta);
+
+		ChatSolicitacaoDao dao = new ChatSolicitacaoDao();
+
+		ChatSolicitacao chat = new ChatSolicitacao();
+		chat.setMensagem(mensagem);
+		chat.setUsuarioPrestador(userReceive);
+		chat.setUsuarioCliente(userSend);
+		chat.setEnviadoPor(idCliente);
+		chat.setSolicitacaoContrato(proposta);
+
+		dao.publicarMensagem(chat);
+
+		return new Gson().toJson("send");
+	}
+
 }

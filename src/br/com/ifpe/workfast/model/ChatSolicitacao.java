@@ -25,8 +25,8 @@ public class ChatSolicitacao {
 	private String mensagem;
 	
 	
-	@Column(name="novo")
-	private String novaMensagem;
+	@Column
+	private int enviadoPor;
 	
 	@Column(name="data")
 	private Date dataPostagem;
@@ -58,13 +58,14 @@ public class ChatSolicitacao {
 	public void setMensagem(String mensagem) {
 		this.mensagem = mensagem;
 	}
-
-	public String getNovaMensagem() {
-		return novaMensagem;
+	
+		
+	public int getEnviadoPor() {
+		return enviadoPor;
 	}
 
-	public void setNovaMensagem(String novaMensagem) {
-		this.novaMensagem = novaMensagem;
+	public void setEnviadoPor(int enviadoPor) {
+		this.enviadoPor = enviadoPor;
 	}
 
 	public Date getDataPostagem() {

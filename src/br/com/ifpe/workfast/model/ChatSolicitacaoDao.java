@@ -63,6 +63,7 @@ public class ChatSolicitacaoDao {
 			consulta.append(" cs.usuarioCliente.tipo_usuario as tipoUsuarioCliente,");
 			consulta.append(" cs.mensagem as mensagem, ");
 			consulta.append(" cs.usuarioPrestador.foto as fotoPrestador, ");
+			consulta.append(" cs.enviadoPor as rementente, ");
 			consulta.append(" cs.usuarioCliente.foto as fotoCliente) ");
 			
 						

@@ -17,6 +17,7 @@ import com.google.gson.Gson;
 
 import br.com.ifpe.workfast.model.CategoriaServico;
 import br.com.ifpe.workfast.model.CategoriaServicoDao;
+import br.com.ifpe.workfast.model.ChatSolicitacao;
 import br.com.ifpe.workfast.model.ChatSolicitacaoDao;
 import br.com.ifpe.workfast.model.ChatVO;
 import br.com.ifpe.workfast.model.Cidade;
@@ -218,8 +219,9 @@ public class PrestadorController {
 
 	@RequestMapping("SegundaEtapa")
 	public String segundaEtapa(@RequestParam("cas") Integer idSolicitacao, Model model) {
+		
 		SolicitacaoContratoDao dao = new SolicitacaoContratoDao();
-		ListaPedidosPendentesVO solicitacao = dao.buscarPedidoPendente(idSolicitacao);
+		SolicitacaoContrato solicitacao = dao.buscarPorId(idSolicitacao);
 		model.addAttribute("proposta", solicitacao);
 		return "prestador/2_estagio";
 	}
@@ -231,7 +233,11 @@ public class PrestadorController {
 
 		ChatSolicitacaoDao dao = new ChatSolicitacaoDao();
 		List<ChatVO> lista = dao.popularChat(idPrestador, idCliente, idProposta);
-
+        for(ChatVO chat:lista) {
+        	System.out.println(chat.getIdCliente() +"- "+chat.getIdPrestador());
+        	System.out.println(chat.getNomeCLiente() +"- "+chat.getNomeFantasiaCliente());
+        	System.out.println(chat.getNomePrestador() +"- "+chat.getNomeFantasiaPrestador());
+        }
 		return new Gson().toJson(lista);
 	}
 
@@ -252,6 +258,39 @@ public class PrestadorController {
 	public String quintaEtapa() {
 		return "prestador/5_estagio";
 	}
+	
+	//chat
+	@RequestMapping(value = "enviarMensagemChatPrestador", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+	public @ResponseBody String enviarMensagem(@RequestParam("msg") String mensagem,
+			@RequestParam("idCliente") Integer idCliente, @RequestParam("idPrestador") Integer idPrestador, @RequestParam("idProposta") Integer idProposta) {
+        
+		Usuario userSend = new Usuario();
+        Usuario userReceive = new Usuario();
+        userSend.setIdUsuario(idPrestador);
+        userReceive.setIdUsuario(idCliente);
+        
+        SolicitacaoContrato proposta = new SolicitacaoContrato();
+        proposta.setIdSolicitacaoContrato(idProposta);
+        
+        
+        
+		ChatSolicitacaoDao dao = new ChatSolicitacaoDao();
+		
+		ChatSolicitacao chat = new ChatSolicitacao();
+		chat.setMensagem(mensagem);
+		chat.setUsuarioPrestador(userSend);
+		chat.setUsuarioCliente(userReceive);
+		chat.setEnviadoPor(idPrestador);
+		chat.setSolicitacaoContrato(proposta);
+		
+		dao.publicarMensagem(chat);
+		
+		
+		
+
+		return new Gson().toJson("send");
+	}
+	
 
 	// metodo para redirecionar para pagina servicos
 	@RequestMapping("ExibirServicos")
