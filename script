@@ -126,6 +126,15 @@ create table solicitacao_contrato(
 );
 
 
+create table pendencias(
+	id int AUTO_INCREMENT PRIMARY KEY,
+	mensagem varchar(255) not null,
+	fk_solicitacao_contrato int NOT null,
+	data_postagem datetime DEFAULT CURRENT_TIMESTAMP,
+	FOREIGN KEY(fk_solicitacao_contrato) REFERENCES solicitacao_contrato (id)
+);
+
+
 
 // insert
 

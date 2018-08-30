@@ -28,6 +28,8 @@ import br.com.ifpe.workfast.model.EnderecoDao;
 import br.com.ifpe.workfast.model.Estado;
 import br.com.ifpe.workfast.model.EstadoDao;
 import br.com.ifpe.workfast.model.ListaPedidosPendentesVO;
+import br.com.ifpe.workfast.model.Pendencias;
+import br.com.ifpe.workfast.model.PendenciasDao;
 import br.com.ifpe.workfast.model.Profissao;
 import br.com.ifpe.workfast.model.ProfissaoDao;
 import br.com.ifpe.workfast.model.Servico;
@@ -125,7 +127,7 @@ public class PrestadorController {
 		String encaminhar = "";
 		SolicitacaoContratoDao dao = new SolicitacaoContratoDao();
 		SolicitacaoContrato solicitacao = dao.buscarPorId(idSolicitacao);
-        
+
 		// encaminhado para o segundo estagio
 		if (solicitacao.getEstagio().equals("2") && solicitacao.getStatus().equals("1")) {
 
@@ -190,7 +192,7 @@ public class PrestadorController {
 	public String terceiraEtapa() {
 		return "prestador/3_estagio";
 	}
-
+	
 	@RequestMapping("QuartaEtapa")
 	public String quartaEtapa() {
 		return "prestador/4_estagio";
@@ -565,6 +567,45 @@ public class PrestadorController {
 
 		return new Gson().toJson(existe);
 
+	}
+
+	/* Incluir Pendências na contratação de serviço */
+
+	@RequestMapping(value = "adicionarPendencias", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+	public @ResponseBody String adicionarPendencias(@RequestParam("mensagem") String mensagem,
+			@RequestParam("idContrato") SolicitacaoContrato idContrato) {
+
+		Pendencias dados = new Pendencias();
+		dados.setMensagem(mensagem);
+		dados.setSolicitacaoContrato(idContrato);
+
+		PendenciasDao dao = new PendenciasDao();
+		dao.salvar(dados);
+
+		return new Gson().toJson("");
+	}
+
+	/* Listar Pendências na contratação de serviço */
+	
+	@RequestMapping(value ="ListarPendencias", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+	public @ResponseBody String listarPendencias() {
+
+		PendenciasDao dao = new PendenciasDao();
+		List<Pendencias> listaPendencias = dao.listar();
+
+		return new Gson().toJson(listaPendencias);
+	}
+	
+	
+	//Deletar Pendência
+	
+	@RequestMapping(value = "apagarPendencia", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+	public @ResponseBody String deletarPendencia(@RequestParam("idPendencia") Integer id) {
+		
+		PendenciasDao dao = new PendenciasDao();
+		dao.remover(id);
+
+		return new Gson().toJson("");
 	}
 
 }

@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="pt-BR">
 
@@ -135,6 +136,84 @@
 	href="<%=request.getContextPath()%>/resources/css/theme-prestador.css"
 	rel="stylesheet" media="all">
 	
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+	
+
+<script type="text/javascript">
+
+$(document).ready(function(){
+	carregarPendencias();
+});
+
+$(document).ready(function(){
+	$("#form_cadastroPendencias").submit(function() {
+	    		  
+			   var mensagem = $("#mensagem").val();  
+			   var idContrato = $("#id_contrato").val();
+  
+			 $.post('adicionarPendencias',{
+		           
+				 mensagem:mensagem,
+				 idContrato:idContrato,
+		          
+		          }, function(data){    
+		        	  swal("Pendência cadastrada com sucesso.","","success"); 
+		        	  carregarPendencias();
+		          });
+
+		return false;
+	  });
+});
+
+function carregarPendencias(){
+	
+	//encaminhando os valores do formulario para ser processadas 
+	$.post('ListarPendencias',{
+	   
+	 }, function(dadosJSON){
+		  var linhas = '';
+		  
+		  linhas += '<div class="table-responsive table-responsive-data2">';
+		  linhas += '<table class="table table-data2">';
+		  linhas += '<thead>';
+			  linhas += '<tr>';
+				  linhas += '<th><h4>Pedência(s) já enviada(s) por você</h4></th>';
+				  linhas += '<th></th>';
+			  linhas += '</tr>';
+		  linhas += ' </thead>';
+		  
+			$(dadosJSON).each(function (i) {
+	
+			    linhas += '<tr>';
+				    linhas += '<td>'+dadosJSON[i].mensagem+'</td>';
+				    linhas += '<td><div class="table-data-feature">';
+				    linhas += '<button onclick="deletar('+ dadosJSON[i].idPendencias +')" class="item" data-toggle="tooltip" data-placement="top" title="Apagar Pedência" >';
+				    linhas += '<i class="zmdi zmdi-delete"></i></button></div></td>';
+			    linhas += '</tr>';
+			    
+			  
+			    
+		    linhas += '</tbody>';
+		    	
+			});
+			
+		  
+			linhas += ' </table>';
+			linhas += ' </div>';
+            
+                     
+			$('#dadosPendencias').html(linhas);
+			   
+	 });
+	
+}
+
+
+</script>
+	
 
 
 </head>
@@ -144,7 +223,7 @@
 	<div class="page-wrapper">
 		<!-- menu adm -->
 		<c:import url="../prestador/menu.jsp" />
-<!-- Container de conteúdo-->
+		<!-- Container de conteúdo-->
             <div class="main-content main-content--pb30">
                 <div class="section__content section__content--p30">
 
@@ -171,41 +250,21 @@
                                <h2 style="text-align: center;">Efetuando o serviço</h2><br>
                                 <p>Nesta etapa você poderá enviar pedências ao cliente, como faltas de matérias etc. Esta estapa poderá ser vista pelo usuário como serviço em andamento.</p><br>
 
-                                <h4 style="text-align: center;"> Envie pedências ao Cliente</h4><br>
+                                <h4 style="text-align: center;"> Envie pendências ao Cliente</h4><br>
 
+								<form id="form_cadastroPendencias" action="adicionarPendencias" method="post" >													
+	                                <textarea requiered="" name="mensagem" id="mensagem" class="form-control" placeholder="Ex.: Olá, cliente!  Você precisa comprar esses materiais para continuar o serviço (...)"></textarea><br>
+									<input type="hidden" id="id_contrato" name="solicitacaoContrato" value="11">
+									
+	                                <div class="row form-group"  style="float: right;">
+	                                    <div class="col col-md-3">
+	                                        <button type="submit" class="btn btn-primary">Enviar</button>
+	                                    </div>
+	                                 </div><br><br><br><br>    
+                                </form>
 
-                                <textarea class="form-control" placeholder="Ex.: Olá, cliente!  Você precisa comprar esses materiais para continuar o serviço (...)"></textarea><br>
-
-                                <!-- Fim do Filtro de profissão-->
-                                <div class="row form-group"  style="float: right;">
-                                    <div class="col col-md-3">
-                                        <button type="button" class="btn btn-primary">Enviar</button>
-                                    </div>
-                                 </div><br><br><br><br>
-
-                                  <div class="table-responsive table-responsive-data2">
-                                <table class="table table-data2">
-                                    <thead>
-                                        <tr>  
-                                            <th>Pedência(s) já enviada(s) por você</th>
-                                            <th></th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>Olá, cliente!  Você precisa comprar esses materiais para continuar o serviço<br>Compre 2 metros de aréia e 5 Sacos de cimentos</td>
-                                            <td>
-                                                <div class="table-data-feature">
-                                                    <button class="item" data-toggle="tooltip" data-placement="top" title="Apagar Pedência">
-                                                        <i class="zmdi zmdi-delete"></i>
-                                                    </button>       
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr class="spacer"></tr> 
-                                    </tbody>
-                                </table>
-                            </div><br><br><br>
+							<div id="dadosPendencias"></div>
+                             <br><br><br>
 
                  
                                 <!-- Fim do Filtro de profissão-->
@@ -240,6 +299,29 @@
 	</div>
 
 	</div>
+	
+	<script>
+	function deletar(id) {
+		swal({
+		  title: "Você tem certeza?",
+		  text: "Uma vez deletado, você não poderá recuperar esta pendência",
+		  icon: "error",
+		  buttons: true,
+		  dangerMode: true,
+		})
+		.then((willDelete) => {
+		  if (willDelete) {  
+			  $.post('apagarPendencia',{
+					 idPendencia:id,
+			          
+			          }, function(data){    
+			        	  swal("Pendência apagada com sucesso.","","success"); 
+			        	  carregarPendencias();
+			          });
+		  }
+		});  
+}
+	</script>
 
 
 	<!-- Jquery JS-->
