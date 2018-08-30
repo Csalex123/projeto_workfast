@@ -5,7 +5,8 @@ import java.sql.Date;
 public class ListaPedidosPendentesVO {
   
 	private Integer idProposta;
-	private Integer idPrestadorServico;
+	private Integer idPrestador;
+	private Integer idCliente;
 	private String nome;
 	private String nomeFantasia;
 	private String tipoUsuario;
@@ -22,16 +23,17 @@ public class ListaPedidosPendentesVO {
 	private String foto;
 	private String estagio;
 	private String status;
-	private Date data;
+	//private Date data;
 	
-	
-	
-	public ListaPedidosPendentesVO(Integer idProposta, Integer idPrestadorServico, String nome,
+
+	public ListaPedidosPendentesVO(Integer idProposta, Integer idPrestador, Integer idCliente, String nome,
 			String nomeFantasia, String tipoUsuario, String servico, String rua, String numeroCasa, String cep,
-			String cidade, String estado, String mensagem, String bairro, String complemento, String foto, String estagio, String status, String convite) {
+			String cidade, String estado, String convite, String mensagem, String bairro, String complemento,
+			String foto, String estagio, String status) {
 		super();
 		this.idProposta = idProposta;
-		this.idPrestadorServico = idPrestadorServico;
+		this.idPrestador = idPrestador;
+		this.idCliente = idCliente;
 		this.nome = nome;
 		this.nomeFantasia = nomeFantasia;
 		this.tipoUsuario = tipoUsuario;
@@ -41,15 +43,13 @@ public class ListaPedidosPendentesVO {
 		this.cep = cep;
 		this.cidade = cidade;
 		this.estado = estado;
+		this.convite = convite;
 		this.mensagem = mensagem;
 		this.bairro = bairro;
 		this.complemento = complemento;
 		this.foto = foto;
 		this.estagio = estagio;
 		this.status = status;
-		this.convite = convite;
-		
-		
 	}
 	public Integer getIdProposta() {
 		return idProposta;
@@ -57,13 +57,18 @@ public class ListaPedidosPendentesVO {
 	public void setIdProposta(Integer idProposta) {
 		this.idProposta = idProposta;
 	}
-	public Integer getIdPrestadorServico() {
-		return idPrestadorServico;
+	public Integer getIdPrestador() {
+		return idPrestador;
 	}
-	public void setIdPrestadorServico(Integer idPrestadorServico) {
-		this.idPrestadorServico = idPrestadorServico;
+	public void setIdPrestador(Integer idPrestador) {
+		this.idPrestador = idPrestador;
 	}
-	
+	public Integer getIdCliente() {
+		return idCliente;
+	}
+	public void setIdCliente(Integer idCliente) {
+		this.idCliente = idCliente;
+	}
 	public String getNome() {
 		return nome;
 	}
@@ -124,12 +129,6 @@ public class ListaPedidosPendentesVO {
 	public void setConvite(String convite) {
 		this.convite = convite;
 	}
-	public Date getData() {
-		return data;
-	}
-	public void setData(Date data) {
-		this.data = data;
-	}
 	public String getMensagem() {
 		return mensagem;
 	}
@@ -166,6 +165,7 @@ public class ListaPedidosPendentesVO {
 	public void setStatus(String status) {
 		this.status = status;
 	}
+	
 	
 	
 	

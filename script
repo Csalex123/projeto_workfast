@@ -125,6 +125,18 @@ create table solicitacao_contrato(
     
 );
 
+create table chatSolicitacao(
+  id int AUTO_INCREMENT PRIMARY KEY,
+  data datetime DEFAULT CURRENT_TIMESTAMP,
+  mensagem text not null,
+  novo char(1) not null,
+  fk_solicitacao int not null,
+  fk_prestador int not null,
+  fk_cliente int not null,
+  FOREIGN KEY(fk_cliente) REFERENCES usuario (id),
+  FOREIGN KEY(fk_prestador) REFERENCES usuario (id),
+  FOREIGN KEY(fk_solicitacao) REFERENCES solicitacao_contrato (id)
+);
 
 create table pendencias(
 	id int AUTO_INCREMENT PRIMARY KEY,

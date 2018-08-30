@@ -130,6 +130,9 @@
 	rel="stylesheet" media="all">
 
 
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
 <!-- Main CSS-->
 <link
 	href="<%=request.getContextPath()%>/resources/css/theme-prestador.css"
@@ -178,7 +181,8 @@
                                 
                                 
                                 
-                                <div class="container mt-3" style="left:10px; top:20px; height: 400px; z-index:1; overflow: auto; padding-bottom: 300px;">
+                                <div id="chat" class="container mt-3" style="left:10px; top:20px; height: 400px; z-index:1; overflow: auto; padding-bottom: 300px;">
+								  
 								  
 								  <div class="media border p-3">
 								    <img src="/workfast/resources/img/icon/avatar-03.jpg"  class="mr-3 mt-3 rounded-circle" style="width:60px;">
@@ -221,8 +225,8 @@
                                     <div class="col col-md-12">
                                        <div class="form-group">
 										  <label for="mensagem"> &nbsp;</label>
-										   <button type="button" class="btn btn-primary" style="width:100%; height: 100%;">
-                                               &nbsp;<i class="fas fa-forward"></i> Ir ao contrato</button>
+										   <a href="TerceiraEtapa?cas=${proposta.idProposta}"></a><button type="button" class="btn btn-primary" style="width:100%; height: 100%;">
+                                               &nbsp;<i class="fas fa-forward"></i> Ir ao contrato</button></a>
 								       </div>
                                       
                                     </div>
@@ -252,6 +256,49 @@
 	</div>
 
 	</div>
+	
+	<script type="text/javascript">
+	var idProposta = "${proposta.idProposta}";
+    var idCliente = "${proposta.idCliente}";
+    var idPrestador = "${usuarioLogado.idUsuario}";
+     
+	function popularChat(idProposta,idCliente,idPrestador){
+		 
+		   $('#chat').html(' ').fadeOut(100);
+		  
+		   $.post('popularChat', {
+	           idProposta:idProposta,
+	           idCliente:idCliente,
+	           idPrestador:idPrestador,
+	           
+	        	   
+	       }, function(dadosJSON){
+	     	  var linhas = " ";
+	     	  
+					if(dadosJSON.length > 0){
+						
+						$(dadosJSON).each(function (i) {
+								linhas += '<hr>';
+							
+						});
+						$('#chat').html(linhas).fadeIn(1200);
+						
+					}else{
+						$('#chat').html('<br><br><center><span>Escreva uma mensagem!</span></center>').fadeIn(1200);
+					}
+
+					
+	             
+	       });
+
+	   }
+	
+	  $(document).ready(function(){
+		   popularChat(idProposta,idCliente,idPrestador);
+		   
+	   });
+
+	</script>
 
 
 	<!-- Jquery JS-->

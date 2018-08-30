@@ -164,6 +164,42 @@ public class ClienteController {
 
 	}
 
+	// Método para abrir lista de servicos solicitados pendentes
+	@RequestMapping("servicoSolicitadosAndamento")
+	public String listaServicoSolicitadosAndamento(@RequestParam("cas") Integer idUsuario, Model model) {
+
+		SolicitacaoContratoDao dao = new SolicitacaoContratoDao();
+		List<ListaPedidosPendentesVO> listaAndamento = dao.listarPedidosAndamentosCliente(idUsuario);
+		model.addAttribute("listaAndamento", listaAndamento);
+
+		return "cliente/solicitacoesEmAndamento";
+
+	}
+
+	// Método para abrir lista de servicos solicitados pendentes
+	@RequestMapping("servicoSolicitadosCancelado")
+	public String listaServicoSolicitadosCancelado(@RequestParam("cas") Integer idUsuario, Model model) {
+
+		SolicitacaoContratoDao dao = new SolicitacaoContratoDao();
+		List<ListaPedidosPendentesVO> listaCancelados = dao.listarPedidosCanceladosCliente(idUsuario);
+		model.addAttribute("listaCancelados", listaCancelados);
+
+		return "cliente/solicitacoesCancelados";
+
+	}
+
+	// Método para abrir lista de servicos solicitados pendentes
+	@RequestMapping("servicoSolicitadosFinalizado")
+	public String listaServicoSolicitadosFinalizado(@RequestParam("cas") Integer idUsuario, Model model) {
+
+		SolicitacaoContratoDao dao = new SolicitacaoContratoDao();
+		List<ListaPedidosPendentesVO> listaFinalizado = dao.listarPedidosFinalizadosCliente(idUsuario);
+		model.addAttribute("listaFinalizado", listaFinalizado);
+
+		return "cliente/solicitacoesFinalizados";
+
+	}
+
 	// Método para abrir o primeiro estágio do pedido
 	@RequestMapping("solicitacaoServico")
 	public String solicitacaoServico(@RequestParam("id") Integer idUsuarioServico, Model model, Model model2,
@@ -187,10 +223,31 @@ public class ClienteController {
 		SolicitacaoContratoDao dao = new SolicitacaoContratoDao();
 		SolicitacaoContrato solicitacao = dao.buscarPorId(idSolicitacao);
 
-		if (solicitacao.getEstagio().equals("1") && solicitacao.getStatus().equals("1")) {
+		if (solicitacao.getEstagio().equals("1") && solicitacao.getStatus().equals("1")
+				&& solicitacao.getConvite().equals("0")) {
 
 			encaminhar = "PrimeiroEstagio";
 
+		} else if (solicitacao.getEstagio().equals("2") && solicitacao.getStatus().equals("1")
+				&& solicitacao.getConvite().equals("1")) {
+			encaminhar = "SegundoEstagio";
+
+		} else if (solicitacao.getEstagio().equals("3") && solicitacao.getStatus().equals("1")
+				&& solicitacao.getConvite().equals("1")) {
+
+			encaminhar = "TerceiroEstagio";
+
+		} else if (solicitacao.getEstagio().equals("4") && solicitacao.getStatus().equals("3")
+				&& solicitacao.getConvite().equals("1")) {
+
+			encaminhar = "QuartoEstagio";
+
+		} else if (solicitacao.getEstagio().equals("5") && solicitacao.getStatus().equals("2")
+				&& solicitacao.getConvite().equals("1")) {
+
+			encaminhar = "QuintoEstagio";
+		}else {
+			encaminhar = "paginaInicialCliente";
 		}
 
 		return new Gson().toJson(encaminhar);
@@ -232,8 +289,6 @@ public class ClienteController {
 		dao.salvar(solicitacao);
 
 		return new Gson().toJson("sent");
-		
-		
 
 	}
 
@@ -245,10 +300,10 @@ public class ClienteController {
 
 		SolicitacaoContratoDao dao = new SolicitacaoContratoDao();
 		SolicitacaoContrato obj = dao.existeVinculacao(idUsuario, idUsuarioServico, idEndereco);
-		if ( obj == null){
+		if (obj == null) {
 			return new Gson().toJson("notExist");
 		} else {
-			
+
 			return new Gson().toJson("exist");
 		}
 
@@ -256,8 +311,10 @@ public class ClienteController {
 
 	// Método para abrir o segundo estágio do pedido
 	@RequestMapping("SegundoEstagio")
-	public String SegundoEstagioPedido() {
-
+	public String SegundoEstagioPedido(@RequestParam("cas") Integer idSolicitacao, Model model) {
+		SolicitacaoContratoDao dao = new SolicitacaoContratoDao();
+		ListaPedidosPendentesVO solicitacao = dao.buscarPedidoPendente(idSolicitacao);
+		model.addAttribute("proposta", solicitacao);
 		return "cliente/2_estagio";
 
 	}

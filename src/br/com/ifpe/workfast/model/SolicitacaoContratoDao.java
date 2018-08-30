@@ -64,7 +64,7 @@ public class SolicitacaoContratoDao {
 
 	}
 	
-	// metodo para retornar proposta que esta aguardando aprovacao do prestador 
+	// metodo para retornar um objeto da proposta que esta aguardando aprovacao do prestador 
 	// esse metodo vai listar as informções do cliente no primeiro estagio na area do prestador
 	public ListaPedidosPendentesVO buscarPedidoPendente(Integer id) {
 
@@ -77,7 +77,8 @@ public class SolicitacaoContratoDao {
 		consulta.append(" select new br.com.ifpe.workfast.model.ListaPedidosPendentesVO(");
 		
 		consulta.append(" sc.idSolicitacaoContrato as idProposta,");
-		consulta.append(" us.idUsuarioServico as idPrestadorServico, ");
+		consulta.append(" us.usuario.idUsuario as idPrestador, ");
+		consulta.append(" sc.usuario.idUsuario as idCliente, ");
 		consulta.append(" sc.usuario.nome as nomeCliente, ");
 		consulta.append(" dp.nomeFantasia as nomeFantasia, ");
 		consulta.append(" sc.usuario.tipo_usuario as tipoUsuario,");
@@ -87,13 +88,14 @@ public class SolicitacaoContratoDao {
 		consulta.append(" ed.cep as cep, ");
 		consulta.append(" ed.cidade.nome as cidade, ");
 		consulta.append(" ed.estado.nome as estado, ");
+		consulta.append(" sc.convite as proposta, ");
 		consulta.append(" sc.mensagem as mensagem, ");
 		consulta.append(" ed.bairro as bairro, ");
 		consulta.append(" ed.complemento as complemento, ");
 		consulta.append(" sc.usuario.foto as foto, ");
 		consulta.append(" sc.estagio as estagio, ");
-		consulta.append(" sc.status as status, ");
-		consulta.append(" sc.convite as proposta) ");
+		consulta.append(" sc.status as status ) ");
+		
 		
 	    
 		consulta.append(" from SolicitacaoContrato sc join sc.usuarioServico us, DadosPessoais dp, Endereco ed ");
@@ -128,23 +130,24 @@ public class SolicitacaoContratoDao {
 		consulta.append(" select new br.com.ifpe.workfast.model.ListaPedidosPendentesVO(");
 		
 		consulta.append(" sc.idSolicitacaoContrato as idProposta,");
-		consulta.append(" us.idUsuarioServico as idPrestadorServico, ");
-		consulta.append(" us.usuario.nome as nomePrestador, ");
+		consulta.append(" us.usuario.idUsuario as idPrestador, ");
+		consulta.append(" sc.usuario.idUsuario as idCliente, ");
+		consulta.append(" sc.usuario.nome as nomeCliente, ");
 		consulta.append(" dp.nomeFantasia as nomeFantasia, ");
-		consulta.append(" us.usuario.tipo_usuario as tipoUsuario,");
+		consulta.append(" sc.usuario.tipo_usuario as tipoUsuario,");
 		consulta.append(" us.servico.nome as nomeServico, ");
 		consulta.append(" ed.rua as endereco, ");
 		consulta.append(" ed.numeroCasa as numeroCasa, ");
 		consulta.append(" ed.cep as cep, ");
 		consulta.append(" ed.cidade.nome as cidade, ");
 		consulta.append(" ed.estado.nome as estado, ");
+		consulta.append(" sc.convite as proposta, ");
 		consulta.append(" sc.mensagem as mensagem, ");
 		consulta.append(" ed.bairro as bairro, ");
 		consulta.append(" ed.complemento as complemento, ");
-		consulta.append(" us.usuario.foto as foto, ");
+		consulta.append(" sc.usuario.foto as foto, ");
 		consulta.append(" sc.estagio as estagio, ");
-		consulta.append(" sc.status as status, ");
-		consulta.append(" sc.convite as proposta) ");
+		consulta.append(" sc.status as status ) ");
 		
 	    
 		consulta.append(" from SolicitacaoContrato sc join sc.usuarioServico us, DadosPessoais dp, Endereco ed ");
@@ -162,7 +165,147 @@ public class SolicitacaoContratoDao {
 		return lista;
 	}
 	
-	//metodo para listar pedidos de servicos do cliente na index
+	//metodo para listar servicos em andamento na area do cliente
+	public List<ListaPedidosPendentesVO> listarPedidosAndamentosCliente(Integer id) {
+
+		EntityManagerFactory factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT);
+		EntityManager manager = factory.createEntityManager();
+		TypedQuery<ListaPedidosPendentesVO> query = null;
+		
+		StringBuilder consulta = new StringBuilder();
+		
+		consulta.append(" select new br.com.ifpe.workfast.model.ListaPedidosPendentesVO(");
+		
+		consulta.append(" sc.idSolicitacaoContrato as idProposta,");
+		consulta.append(" us.usuario.idUsuario as idPrestador, ");
+		consulta.append(" sc.usuario.idUsuario as idCliente, ");
+		consulta.append(" sc.usuario.nome as nomeCliente, ");
+		consulta.append(" dp.nomeFantasia as nomeFantasia, ");
+		consulta.append(" sc.usuario.tipo_usuario as tipoUsuario,");
+		consulta.append(" us.servico.nome as nomeServico, ");
+		consulta.append(" ed.rua as endereco, ");
+		consulta.append(" ed.numeroCasa as numeroCasa, ");
+		consulta.append(" ed.cep as cep, ");
+		consulta.append(" ed.cidade.nome as cidade, ");
+		consulta.append(" ed.estado.nome as estado, ");
+		consulta.append(" sc.convite as proposta, ");
+		consulta.append(" sc.mensagem as mensagem, ");
+		consulta.append(" ed.bairro as bairro, ");
+		consulta.append(" ed.complemento as complemento, ");
+		consulta.append(" sc.usuario.foto as foto, ");
+		consulta.append(" sc.estagio as estagio, ");
+		consulta.append(" sc.status as status ) ");
+		
+	    
+		consulta.append(" from SolicitacaoContrato sc join sc.usuarioServico us, DadosPessoais dp, Endereco ed ");
+		consulta.append(" where dp.usuario = us.usuario AND ed.usuario = sc.usuario AND sc.status = :paramStatus AND sc.estagio = :paramEstagio1  AND sc.usuario.idUsuario = :paramId");
+		query = manager.createQuery(consulta.toString(),ListaPedidosPendentesVO.class);
+		query.setParameter("paramId", id);
+		query.setParameter("paramStatus", "3");
+		query.setParameter("paramEstagio1", "4");
+		
+		List<ListaPedidosPendentesVO> lista = query.getResultList();
+		manager.close();
+		factory.close();
+
+		return lista;
+	}
+	
+	//metodo para listar servicos fnalizados na area do cliente
+	public List<ListaPedidosPendentesVO> listarPedidosFinalizadosCliente(Integer id) {
+
+		EntityManagerFactory factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT);
+		EntityManager manager = factory.createEntityManager();
+		TypedQuery<ListaPedidosPendentesVO> query = null;
+		
+		StringBuilder consulta = new StringBuilder();
+		
+		consulta.append(" select new br.com.ifpe.workfast.model.ListaPedidosPendentesVO(");
+		
+		consulta.append(" sc.idSolicitacaoContrato as idProposta,");
+		consulta.append(" us.usuario.idUsuario as idPrestador, ");
+		consulta.append(" sc.usuario.idUsuario as idCliente, ");
+		consulta.append(" sc.usuario.nome as nomeCliente, ");
+		consulta.append(" dp.nomeFantasia as nomeFantasia, ");
+		consulta.append(" sc.usuario.tipo_usuario as tipoUsuario,");
+		consulta.append(" us.servico.nome as nomeServico, ");
+		consulta.append(" ed.rua as endereco, ");
+		consulta.append(" ed.numeroCasa as numeroCasa, ");
+		consulta.append(" ed.cep as cep, ");
+		consulta.append(" ed.cidade.nome as cidade, ");
+		consulta.append(" ed.estado.nome as estado, ");
+		consulta.append(" sc.convite as proposta, ");
+		consulta.append(" sc.mensagem as mensagem, ");
+		consulta.append(" ed.bairro as bairro, ");
+		consulta.append(" ed.complemento as complemento, ");
+		consulta.append(" sc.usuario.foto as foto, ");
+		consulta.append(" sc.estagio as estagio, ");
+		consulta.append(" sc.status as status ) ");
+		
+		
+	    
+		consulta.append(" from SolicitacaoContrato sc join sc.usuarioServico us, DadosPessoais dp, Endereco ed ");
+		consulta.append(" where dp.usuario = us.usuario AND ed.usuario = sc.usuario AND sc.status = :paramStatus AND sc.estagio = :paramEstagio1  AND sc.usuario.idUsuario = :paramId");
+		query = manager.createQuery(consulta.toString(),ListaPedidosPendentesVO.class);
+		query.setParameter("paramId", id);
+		query.setParameter("paramStatus", "2");
+		query.setParameter("paramEstagio1", "5");
+		
+		List<ListaPedidosPendentesVO> lista = query.getResultList();
+		manager.close();
+		factory.close();
+
+		return lista;
+	}
+	
+	//metodo para listar servicos fnalizados na area do cliente
+	public List<ListaPedidosPendentesVO> listarPedidosCanceladosCliente(Integer id) {
+
+		EntityManagerFactory factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT);
+		EntityManager manager = factory.createEntityManager();
+		TypedQuery<ListaPedidosPendentesVO> query = null;
+		
+		StringBuilder consulta = new StringBuilder();
+		
+		consulta.append(" select new br.com.ifpe.workfast.model.ListaPedidosPendentesVO(");
+		
+		consulta.append(" sc.idSolicitacaoContrato as idProposta,");
+		consulta.append(" us.usuario.idUsuario as idPrestador, ");
+		consulta.append(" sc.usuario.idUsuario as idCliente, ");
+		consulta.append(" sc.usuario.nome as nomeCliente, ");
+		consulta.append(" dp.nomeFantasia as nomeFantasia, ");
+		consulta.append(" sc.usuario.tipo_usuario as tipoUsuario,");
+		consulta.append(" us.servico.nome as nomeServico, ");
+		consulta.append(" ed.rua as endereco, ");
+		consulta.append(" ed.numeroCasa as numeroCasa, ");
+		consulta.append(" ed.cep as cep, ");
+		consulta.append(" ed.cidade.nome as cidade, ");
+		consulta.append(" ed.estado.nome as estado, ");
+		consulta.append(" sc.convite as proposta, ");
+		consulta.append(" sc.mensagem as mensagem, ");
+		consulta.append(" ed.bairro as bairro, ");
+		consulta.append(" ed.complemento as complemento, ");
+		consulta.append(" sc.usuario.foto as foto, ");
+		consulta.append(" sc.estagio as estagio, ");
+		consulta.append(" sc.status as status ) ");
+		
+		
+	    
+		consulta.append(" from SolicitacaoContrato sc join sc.usuarioServico us, DadosPessoais dp, Endereco ed ");
+		consulta.append(" where dp.usuario = us.usuario AND ed.usuario = sc.usuario AND sc.status = :paramStatus AND sc.estagio = :paramEstagio1  AND sc.usuario.idUsuario = :paramId");
+		query = manager.createQuery(consulta.toString(),ListaPedidosPendentesVO.class);
+		query.setParameter("paramId", id);
+		query.setParameter("paramStatus", "0");
+		query.setParameter("paramEstagio1", "0");
+		
+		List<ListaPedidosPendentesVO> lista = query.getResultList();
+		manager.close();
+		factory.close();
+
+		return lista;
+	}
+	
+	//metodo para listar pedidos de servicos do cliente na index prestdor
 	public List<ListaPedidosPendentesVO> listarPedidosPrestador(Integer id) {
 
 		EntityManagerFactory factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT);
@@ -174,7 +317,8 @@ public class SolicitacaoContratoDao {
 		consulta.append(" select new br.com.ifpe.workfast.model.ListaPedidosPendentesVO(");
 		
 		consulta.append(" sc.idSolicitacaoContrato as idProposta,");
-		consulta.append(" us.idUsuarioServico as idPrestadorServico, ");
+		consulta.append(" us.usuario.idUsuario as idPrestador, ");
+		consulta.append(" sc.usuario.idUsuario as idCliente, ");
 		consulta.append(" sc.usuario.nome as nomeCliente, ");
 		consulta.append(" dp.nomeFantasia as nomeFantasia, ");
 		consulta.append(" sc.usuario.tipo_usuario as tipoUsuario,");
@@ -184,13 +328,14 @@ public class SolicitacaoContratoDao {
 		consulta.append(" ed.cep as cep, ");
 		consulta.append(" ed.cidade.nome as cidade, ");
 		consulta.append(" ed.estado.nome as estado, ");
+		consulta.append(" sc.convite as proposta, ");
 		consulta.append(" sc.mensagem as mensagem, ");
 		consulta.append(" ed.bairro as bairro, ");
 		consulta.append(" ed.complemento as complemento, ");
 		consulta.append(" sc.usuario.foto as foto, ");
 		consulta.append(" sc.estagio as estagio, ");
-		consulta.append(" sc.status as status, ");
-		consulta.append(" sc.convite as proposta) ");
+		consulta.append(" sc.status as status ) ");
+		
 		
 	    
 		consulta.append(" from SolicitacaoContrato sc join sc.usuarioServico us, DadosPessoais dp, Endereco ed ");
@@ -218,7 +363,8 @@ public class SolicitacaoContratoDao {
 			consulta.append(" select new br.com.ifpe.workfast.model.ListaPedidosPendentesVO(");
 			
 			consulta.append(" sc.idSolicitacaoContrato as idProposta,");
-			consulta.append(" us.idUsuarioServico as idPrestadorServico, ");
+			consulta.append(" us.usuario.idUsuario as idPrestador, ");
+			consulta.append(" sc.usuario.idUsuario as idCliente, ");
 			consulta.append(" sc.usuario.nome as nomeCliente, ");
 			consulta.append(" dp.nomeFantasia as nomeFantasia, ");
 			consulta.append(" sc.usuario.tipo_usuario as tipoUsuario,");
@@ -228,13 +374,14 @@ public class SolicitacaoContratoDao {
 			consulta.append(" ed.cep as cep, ");
 			consulta.append(" ed.cidade.nome as cidade, ");
 			consulta.append(" ed.estado.nome as estado, ");
+			consulta.append(" sc.convite as proposta, ");
 			consulta.append(" sc.mensagem as mensagem, ");
 			consulta.append(" ed.bairro as bairro, ");
 			consulta.append(" ed.complemento as complemento, ");
 			consulta.append(" sc.usuario.foto as foto, ");
 			consulta.append(" sc.estagio as estagio, ");
-			consulta.append(" sc.status as status, ");
-			consulta.append(" sc.convite as proposta) ");
+			consulta.append(" sc.status as status ) ");
+			
 			
 		    
 			consulta.append(" from SolicitacaoContrato sc join sc.usuarioServico us, DadosPessoais dp, Endereco ed ");

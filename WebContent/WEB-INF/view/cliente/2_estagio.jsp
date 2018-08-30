@@ -111,38 +111,91 @@
 
 <body class="animsition">
 
-	<c:import url="../cliente/menu.jsp" />
-	
-	 <!-- Container de conteúdo-->
+	<div class="page-wrapper">
+		<!-- menu adm -->
+		<c:import url="../prestador/menu.jsp" />
+<!-- Container de conteúdo-->
             <div class="main-content main-content--pb30">
                 <div class="section__content section__content--p30">
-                    <div class="container-fluid">                                           
+
+
+                    <!-- Conteiner de Filtro -->
+                    <div class="container-fluid">
+                        
+                        <!-- Conteiner de listagem de candidatos -->         
+                                
                         <div class="fontawesome-list-wrap">
-                                <section>
+                               <section>
                                     <h3 style="text-align: center;">Progresso do pedido</h3><br>    
                                     <ul id="progress">
-                                            <li ></span>Endereço</li>
-                                            <li class="active" >Informações</li>
-                                            <li>Contrato</li>
-                                            <li >Efetuando</li>
+                                            <li ></span>Inf. Cliente</li>
+                                            <li class="active">Inf. Serviço</li>
+                                            <li >Contrato</li>
+                                            <li>Efetuando</li>
                                             <li>Finalizado</li>
                                     </ul>
                                     
                                 </section>
 
                             <section >
-                                <h2 style="text-align: center;">Informações sobre o serviço</h2><br>
-                                <p>Neste estágio você tirará todas as suas dúvidas com o prestador de serviço, e assim você saberá se ele irá prestar serviço para você ou não.</p><br>
+                            <sectio>
+                               <h2 style="text-align: center;">Informações do Serviço</h2><br>
+                                <center><p> Aqui você terá um fórum para se comunicar com o cliente para tirar a suas dúvidas sobre o serviço que ele vai querer.</p></center><br>
 
-                            
-
-                                <h4 style="text-align: center;">Chat</h4><br>
+                                <h4 style="text-align: center;"> chat</h4><br>
+                            </sectio>
                                 
-                                 
-                                <div class="row form-group"  style="float: right;">
-                                    <div class="col col-md-3">
-                                        <a href="TerceiroEstagio"><button type="button" class="btn btn-primary">
-                                        &nbsp;<i class="fas fa-forward"></i> Avançar</button></a>
+                                
+                                
+                                
+                                <div id="chat" class="container mt-3" style="left:10px; top:20px; height: 400px; z-index:1; overflow: auto; padding-bottom: 300px;">
+								  
+								  
+								  <div class="media border p-3">
+								    <img src="/workfast/resources/img/icon/avatar-03.jpg"  class="mr-3 mt-3 rounded-circle" style="width:60px;">
+								    <div class="media-body">
+								      <h4>John Doe <small><i>Posted on February 19, 2016</i></small></h4>
+								      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>      
+								    </div>
+								  </div>
+								  <hr>
+								   <div class="media border p-3">
+								    <div class="media-body">
+								      <h4>John Doe <small><i>Posted on February 19, 2016</i></small></h4>
+								      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>      
+								    </div>
+								    <img src="/workfast/resources/img/icon/avatar-01.jpg"  class="ml-3 mt-3 rounded-circle" style="width:60px;">
+								  </div>
+								  
+								 
+								  
+								</div>
+								
+                                <div class="row ">
+                                    <div class="col col-md-10">
+                                       <div class="form-group">
+										  <label for="mensagem">Mensagem:</label>
+										  <textarea class="form-control" rows="3" id="mensagem"></textarea>
+										</div>
+                                    </div>
+                                    <div class="col col-md-2">
+                                       <div class="form-group">
+										  <label for="mensagem"> &nbsp;</label>
+										   <button type="button" class="btn btn-primary" style="width:100%; height: 100%;">
+                                               &nbsp;<i class="fas fa-forward"></i> Enviar</button>
+								       </div>
+                                      
+                                    </div>
+                                 </div>
+                                  <div class="row ">
+                                    
+                                    <div class="col col-md-12">
+                                       <div class="form-group">
+										  <label for="mensagem"> &nbsp;</label>
+										   <a href="TerceiraEtapa?cas=${proposta.idProposta}"></a><button type="button" class="btn btn-primary" style="width:100%; height: 100%;">
+                                               &nbsp;<i class="fas fa-forward"></i> Ir ao contrato</button></a>
+								       </div>
+                                      
                                     </div>
                                  </div>
 
@@ -151,6 +204,68 @@
                     </div>
                 </div>
             </div>
+		</section>
+
+		<section>
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="copyright">
+						<p>
+							Copyright © 2018 WorkFast. Todos os direitos reservados.
+						</p>
+					</div>
+				</div>
+			</div>
+		</div>
+		</section>
+
+	</div>
+
+	</div>
+	
+	<script type="text/javascript">
+	var idProposta = "${proposta.idProposta}";
+    var idCliente = "${usuarioLogado.idUsuario}";
+    var idPrestador = "${proposta.idPrestador}";
+     
+	function popularChat(idProposta,idCliente,idPrestador){
+		 
+		   $('#chat').html(' ').fadeOut(100);
+		  
+		   $.post('popularChat', {
+	           idProposta:idProposta,
+	           idCliente:idCliente,
+	           idPrestador:idPrestador,
+	           
+	        	   
+	       }, function(dadosJSON){
+	     	  var linhas = " ";
+	     	  
+					if(dadosJSON.length > 0){
+						
+						$(dadosJSON).each(function (i) {
+								linhas += '<hr>';
+							
+						});
+						$('#chat').html(linhas).fadeIn(1200);
+						
+					}else{
+						$('#chat').html('<br><br><center><span>Escreva uma mensagem!</span></center>').fadeIn(1200);
+					}
+
+					
+	             
+	       });
+
+	   }
+	
+	  $(document).ready(function(){
+		   popularChat(idProposta,idCliente,idPrestador);
+		   
+	   });
+
+	</script>
 
 
     <!-- Jquery JS-->

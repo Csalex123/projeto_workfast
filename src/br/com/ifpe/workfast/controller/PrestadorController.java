@@ -17,6 +17,8 @@ import com.google.gson.Gson;
 
 import br.com.ifpe.workfast.model.CategoriaServico;
 import br.com.ifpe.workfast.model.CategoriaServicoDao;
+import br.com.ifpe.workfast.model.ChatSolicitacaoDao;
+import br.com.ifpe.workfast.model.ChatVO;
 import br.com.ifpe.workfast.model.Cidade;
 import br.com.ifpe.workfast.model.CidadeAtuacaoServico;
 import br.com.ifpe.workfast.model.CidadeAtuacaoServicoDao;
@@ -129,10 +131,28 @@ public class PrestadorController {
 		SolicitacaoContrato solicitacao = dao.buscarPorId(idSolicitacao);
 
 		// encaminhado para o segundo estagio
-		if (solicitacao.getEstagio().equals("2") && solicitacao.getStatus().equals("1")) {
+		if (solicitacao.getEstagio().equals("2") && solicitacao.getStatus().equals("1")
+				&& solicitacao.getConvite().equals("1")) {
 
 			encaminhar = "SegundaEtapa";
 
+		} else if (solicitacao.getEstagio().equals("3") && solicitacao.getStatus().equals("1")
+				&& solicitacao.getConvite().equals("1")) {
+
+			encaminhar = "TerceiraEtapa";
+
+		} else if (solicitacao.getEstagio().equals("4") && solicitacao.getStatus().equals("3")
+				&& solicitacao.getConvite().equals("1")) {
+
+			encaminhar = "QuartaEtapa";
+
+		} else if (solicitacao.getEstagio().equals("5") && solicitacao.getStatus().equals("2")
+				&& solicitacao.getConvite().equals("1")) {
+
+			encaminhar = "QuintaEtapa";
+
+		} else {
+			encaminhar = "paginaInicialPrestador";
 		}
 
 		return new Gson().toJson(encaminhar);
@@ -175,6 +195,19 @@ public class PrestadorController {
 		return new Gson().toJson("verificarEstagios");
 	}
 
+	// metodo para o prestador recusar o pedido escolhido
+	@RequestMapping(value = "recusarPedido", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+	public @ResponseBody String recusarPedido(@RequestParam("cas") Integer idSolicitacao) {
+
+		SolicitacaoContratoDao dao = new SolicitacaoContratoDao();
+		SolicitacaoContrato obj = dao.buscarPorId(idSolicitacao);
+		obj.setEstagio("0");
+		obj.setConvite("0");
+		obj.setStatus("0");
+		dao.update(obj);
+		return new Gson().toJson("verificarEstagios");
+	}
+
 	@RequestMapping("PrimeiraEtapa")
 	public String primeiroEtapa(@RequestParam("cas") Integer idSolicitacao, Model model) {
 		SolicitacaoContratoDao dao = new SolicitacaoContratoDao();
@@ -184,15 +217,32 @@ public class PrestadorController {
 	}
 
 	@RequestMapping("SegundaEtapa")
-	public String segundaEtapa() {
+	public String segundaEtapa(@RequestParam("cas") Integer idSolicitacao, Model model) {
+		SolicitacaoContratoDao dao = new SolicitacaoContratoDao();
+		ListaPedidosPendentesVO solicitacao = dao.buscarPedidoPendente(idSolicitacao);
+		model.addAttribute("proposta", solicitacao);
 		return "prestador/2_estagio";
 	}
 
+	// metodo para o prestador aceitar o pedido escolhido
+	@RequestMapping(value = "popularChat", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+	public @ResponseBody String popularChat(@RequestParam("idProposta") Integer idProposta,
+			@RequestParam("idCliente") Integer idCliente, @RequestParam("idPrestador") Integer idPrestador) {
+
+		ChatSolicitacaoDao dao = new ChatSolicitacaoDao();
+		List<ChatVO> lista = dao.popularChat(idPrestador, idCliente, idProposta);
+
+		return new Gson().toJson(lista);
+	}
+
 	@RequestMapping("TerceiraEtapa")
-	public String terceiraEtapa() {
+	public String terceiraEtapa(@RequestParam("cas") Integer idSolicitacao, Model model) {
+		SolicitacaoContratoDao dao = new SolicitacaoContratoDao();
+		ListaPedidosPendentesVO solicitacao = dao.buscarPedidoPendente(idSolicitacao);
+		model.addAttribute("proposta", solicitacao);
 		return "prestador/3_estagio";
 	}
-	
+
 	@RequestMapping("QuartaEtapa")
 	public String quartaEtapa() {
 		return "prestador/4_estagio";
@@ -586,8 +636,8 @@ public class PrestadorController {
 	}
 
 	/* Listar Pendências na contratação de serviço */
-	
-	@RequestMapping(value ="ListarPendencias", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+
+	@RequestMapping(value = "ListarPendencias", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
 	public @ResponseBody String listarPendencias() {
 
 		PendenciasDao dao = new PendenciasDao();
@@ -595,13 +645,12 @@ public class PrestadorController {
 
 		return new Gson().toJson(listaPendencias);
 	}
-	
-	
-	//Deletar Pendência
-	
+
+	// Deletar Pendência
+
 	@RequestMapping(value = "apagarPendencia", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
 	public @ResponseBody String deletarPendencia(@RequestParam("idPendencia") Integer id) {
-		
+
 		PendenciasDao dao = new PendenciasDao();
 		dao.remover(id);
 

@@ -36,13 +36,13 @@
                                     <a href="servicoSolicitadosPendentes?cas=${usuarioLogado.idUsuario}"><i class="fa fa-exclamation" aria-hidden="true"></i>Pedidos Pendentes</a>
                                 </li>
                                 <li>
-                                    <a style="font-size: 15px;" href="#"><i class="fa fa-clock" aria-hidden="true"></i>Pedidos em Andamento</a>
+                                    <a style="font-size: 15px;" href="servicoSolicitadosAndamento?cas=${usuarioLogado.idUsuario}"><i class="fa fa-clock" aria-hidden="true"></i>Pedidos em Andamento</a>
                                 </li>
                                 <li>
-                                    <a href="#"><i class="fa fa-times" aria-hidden="true"></i>Pedidos Cancelados</a>
+                                    <a href="servicoSolicitadosCancelado?cas=${usuarioLogado.idUsuario}"><i class="fa fa-times" aria-hidden="true"></i>Pedidos Cancelados</a>
                                 </li>
                                 <li>
-                                    <a href="#"><i class="fa fa-check" aria-hidden="true"></i>Pedidos Finalizados</a>
+                                    <a href="servicoSolicitadosFinalizado?cas=${usuarioLogado.idUsuario}"><i class="fa fa-check" aria-hidden="true"></i>Pedidos Finalizados</a>
                                 </li>
                             </ul>
                         </li>
@@ -87,14 +87,14 @@
                                 <li>
                                     <a href="servicoSolicitadosPendentes?cas=${usuarioLogado.idUsuario}"><i class="fa fa-exclamation" aria-hidden="true"></i>Pedidos Pendentes</a>
                                 </li>
-                                <li >
-                                    <a style="font-size: 15px;" href="#"><i class="fa fa-clock" aria-hidden="true" ></i>Pedidos em Andamento</a>
+                                <li>
+                                    <a style="font-size: 15px;" href="servicoSolicitadosAndamento?cas=${usuarioLogado.idUsuario}"><i class="fa fa-clock" aria-hidden="true"></i>Pedidos em Andamento</a>
                                 </li>
                                 <li>
-                                    <a href="#"><i class="fa fa-times" aria-hidden="true"></i>Pedidos Cancelados</a>
+                                    <a href="servicoSolicitadosCancelado?cas=${usuarioLogado.idUsuario}"><i class="fa fa-times" aria-hidden="true"></i>Pedidos Cancelados</a>
                                 </li>
                                 <li>
-                                    <a href="#"><i class="fa fa-check" aria-hidden="true"></i>Pedidos Finalizados</a>
+                                    <a href="servicoSolicitadosFinalizado?cas=${usuarioLogado.idUsuario}"><i class="fa fa-check" aria-hidden="true"></i>Pedidos Finalizados</a>
                                 </li>
                             </ul>
                         </li>

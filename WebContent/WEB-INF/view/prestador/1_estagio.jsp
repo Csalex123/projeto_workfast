@@ -169,8 +169,23 @@
                                     </ul>
                                     
                                 </section>
+                                
+                                
 
                             <section >
+                             <div class="row form-group"  style="float: right;">
+                                    <div class="col col-md-3">
+                                       <button type="button" id="btnAceitar" class="btn btn-primary">
+                                        &nbsp; Aceitar Pedido <i class="fas fa-forward"></i></button>
+                                    </div>
+                                 </div>
+                                 
+                                 <div class="row form-group"  style="float: left;">
+                                    <div class="col col-md-3">
+                                       <button type="button" id="btnRecusar" class="btn btn-danger">
+                                        &nbsp;<i class="fas fa-backward"></i> Recusar Pedido</button>
+                                    </div>
+                                 </div>
                                 <h2 style="text-align: center;">Informações do Cliente</h2><br>
                                 <p> Neste estágio você terá acesso ao endereço do cliente. Será disponível também para você um mapa, e este mapa traçará uma rota: do seu endereço até a residência do cliente
                                 
@@ -318,11 +333,18 @@
                             
 
                  
-                                <!-- Fim do Filtro de profissão-->
+                                
                                 <div class="row form-group"  style="float: right;">
                                     <div class="col col-md-3">
                                        <button type="button" id="btnAceitar" class="btn btn-primary">
-                                        &nbsp;<i class="fas fa-forward"></i> Aceitar Peidido</button>
+                                        &nbsp; Aceitar Pedido <i class="fas fa-forward"></i></button>
+                                    </div>
+                                 </div>
+                                 
+                                 <div class="row form-group"  style="float: left;">
+                                    <div class="col col-md-3">
+                                       <button type="button" id="btnRecusar" class="btn btn-danger">
+                                        &nbsp;<i class="fas fa-backward"></i> Recusar Pedido</button>
                                     </div>
                                  </div>
 
@@ -380,9 +402,61 @@
 						    		   $.post('verificarEstagios', {
 										  cas : cas,
 									   },function(dadosJSON) {
-											window.location = dadosJSON;
+											window.location = dadosJSON+"?cas="+cas;
 									   });
 						    	 });
+						 });
+						
+					});
+				  
+				  
+				  
+				  
+				
+				
+			    
+			   
+			    
+			  } 
+			  
+			});
+		 
+		 
+	 
+	 
+	 
+	 });
+   
+ $("#btnRecusar").click(function() {
+		 
+		 
+		 swal({
+			  title: "Você tem certeza que quer recusar esse pedido?",
+			  text: "",
+			  icon: "warning",
+			  buttons:true,
+			  dangerMode: true,
+			})
+			.then((willDelete) => {
+			 
+			  if (willDelete) {
+				  
+				  $.post('recusarPedido', {
+					  cas : cas,
+										
+
+					}, function(dadosJSON) {
+
+						swal("Pedido recusado!", {
+						      icon: "success",
+						    }).then((value) => {
+						    	
+						    	$.post('verificarEstagios', {
+									 cas : cas,
+							    },function(dadosJSON) {
+									window.location = dadosJSON;
+								});
+						    	
 						 });
 						
 					});
