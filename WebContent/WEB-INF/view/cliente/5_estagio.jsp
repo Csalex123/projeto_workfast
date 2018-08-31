@@ -68,12 +68,12 @@
 	href="<%=request.getContextPath()%>/resources/css/theme-cliente.css"
 	rel="stylesheet" media="all">
 
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
 
-<!-- Adicionando JQuery -->
-<script src="https://code.jquery.com/jquery-3.2.1.min.js"
-	integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
-	crossorigin="anonymous"></script>
 
 <style type="text/css">
 * {
@@ -181,6 +181,34 @@ h1 { font-size: 1.5em; margin: 10px; }
 .rating > label:hover ~ input:checked ~ label, /* lighten current selection */
 .rating > input:checked ~ label:hover ~ label { color: #FFED85;  }
 </style>
+
+<script>
+$(document).ready(function(){
+	
+	//$("#cadastrar_avaliacao").submit(function() {
+		$("#button").click(function(){
+			
+	  		  
+			   var mensagem = $("#mensagem").val();  
+			   var idPrestador = $("#id_prestador").val();
+			   var estrela = $("input[name='rating']:checked").val();
+			   
+  	
+			 $.post('adicionarAvaliacao',{
+		           
+				 mensagem:mensagem,
+				 idPrestador:idPrestador,
+				 estrela:estrela,
+		          
+		          }, function(data){    
+		        	  swal("Avalicação enviada com sucesso.","","success"); 
+		        	  $("#div_avaliacao").hide(); 
+		          });
+
+		return false; 
+	  });
+});
+</script>
 </head>
 
 <body class="animsition">
@@ -260,13 +288,16 @@ h1 { font-size: 1.5em; margin: 10px; }
 						<h3 style="text-align: center;">Avalição</h3>
 						<br>
 
-
+						<div id="div_avaliacao">
 						<div class="row form-group">
 							<div class="col col-md-3">
 								<label for="select" class=" form-control-label"
 									style="font-weight: bold;">Recomendação:</label>
 							</div>
+							
+							
 							<div class="col-12 col-md-5">
+							<form action="" id="cadastrar_avaliacao">
 								<fieldset class="rating">
 									<input type="radio" id="star5" name="rating" value="5" /><label
 										class="full" for="star5" title="5 Estrelas"></label> <input
@@ -285,7 +316,7 @@ h1 { font-size: 1.5em; margin: 10px; }
 										type="radio" id="star1half" name="rating" value="1.5" /><label
 										class="half" for="star1half" title=" 1.5 Estrelas"></label> <input
 										type="radio" id="star1" name="rating" value="1" /><label
-										class="full" for="star1" title="1 Estrelas"></label> <input
+										class="full" for="star1" title="1 Estrela"></label> <input
 										type="radio" id="starhalf" name="rating" value="0.5" /><label
 										class="half" for="starhalf" title="0.5 Estrelas"></label>
 								</fieldset>
@@ -298,17 +329,21 @@ h1 { font-size: 1.5em; margin: 10px; }
 									style="font-weight: bold;">Comentário:</label>
 							</div>
 							<div class="col-12 col-md-5">
-								<textarea class="form-control" rows="7" style="resize: none"></textarea>
+								<textarea class="form-control" id="mensagem" required rows="7" style="resize: none"></textarea>	
 							</div>
 						</div>
-
+						<input type="hidden" value="3" id="id_prestador">
+						
 						<div class="row form-group" style="float: right;">
 							<div class="col col-md-3">
-								<button type="button" class="btn btn-primary">&nbsp;
+								<button type="button" id="button" class="btn btn-primary">&nbsp;
 									Enviar avaliação</button>
 							</div>
 						</div>
-
+						
+						
+					</form>
+				</div>
 					</section>
 					<br>
 					<br>

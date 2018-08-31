@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.gson.Gson;
 
+import br.com.ifpe.workfast.model.Avaliacao;
+import br.com.ifpe.workfast.model.AvaliacaoDao;
 import br.com.ifpe.workfast.model.CategoriaServico;
 import br.com.ifpe.workfast.model.CategoriaServicoDao;
 import br.com.ifpe.workfast.model.ChatSolicitacao;
@@ -692,6 +694,26 @@ public class PrestadorController {
 
 		PendenciasDao dao = new PendenciasDao();
 		dao.remover(id);
+
+		return new Gson().toJson("");
+	}
+	
+	/* Enviar Avaliação */
+	
+	@RequestMapping(value = "adicionarAvaliacao", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+	public @ResponseBody String adicionarAvaliacao(@RequestParam("mensagem") String mensagem,
+			@RequestParam("idPrestador") Usuario idContrato, @RequestParam("estrela") int estrela) {
+
+		
+		Avaliacao dados = new Avaliacao();
+		
+		dados.setMensagem(mensagem);
+		dados.setEstrela(estrela);
+		dados.setUsuario(idContrato);
+	
+		AvaliacaoDao dao = new AvaliacaoDao();
+		dao.salvar(dados);
+
 
 		return new Gson().toJson("");
 	}

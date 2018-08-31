@@ -1,13 +1,15 @@
 -- phpMyAdmin SQL Dump
--- version 4.5.2
--- http://www.phpmyadmin.net
+-- version 4.8.2
+-- https://www.phpmyadmin.net/
 --
--- Host: localhost
--- Generation Time: Aug 29, 2018 at 04:54 
--- Server version: 10.1.13-MariaDB
--- PHP Version: 7.0.8
+-- Host: 127.0.0.1
+-- Generation Time: 31-Ago-2018 às 06:10
+-- Versão do servidor: 10.1.34-MariaDB
+-- PHP Version: 7.2.7
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
+START TRANSACTION;
 SET time_zone = "+00:00";
 
 
@@ -23,7 +25,28 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `categoria_servico`
+-- Estrutura da tabela `avaliacao`
+--
+
+CREATE TABLE `avaliacao` (
+  `id` int(11) NOT NULL,
+  `estrela` char(1) COLLATE utf8_unicode_ci NOT NULL,
+  `mensagem` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `data_postagem` datetime DEFAULT CURRENT_TIMESTAMP,
+  `fk_prestadorServico` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Extraindo dados da tabela `avaliacao`
+--
+
+INSERT INTO `avaliacao` (`id`, `estrela`, `mensagem`, `data_postagem`, `fk_prestadorServico`) VALUES
+(1, '5', 'dsadas', NULL, 3);
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `categoria_servico`
 --
 
 CREATE TABLE `categoria_servico` (
@@ -32,7 +55,7 @@ CREATE TABLE `categoria_servico` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `categoria_servico`
+-- Extraindo dados da tabela `categoria_servico`
 --
 
 INSERT INTO `categoria_servico` (`id`, `nome`) VALUES
@@ -76,7 +99,34 @@ INSERT INTO `categoria_servico` (`id`, `nome`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `cidade`
+-- Estrutura da tabela `chatsolicitacao`
+--
+
+CREATE TABLE `chatsolicitacao` (
+  `id` int(11) NOT NULL,
+  `data` datetime DEFAULT NULL,
+  `enviadoPor` int(11) DEFAULT NULL,
+  `mensagem` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `fk_solicitacao` int(11) DEFAULT NULL,
+  `fk_cliente` int(11) DEFAULT NULL,
+  `fk_prestador` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Extraindo dados da tabela `chatsolicitacao`
+--
+
+INSERT INTO `chatsolicitacao` (`id`, `data`, `enviadoPor`, `mensagem`, `fk_solicitacao`, `fk_cliente`, `fk_prestador`) VALUES
+(1, NULL, 2, 'Olá', 10, 6, 2),
+(2, NULL, 2, 'Qual é a dúvida?', 10, 6, 2),
+(3, NULL, 6, 'A dúvida é;;', 10, 6, 2),
+(4, NULL, 2, 'Massa', 10, 6, 2),
+(5, NULL, 6, 'dasdasdasdasdsdasdasdasdasdsdasdasdasdasdsdasdasdasdasdsdasdasdasdasdsdasdasdasdasdsdasdasdasdasdsdasdasdasdasds', 10, 6, 2);
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `cidade`
 --
 
 CREATE TABLE `cidade` (
@@ -86,7 +136,7 @@ CREATE TABLE `cidade` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `cidade`
+-- Extraindo dados da tabela `cidade`
 --
 
 INSERT INTO `cidade` (`id`, `nome`, `estado`) VALUES
@@ -5660,7 +5710,7 @@ INSERT INTO `cidade` (`id`, `nome`, `estado`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `cidade_atuacao_servico`
+-- Estrutura da tabela `cidade_atuacao_servico`
 --
 
 CREATE TABLE `cidade_atuacao_servico` (
@@ -5670,7 +5720,7 @@ CREATE TABLE `cidade_atuacao_servico` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `cidade_atuacao_servico`
+-- Extraindo dados da tabela `cidade_atuacao_servico`
 --
 
 INSERT INTO `cidade_atuacao_servico` (`id`, `fk_cidade`, `fk_usuarioServico`) VALUES
@@ -5686,7 +5736,7 @@ INSERT INTO `cidade_atuacao_servico` (`id`, `fk_cidade`, `fk_usuarioServico`) VA
 -- --------------------------------------------------------
 
 --
--- Table structure for table `dado_pessoal`
+-- Estrutura da tabela `dado_pessoal`
 --
 
 CREATE TABLE `dado_pessoal` (
@@ -5703,7 +5753,7 @@ CREATE TABLE `dado_pessoal` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `dado_pessoal`
+-- Extraindo dados da tabela `dado_pessoal`
 --
 
 INSERT INTO `dado_pessoal` (`id`, `nomeFantasia`, `razaoSocial`, `cpfCnpj`, `rgIe`, `sexo`, `dataNascimento`, `telefone`, `celular`, `fk_usuario`) VALUES
@@ -5724,7 +5774,7 @@ INSERT INTO `dado_pessoal` (`id`, `nomeFantasia`, `razaoSocial`, `cpfCnpj`, `rgI
 -- --------------------------------------------------------
 
 --
--- Table structure for table `endereco`
+-- Estrutura da tabela `endereco`
 --
 
 CREATE TABLE `endereco` (
@@ -5740,7 +5790,7 @@ CREATE TABLE `endereco` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `endereco`
+-- Extraindo dados da tabela `endereco`
 --
 
 INSERT INTO `endereco` (`id`, `cidade`, `rua`, `bairro`, `numero_casa`, `cep`, `estado`, `complemento`, `fk_usuario`) VALUES
@@ -5760,7 +5810,7 @@ INSERT INTO `endereco` (`id`, `cidade`, `rua`, `bairro`, `numero_casa`, `cep`, `
 -- --------------------------------------------------------
 
 --
--- Table structure for table `estado`
+-- Estrutura da tabela `estado`
 --
 
 CREATE TABLE `estado` (
@@ -5770,7 +5820,7 @@ CREATE TABLE `estado` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `estado`
+-- Extraindo dados da tabela `estado`
 --
 
 INSERT INTO `estado` (`id`, `nome`, `uf`) VALUES
@@ -5805,7 +5855,28 @@ INSERT INTO `estado` (`id`, `nome`, `uf`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `profissao`
+-- Estrutura da tabela `pendencias`
+--
+
+CREATE TABLE `pendencias` (
+  `id` int(11) NOT NULL,
+  `data_postagem` datetime DEFAULT NULL,
+  `mensagem` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `fk_solicitacao_contrato` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Extraindo dados da tabela `pendencias`
+--
+
+INSERT INTO `pendencias` (`id`, `data_postagem`, `mensagem`, `fk_solicitacao_contrato`) VALUES
+(2, NULL, 'aaa', NULL),
+(3, NULL, 'dasdsada', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `profissao`
 --
 
 CREATE TABLE `profissao` (
@@ -5815,7 +5886,7 @@ CREATE TABLE `profissao` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `profissao`
+-- Extraindo dados da tabela `profissao`
 --
 
 INSERT INTO `profissao` (`id`, `nome`, `descricao`) VALUES
@@ -6143,7 +6214,7 @@ INSERT INTO `profissao` (`id`, `nome`, `descricao`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `profissao_usuario`
+-- Estrutura da tabela `profissao_usuario`
 --
 
 CREATE TABLE `profissao_usuario` (
@@ -6155,7 +6226,7 @@ CREATE TABLE `profissao_usuario` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `servico`
+-- Estrutura da tabela `servico`
 --
 
 CREATE TABLE `servico` (
@@ -6165,7 +6236,7 @@ CREATE TABLE `servico` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `servico`
+-- Extraindo dados da tabela `servico`
 --
 
 INSERT INTO `servico` (`id`, `nome`, `fk_categoria`) VALUES
@@ -6374,7 +6445,7 @@ INSERT INTO `servico` (`id`, `nome`, `fk_categoria`) VALUES
 (203, 'Fachadas', 27),
 (204, 'Automotiva', 27),
 (205, 'Pós-Obra', 27),
-(206, 'Caixa D''Agua', 27),
+(206, 'Caixa D\'Agua', 27),
 (207, 'Movéis', 27),
 (208, 'Outros', 27),
 (209, 'Correias Transportadoras', 28),
@@ -6440,7 +6511,7 @@ INSERT INTO `servico` (`id`, `nome`, `fk_categoria`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `solicitacao_contrato`
+-- Estrutura da tabela `solicitacao_contrato`
 --
 
 CREATE TABLE `solicitacao_contrato` (
@@ -6456,16 +6527,17 @@ CREATE TABLE `solicitacao_contrato` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Dumping data for table `solicitacao_contrato`
+-- Extraindo dados da tabela `solicitacao_contrato`
 --
 
 INSERT INTO `solicitacao_contrato` (`id`, `dataPedido`, `fk_cliente`, `fk_prestadorServico`, `fk_endereco`, `status_solicitacao`, `convite`, `estagio`, `mensagem`) VALUES
-(10, '2018-08-29 05:51:07', 6, 1, 5, '1', '0', '1', 'teste');
+(10, '2018-08-29 05:51:07', 6, 1, 5, '1', '1', '2', 'teste'),
+(11, '2018-08-31 02:00:10', 6, 3, 5, '1', '0', '1', 'fdsfsd');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tipo_acesso`
+-- Estrutura da tabela `tipo_acesso`
 --
 
 CREATE TABLE `tipo_acesso` (
@@ -6474,7 +6546,7 @@ CREATE TABLE `tipo_acesso` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `tipo_acesso`
+-- Extraindo dados da tabela `tipo_acesso`
 --
 
 INSERT INTO `tipo_acesso` (`id`, `descricao`) VALUES
@@ -6485,7 +6557,7 @@ INSERT INTO `tipo_acesso` (`id`, `descricao`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `usuario`
+-- Estrutura da tabela `usuario`
 --
 
 CREATE TABLE `usuario` (
@@ -6501,7 +6573,7 @@ CREATE TABLE `usuario` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `usuario`
+-- Extraindo dados da tabela `usuario`
 --
 
 INSERT INTO `usuario` (`id`, `nome`, `email`, `senha`, `ativo`, `nivel_acesso`, `foto`, `tipo_usuario`, `fk_tipo_acesso`) VALUES
@@ -6522,7 +6594,7 @@ INSERT INTO `usuario` (`id`, `nome`, `email`, `senha`, `ativo`, `nivel_acesso`, 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `usuario_servico`
+-- Estrutura da tabela `usuario_servico`
 --
 
 CREATE TABLE `usuario_servico` (
@@ -6533,7 +6605,7 @@ CREATE TABLE `usuario_servico` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `usuario_servico`
+-- Extraindo dados da tabela `usuario_servico`
 --
 
 INSERT INTO `usuario_servico` (`id`, `descricao`, `fk_usuario`, `fk_servico`) VALUES
@@ -6549,10 +6621,26 @@ INSERT INTO `usuario_servico` (`id`, `descricao`, `fk_usuario`, `fk_servico`) VA
 --
 
 --
+-- Indexes for table `avaliacao`
+--
+ALTER TABLE `avaliacao`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `FKcd1mi6bx1816utr3kd8myprtm` (`fk_prestadorServico`);
+
+--
 -- Indexes for table `categoria_servico`
 --
 ALTER TABLE `categoria_servico`
   ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `chatsolicitacao`
+--
+ALTER TABLE `chatsolicitacao`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `FKs91c49685klvqa1f4ck8yg3ae` (`fk_solicitacao`),
+  ADD KEY `FK4t6da5fvmg8gdoqujtn9hyryu` (`fk_cliente`),
+  ADD KEY `FKiocqwlbp2ddf4qsfqb04whfe8` (`fk_prestador`);
 
 --
 -- Indexes for table `cidade`
@@ -6590,6 +6678,13 @@ ALTER TABLE `endereco`
 --
 ALTER TABLE `estado`
   ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `pendencias`
+--
+ALTER TABLE `pendencias`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `FK2jstdhjygm1a1d27pnd2iwjx2` (`fk_solicitacao_contrato`);
 
 --
 -- Indexes for table `profissao`
@@ -6647,83 +6742,129 @@ ALTER TABLE `usuario_servico`
 --
 
 --
+-- AUTO_INCREMENT for table `avaliacao`
+--
+ALTER TABLE `avaliacao`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
 -- AUTO_INCREMENT for table `categoria_servico`
 --
 ALTER TABLE `categoria_servico`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
+
+--
+-- AUTO_INCREMENT for table `chatsolicitacao`
+--
+ALTER TABLE `chatsolicitacao`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
 --
 -- AUTO_INCREMENT for table `cidade`
 --
 ALTER TABLE `cidade`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5565;
+
 --
 -- AUTO_INCREMENT for table `cidade_atuacao_servico`
 --
 ALTER TABLE `cidade_atuacao_servico`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+
 --
 -- AUTO_INCREMENT for table `dado_pessoal`
 --
 ALTER TABLE `dado_pessoal`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+
 --
 -- AUTO_INCREMENT for table `endereco`
 --
 ALTER TABLE `endereco`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+
 --
 -- AUTO_INCREMENT for table `estado`
 --
 ALTER TABLE `estado`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+
+--
+-- AUTO_INCREMENT for table `pendencias`
+--
+ALTER TABLE `pendencias`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
 --
 -- AUTO_INCREMENT for table `profissao`
 --
 ALTER TABLE `profissao`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=321;
+
 --
 -- AUTO_INCREMENT for table `profissao_usuario`
 --
 ALTER TABLE `profissao_usuario`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
 --
 -- AUTO_INCREMENT for table `servico`
 --
 ALTER TABLE `servico`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=268;
+
 --
 -- AUTO_INCREMENT for table `solicitacao_contrato`
 --
 ALTER TABLE `solicitacao_contrato`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+
 --
 -- AUTO_INCREMENT for table `tipo_acesso`
 --
 ALTER TABLE `tipo_acesso`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
 --
 -- AUTO_INCREMENT for table `usuario`
 --
 ALTER TABLE `usuario`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+
 --
 -- AUTO_INCREMENT for table `usuario_servico`
 --
 ALTER TABLE `usuario_servico`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
 --
 -- Constraints for dumped tables
 --
 
 --
--- Constraints for table `cidade`
+-- Limitadores para a tabela `avaliacao`
+--
+ALTER TABLE `avaliacao`
+  ADD CONSTRAINT `FKcd1mi6bx1816utr3kd8myprtm` FOREIGN KEY (`fk_prestadorServico`) REFERENCES `usuario` (`id`),
+  ADD CONSTRAINT `avaliacao_ibfk_1` FOREIGN KEY (`fk_prestadorServico`) REFERENCES `usuario` (`id`);
+
+--
+-- Limitadores para a tabela `chatsolicitacao`
+--
+ALTER TABLE `chatsolicitacao`
+  ADD CONSTRAINT `FK4t6da5fvmg8gdoqujtn9hyryu` FOREIGN KEY (`fk_cliente`) REFERENCES `usuario` (`id`),
+  ADD CONSTRAINT `FKiocqwlbp2ddf4qsfqb04whfe8` FOREIGN KEY (`fk_prestador`) REFERENCES `usuario` (`id`),
+  ADD CONSTRAINT `FKs91c49685klvqa1f4ck8yg3ae` FOREIGN KEY (`fk_solicitacao`) REFERENCES `solicitacao_contrato` (`id`);
+
+--
+-- Limitadores para a tabela `cidade`
 --
 ALTER TABLE `cidade`
   ADD CONSTRAINT `FKedwmmd3jtkssgrwyugrindb7j` FOREIGN KEY (`estado`) REFERENCES `estado` (`id`),
   ADD CONSTRAINT `cidade_ibfk_1` FOREIGN KEY (`estado`) REFERENCES `estado` (`id`);
 
 --
--- Constraints for table `cidade_atuacao_servico`
+-- Limitadores para a tabela `cidade_atuacao_servico`
 --
 ALTER TABLE `cidade_atuacao_servico`
   ADD CONSTRAINT `FKbmfsut4yfm2u4vfqvg0l58tk3` FOREIGN KEY (`fk_cidade`) REFERENCES `cidade` (`id`),
@@ -6732,14 +6873,14 @@ ALTER TABLE `cidade_atuacao_servico`
   ADD CONSTRAINT `cidade_atuacao_servico_ibfk_2` FOREIGN KEY (`fk_usuarioServico`) REFERENCES `usuario_servico` (`id`);
 
 --
--- Constraints for table `dado_pessoal`
+-- Limitadores para a tabela `dado_pessoal`
 --
 ALTER TABLE `dado_pessoal`
   ADD CONSTRAINT `FK5hmgct1my2xgbydokvhrtkufo` FOREIGN KEY (`fk_usuario`) REFERENCES `usuario` (`id`),
   ADD CONSTRAINT `dado_pessoal_ibfk_1` FOREIGN KEY (`fk_usuario`) REFERENCES `usuario` (`id`);
 
 --
--- Constraints for table `endereco`
+-- Limitadores para a tabela `endereco`
 --
 ALTER TABLE `endereco`
   ADD CONSTRAINT `FK6sc1akd9rxpytcdgf0gsokstv` FOREIGN KEY (`estado`) REFERENCES `estado` (`id`),
@@ -6750,7 +6891,13 @@ ALTER TABLE `endereco`
   ADD CONSTRAINT `endereco_ibfk_3` FOREIGN KEY (`fk_usuario`) REFERENCES `usuario` (`id`);
 
 --
--- Constraints for table `profissao_usuario`
+-- Limitadores para a tabela `pendencias`
+--
+ALTER TABLE `pendencias`
+  ADD CONSTRAINT `FK2jstdhjygm1a1d27pnd2iwjx2` FOREIGN KEY (`fk_solicitacao_contrato`) REFERENCES `solicitacao_contrato` (`id`);
+
+--
+-- Limitadores para a tabela `profissao_usuario`
 --
 ALTER TABLE `profissao_usuario`
   ADD CONSTRAINT `FKbcvkccsdk753a3ov20r5lr90g` FOREIGN KEY (`fk_usuario`) REFERENCES `usuario` (`id`),
@@ -6759,14 +6906,14 @@ ALTER TABLE `profissao_usuario`
   ADD CONSTRAINT `profissao_usuario_ibfk_2` FOREIGN KEY (`fk_profissao`) REFERENCES `profissao` (`id`);
 
 --
--- Constraints for table `servico`
+-- Limitadores para a tabela `servico`
 --
 ALTER TABLE `servico`
   ADD CONSTRAINT `FKr9mj3d5hunjb9lsh5dtu1e53l` FOREIGN KEY (`fk_categoria`) REFERENCES `categoria_servico` (`id`),
   ADD CONSTRAINT `servico_ibfk_1` FOREIGN KEY (`fk_categoria`) REFERENCES `categoria_servico` (`id`);
 
 --
--- Constraints for table `solicitacao_contrato`
+-- Limitadores para a tabela `solicitacao_contrato`
 --
 ALTER TABLE `solicitacao_contrato`
   ADD CONSTRAINT `FKhggafdju5w58ve7vpl6qdo45j` FOREIGN KEY (`fk_prestadorServico`) REFERENCES `usuario_servico` (`id`),
@@ -6777,20 +6924,21 @@ ALTER TABLE `solicitacao_contrato`
   ADD CONSTRAINT `solicitacao_contrato_ibfk_3` FOREIGN KEY (`fk_endereco`) REFERENCES `endereco` (`id`);
 
 --
--- Constraints for table `usuario`
+-- Limitadores para a tabela `usuario`
 --
 ALTER TABLE `usuario`
   ADD CONSTRAINT `FKnd5dh1sobio945c8e93lowv34` FOREIGN KEY (`fk_tipo_acesso`) REFERENCES `tipo_acesso` (`id`),
   ADD CONSTRAINT `usuario_ibfk_1` FOREIGN KEY (`fk_tipo_acesso`) REFERENCES `tipo_acesso` (`id`);
 
 --
--- Constraints for table `usuario_servico`
+-- Limitadores para a tabela `usuario_servico`
 --
 ALTER TABLE `usuario_servico`
   ADD CONSTRAINT `FKbio5dtvb9vwudltnygabdcoyu` FOREIGN KEY (`fk_servico`) REFERENCES `servico` (`id`),
   ADD CONSTRAINT `FKrr708fol3rmgpifijs2t7a0dd` FOREIGN KEY (`fk_usuario`) REFERENCES `usuario` (`id`),
   ADD CONSTRAINT `usuario_servico_ibfk_1` FOREIGN KEY (`fk_usuario`) REFERENCES `usuario` (`id`),
   ADD CONSTRAINT `usuario_servico_ibfk_2` FOREIGN KEY (`fk_servico`) REFERENCES `servico` (`id`);
+COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

@@ -147,6 +147,16 @@ create table pendencias(
 );
 
 
+create table avaliacao(
+ id int AUTO_INCREMENT PRIMARY KEY,
+ estrela char not null, 
+ mensagem varchar(255) not null,
+ data_postagem datetime DEFAULT CURRENT_TIMESTAMP,
+ fk_prestadorServico int NOT null,
+    
+ FOREIGN KEY(fk_prestadorServico) REFERENCES usuario (id)
+);
+
 
 // insert
 

@@ -291,7 +291,7 @@
                                         
                                         <div>
                                             <label for="txtEnderecoChegada">Endereço de chegada(Cliente):</label>
-                                            <input type="text" id="txtEnderecoChegada" class="form-control" name="txtEnderecoChegada" />
+                                            <input type="text" value="${proposta.cep}" id="txtEnderecoChegada" class="form-control" name="txtEnderecoChegada" />
                                         </div><br>
 
                                          <div class="row form-group"  style="float: right;">

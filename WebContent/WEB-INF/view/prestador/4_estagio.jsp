@@ -162,6 +162,7 @@ $(document).ready(function(){
 		          }, function(data){    
 		        	  swal("Pendência cadastrada com sucesso.","","success"); 
 		        	  carregarPendencias();
+		        	  $("#mensagem").val("");  
 		          });
 
 		return false;

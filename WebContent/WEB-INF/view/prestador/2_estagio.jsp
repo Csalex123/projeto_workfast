@@ -290,7 +290,7 @@
 									linhas += ' <div class="media-body">';
 									 if(dadosJSON[i].tipoUsuarioCliente == '1'){
 										
-										 linhas += '  <h4>'+dadosJSON[i].nomeCliente+' <small><i>Agosto 30, 2018</i></small></h4>';
+										 linhas += '  <h4>'+dadosJSON[i].nomeCLiente+' <small><i>Agosto 30, 2018</i></small></h4>';
 									 }else if(dadosJSON[i].tipoUsuarioCliente == '2'){
 										
 										 linhas += '  <h4>'+dadosJSON[i].nomeFantasiaCliente+' <small><i>Agosto 30, 2018</i></small></h4>';
