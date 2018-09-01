@@ -28,6 +28,8 @@ import br.com.ifpe.workfast.model.EnderecoDao;
 import br.com.ifpe.workfast.model.Estado;
 import br.com.ifpe.workfast.model.EstadoDao;
 import br.com.ifpe.workfast.model.ListaPedidosPendentesVO;
+import br.com.ifpe.workfast.model.Pendencias;
+import br.com.ifpe.workfast.model.PendenciasDao;
 import br.com.ifpe.workfast.model.Profissao;
 import br.com.ifpe.workfast.model.ProfissaoDao;
 import br.com.ifpe.workfast.model.SolicitacaoContrato;
@@ -330,12 +332,17 @@ public class ClienteController {
 	}
 
 	// Método para abrir o Quarto estágio do pedido
-	@RequestMapping("QuartoEstagio")
-	public String QuartoEstagioPedido() {
+		@RequestMapping("QuartoEstagio")
+		public String QuartoEstagioPedido(Model model) {
+			
+			PendenciasDao dao = new PendenciasDao();				
+			List<Pendencias> listaPencias = dao.buscarPendencias(11);
+			
+			model.addAttribute("listaPencias", listaPencias);
+			
+			return "cliente/4_estagio";
 
-		return "cliente/4_estagio";
-
-	}
+		}
 
 	// Método para abrir o Quinto estágio do pedido
 	@RequestMapping("QuintoEstagio")
@@ -397,5 +404,8 @@ public class ClienteController {
 
 		return new Gson().toJson("send");
 	}
+	
+	
+	
 
 }

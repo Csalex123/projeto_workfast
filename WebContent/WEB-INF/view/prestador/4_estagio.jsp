@@ -148,6 +148,7 @@ $(document).ready(function(){
 	carregarPendencias();
 });
 
+
 $(document).ready(function(){
 	$("#form_cadastroPendencias").submit(function() {
 	    		  
@@ -189,7 +190,7 @@ function carregarPendencias(){
 			$(dadosJSON).each(function (i) {
 	
 			    linhas += '<tr>';
-				    linhas += '<td>'+dadosJSON[i].mensagem+'</td>';
+				    linhas += '<td>'+dadosJSON[i].mensagem+' <br><br> <b style="color:blue"> Data Postado: '+dadosJSON[i].dataPostagem+ ' </b></td>';
 				    linhas += '<td><div class="table-data-feature">';
 				    linhas += '<button onclick="deletar('+ dadosJSON[i].idPendencias +')" class="item" data-toggle="tooltip" data-placement="top" title="Apagar Pedência" >';
 				    linhas += '<i class="zmdi zmdi-delete"></i></button></div></td>';

@@ -28,10 +28,10 @@ public class Avaliacao {
 	
 	@Column(name="data_postagem")
 	private Date dataPostagem;
-	
+		
 	@ManyToOne
-	@JoinColumn(name="fk_prestadorServico")
-	private Usuario usuario;
+	@JoinColumn(name="fk_solicitacao_contrato")
+	private SolicitacaoContrato solicitacaoContrato;
 
 	
 	public int getIdAvaliacao() {
@@ -66,13 +66,15 @@ public class Avaliacao {
 		this.dataPostagem = dataPostagem;
 	}
 
-	public Usuario getUsuario() {
-		return usuario;
+	public SolicitacaoContrato getSolicitacaoContrato() {
+		return solicitacaoContrato;
 	}
 
-	public void setUsuario(Usuario usuario) {
-		this.usuario = usuario;
+	public void setSolicitacaoContrato(SolicitacaoContrato solicitacaoContrato) {
+		this.solicitacaoContrato = solicitacaoContrato;
 	}
+
+
 	
 	
 	

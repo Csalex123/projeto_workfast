@@ -4,7 +4,9 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.NoResultException;
 import javax.persistence.Persistence;
+import javax.persistence.Query;
 
 public class PendenciasDao {
 
@@ -22,7 +24,10 @@ public class PendenciasDao {
 		manager.close();
 		factory.close();
 	}
+	
 
+	
+	// Listar Pendencias para o prestador
 	public List<Pendencias> listar() {
 		EntityManagerFactory factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT);
 		EntityManager manager = factory.createEntityManager();
@@ -30,6 +35,25 @@ public class PendenciasDao {
 		manager.close();
 		factory.close();
 		return lista;
+	}
+	
+	public List<Pendencias> buscarPendencias(int idSolicitacao) {
+
+
+		EntityManagerFactory factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT);
+		EntityManager manager = factory.createEntityManager();
+		Query query = null;
+		
+		query = manager.createQuery("FROM Pendencias WHERE solicitacaoContrato.idSolicitacaoContrato = :paramId");
+		query.setParameter("paramId", idSolicitacao);
+
+		
+		List<Pendencias> lista = query.getResultList();
+		manager.close();
+		factory.close();
+		
+		return lista;
+
 	}
 
 	public void remover(int id) {

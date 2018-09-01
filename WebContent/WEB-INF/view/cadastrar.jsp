@@ -65,13 +65,13 @@
 				<form action="incluirUsuario" id="form_cadastro" method="post">
 					<div class="form-group">
 						<label for="nome">Nome:</label> <input type="text"
-							class="form-control" id="nome"
+							class="form-control" id="nome" maxlength="70"
 							placeholder="Digite seu nome e sobrenome" name="nome">
 					</div>
 
 					<div class="form-group">
 						<label for="email">E-mail:</label> <input type="email"
-							class="form-control" id="email" placeholder="Digite  seu e-mail"
+							class="form-control" id="email" maxlength="50" placeholder="Digite  seu e-mail"
 							name="email">
 					</div>
 					
@@ -83,7 +83,7 @@
 						<div class="row">
 							<div class="col-sm-10">
 								<input type="password" class="form-control" id="senha"
-									placeholder="Digite uma senha" name="senha">
+									placeholder="Digite uma senha" maxlength="18" name="senha">
 							</div>
 
 							<div class="col-sm-2">
@@ -104,7 +104,7 @@
 					<div class="form-group">
 						<label for="repetir_senha">Confirmar senha:</label> <input
 							type="password" class="form-control" id="repetir_senha"
-							name="senha2" placeholder="Confirme sua senha">
+							name="senha2" maxlength="18" placeholder="Confirme sua senha">
 					</div>
 
 					<div class="form-group">

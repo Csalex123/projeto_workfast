@@ -152,9 +152,9 @@ create table avaliacao(
  estrela char not null, 
  mensagem varchar(255) not null,
  data_postagem datetime DEFAULT CURRENT_TIMESTAMP,
- fk_prestadorServico int NOT null,
+ fk_solicitacao_contrato int NOT null,
     
- FOREIGN KEY(fk_prestadorServico) REFERENCES usuario (id)
+FOREIGN KEY(fk_solicitacao_contrato) REFERENCES solicitacao_contrato (id)
 );
 
 

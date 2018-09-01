@@ -27,11 +27,7 @@
                                 <i class="fa fa-home"></i>Home</a>
                         </li>
                     
-                        <li class="has-sub">
-                            <a class="js-arrow" href="#">
-                                <i class="fa fa-calendar"></i>Meus Pedidos</a>
-
-                            <ul class="navbar-mobile-sub__list list-unstyled js-sub-list">
+                        
                                 <li>
                                     <a href="servicoSolicitadosPendentes?cas=${usuarioLogado.idUsuario}"><i class="fa fa-exclamation" aria-hidden="true"></i>Pedidos Pendentes</a>
                                 </li>
@@ -44,8 +40,7 @@
                                 <li>
                                     <a href="servicoSolicitadosFinalizado?cas=${usuarioLogado.idUsuario}"><i class="fa fa-check" aria-hidden="true"></i>Pedidos Finalizados</a>
                                 </li>
-                            </ul>
-                        </li>
+                         
 
 
                         <li>
@@ -79,13 +74,9 @@
                             <a href="paginaInicialCliente">
                                 <i class=" fa fa-home"></i>Home</a>
                         </li>
-                        <li class="has-sub">
-                            <a class="js-arrow" href="#">
-                                <i class="fa fa-calendar"></i>Meus Pedidos</a>
-                                
-                            <ul class="navbar-mobile-sub__list list-unstyled js-sub-list">
+                       
                                 <li>
-                                    <a href="servicoSolicitadosPendentes?cas=${usuarioLogado.idUsuario}"><i class="fa fa-exclamation" aria-hidden="true"></i>Pedidos Pendentes</a>
+                                    <a href="servicoSolicitadosPendentes?cas=${usuarioLogado.idUsuario}">&nbsp;<i class="fa fa-exclamation" aria-hidden="true"></i>Pedidos Pendentes</a>
                                 </li>
                                 <li>
                                     <a style="font-size: 15px;" href="servicoSolicitadosAndamento?cas=${usuarioLogado.idUsuario}"><i class="fa fa-clock" aria-hidden="true"></i>Pedidos em Andamento</a>
@@ -96,8 +87,7 @@
                                 <li>
                                     <a href="servicoSolicitadosFinalizado?cas=${usuarioLogado.idUsuario}"><i class="fa fa-check" aria-hidden="true"></i>Pedidos Finalizados</a>
                                 </li>
-                            </ul>
-                        </li>
+                          
 
                         <li class="">
                             <a href="#">

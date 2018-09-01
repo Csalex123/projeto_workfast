@@ -192,7 +192,7 @@
 								<label for="select" class=" form-control-label">Complemento:</label>
 							</div>
 							<div class="col-12 col-md-5">
-								<input type="text" name="complemento" required="" maxlength="45"
+								<input type="text" name="complemento"  maxlength="45"
 									class="form-control">
 							</div>
 						</div>

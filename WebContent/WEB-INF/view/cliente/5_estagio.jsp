@@ -190,14 +190,14 @@ $(document).ready(function(){
 			
 	  		  
 			   var mensagem = $("#mensagem").val();  
-			   var idPrestador = $("#id_prestador").val();
+			   var idSolicitacao = $("#id_solicitacao").val();
 			   var estrela = $("input[name='rating']:checked").val();
 			   
   	
 			 $.post('adicionarAvaliacao',{
 		           
 				 mensagem:mensagem,
-				 idPrestador:idPrestador,
+				 idSolicitacao:idSolicitacao,
 				 estrela:estrela,
 		          
 		          }, function(data){    
@@ -267,7 +267,7 @@ $(document).ready(function(){
 						<div class="row form-group">
 							<div class="col col-md-2">
 								<label for="select" class=" form-control-label"
-									style="font-weight: bold;">Nome :</label>
+									style="font-weight: bold;">Nome:</label>
 							</div>
 							<div class="col-12 col-md-5">
 								<p>Pedro Silva</p>
@@ -285,7 +285,7 @@ $(document).ready(function(){
 						</div>
 						<br>
 
-						<h3 style="text-align: center;">Avalição</h3>
+						<h3 style="text-align: center;">Avaliação</h3>
 						<br>
 
 						<div id="div_avaliacao">
@@ -326,13 +326,13 @@ $(document).ready(function(){
 						<div class="row form-group">
 							<div class="col col-md-3">
 								<label for="select" class=" form-control-label"
-									style="font-weight: bold;">Comentário:</label>
+									style="font-weight: bold;">Escreva um comentário:</label>
 							</div>
 							<div class="col-12 col-md-5">
 								<textarea class="form-control" id="mensagem" required rows="7" style="resize: none"></textarea>	
 							</div>
 						</div>
-						<input type="hidden" value="3" id="id_prestador">
+						<input type="hidden" value="11" id="id_solicitacao">
 						
 						<div class="row form-group" style="float: right;">
 							<div class="col col-md-3">

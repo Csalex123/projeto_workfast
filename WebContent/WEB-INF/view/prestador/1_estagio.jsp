@@ -137,7 +137,50 @@
 	rel="stylesheet" media="all">
 	
 <!-- Adicionando JQuery -->
-<script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+<script src="http://code.jquery.com/jquery-1.8.1.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+            function CalculaDistancia() {
+                $('#litResultado').html('Aguarde...');
+                //Instanciar o DistanceMatrixService
+                var service = new google.maps.DistanceMatrixService();
+                //executar o DistanceMatrixService
+                service.getDistanceMatrix(
+                  {
+                      //Origem
+                      origins: [$("#txtOrigem").val()],
+                      //Destino
+                      destinations: [$("#txtDestino").val()],
+                      //Modo (DRIVING | WALKING | BICYCLING)
+                      travelMode: google.maps.TravelMode.DRIVING,
+                      //Sistema de medida (METRIC | IMPERIAL)
+                      unitSystem: google.maps.UnitSystem.METRIC
+                      //Vai chamar o callback
+                  }, callback);
+            }
+            //Tratar o retorno do DistanceMatrixService
+            function callback(response, status) {
+                //Verificar o Status
+                if (status != google.maps.DistanceMatrixStatus.OK)
+                    //Se o status não for "OK"
+                    $('#litResultado').html(status);
+                else {
+                    //Se o status for OK
+                    //Endereço de origem = response.originAddresses
+                    //Endereço de destino = response.destinationAddresses
+                    //Distância = response.rows[0].elements[0].distance.text
+                    //Duração = response.rows[0].elements[0].duration.text
+                    $('#litResultado').html("<strong>Origem</strong>: " + response.originAddresses +
+                        "<br /><strong>Destino:</strong> " + response.destinationAddresses +
+                        "<br /><strong>Distância</strong>: " + response.rows[0].elements[0].distance.text +
+                        " <br /><strong>Duração</strong>: " + response.rows[0].elements[0].duration.text
+                        );
+                    //Atualizar o mapa
+                    $("#map").attr("src", "https://maps.google.com/maps?saddr=" + response.originAddresses + "&daddr=" + response.destinationAddresses + "&output=embed");
+                }
+            }
+        </script>
+
  
 
 </head>
@@ -281,58 +324,29 @@
                               
                                 <h4 style="text-align: center;"> Traçe uma rota até o cliente</h4><br>
 
-                                 <form method="post" action="index.html">
+                                 
                                     <fieldset>
                                         
                                         <div>
-                                            <label for="txtEnderecoPartida">Endereço de partida(Você):</label>
-                                            <input type="text" id="txtEnderecoPartida" class="form-control" name="txtEnderecoPartida" />
+                                        	
+                                            <label for="txtOrigem">Endereço de partida(Você):</label>
+                                            <input type="text" id="txtOrigem" class="form-control field"  />
                                         </div>
                                         
                                         <div>
-                                            <label for="txtEnderecoChegada">Endereço de chegada(Cliente):</label>
-                                            <input type="text" value="${proposta.cep}" id="txtEnderecoChegada" class="form-control" name="txtEnderecoChegada" />
+                                            <input type="hidden" id="txtDestino" value="${proposta.cidade} ${proposta.bairro} ${proposta.rua}" class="form-control field"  />
                                         </div><br>
-
-                                         <div class="row form-group"  style="float: right;">
-                                            <div class="col col-md-3">
-                                                    <div>
-                                                        <input type="submit" id="btnEnviar" name="btnEnviar" class="btn btn-primary" value="Traçar rota" />
-                                                    </div><br><br>
-                                            </div>
-                                        </div>
-
+                                        
+                                        <input type="button" onclick="CalculaDistancia()" value="Traçar Rota" class="btnNew btn btn-primary" /><br>
+									
                         
                                     </fieldset>
-
-                                </form>
-
-                                 <div class="row form-group">
-                                    <div class="col col-md-3">
-                                        </div>
-                                            <div class="col-12 col-md-12">
-                                        <center>
-                                             <label  class=" form-control-label" ><h4>Mapa:</h4></label><br><br>
-                                        </center>
-                                                <div id="mapa"> </div>
-                                         </div>
-                                    </div><br><br>
-
-
-                                      <div class="row form-group">
-                                         <div class="col col-md-3">
-                                        </div>
-                                            <div class="col-12 col-md-12">
-                                            <center>
-                                                 <label for="select" class=" form-control-label" ><h4>Trajeto:</h4></label><br><br>
-                                             </center>
-                                                <div id="trajeto-texto"></div> 
-                                            </div>
-                                    </div><br>
-        
+   
+                                <div><span id="litResultado">&nbsp;</span></div>
+						        <div style="padding: 10px 0 0; clear: both">
+						            <iframe width="100%" scrolling="no" height="500" frameborder="0" id="map" marginheight="0" marginwidth="0" src="https://maps.google.com/maps?saddr=${endereco.cidade.nome} ${endereco.bairro} ${endereco.rua}&daddr=${proposta.cidade} ${proposta.bairro} ${proposta.rua}&output=embed"></iframe>
+						        </div><br><br>
                             
-
-                 
                                 
                                 <div class="row form-group"  style="float: right;">
                                     <div class="col col-md-3">
@@ -372,6 +386,17 @@
 	</div>
 
 	</div>
+	<script>
+	$(document).ready(function(){
+		/*
+		$("#botaoRota").click(function(){
+			var origem = $("#txtOrigem").val(); 
+			 $("#map").attr("src", "https://maps.google.com/maps?saddr=" + origem + "&daddr=" +  ${proposta.cidade} + ${proposta.bairro} + ${proposta.rua} + "&output=embed"); 
+		}); */
+	});
+	
+	</script>
+	
 	<script type="text/javascript">
 	var cas = "${proposta.idProposta}";
 	 
@@ -461,13 +486,7 @@
 						
 					});
 				  
-				  
-				  
-				  
-				
-				
-			    
-			   
+				     
 			    
 			  } 
 			  
@@ -496,8 +515,7 @@
   src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAU4tZgF7qKxiAMdKz8j0Pa3_TVyNdZgjM&callback=initialize"></script>
 
     
-	<!-- Mapa JS-->
-	<script src="<%=request.getContextPath()%>/resources/js/prestador/mapa.js"></script>
+	
 	
 
 	<!-- Jquery JS-->

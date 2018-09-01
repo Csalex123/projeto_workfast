@@ -1,58 +1,34 @@
-var map;
-var directionsDisplay;
-var directionsService = new google.maps.DirectionsService();
-
-function initialize() {	
-	directionsDisplay = new google.maps.DirectionsRenderer();
-	var latlng = new google.maps.LatLng(-18.8800397, -47.05878999999999);
-	
-    var options = {
-        zoom: 5,
-		center: latlng,
-        mapTypeId: google.maps.MapTypeId.ROADMAP
-    };
-
-    map = new google.maps.Map(document.getElementById("mapa"), options);
-	directionsDisplay.setMap(map);
-	directionsDisplay.setPanel(document.getElementById("trajeto-texto"));
-	
-	if (navigator.geolocation) {
-		navigator.geolocation.getCurrentPosition(function (position) {
-
-			pontoPadrao = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-			map.setCenter(pontoPadrao);
-			
-			var geocoder = new google.maps.Geocoder();
-			
-			geocoder.geocode({
-				"location": new google.maps.LatLng(position.coords.latitude, position.coords.longitude)
-            },
-            function(results, status) {
-				if (status == google.maps.GeocoderStatus.OK) {
-					$("#txtEnderecoPartida").val(results[0].formatted_address);
-				}
-            });
-		});
-	}
-}
-
-initialize();
-
-$("form").submit(function(event) {
-	event.preventDefault();
-	
-	var enderecoPartida = $("#txtEnderecoPartida").val();
-	var enderecoChegada = $("#txtEnderecoChegada").val();
-	
-	var request = {
-		origin: enderecoPartida,
-		destination: enderecoChegada,
-		travelMode: google.maps.TravelMode.DRIVING
-	};
-	
-	directionsService.route(request, function(result, status) {
-		if (status == google.maps.DirectionsStatus.OK) {
-			directionsDisplay.setDirections(result);
-		}
-	});
-});
+function CalculaDistancia() {
+                $('#litResultado').html('Aguarde...');
+                var service = new google.maps.DistanceMatrixService();
+             
+                service.getDistanceMatrix(
+                  {
+                     
+                      origins: [$("#txtOrigem").val()],
+                    
+                      destinations: [$("#txtDestino").val()],
+                    
+                      travelMode: google.maps.TravelMode.DRIVING,
+                    
+                      unitSystem: google.maps.UnitSystem.METRIC
+                  
+                  }, callback);
+            }
+            
+            function callback(response, status) {
+              
+                if (status != google.maps.DistanceMatrixStatus.OK)
+                   
+                    $('#litResultado').html(status);
+                else {
+                    
+                    $('#litResultado').html("<strong>Origem</strong>: " + response.originAddresses +
+                        "<br /><strong>Destino:</strong> " + response.destinationAddresses +
+                        "<br /><strong>Distância</strong>: " + response.rows[0].elements[0].distance.text +
+                        " <br /><strong>Duração</strong>: " + response.rows[0].elements[0].duration.text
+                        );
+                    //Atualizar o mapa
+                    $("#map").attr("src", "https://maps.google.com/maps?saddr=" + response.originAddresses + "&daddr=" + response.destinationAddresses + "&output=embed");
+                }
+            }

@@ -212,9 +212,16 @@ public class PrestadorController {
 	}
 
 	@RequestMapping("PrimeiraEtapa")
-	public String primeiroEtapa(@RequestParam("cas") Integer idSolicitacao, Model model) {
+	public String primeiroEtapa(@RequestParam("cas") Integer idSolicitacao, Model model,  HttpServletRequest request) {
 		SolicitacaoContratoDao dao = new SolicitacaoContratoDao();
 		ListaPedidosPendentesVO solicitacao = dao.buscarPedidoPendente(idSolicitacao);
+		
+		Usuario usuario = (Usuario) request.getSession().getAttribute("usuarioLogado");
+		
+		EnderecoDao dao2 = new EnderecoDao();
+		Endereco endereco = dao2.buscarEnderecoUsuarioPrestador(usuario.getIdUsuario());
+		
+		model.addAttribute("endereco", endereco);
 		model.addAttribute("proposta", solicitacao);
 		return "prestador/1_estagio";
 	}
@@ -702,14 +709,14 @@ public class PrestadorController {
 	
 	@RequestMapping(value = "adicionarAvaliacao", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
 	public @ResponseBody String adicionarAvaliacao(@RequestParam("mensagem") String mensagem,
-			@RequestParam("idPrestador") Usuario idContrato, @RequestParam("estrela") int estrela) {
+			@RequestParam("idSolicitacao") SolicitacaoContrato idContrato, @RequestParam("estrela") int estrela) {
 
 		
 		Avaliacao dados = new Avaliacao();
 		
 		dados.setMensagem(mensagem);
 		dados.setEstrela(estrela);
-		dados.setUsuario(idContrato);
+		dados.setSolicitacaoContrato(idContrato);
 	
 		AvaliacaoDao dao = new AvaliacaoDao();
 		dao.salvar(dados);

@@ -103,55 +103,7 @@
 
 			<hr>
 
-			<div class="row" id="div_button">
-				<center>
-					<button class="btn btn-default" id="facebook"
-						style="float: left; margin-left: 9%">Facebook</button>
-
-					<!--	Login Google	-->
-					<div class="g-signin2" data-onsuccess="onSignIn" id="myP"></div>
-
-					<img id="myImg"> <br>
-					<p id="name"></p>
-
-					<div id="status"></div>
-
-					<script type="text/javascript">
-						function onSignIn(googleUser) {
-							// window.location.href='success.jsp';
-
-							var profile = googleUser.getBasicProfile();
-							var imagurl = profile.getImageUrl();
-							var name = profile.getName();
-							var email = profile.getEmail();
-							document.getElementById("myImg").src = imagurl;
-							document.getElementById("name").innerHTML = name;
-
-							document.getElementById("myP").style.visibility = "hidden";
-
-							document.getElementById("status").innerHTML = 'Bem vindo '
-									+ name
-									+ '! <a href="googleSuccess"?email='
-									+ email
-									+ '&name='
-									+ name
-									+ '/>Continue com o login do Google</a></p>'
-
-						}
-					</script>
-
-					<button onclick="myFunction()">Sair</button>
-
-					<script>
-						function myFunction() {
-							gapi.auth2.getAuthInstance().disconnect();
-							location.reload();
-						}
-					</script>
-					<!--	Fim Login Google	-->
-
-					<!-- <button class="btn btn-default" id="google">Google</button> -->
-				</center>
+			
 
 				<div>
 					<center>
@@ -163,8 +115,8 @@
 						</p>
 					</center>
 				</div>
-			</div>
-		</div>
+			
+
 
 	</div>
 	</div>

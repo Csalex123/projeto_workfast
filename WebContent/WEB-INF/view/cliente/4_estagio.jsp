@@ -10,6 +10,8 @@
 <!-- Required meta tags-->
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	
+
 
 
 <!-- Title Page-->
@@ -135,6 +137,9 @@
 	border-left-color: #23468c;
 }
 </style>
+
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 </head>
 
 <body class="animsition">
@@ -174,57 +179,52 @@
 									Baixar contrato em PDF</button>
 							</div>
 						</div>
-						<br>
-						<br>
-						<br>
+						<br> <br> <br>
 
 						<h4 style="text-align: center;">Pedência(s)</h4>
 						<br>
-						<h5>Observação: O prestador x solicitou que você comprasse
-							esses matérias para realizar o serviço</h5>
-						<br>
-						<div class="row form-group">
-							<div class="col col-md-3">
-								<label class=" form-control-label">Tijolos:</label>
-							</div>
-							<div class="col-12 col-md-5">150 unidades</div>
-						</div>
-
-
-						<div class="row form-group">
-							<div class="col col-md-3">
-								<label class=" form-control-label">Areia:</label>
-							</div>
-							<div class="col-12 col-md-5">2 Metrôs</div>
-						</div>
-
-
-
-						<div class="row form-group">
-							<div class="col col-md-3">
-								<label class=" form-control-label">Cimento:</label>
-							</div>
-							<div class="col-12 col-md-5">3 Sacos de cimentos</div>
-						</div>
 						
-						
-
-
-						<div class="row form-group" style="float: right;">
-							<div class="col col-md-3">
-								<a href="QuintoEstagio"><button type="button" class="btn btn-primary">
-									&nbsp;<i class="fas fa-forward"></i> Avançar
-								</button></a>
+							<div  class="table-responsive table-responsive-data2">
+								<table class="table table-data2">
+									<thead>
+										<tr>
+											<th><h4>Pedência(s) enviada para você</h4></th>';
+											
+										</tr>
+									</thead>
+									
+								<c:forEach var="pendencias" items="${listaPencias}">
+									<tbody >
+									<tr>
+										
+										<td>${pendencias.mensagem} <br><br> <b style="color:blue"> Data Postado: ${pendencias.dataPostagem}</b></td>
+										<td></td><br>
+										
+									</tr>
+									</tbody>
+								</c:forEach>
+								
+								</table>
 							</div>
-						</div>
 
+
+
+
+							<div class="row form-group" style="float: right;">
+								<div class="col col-md-3">
+									<a href="QuintoEstagio"><button type="button"
+											class="btn btn-primary">
+											&nbsp;<i class="fas fa-forward"></i> Avançar
+										</button></a>
+								</div>
+							</div>
 					</section>
-					<br>
-					<br>
+					<br> <br>
 				</div>
 			</div>
 		</div>
 	</div>
+	
 
 	<!-- Jquery JS-->
 	<script
