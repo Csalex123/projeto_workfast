@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: 31-Ago-2018 às 06:10
+-- Generation Time: 01-Set-2018 às 06:55
 -- Versão do servidor: 10.1.34-MariaDB
 -- PHP Version: 7.2.7
 
@@ -33,15 +33,15 @@ CREATE TABLE `avaliacao` (
   `estrela` char(1) COLLATE utf8_unicode_ci NOT NULL,
   `mensagem` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `data_postagem` datetime DEFAULT CURRENT_TIMESTAMP,
-  `fk_prestadorServico` int(11) NOT NULL
+  `fk_solicitacao_contrato` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Extraindo dados da tabela `avaliacao`
 --
 
-INSERT INTO `avaliacao` (`id`, `estrela`, `mensagem`, `data_postagem`, `fk_prestadorServico`) VALUES
-(1, '5', 'dsadas', NULL, 3);
+INSERT INTO `avaliacao` (`id`, `estrela`, `mensagem`, `data_postagem`, `fk_solicitacao_contrato`) VALUES
+(1, '5', 'fdsfdsfds', NULL, 11);
 
 -- --------------------------------------------------------
 
@@ -5798,14 +5798,15 @@ INSERT INTO `endereco` (`id`, `cidade`, `rua`, `bairro`, `numero_casa`, `cep`, `
 (2, 3339, 'Rua Quarenta e Cinco', 'Parque Capibaribe', '11', '54.720-235', 16, 'casa', 3),
 (3, 3339, 'Rua Quarenta e Cinco', 'Parque Capibaribe', 'casa', '54.720-235', 16, 'apartemento', 5),
 (5, 3339, 'Rua Quarenta e Cinco', 'Parque Capibaribe', '122', '54.720-235', 16, 'bloco2', 6),
-(6, 3339, 'Rua Quarenta e Cinco', 'Parque Capibaribe', '111', '54.720-235', 16, 'casas', 7),
+(6, 3213, 'Rua Manoel Florentino da Silva', 'São Francisco', '111', '54530410', 16, 'casas', 7),
 (7, 3339, 'Rua Quarenta e Cinco', 'Parque Capibaribe', '11', '54.720-235', 16, 'predio', 8),
 (8, 3339, 'Rua Quarenta e Cinco', 'Parque Capibaribe', '111', '54.720-235', 16, 'casa', 9),
 (9, 3339, 'Rua Quarenta e Cinco', 'Parque Capibaribe', '111', '54.720-235', 16, 'casa', 9),
 (10, 3339, 'Rua Quarenta e Cinco', 'Parque Capibaribe', '11', '54.720-235', 16, '11', 10),
 (11, 3339, 'Rua Quarenta e Cinco', 'Parque Capibaribe', '111', '54.720-235', 16, 'predio', 11),
 (12, 3339, 'Rua Quarenta e Cinco', 'Parque Capibaribe', '111', '54.720-235', 16, 'casa', 12),
-(13, 3339, 'Rua Quarenta e Cinco', 'Parque Capibaribe', '11', '54.720-235', 16, '', 13);
+(13, 3339, 'Rua Quarenta e Cinco', 'Parque Capibaribe', '11', '54.720-235', 16, '', 13),
+(14, 3213, 'Rua Manoel Florentino da Silva', 'São Francisco', '111', '54530410', 16, '', 6);
 
 -- --------------------------------------------------------
 
@@ -5871,7 +5872,11 @@ CREATE TABLE `pendencias` (
 
 INSERT INTO `pendencias` (`id`, `data_postagem`, `mensagem`, `fk_solicitacao_contrato`) VALUES
 (2, NULL, 'aaa', NULL),
-(3, NULL, 'dasdsada', NULL);
+(3, NULL, 'dasdsada', NULL),
+(4, NULL, 'fdsfds', 11),
+(8, NULL, 'dsa', 11),
+(9, NULL, 'Beleza', 11),
+(10, NULL, 'Beleza2', 11);
 
 -- --------------------------------------------------------
 
@@ -6532,7 +6537,10 @@ CREATE TABLE `solicitacao_contrato` (
 
 INSERT INTO `solicitacao_contrato` (`id`, `dataPedido`, `fk_cliente`, `fk_prestadorServico`, `fk_endereco`, `status_solicitacao`, `convite`, `estagio`, `mensagem`) VALUES
 (10, '2018-08-29 05:51:07', 6, 1, 5, '1', '1', '2', 'teste'),
-(11, '2018-08-31 02:00:10', 6, 3, 5, '1', '0', '1', 'fdsfsd');
+(11, '2018-08-31 02:00:10', 6, 3, 5, '1', '1', '2', 'fdsfsd'),
+(12, '2018-09-01 04:26:11', 6, 1, 14, '1', '0', '1', 'fsdfsd'),
+(13, '2018-09-01 04:34:07', 7, 1, 6, '1', '0', '1', 'fsdfds'),
+(14, '2018-09-01 04:37:09', 6, 3, 14, '1', '0', '1', 'Beleza');
 
 -- --------------------------------------------------------
 
@@ -6625,7 +6633,7 @@ INSERT INTO `usuario_servico` (`id`, `descricao`, `fk_usuario`, `fk_servico`) VA
 --
 ALTER TABLE `avaliacao`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `FKcd1mi6bx1816utr3kd8myprtm` (`fk_prestadorServico`);
+  ADD KEY `FKsr3rqeydqetuwby4x7psto5l5` (`fk_solicitacao_contrato`);
 
 --
 -- Indexes for table `categoria_servico`
@@ -6781,7 +6789,7 @@ ALTER TABLE `dado_pessoal`
 -- AUTO_INCREMENT for table `endereco`
 --
 ALTER TABLE `endereco`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `estado`
@@ -6793,7 +6801,7 @@ ALTER TABLE `estado`
 -- AUTO_INCREMENT for table `pendencias`
 --
 ALTER TABLE `pendencias`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `profissao`
@@ -6817,7 +6825,7 @@ ALTER TABLE `servico`
 -- AUTO_INCREMENT for table `solicitacao_contrato`
 --
 ALTER TABLE `solicitacao_contrato`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `tipo_acesso`
@@ -6845,8 +6853,8 @@ ALTER TABLE `usuario_servico`
 -- Limitadores para a tabela `avaliacao`
 --
 ALTER TABLE `avaliacao`
-  ADD CONSTRAINT `FKcd1mi6bx1816utr3kd8myprtm` FOREIGN KEY (`fk_prestadorServico`) REFERENCES `usuario` (`id`),
-  ADD CONSTRAINT `avaliacao_ibfk_1` FOREIGN KEY (`fk_prestadorServico`) REFERENCES `usuario` (`id`);
+  ADD CONSTRAINT `FKsr3rqeydqetuwby4x7psto5l5` FOREIGN KEY (`fk_solicitacao_contrato`) REFERENCES `solicitacao_contrato` (`id`),
+  ADD CONSTRAINT `avaliacao_ibfk_1` FOREIGN KEY (`fk_solicitacao_contrato`) REFERENCES `solicitacao_contrato` (`id`);
 
 --
 -- Limitadores para a tabela `chatsolicitacao`
