@@ -63,8 +63,63 @@ public class SolicitacaoContratoDao {
 		return obj;
 
 	}
+	// metodo para retornar um objeto da proposta e que esta aguardando aprovacao do prestador 
+		// esse metodo vai listar as informções do cliente no primeiro estagio na area do prestador
+		public ListaPedidosPendentesVO buscarPedidoPendentePrestador(Integer id) {
+
+			EntityManagerFactory factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT);
+			EntityManager manager = factory.createEntityManager();
+			TypedQuery<ListaPedidosPendentesVO> query = null;
+			
+			StringBuilder consulta = new StringBuilder();
+			
+			consulta.append(" select new br.com.ifpe.workfast.model.ListaPedidosPendentesVO(");
+			
+			consulta.append(" sc.idSolicitacaoContrato as idProposta,");
+			consulta.append(" us.usuario.idUsuario as idPrestador, ");
+			consulta.append(" sc.usuario.idUsuario as idCliente, ");
+			consulta.append(" us.usuario.nome as nomeCliente, ");
+			consulta.append(" dp.nomeFantasia as nomeFantasia, ");
+			consulta.append(" us.usuario.tipo_usuario as tipoUsuario,");
+			consulta.append(" us.servico.nome as nomeServico, ");
+			consulta.append(" ed.rua as endereco, ");
+			consulta.append(" ed.numeroCasa as numeroCasa, ");
+			consulta.append(" ed.cep as cep, ");
+			consulta.append(" ed.cidade.nome as cidade, ");
+			consulta.append(" ed.estado.nome as estado, ");
+			consulta.append(" sc.convite as proposta, ");
+			consulta.append(" sc.mensagem as mensagem, ");
+			consulta.append(" ed.bairro as bairro, ");
+			consulta.append(" ed.complemento as complemento, ");
+			consulta.append(" sc.usuario.foto as foto, ");
+			consulta.append(" sc.estagio as estagio, ");
+			consulta.append(" sc.status as status ) ");
+			
+			
+		    
+			consulta.append(" from SolicitacaoContrato sc join sc.usuarioServico us join sc.endereco ed,  DadosPessoais dp ");
+			consulta.append(" where dp.usuario = us.usuario AND ed.usuario = sc.usuario AND sc.status = :paramStatus AND (sc.estagio = :paramEstagio1 OR (sc.estagio = :paramEstagio2 OR sc.estagio = :paramEstagio3) ) AND sc.idSolicitacaoContrato = :paramId");
+			query = manager.createQuery(consulta.toString(),ListaPedidosPendentesVO.class);
+			query.setParameter("paramId", id); 
+			query.setParameter("paramStatus", "1");
+			query.setParameter("paramEstagio1", "1");
+			query.setParameter("paramEstagio2", "2");
+			query.setParameter("paramEstagio3", "3");
+			List<ListaPedidosPendentesVO> registros = query.getResultList(); 
+			
+			ListaPedidosPendentesVO obj = null;
+			
+			if (!registros.isEmpty()) {
+				obj = (ListaPedidosPendentesVO) registros.get(0);
+			}
+			
+			manager.close();
+			factory.close();
+			return obj;	 
+			
+		}
 	
-	// metodo para retornar um objeto da proposta que esta aguardando aprovacao do prestador 
+	// metodo para retornar um objeto da proposta e que esta aguardando aprovacao do prestador 
 	// esse metodo vai listar as informções do cliente no primeiro estagio na area do prestador
 	public ListaPedidosPendentesVO buscarPedidoPendente(Integer id) {
 
@@ -94,16 +149,19 @@ public class SolicitacaoContratoDao {
 		consulta.append(" ed.complemento as complemento, ");
 		consulta.append(" sc.usuario.foto as foto, ");
 		consulta.append(" sc.estagio as estagio, ");
+		
 		consulta.append(" sc.status as status ) ");
 		
 		
 	    
-		consulta.append(" from SolicitacaoContrato sc join sc.usuarioServico us, DadosPessoais dp, Endereco ed ");
-		consulta.append(" where dp.usuario = sc.usuario AND ed.usuario = sc.usuario AND sc.status = :paramStatus AND sc.estagio = :paramEstagio AND sc.idSolicitacaoContrato = :paramId");
+		consulta.append(" from SolicitacaoContrato sc join sc.usuarioServico us join sc.endereco ed,  DadosPessoais dp ");
+		consulta.append(" where dp.usuario = sc.usuario AND ed.usuario = sc.usuario AND sc.status = :paramStatus AND (sc.estagio = :paramEstagio1 OR (sc.estagio = :paramEstagio2 OR sc.estagio = :paramEstagio3) ) AND sc.idSolicitacaoContrato = :paramId");
 		query = manager.createQuery(consulta.toString(),ListaPedidosPendentesVO.class);
 		query.setParameter("paramId", id); 
 		query.setParameter("paramStatus", "1");
-		query.setParameter("paramEstagio", "1");
+		query.setParameter("paramEstagio1", "1");
+		query.setParameter("paramEstagio2", "2");
+		query.setParameter("paramEstagio3", "3");
 		List<ListaPedidosPendentesVO> registros = query.getResultList(); 
 		
 		ListaPedidosPendentesVO obj = null;
@@ -128,11 +186,10 @@ public class SolicitacaoContratoDao {
 		StringBuilder consulta = new StringBuilder();
 		
 		consulta.append(" select new br.com.ifpe.workfast.model.ListaPedidosPendentesVO(");
-		
 		consulta.append(" sc.idSolicitacaoContrato as idProposta,");
 		consulta.append(" us.usuario.idUsuario as idPrestador, ");
 		consulta.append(" sc.usuario.idUsuario as idCliente, ");
-		consulta.append(" us.usuario.nome as nomeCliente, ");
+		consulta.append(" sc.usuario.nome as nomeCliente, ");
 		consulta.append(" dp.nomeFantasia as nomeFantasia, ");
 		consulta.append(" sc.usuario.tipo_usuario as tipoUsuario,");
 		consulta.append(" us.servico.nome as nomeServico, ");
@@ -150,8 +207,8 @@ public class SolicitacaoContratoDao {
 		consulta.append(" sc.status as status ) ");
 		
 	    
-		consulta.append(" from SolicitacaoContrato sc join sc.usuarioServico us, DadosPessoais dp, Endereco ed ");
-		consulta.append(" where dp.usuario = us.usuario AND ed.usuario = sc.usuario AND sc.status = :paramStatus AND (sc.estagio = :paramEstagio1 OR (sc.estagio = :paramEstagio2 OR sc.estagio = :paramEstagio3) ) AND sc.usuario.idUsuario = :paramId");
+		consulta.append(" from SolicitacaoContrato sc join sc.usuarioServico us join sc.endereco ed,  DadosPessoais dp ");
+		consulta.append(" where dp.usuario = us.usuario AND sc.status = :paramStatus AND (sc.estagio = :paramEstagio1 OR (sc.estagio = :paramEstagio2 OR sc.estagio = :paramEstagio3) ) AND sc.usuario.idUsuario = :paramId");
 		query = manager.createQuery(consulta.toString(),ListaPedidosPendentesVO.class);
 		query.setParameter("paramId", id);
 		query.setParameter("paramStatus", "1");
@@ -197,7 +254,7 @@ public class SolicitacaoContratoDao {
 		consulta.append(" sc.status as status ) ");
 		
 	    
-		consulta.append(" from SolicitacaoContrato sc join sc.usuarioServico us, DadosPessoais dp, Endereco ed ");
+		consulta.append(" from SolicitacaoContrato sc join sc.usuarioServico us join sc.endereco ed,  DadosPessoais dp ");
 		consulta.append(" where dp.usuario = us.usuario AND ed.usuario = sc.usuario AND sc.status = :paramStatus AND sc.estagio = :paramEstagio1  AND sc.usuario.idUsuario = :paramId");
 		query = manager.createQuery(consulta.toString(),ListaPedidosPendentesVO.class);
 		query.setParameter("paramId", id);
@@ -244,7 +301,7 @@ public class SolicitacaoContratoDao {
 		
 		
 	    
-		consulta.append(" from SolicitacaoContrato sc join sc.usuarioServico us, DadosPessoais dp, Endereco ed ");
+		consulta.append(" from SolicitacaoContrato sc join sc.usuarioServico us join sc.endereco ed,  DadosPessoais dp ");
 		consulta.append(" where dp.usuario = us.usuario AND ed.usuario = sc.usuario AND sc.status = :paramStatus AND sc.estagio = :paramEstagio1  AND sc.usuario.idUsuario = :paramId");
 		query = manager.createQuery(consulta.toString(),ListaPedidosPendentesVO.class);
 		query.setParameter("paramId", id);
@@ -291,7 +348,7 @@ public class SolicitacaoContratoDao {
 		
 		
 	    
-		consulta.append(" from SolicitacaoContrato sc join sc.usuarioServico us, DadosPessoais dp, Endereco ed ");
+		consulta.append(" from SolicitacaoContrato sc join sc.usuarioServico us join sc.endereco ed,  DadosPessoais dp ");
 		consulta.append(" where dp.usuario = us.usuario AND ed.usuario = sc.usuario AND sc.status = :paramStatus AND sc.estagio = :paramEstagio1  AND sc.usuario.idUsuario = :paramId");
 		query = manager.createQuery(consulta.toString(),ListaPedidosPendentesVO.class);
 		query.setParameter("paramId", id);
@@ -338,8 +395,8 @@ public class SolicitacaoContratoDao {
 		
 		
 	    
-		consulta.append(" from SolicitacaoContrato sc join sc.usuarioServico us, DadosPessoais dp, Endereco ed ");
-		consulta.append(" where dp.usuario = sc.usuario AND ed.usuario = sc.usuario AND sc.status = :paramStatus AND sc.estagio = :paramEstagio AND sc.usuarioServico.usuario.idUsuario = :paramId");
+		consulta.append(" from SolicitacaoContrato sc join sc.usuarioServico us join sc.endereco ed,  DadosPessoais dp ");
+		consulta.append(" where dp.usuario = sc.usuario AND sc.usuario = ed.usuario AND sc.status = :paramStatus AND sc.estagio = :paramEstagio AND sc.usuarioServico.usuario.idUsuario = :paramId");
 		query = manager.createQuery(consulta.toString(),ListaPedidosPendentesVO.class);
 		query.setParameter("paramId", id);
 		query.setParameter("paramStatus", "1");
@@ -384,7 +441,7 @@ public class SolicitacaoContratoDao {
 			
 			
 		    
-			consulta.append(" from SolicitacaoContrato sc join sc.usuarioServico us, DadosPessoais dp, Endereco ed ");
+			consulta.append(" from SolicitacaoContrato sc join sc.usuarioServico us join sc.endereco ed,  DadosPessoais dp ");
 			consulta.append(" where dp.usuario = sc.usuario AND ed.usuario = sc.usuario AND sc.status = :paramStatus1 AND (sc.estagio = :paramEstagio1 OR sc.estagio = :paramEstagio2) AND sc.usuarioServico.usuario.idUsuario = :paramId");
 			query = manager.createQuery(consulta.toString(),ListaPedidosPendentesVO.class);
 			query.setParameter("paramId", id);

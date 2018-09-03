@@ -1,222 +1,141 @@
-create database workfast;
-use workfast;
+-- phpMyAdmin SQL Dump
+-- version 4.5.2
+-- http://www.phpmyadmin.net
+--
+-- Host: localhost
+-- Generation Time: Sep 03, 2018 at 08:20 
+-- Server version: 10.1.13-MariaDB
+-- PHP Version: 7.0.8
 
-create table tipo_acesso(
- id int AUTO_INCREMENT PRIMARY KEY,
- descricao varchar(100) not null
-);
-
-
-create table usuario(
- id int AUTO_INCREMENT PRIMARY KEY,
- nome varchar(100) not null,
- email varchar(100) not null,
- senha varchar(100) not null,
- ativo char(1) not null,
- nivel_acesso char(1) not null,
- foto varchar(100) null,
- tipo_usuario char(1) not null,
- fk_tipo_acesso int not null,
- FOREIGN KEY(fk_tipo_acesso) REFERENCES tipo_acesso(id)
-);
-
-create table profissao(
-id int AUTO_INCREMENT PRIMARY KEY,
-nome varchar(100) not null,
-descricao varchar(100) not null
-);
-
-create table profissao_usuario(
-id int AUTO_INCREMENT PRIMARY KEY,
-fk_usuario int not null,
-fk_profissao int not null,
-FOREIGN KEY(fk_usuario) REFERENCES usuario (id),
-FOREIGN KEY(fk_profissao) REFERENCES profissao (id)
-);
-
-create table categoria_servico(
-id int AUTO_INCREMENT PRIMARY KEY,
-nome varchar(100) not null
-);
-
-create table servico(
-id int AUTO_INCREMENT PRIMARY KEY,
-nome varchar(100) not null,
-fk_categoria int not null,
-FOREIGN KEY(fk_categoria) REFERENCES categoria_servico (id)
-);
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET time_zone = "+00:00";
 
 
-create table usuario_servico(
-id int AUTO_INCREMENT PRIMARY KEY,
-descricao varchar(255) not null,
-fk_usuario int not null,
-fk_servico int not null,
-FOREIGN KEY(fk_usuario) REFERENCES usuario (id),
-FOREIGN KEY(fk_servico) REFERENCES servico (id)
-);
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
 
+--
+-- Database: `workfast`
+--
 
-create table dado_pessoal(
-id int AUTO_INCREMENT PRIMARY KEY,
-nomeFantasia varchar(100) null,
-razaoSocial varchar(100) null,
-cpfCnpj varchar(30) not null,
-rgIe varchar(30) null,  
-sexo char(1) null,
-dataNascimento date null,
-telefone varchar(25) null,
-celular varchar(25) null,
-fk_usuario int not null,
-FOREIGN KEY(fk_usuario) REFERENCES usuario (id)
-);
+-- --------------------------------------------------------
 
-CREATE TABLE estado (
-  id int AUTO_INCREMENT PRIMARY KEY,
-  nome varchar(255) not  NULL,
-  uf varchar(20) not NULL
-); 
+--
+-- Table structure for table `avaliacao`
+--
 
-CREATE TABLE cidade (
-  id int(11) AUTO_INCREMENT PRIMARY KEY NOT NULL,
-  nome varchar(255) not NULL,
-  estado int not NULL,
-  FOREIGN KEY(estado) REFERENCES estado(id)
-);
+CREATE TABLE `avaliacao` (
+  `id` int(11) NOT NULL,
+  `estrela` char(1) COLLATE utf8_unicode_ci NOT NULL,
+  `mensagem` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `data_postagem` datetime DEFAULT CURRENT_TIMESTAMP,
+  `fk_solicitacao_contrato` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
-create table endereco(
-id int AUTO_INCREMENT PRIMARY KEY,
-cidade int not null,
-rua varchar(45) not null,
-bairro varchar(45) not null,
-numero_casa varchar(45) not null,
-cep varchar(20) not null,
-estado int not null,
-complemento varchar(70) null,
-fk_usuario int not null,
-FOREIGN KEY(cidade) REFERENCES cidade (id),
-FOREIGN KEY(estado) REFERENCES estado (id),
-FOREIGN KEY(fk_usuario) REFERENCES usuario (id)
-);
+-- --------------------------------------------------------
 
-create table cidade_atuacao_servico(
- id int AUTO_INCREMENT PRIMARY KEY,
- fk_cidade int not null,
- fk_usuarioServico int not null,
- FOREIGN KEY(fk_cidade) REFERENCES cidade (id),
- FOREIGN KEY(fk_usuarioServico) REFERENCES usuario_servico(id)
-    
-);
+--
+-- Table structure for table `categoria_servico`
+--
 
-create table solicitacao_contrato(
-    id int AUTO_INCREMENT PRIMARY KEY,
-    dataPedido datetime DEFAULT CURRENT_TIMESTAMP,
-    fk_cliente int NOT null,
-    fk_prestadorServico int NOT null,
-    fk_endereco int NOT null,
-    status_solicitacao char(1) NOT null,
-    convite char(1) NOT null,
-    estagio char(1) not null,  
-    mensagem varchar(255) not null,
- 
-    FOREIGN KEY(fk_cliente) REFERENCES usuario (id),
-    FOREIGN KEY(fk_prestadorServico) REFERENCES usuario_servico (id),
-    FOREIGN KEY(fk_endereco) REFERENCES endereco (id)
-    
-);
+CREATE TABLE `categoria_servico` (
+  `id` int(11) NOT NULL,
+  `nome` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-create table chatSolicitacao(
-  id int AUTO_INCREMENT PRIMARY KEY,
-  data datetime DEFAULT CURRENT_TIMESTAMP,
-  mensagem text not null,
-  novo char(1) not null,
-  fk_solicitacao int not null,
-  fk_prestador int not null,
-  fk_cliente int not null,
-  FOREIGN KEY(fk_cliente) REFERENCES usuario (id),
-  FOREIGN KEY(fk_prestador) REFERENCES usuario (id),
-  FOREIGN KEY(fk_solicitacao) REFERENCES solicitacao_contrato (id)
-);
+--
+-- Dumping data for table `categoria_servico`
+--
 
-create table pendencias(
-	id int AUTO_INCREMENT PRIMARY KEY,
-	mensagem varchar(255) not null,
-	fk_solicitacao_contrato int NOT null,
-	data_postagem datetime DEFAULT CURRENT_TIMESTAMP,
-	FOREIGN KEY(fk_solicitacao_contrato) REFERENCES solicitacao_contrato (id)
-);
+INSERT INTO `categoria_servico` (`id`, `nome`) VALUES
+(1, 'Artesanato'),
+(2, 'Audio Visual'),
+(3, 'Beleza'),
+(4, 'Brindes'),
+(5, 'Comunicação'),
+(6, 'Confecção'),
+(7, 'Decoração'),
+(8, 'Educação'),
+(9, 'Eletrodomesticos'),
+(10, 'Eletrônica'),
+(11, 'Eventos'),
+(12, 'gastronomia'),
+(13, 'Gráfico'),
+(14, 'Informática'),
+(15, 'Locações'),
+(16, 'Manutenção'),
+(17, 'Mecânico'),
+(18, 'Móveis'),
+(19, 'Profissional Liberal'),
+(20, 'Refrigeração'),
+(21, 'Seguros'),
+(22, 'Serviços Domésticos'),
+(23, 'Sonorização'),
+(24, 'Tradução'),
+(25, 'Transporte'),
+(26, 'Turismo'),
+(27, 'Limpeza'),
+(28, 'Vulcanização'),
+(29, 'Revestimento'),
+(30, 'Telecomunição'),
+(31, 'Jardinagem'),
+(32, 'Construção e Reforma'),
+(33, 'Saúde'),
+(34, 'Proteção e Segurança'),
+(35, 'Pet'),
+(36, 'Outros');
 
+-- --------------------------------------------------------
 
-create table avaliacao(
- id int AUTO_INCREMENT PRIMARY KEY,
- estrela char not null, 
- mensagem varchar(255) not null,
- data_postagem datetime DEFAULT CURRENT_TIMESTAMP,
- fk_solicitacao_contrato int NOT null,    
-FOREIGN KEY(fk_solicitacao_contrato) REFERENCES solicitacao_contrato (id)
-);
+--
+-- Table structure for table `chatSolicitacao`
+--
 
-create table contrato(
-id int AUTO_INCREMENT PRIMARY KEY,
-codigoContrato varchar(10) not null,
-dataInicio date not null,
-descricaoServicos text not null,
-formaPagamento varchar(30) not null,
-valor float not null,
-parcelas int null,
-descricaoPagamento text not null,
-multa int null
-aceito char(1) not null
-fk_solicitacao_contrato int NOT null,    
-FOREIGN KEY(fk_solicitacao_contrato) REFERENCES solicitacao_contrato (id));
+CREATE TABLE `chatSolicitacao` (
+  `id` int(11) NOT NULL,
+  `data` datetime DEFAULT NULL,
+  `enviadoPor` int(11) DEFAULT NULL,
+  `mensagem` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `fk_solicitacao` int(11) DEFAULT NULL,
+  `fk_cliente` int(11) DEFAULT NULL,
+  `fk_prestador` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
+--
+-- Dumping data for table `chatSolicitacao`
+--
 
+INSERT INTO `chatSolicitacao` (`id`, `data`, `enviadoPor`, `mensagem`, `fk_solicitacao`, `fk_cliente`, `fk_prestador`) VALUES
+(1, NULL, 2, 'oi tudo bom', 18, 6, 2),
+(2, NULL, 2, 'blz ', 18, 6, 2),
+(3, NULL, 2, 'oi', 18, 6, 2),
+(4, NULL, 6, 'jhgjhgjhgjghjgjg', 18, 6, 2),
+(5, NULL, 2, 'khjkhkjhkjh', 18, 6, 2),
+(6, NULL, 2, 'ghjhgjhgjhg', 18, 6, 2),
+(7, NULL, 2, 'dgdg', 18, 6, 2),
+(8, NULL, 6, 'dgdgfd', 18, 6, 2),
+(9, NULL, 2, 'hjkhkjhkjhk', 18, 6, 2),
+(10, NULL, 6, 'jhjkhkjhkjh', 18, 6, 2),
+(11, NULL, 2, '45464654646', 18, 6, 2),
+(12, NULL, 6, 'kjkjlklkjl', 18, 6, 2);
 
+-- --------------------------------------------------------
 
-// insert
+--
+-- Table structure for table `cidade`
+--
 
-INSERT INTO `tipo_acesso` (`id`, `descricao`) VALUES
-(1, 'Cliente'),
-(2, 'Administrador'),
-(3, 'Prestador de Serviço');
+CREATE TABLE `cidade` (
+  `id` int(11) NOT NULL,
+  `nome` varchar(255) NOT NULL,
+  `estado` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-INSERT INTO `usuario` (`id`, `nome`, `email`, `senha`, `ativo`, `nivel_acesso`, `foto`, `tipo_usuario`, `fk_tipo_acesso`) VALUES
-(1, 'God Silva', 'gold@gmail.com', '123456', '1', '0', NULL, '0', 2);
-
-
-
-
-//Insert Estado
-
-INSERT INTO `estado` (`id`, `nome`, `uf`) VALUES
-(1, 'Acre', 'AC'),
-(2, 'Alagoas', 'AL'),
-(3, 'Amazonas', 'AM'),
-(4, 'Amapá', 'AP'),
-(5, 'Bahia', 'BA'),
-(6, 'Ceará', 'CE'),
-(7, 'Distrito Federal', 'DF'),
-(8, 'Espírito Santo', 'ES'),
-(9, 'Goiás', 'GO'),
-(10, 'Maranhão', 'MA'),
-(11, 'Minas Gerais', 'MG'),
-(12, 'Mato Grosso do Sul', 'MS'),
-(13, 'Mato Grosso', 'MT'),
-(14, 'Pará', 'PA'),
-(15, 'Paraíba', 'PB'),
-(16, 'Pernambuco', 'PE'),
-(17, 'Piauí', 'PI'),
-(18, 'Paraná', 'PR'),
-(19, 'Rio de Janeiro', 'RJ'),
-(20, 'Rio Grande do Norte', 'RN'),
-(21, 'Rondônia', 'RO'),
-(22, 'Roraima', 'RR'),
-(23, 'Rio Grande do Sul', 'RS'),
-(24, 'Santa Catarina', 'SC'),
-(25, 'Sergipe', 'SE'),
-(26, 'São Paulo', 'SP'),
-(27, 'Tocantins', 'TO');
-
+--
+-- Dumping data for table `cidade`
+--
 
 INSERT INTO `cidade` (`id`, `nome`, `estado`) VALUES
 (1, 'Afonso Cláudio', 8),
@@ -5786,715 +5705,1262 @@ INSERT INTO `cidade` (`id`, `nome`, `estado`) VALUES
 (5563, 'Wanderlândia', 27),
 (5564, 'Xambioá', 27);
 
-INSERT INTO `categoria_servico` (`id`, `nome`) VALUES
-(1, 'Artesanato'),
-(2, 'Audio Visual'),
-(3, 'Beleza'),
-(4, 'Brindes'),
-(5, 'Comunicação'),
-(6, 'Confecção'),
-(7, 'Decoração'),
-(8, 'Educação'),
-(9, 'Eletrodomesticos'),
-(10, 'Eletrônica'),
-(11, 'Eventos'),
-(12, 'gastronomia'),
-(13, 'Gráfico'),
-(14, 'Informática'),
-(15, 'Locações'),
-(16, 'Manutenção'),
-(17, 'Mecânico'),
-(18, 'Móveis'),
-(19, 'Profissional Liberal'),
-(20, 'Refrigeração'),
-(21, 'Seguros'),
-(22, 'Serviços Domésticos'),
-(23, 'Sonorização'),
-(24, 'Tradução'),
-(25, 'Transporte'),
-(26, 'Turismo'),
-(27, 'Limpeza'),
-(28, 'Vulcanização'),
-(29, 'Revestimento'),
-(30, 'Telecomunição'),
-(31, 'Jardinagem'),
-(32, 'Construção e Reforma'),
-(33, 'Saúde'),
-(34, 'Proteção e Segurança'),
-(35, 'Pet'),
-(36, 'Outros');
+-- --------------------------------------------------------
 
-INSERT INTO servico (nome, fk_categoria) VALUES
-("Artesanato", 1),
-("Trico", 1),
-("Crochê", 1),
-("Outos", 1);
+--
+-- Table structure for table `cidade_atuacao_servico`
+--
 
-INSERT INTO servico (nome, fk_categoria) VALUES
-("Fotografia", 2),
-("Filmagem", 2),
-("Sonorização", 2),
-("Produção", 2),
-("Conversao LP para CD", 2),
-("Conversão VHS para DVD/Blu Ray", 2),
-("Recuperação de K7/VHS", 2),
-("Estúdio de Música", 2),
-("Sistema de Audio, video Automação", 2),
-("Outros", 2);
+CREATE TABLE `cidade_atuacao_servico` (
+  `id` int(11) NOT NULL,
+  `fk_cidade` int(11) NOT NULL,
+  `fk_usuarioServico` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-INSERT INTO servico (nome, fk_categoria) VALUES
-("Cabeleleiro", 3),
-("Manicure", 3),
-("Pedicure", 3),
-("Massagem", 3),
-("Podólogo", 3),
-("Esteticista", 3),
-("Barbeiro", 3),
-("Depilação", 3),
-("Designer de Sombrancelhas", 3),
-("Outros", 3);
+--
+-- Dumping data for table `cidade_atuacao_servico`
+--
 
+INSERT INTO `cidade_atuacao_servico` (`id`, `fk_cidade`, `fk_usuarioServico`) VALUES
+(1, 3339, 1),
+(2, 3339, 2),
+(3, 3339, 3),
+(4, 3339, 4),
+(5, 3184, 5),
+(6, 3339, 5),
+(7, 3186, 6),
+(8, 3339, 6);
 
-INSERT INTO servico (nome, fk_categoria) VALUES
-("Pastas, Camistas", 4),
-("Canetas, Chaveiros", 4),
-("Adesivos", 4),
-("Outros", 4);
+-- --------------------------------------------------------
 
- INSERT INTO servico (nome, fk_categoria) VALUES
-("Comunicação Visual", 5),
-("Identidade Visual", 5),
-("Faixas", 5),
-("Letreiros", 5),
-("Grafiteiro", 5),
-("Marketing Digital", 5),
-("Outros", 5);
+--
+-- Table structure for table `contrato`
+--
 
+CREATE TABLE `contrato` (
+  `id` int(11) NOT NULL,
+  `codigoContrato` varchar(10) COLLATE utf8_unicode_ci NOT NULL,
+  `dataInicio` date NOT NULL,
+  `descricaoServicos` text COLLATE utf8_unicode_ci NOT NULL,
+  `formaPagamento` varchar(30) COLLATE utf8_unicode_ci NOT NULL,
+  `valor` float NOT NULL,
+  `parcelas` int(11) DEFAULT NULL,
+  `descricaoPagamento` text COLLATE utf8_unicode_ci NOT NULL,
+  `multa` int(11) DEFAULT NULL,
+  `aceito` char(1) COLLATE utf8_unicode_ci NOT NULL,
+  `fk_solicitacao_contrato` int(11) NOT NULL,
+  `prazo` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
-INSERT INTO servico (nome, fk_categoria) VALUES
-("Costureira", 6),
-("Silk Screen", 6),
-("Alfaiate", 6),
-("Manutenção de Roupa", 6),
-("Pequenos Reparos", 6),
-("Outros", 6);
+--
+-- Dumping data for table `contrato`
+--
 
- INSERT INTO servico (nome, fk_categoria) VALUES
-("Persianas", 7),
-("Toldos", 7),
-("Papel de Parede", 7),
-("Cortinas", 7),
-("Tapetes", 7),
-("Caspetes", 7),
-("Designer de Interiores", 7),
-("Decorador", 7),
-("Paisagismo", 7),
-("Decorador", 7),
-("Jardinagem", 7),
-("Outros", 7);
+INSERT INTO `contrato` (`id`, `codigoContrato`, `dataInicio`, `descricaoServicos`, `formaPagamento`, `valor`, `parcelas`, `descricaoPagamento`, `multa`, `aceito`, `fk_solicitacao_contrato`, `prazo`) VALUES
+(2, '', '2018-09-12', 'testeggjkagksjhdjkhajshdjkhsjkdhkjhasjkdhjkahdjhaksjhdkjhajkdhkjahdkhsakjdhkajhdkhakjdhkahsd', 'Em dinheiro', 500, 0, 'kjkljfdlkjlkjflkjslkjfkljsdkfljlskjfkjdkljfkljsdlkfjdklsjfkljslfjslkjfljslkfjlsj', 0, '0', 18, 90);
 
-INSERT INTO servico (nome, fk_categoria) VALUES
-("Aula Particular", 8),
-("Aula de Reforço", 8),
-("Aula de Inglês", 8),
-("Aula de Alemão", 8),
-("Aula de Espanhol", 8),
-("Aula de Italiano", 8),
-("Aula de Instrumentos Musicais", 8),
-("Aula Particular de Ballet", 8),
-("Arte", 8),
-("Outros", 8);
+-- --------------------------------------------------------
 
- INSERT INTO servico (nome, fk_categoria) VALUES
-("Consertos em Geral", 9),
-("Outros", 9);
+--
+-- Table structure for table `dado_pessoal`
+--
 
- INSERT INTO servico (nome, fk_categoria) VALUES
-("Conserto em Geral", 10),
-("Manutenção em Geral", 10),
-("Outros", 10);
+CREATE TABLE `dado_pessoal` (
+  `id` int(11) NOT NULL,
+  `nomeFantasia` varchar(100) DEFAULT NULL,
+  `razaoSocial` varchar(100) DEFAULT NULL,
+  `cpfCnpj` varchar(25) NOT NULL,
+  `rgIe` varchar(25) DEFAULT NULL,
+  `sexo` char(1) DEFAULT NULL,
+  `dataNascimento` date DEFAULT NULL,
+  `telefone` varchar(20) DEFAULT NULL,
+  `celular` varchar(20) DEFAULT NULL,
+  `fk_usuario` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-INSERT INTO servico (nome, fk_categoria) VALUES
-("Festas em Geral", 11),
-("Coffe Break", 11),
-("Coquetel", 11),
-("Churrasco", 11),
-("Organização de Eventos", 11),
-("Sonorização", 11),
-("Comes e Bebes", 11),
-("Mestre de Cerimônia", 11),
-("Fotógrafo", 11),
-("Músico", 11),
-("Locação de Cadeiras, Mesas, Utensílios", 11),
-("Animador de Festas", 11),
-("Assessor de Casamento", 11),
-("Bartender", 11),
-("Cantos de Cerimonias", 11),
-("Confeiteiro", 11),
-("Conzinheiro", 11),
-("Decoração Para Eventos", 11),
-("Outros", 11);
+--
+-- Dumping data for table `dado_pessoal`
+--
 
-INSERT INTO servico (nome, fk_categoria) VALUES
-("Doces e Salgados", 12),
-("Bolos", 12),
-("Jantares", 12),
-("Comida Vegetariana", 12),
-("Churrasco", 12),
-("Outros", 12);
+INSERT INTO `dado_pessoal` (`id`, `nomeFantasia`, `razaoSocial`, `cpfCnpj`, `rgIe`, `sexo`, `dataNascimento`, `telefone`, `celular`, `fk_usuario`) VALUES
+(1, '', '', '111.111.111-11', '1.111.111', '1', '1994-12-11', '(11) 1111-1111', '(11) 11111-1111', 2),
+(2, '', '', '222.222.222-22', '2.222.222', '1', '2000-12-11', '(22) 2222-2222', '(22) 22222-2222', 3),
+(3, '', '', '999.999.999-99', '99.999.999-9', '1', '1994-12-11', '(11) 1111-1111', '(11) 1 1111-1111', 4),
+(4, 'fg service', 'fg service ltda', '33.333.333/3333-33', '33333', '', '2000-01-10', '(33) 3333-3333', ' ', 5),
+(6, '', '', '555.555.555-55', '55.555.555-5', '1', '1994-11-12', '(11) 1111-1111', '(11) 1 1111-1111', 6),
+(7, '', '', '666.666.666-66', '66.666.666-6', '1', '1994-11-12', '(11) 1111-1111', '(11) 1 1111-1111', 7),
+(8, 'Empresa1', 'empresa1 ltda', '11.111.111/1111-11', '111111-11', '', '2000-10-10', '(11) 1111-1111', '(11) 1 1111-1111', 8),
+(9, '', '', '777.777.777-77', '1.111.111', '1', '1994-11-12', '(11) 1111-1111', '(11) 1 1111-1111', 9),
+(10, '', '', '777.777.777-77', '1.111.111', '1', '1994-11-12', '(11) 1111-1111', '(11) 1 1111-1111', 9),
+(11, 'Empresa2', 'empresa2 ltda', '22.222.222/2222-22', '111111-11', '', '2000-10-10', '(11) 1111-1111', '(11) 1 1111-1111', 10),
+(12, '', '', '333.333.333-33', '3.333.333', '1', '1992-11-12', '(11) 1111-1111', '(11) 1 1111-1111', 11),
+(13, 'empresa3', 'empresa3 ltda', '44.444.444/4444-44', '333333-33', '', '2000-10-10', '(11) 1111-1111', '(11) 1 1111-1111', 12),
+(14, '', '', '987.856.456-43', '1.111.111', '1', '1992-09-11', '(11) 1111-1111', '(11) 1 1111-1111', 13);
 
-INSERT INTO servico (nome, fk_categoria) VALUES
-("Impressão de Panfletos", 13),
-("Cartões de Visita", 13),
-("Convites", 13),
-("Impressos", 13),
-("Etiquetas", 13),
-("Logotipos", 13),
-("Arte Graficas", 13),
-("Cartunista", 13),
-("Outros", 13);
+-- --------------------------------------------------------
 
- INSERT INTO servico (nome, fk_categoria) VALUES
-("Programador", 14),
-("Web Designer", 14),
-("Analista de Sistemas", 14),
-("Equipamentos em Geral", 14),
-("Web Sites", 14),
-("Consultoria", 14),
-("Desenvolvimento de Sistemas", 14),
-("Redes e Cabeamento", 14),
-("Conserto de Computadores", 14),
-("Outros", 14);
+--
+-- Table structure for table `endereco`
+--
 
-INSERT INTO servico (nome, fk_categoria) VALUES
-("Geradores", 15),
-("Veículos em Geral", 15),
-("Cadeiras, Mesas e Utensílios", 15),
-("Banheiro Químico", 15),
-("Segurança", 15),
-("Garçom", 15),
-("Som Para Eventos", 15),
-("Máquinas de Jogos", 15),
-("Quadras em Geral", 15),
-("Casa de Praia", 15),
-("Sítios em Geral", 15),
-("Salões em Geral", 15),
-("Outros", 15);
+CREATE TABLE `endereco` (
+  `id` int(11) NOT NULL,
+  `cidade` int(11) NOT NULL,
+  `rua` varchar(45) NOT NULL,
+  `bairro` varchar(45) NOT NULL,
+  `numero_casa` varchar(45) NOT NULL,
+  `cep` varchar(20) NOT NULL,
+  `estado` int(11) NOT NULL,
+  `complemento` varchar(70) DEFAULT NULL,
+  `fk_usuario` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-INSERT INTO servico (nome, fk_categoria) VALUES
-("Reparação em Geral", 16),
-("Conserto em Geral", 16),
-("Reforma em Geral", 16),
-("Pintura em Geral", 16),
-("Eletricista", 16),
-("Encanador", 16),
-("Pedreiro", 16),
-("Telhadista", 16),
-("Pisos", 16),
-("Gesseiro", 16),
-("Dry Wall", 16),
-("Rufos e Calhas", 16),
-("Aparelhos de Ginástica", 16),
-("Outros", 16);
+--
+-- Dumping data for table `endereco`
+--
 
- INSERT INTO servico (nome, fk_categoria) VALUES
-("Conserto de Automoveis", 17),
-("Conserto de Motocicletas", 17),
-("Conserto de Motores", 17),
-("Outros", 17);
+INSERT INTO `endereco` (`id`, `cidade`, `rua`, `bairro`, `numero_casa`, `cep`, `estado`, `complemento`, `fk_usuario`) VALUES
+(1, 3339, 'Rua Quarenta e Cinco', 'Parque Capibaribe', '11', '54.720-235', 16, 'casa', 2),
+(2, 3339, 'Rua Quarenta e Cinco', 'Parque Capibaribe', '11', '54.720-235', 16, 'casa', 3),
+(3, 3339, 'Rua Quarenta e Cinco', 'Parque Capibaribe', 'casa', '54.720-235', 16, 'apartemento', 5),
+(5, 3339, 'Rua Quarenta e Cinco', 'Parque Capibaribe', '122', '54.720-235', 16, 'bloco2', 6),
+(6, 3213, 'Rua Manoel Florentino da Silva', 'São Francisco', '111', '54530410', 16, 'casas', 7),
+(7, 3339, 'Rua Quarenta e Cinco', 'Parque Capibaribe', '11', '54.720-235', 16, 'predio', 8),
+(8, 3339, 'Rua Quarenta e Cinco', 'Parque Capibaribe', '111', '54.720-235', 16, 'casa', 9),
+(9, 3339, 'Rua Quarenta e Cinco', 'Parque Capibaribe', '111', '54.720-235', 16, 'casa', 9),
+(10, 3339, 'Rua Quarenta e Cinco', 'Parque Capibaribe', '11', '54.720-235', 16, '11', 10),
+(11, 3339, 'Rua Quarenta e Cinco', 'Parque Capibaribe', '111', '54.720-235', 16, 'predio', 11),
+(12, 3339, 'Rua Quarenta e Cinco', 'Parque Capibaribe', '111', '54.720-235', 16, 'casa', 12),
+(13, 3339, 'Rua Quarenta e Cinco', 'Parque Capibaribe', '11', '54.720-235', 16, '', 13),
+(15, 3183, 'r7', 'jose', '12', '53500990', 16, 'casa', 6);
 
+-- --------------------------------------------------------
 
-INSERT INTO servico (nome, fk_categoria) VALUES
-("Marcenaria", 18),
-("Montagem", 18),
-("Móveis Encomendados", 18),
-("Restauração", 18),
-("Tapeçaria", 18),
-("Estofador", 18),
-("Outros", 18);
+--
+-- Table structure for table `estado`
+--
 
- INSERT INTO servico (nome, fk_categoria) VALUES
-("Médico", 19),
-("Advogado", 19),
-("Engenheiro", 19),
-("Arquiteto", 19),
-("Programador", 19),
-("Web Designer", 19),
-("Dentista", 19),
-("Fisioterapeuta", 19),
-("Massagista", 19),
-("Designer Comunicação Visual", 19),
-("Contador", 19),
-("Personal Trainer", 19),
-("Personal Stylist", 19),
-("Personal Organizer", 19),
-("Outros", 19);
+CREATE TABLE `estado` (
+  `id` int(11) NOT NULL,
+  `nome` varchar(255) NOT NULL,
+  `uf` varchar(20) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-INSERT INTO servico (nome, fk_categoria) VALUES
-("Instalação em Geral", 20),
-("Conserto em Geral", 20),
-("Montagem de Câmara Fria", 20),
-("Outros", 20);
+--
+-- Dumping data for table `estado`
+--
 
-INSERT INTO servico (nome, fk_categoria) VALUES
-("Automotivo", 21),
-("Residencial", 21),
-("Pessoal", 21),
-("Outros", 21);
+INSERT INTO `estado` (`id`, `nome`, `uf`) VALUES
+(1, 'Acre', 'AC'),
+(2, 'Alagoas', 'AL'),
+(3, 'Amazonas', 'AM'),
+(4, 'Amapá', 'AP'),
+(5, 'Bahia', 'BA'),
+(6, 'Ceará', 'CE'),
+(7, 'Distrito Federal', 'DF'),
+(8, 'Espírito Santo', 'ES'),
+(9, 'Goiás', 'GO'),
+(10, 'Maranhão', 'MA'),
+(11, 'Minas Gerais', 'MG'),
+(12, 'Mato Grosso do Sul', 'MS'),
+(13, 'Mato Grosso', 'MT'),
+(14, 'Pará', 'PA'),
+(15, 'Paraíba', 'PB'),
+(16, 'Pernambuco', 'PE'),
+(17, 'Piauí', 'PI'),
+(18, 'Paraná', 'PR'),
+(19, 'Rio de Janeiro', 'RJ'),
+(20, 'Rio Grande do Norte', 'RN'),
+(21, 'Rondônia', 'RO'),
+(22, 'Roraima', 'RR'),
+(23, 'Rio Grande do Sul', 'RS'),
+(24, 'Santa Catarina', 'SC'),
+(25, 'Sergipe', 'SE'),
+(26, 'São Paulo', 'SP'),
+(27, 'Tocantins', 'TO');
 
- INSERT INTO servico (nome, fk_categoria) VALUES
-("Diarista", 22),
-("Faxina", 22),
-("Limpeza em Geral", 22),
-("Lavagem de Roupa", 22),
-("Passar de Roupa", 22),
-("Cuidador", 22),
-("Babá", 22),
-("Outros", 22);
+-- --------------------------------------------------------
 
- INSERT INTO servico (nome, fk_categoria) VALUES
-("Som Para Eventos", 23),
-("Som Automotivo", 23),
-("Instalação de Home Theater", 23),
-("Outros", 23);
-	
- INSERT INTO servico (nome, fk_categoria) VALUES
-("Tradutor", 24),
-("Tradutor e Intérprete", 24),
-("Traduções Simultâneas", 24),
-("Outros", 24);
+--
+-- Table structure for table `pendencias`
+--
 
- INSERT INTO servico (nome, fk_categoria) VALUES
-("Mudança", 25),
-("Ônibus Escolar", 25),
-("Motorista", 25),
-("Outros", 25);
+CREATE TABLE `pendencias` (
+  `id` int(11) NOT NULL,
+  `data_postagem` datetime DEFAULT NULL,
+  `mensagem` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `fk_solicitacao_contrato` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
-INSERT INTO servico (nome, fk_categoria) VALUES
-("Hospedagem Em Casa de Familia", 26),
-("Hotel", 26),
-("Motel", 26),
-("Pousada", 26),
-("Outros", 26);
+-- --------------------------------------------------------
 
-INSERT INTO servico (nome, fk_categoria) VALUES
-("Predial", 27),
-("Tapetes e Carpetes", 27),
-("Residencial", 27),
-("Piscina", 27),
-("Fachadas", 27),
-("Automotiva", 27),
-("Pós-Obra", 27),
-("Caixa D'Agua", 27),
-("Movéis", 27),
-("Outros", 27);
+--
+-- Table structure for table `profissao`
+--
 
- INSERT INTO servico (nome, fk_categoria) VALUES
-("Correias Transportadoras", 28),
-("Borracharia", 28),
-("Pneus", 28),
-("Borracha em Geral", 28),
-("Outros", 28);
+CREATE TABLE `profissao` (
+  `id` int(11) NOT NULL,
+  `nome` varchar(100) NOT NULL,
+  `descricao` varchar(100) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-INSERT INTO servico (nome, fk_categoria) VALUES
-("Impermeabilização", 29),
-("Cilindro", 29),
-("Piso", 29),
-("Azulejo", 29),
-("Forros", 29),
-("Outros", 29);
+--
+-- Dumping data for table `profissao`
+--
 
-INSERT INTO servico (nome, fk_categoria) VALUES
-("Telefonia", 30),
-("Radios e Comunicação", 30),
-("Teleconferência", 30),
-("Instalação de Redes de Computadores", 30),
-("Instalação e Manutenção de Câmeras", 30),
-("Instalação e Manutenção de Interfones", 30),
-("Instalação de Cental Telefonica/PABX", 30),
-("Outros", 30);
+INSERT INTO `profissao` (`id`, `nome`, `descricao`) VALUES
+(1, 'ADMINISTRADOR ', NULL),
+(2, 'ADMINISTRADOR DE EDIFICIO ', NULL),
+(3, 'ADMINISTRADOR DE EXPLORACAO AGRICOLA ', NULL),
+(4, 'ADMINISTRADORES ', NULL),
+(5, 'ADVOGADO ', NULL),
+(6, 'ADVOGADO DIREITO DO TRABALHO ', NULL),
+(7, 'AGENCIADOR DE PROPAGANDA ', NULL),
+(8, 'AGENTE ADMINISTRATIVO ', NULL),
+(9, 'AGENTE DE COMPRAS ', NULL),
+(10, 'AGENTE DE VENDA DE SERVICOS AS EMPRESAS ', NULL),
+(11, 'AGENTE DE VIAGEM ', NULL),
+(12, 'AGENTE PUBLICITARIO ', NULL),
+(13, 'AGENTE TECNICO DE VENDAS ', NULL),
+(14, 'AGENTES ADMINISTRATIVOS ', NULL),
+(15, 'AGENTES DE ADMINISTRACAO DE EMPRESAS PUBLICAS E PRIVADAS ', NULL),
+(16, 'ALMOXARIFE ', NULL),
+(17, 'ANALISTA DE CARGOS E SALARIOS ', NULL),
+(18, 'ANALISTA DE COMERCIALIZACAO ', NULL),
+(19, 'ANALISTA DE COMUNICACA 8234    ANALISTA DE CREDITO E COBRANCA ', NULL),
+(20, 'ANALISTA DE IMPORTACAO E EXPORTACAO ', NULL),
+(21, 'ANALISTA DE OCUPACAO ', NULL),
+(22, 'ANALISTA DE ORGANIZACAO E METODOS ', NULL),
+(23, 'ANALISTA DE PESQUISA DE MERCADO ', NULL),
+(24, 'ANALISTA DE RECURSOS HUMANOS ', NULL),
+(25, 'ANALISTA DE SEGUROS ', NULL),
+(26, 'ANALISTA DE SISTEMAS ', NULL),
+(27, 'ANALISTA DE SUPORTE DE SISTEMA ', NULL),
+(28, 'APONTADOR DE MAO DE OBRA ', NULL),
+(29, 'APONTADOR DE PRODUCAO ', NULL),
+(30, 'ARQUITETO ', NULL),
+(31, 'ARQUIVISTA ', NULL),
+(32, 'ASSISTENTE ADMINISTRATIVO ', NULL),
+(33, 'ASSISTENTE DE PATRIMONIO ', NULL),
+(34, 'ASSISTENTE DE VENDAS FINANCEIRO ', NULL),
+(35, 'ASSISTENTE SOCIAL ', NULL),
+(36, 'ATENDETE DE ENFERMAGEM ', NULL),
+(37, 'ATLETA PROFISSIONAL DE FUTEBOL ', NULL),
+(38, 'AUDITOR CONTABIL ', NULL),
+(39, 'AUDITOR GERAL ', NULL),
+(40, 'AUXILIAR DE ALMOXARIFADO ', NULL),
+(41, 'AUXILIAR DE BIBLIOTECA ', NULL),
+(42, 'AUXILIAR DE CONTABILIDADE ', NULL),
+(43, 'AUXILIAR DE ENFERMAGEM ', NULL),
+(44, 'AUXILIAR DE ESCRITORIO ', NULL),
+(45, 'AUXILIAR DE FARMACIA ', NULL),
+(46, 'AUXILIAR DE IMPORTACAO E EXPORTACAO ', NULL),
+(47, 'AUXILIAR DE LABORATORIO DE ANALISES CLINICAS ', NULL),
+(48, 'AUXILIAR DE LABORATORIO DE ANALISES FISICOQUIMICAS ', NULL),
+(49, 'AUXILIAR DE PESSOAL ', NULL),
+(50, 'AUXILIAR DE SEGUROS ', NULL),
+(51, 'AUXILIAR DE SERVICOS JURIDICOS ', NULL),
+(52, 'AUXILIARES DE CONTABILIDADE ', NULL),
+(53, 'AUXILIARES DE ESCRITORIO ', NULL),
+(54, 'BABA ', NULL),
+(55, 'BARMAN ', NULL),
+(56, 'BIBLIOTECARIO ', NULL),
+(57, 'BIOLOGISTA ', NULL),
+(58, 'BIOQUIMICO ', NULL),
+(59, 'CABELEIREIRO ', NULL),
+(60, 'CARTEIRO ', NULL),
+(61, 'CHEFE DE ADMINISTRATIVOS ', NULL),
+(62, 'CHEFE DE ALMOXARIFADO ', NULL),
+(63, 'CHEFE DE CONTABILIDADE ', NULL),
+(64, 'CHEFE DE CONTABILIDADE E FINANCAS ', NULL),
+(65, 'CHEFE DE CONTAS A PAGAR ', NULL),
+(66, 'CHEFE DE CONTROLE DE PATRIMONIO ', NULL),
+(67, 'CHEFE DE ESCRITORIO ', NULL),
+(68, 'CHEFE DE ESCRITORIO CONTABILIDADE ', NULL),
+(69, 'CHEFE DE ESCRITORIO CREDITO E COBRANCA ', NULL),
+(70, 'CHEFE DE ESCRITORIO ORCAMENTO ', NULL),
+(71, 'CHEFE DE ESCRITORIO PESSOAL ', NULL),
+(72, 'CHEFE DE ESCRITORIO SERVICOS GERAIS ', NULL),
+(73, 'CHEFE DE ESCRITORIO TESOURARIA ', NULL),
+(74, 'CHEFE DE RECEPCAO HOTEL ', NULL),
+(75, 'CHEFE DE SERVICO DE TRANSPORTE RODOVIARIO ', NULL),
+(76, 'CHEFE DE SERVICOS DE TELECOMUNICACOES ', NULL),
+(77, 'CIRURGIAO ', NULL),
+(78, 'CIRURGIAO DENTISTA ', NULL),
+(79, 'CODIFICADOR DE DADOS ', NULL),
+(80, 'COMERCIANTE VAREJISTA ', NULL),
+(81, 'COMISSARIO DE BORDO AERONAVES ', NULL),
+(82, 'COMPRADOR COMERCIO ATACADISTA E VAREJISTA ', NULL),
+(83, 'CONDUTOR DE CAMINHAO BASCULANTE ', NULL),
+(84, 'CONDUTORES DE AUTOMOVEIS ', NULL),
+(85, 'CONSULTOR JURIDICO ', NULL),
+(86, 'CONTADOR ', NULL),
+(87, 'CONTRAMESTRE DE EMBARCACAO ', NULL),
+(88, 'CONTRAMESTRE INDUSTRIA TEXTIL ', NULL),
+(89, 'COORDENADOR DE ENSINO ', NULL),
+(90, 'CORRESPONDENTE COMERCIAL ', NULL),
+(91, 'COZINHEIRO CHEFE ', NULL),
+(92, 'CRONOANALISTA ', NULL),
+(93, 'DATILOGRAFO ', NULL),
+(94, 'DEMONSTRADOR ', NULL),
+(95, 'DESENHISTA ', NULL),
+(96, 'DESENHISTA PROJETISTA ', NULL),
+(97, 'DESENHISTA TECNICO ', NULL),
+(98, 'DESPACHANTE ', NULL),
+(99, 'DIAGRAMADOR ', NULL),
+(100, 'DIGITADOR ', NULL),
+(101, 'DIRETOR DE EMPRESA ', NULL),
+(102, 'DIRETOR DE EMPRESA DE COMERCIO VAREJISTA ', NULL),
+(103, 'DIRETOR DE EMPRESA DE COMUNICACOES ', NULL),
+(104, 'DIRETOR DE EMPRESA DE CONSTRUCAO CIVIL ', NULL),
+(105, 'DIRETOR DE EMPRESA DE PRESTACAO DE SERVICOS ', NULL),
+(106, 'DIRETOR DE EMPRESA DE SERVICOS CLINICOS E HOSPITALARES ', NULL),
+(107, 'DIRETOR DE EMPRESA FINANCEIRA ', NULL),
+(108, 'DIRETOR DE EMPRESA MANUFATUREIRA ', NULL),
+(109, 'DIRETOR DE ESTABELECIMENTO DE ENSINO ', NULL),
+(110, 'DIRETOR DE ESTABELECIMENTO DE ENSINO SUPERIOR ', NULL),
+(111, 'DIRETORES DE EMPRESAS ', NULL),
+(112, 'ECONOMISTA ', NULL),
+(113, 'ECONOMISTA MERCADOLOGIA ', NULL),
+(114, 'ECONOMISTA PROGRAMACAO ECONOMICO FINANCEIRA ', NULL),
+(115, 'ECONOMISTAS ', NULL),
+(116, 'EDITOR DE LIVROS ', NULL),
+(117, 'ENCARREGADO DE DIGITACAO E OPERACAO ', NULL),
+(118, 'ENFERMEIRO ', NULL),
+(119, 'ENFERMEIRO DO TRABALHO ', NULL),
+(120, 'ENFERMEIROS ', NULL),
+(121, 'ENGENHEIRO AERONAUTICO ', NULL),
+(122, 'ENGENHEIRO AGRONOMO ', NULL),
+(123, 'ENGENHEIRO CIVIL ', NULL),
+(124, 'ENGENHEIRO DE CONTROLE DE QUALIDADE ', NULL),
+(125, 'ENGENHEIRO DE MANUTENCAO ELETRICIDADE E ELETRONICA ', NULL),
+(126, 'ENGENHEIRO DE MINAS ', NULL),
+(127, 'ENGENHEIRO DE ORGANIZACAO E METODOS ', NULL),
+(128, 'ENGENHEIRO DE SEGURANCA DO TRABALHO ', NULL),
+(129, 'ENGENHEIRO DE TELECOMUNICACOES ', NULL),
+(130, 'ENGENHEIRO DE TRAFEGO ', NULL),
+(131, 'ENGENHEIRO ELETRICISTA ', NULL),
+(132, 'ENGENHEIRO ELETRONICO ', NULL),
+(133, 'ENGENHEIRO MECANICO ', NULL),
+(134, 'ENGENHEIRO QUIMICO ', NULL),
+(135, 'ENGENHEIROS ', NULL),
+(136, 'ESCRITURARIO ', NULL),
+(137, 'ESCRIVAO ', NULL),
+(138, 'ESTATISTICO ', NULL),
+(139, 'ESTETICISTA ', NULL),
+(140, 'FARMACEUTICO ', NULL),
+(141, 'FISIOTERAPEUTA ', NULL),
+(142, 'FONOAUDIOLOGO ', NULL),
+(143, 'FUNCIONARIO PUBLICO ESTADUAL SUPERIOR ', NULL),
+(144, 'FUNCIONARIO PUBLICO FEDERAL SUPERIOR ', NULL),
+(145, 'FUNCIONARIO PUBLICO MUNICIPAL SUPERIOR ', NULL),
+(146, 'FUNCIONARIO PUBLICO SUPERIOR ', NULL),
+(147, 'GEOLOGO ', NULL),
+(148, 'GERENTE ADMINISTRATIVO ', NULL),
+(149, 'GERENTE COMERCIAL ', NULL),
+(150, 'GERENTE DE BANCO ', NULL),
+(151, 'GERENTE DE BAR ', NULL),
+(152, 'GERENTE DE COMPRA ', NULL),
+(153, 'GERENTE DE  EMPRESAS ', NULL),
+(154, 'GERENTE DE HOTEL ', NULL),
+(155, 'GERENTE DE INFORMATICA ', NULL),
+(156, 'GERENTE DE LOJA ', NULL),
+(157, 'GERENTE DE MARKETING ', NULL),
+(158, 'GERENTE DE OPERACAO ', NULL),
+(159, 'GERENTE DE PESQUISA E DESENVOLVIMENTO ', NULL),
+(160, 'GERENTE DE PESSOAL ', NULL),
+(161, 'GERENTE DE PLANEJAMENTO ', NULL),
+(162, 'GERENTE DE POSTAL E TELECOMUNICACOES ', NULL),
+(163, 'GERENTE DE PRODUCAO ', NULL),
+(164, 'GERENTE DE PROPAGANDA ', NULL),
+(165, 'GERENTE DE RESTAURANTE ', NULL),
+(166, 'GERENTE DE RH ', NULL),
+(167, 'GERENTE DE TRANSPORTE ', NULL),
+(168, 'GERENTE DE VENDAS ', NULL),
+(169, 'GERENTE EXECUTIVO ', NULL),
+(170, 'GERENTE FINANCEIRO ', NULL),
+(171, 'GERENTE OPERACIONAL ', NULL),
+(172, 'INSPETOR DE PRODUCAO ', NULL),
+(173, 'INSPETOR DE QUALIDADE ', NULL),
+(174, 'INSPETOR DE	SERVICOS DE TRANSPORTE ', NULL),
+(175, 'INSPETOR TECNICO DE VENDAS ', NULL),
+(176, 'INSTRUTOR DE APRENDIZAGEM E TREINAMENTO ', NULL),
+(177, 'JORNALISTA ', NULL),
+(178, 'LABORATORISTA ANALISES CLINICAS ', NULL),
+(179, 'LABORATORISTA INDUSTRIAL ', NULL),
+(180, 'LOCUTOR ', NULL),
+(181, 'MAITRE ', NULL),
+(182, 'MEDICO ', NULL),
+(183, 'MEDICO ANESTESISTA ', NULL),
+(184, 'MEDICO CARDIOLOGISTA ', NULL),
+(185, 'MEDICO DO TRABALHO ', NULL),
+(186, 'MEDICO GINECOLOGISTA ', NULL),
+(187, 'MEDICO ORTOPEDISTA ', NULL),
+(188, 'MEDICO PEDIATRA ', NULL),
+(189, 'MEDICO PSIQUIATRA ', NULL),
+(190, 'MEDICO VETERINARIO ', NULL),
+(191, 'MESTRE CONTRUCAO CIVIL ', NULL),
+(192, 'MESTRE INDUSTRIAL ', NULL),
+(193, 'MOTOCICLISTA TRANSPORTE DE MERCADORIAS ', NULL),
+(194, 'MOTORISTA ', NULL),
+(195, 'MOTORISTA DE CAMINHAO ', NULL),
+(196, 'MOTORISTA DE FURGAO OU VEICULO SIMILAR ', NULL),
+(197, 'MOTORISTA DE ONIBUS ', NULL),
+(198, 'MOTORISTA DE TAXI ', NULL),
+(199, 'MUSICO ', NULL),
+(200, 'NUTRICIONISTA ', NULL),
+(201, 'OPERADOR DE CAMERA DE TELEVISAO ', NULL),
+(202, 'OPERADOR DE COMPUTADOR ', NULL),
+(203, 'OPERADOR DE EQUIPAMENTOS DE ENTRADA DE DADOS ', NULL),
+(204, 'OPERADOR DE ESTACAO DE RADIO ', NULL),
+(205, 'OPERADOR DE MAQUINAS E VEICULOS ', NULL),
+(206, 'OPERADOR DE MICRO ', NULL),
+(207, 'OPERADOR DE PRODUTOS FINANCEIROS ', NULL),
+(208, 'OPERADOR DE RAIOS X ', NULL),
+(209, 'OPERADOR DE TELEMARKETING ', NULL),
+(210, 'ORIENTADOR EDUCACIONAL ', NULL),
+(211, 'OURIVES ', NULL),
+(212, 'PEDAGOGO ', NULL),
+(213, 'PILOTO ', NULL),
+(214, 'PINTOR ', NULL),
+(215, 'PRODUTOR DE RADIO E TELEVISAO ', NULL),
+(216, 'PROFESSOR DE 1A A 4A SERIE ENSINO DE 1O GRAU ', NULL),
+(217, 'PROFESSOR DE ADMINISTRACAO ENSINO SUPERIOR ', NULL),
+(218, 'PROFESSOR DE ALUNOS COM DEFICENCIAS MENTAIS ', NULL),
+(219, 'PROFESSOR DE BIOLOGIA ENSINO DE 2O GRAU ', NULL),
+(220, 'PROFESSOR DE CIENCIAS NATURAIS ENSINO DE 1O GRAU ', NULL),
+(221, 'PROFESSOR DE COMUNICACAO ', NULL),
+(222, 'PROFESSOR DE CONTABILIDADE ENSINO SUPERIOR ', NULL),
+(223, 'PROFESSOR DE DIDATICA ENSINO SUPERIOR ', NULL),
+(224, 'PROFESSOR DE DIREITO ', NULL),
+(225, 'PROFESSOR DE ECONOMIA ', NULL),
+(226, 'PROFESSOR DE EDUCACAO FISICA ', NULL),
+(227, 'PROFESSOR DE ENFERMAGEM ', NULL),
+(228, 'PROFESSOR DE ENSINO PRE ESCOLAR ', NULL),
+(229, 'PROFESSOR DE ESTATISTICA ', NULL),
+(230, 'PROFESSOR DE ESTUDOS SOCIAIS ENSINO DE 1O GRAU ', NULL),
+(231, 'PROFESSOR DE FISICA ', NULL),
+(232, 'PROFESSOR DE FISIOTERAPIA ENSINO SUPERIOR ', NULL),
+(233, 'PROFESSOR DE HISTORIA ', NULL),
+(234, 'PROFESSOR DE INGLES ', NULL),
+(235, 'PROFESSOR DE LINGUA PORTUGUESA ', NULL),
+(236, 'PROFESSOR DE LINGUAS ESTRANGEIRAS ', NULL),
+(237, 'PROFESSOR DE MATEMATICA ', NULL),
+(238, 'PROFESSOR DE ORIENTACAO EDUCACIONAL ENSINO SUPERIOR ', NULL),
+(239, 'PROFESSOR DE PEDAGOGIA ', NULL),
+(240, 'PROFESSOR DE PORTUGUES E LITERATURA ', NULL),
+(241, 'PROFESSOR DE PRATICA DE ENSINO ENSINO SUPERIOR ', NULL),
+(242, 'PROFESSOR DE PSICOLOGIA ', NULL),
+(243, 'PROFESSOR DE QUIMICA ', NULL),
+(244, 'PROFESSOR DE SOCIOLOGIA ', NULL),
+(245, 'PROFESSOR DE TECNOLOGIA ', NULL),
+(246, 'PROFESSORES ', NULL),
+(247, 'PROFESSORES DE BIOLOGIA ', NULL),
+(248, 'PROFESSORES DE CIENCIAS HUMANAS ', NULL),
+(249, 'PROFESSORES DE ENSINO DE 2O GRAU ', NULL),
+(250, 'PROFESSORES DE ENSINO DE PRIMEIRO GRAU ', NULL),
+(251, 'PROFESSORES DE ENSINO ESPECIAL ', NULL),
+(252, 'PROFESSORES DE ENSINO PRE ESCOLAR ', NULL),
+(253, 'PROFESSORES DE ENSINO SUPERIOR ', NULL),
+(254, 'PROFESSORES DE PEDAGOGIA ', NULL),
+(255, 'PROFESSSOR DE GEOGRAFIA ', NULL),
+(256, 'PROGRAMADOR DE COMPUTADOR ', NULL),
+(257, 'PROPAGANDISTA DE PRODUTOS DE LABORATORIO ', NULL),
+(258, 'PSICOLOGO ', NULL),
+(259, 'QUIMICO ', NULL),
+(260, 'QUIMICO ANALISTA ', NULL),
+(261, 'QUIMICO INDUSTRIAL ', NULL),
+(262, 'RECEPCIONISTA ', NULL),
+(263, 'REDATOR ', NULL),
+(264, 'RELACOES PUBLICAS ', NULL),
+(265, 'REPORTER ', NULL),
+(266, 'REPRESENTANTE COMERCIAL ', NULL),
+(267, 'SECRETARIO ', NULL),
+(268, 'SECRETARIO BILINGUE ', NULL),
+(269, 'SECRETARIO EXECUTIVO ', NULL),
+(270, 'SERVENTUARIOS DA JUSTICA ', NULL),
+(271, 'SOCIOLOGO ', NULL),
+(272, 'SUPERVISOR DE COMPRAS ', NULL),
+(273, 'SUPERVISOR DE VENDAS COMERCIO ATACADISTA ', NULL),
+(274, 'SUPERVISOR DE VENDAS COMERCIO VAREJISTA ', NULL),
+(275, 'SUPERVISOR EDUCACIONAL ', NULL),
+(276, 'SUPERVISORES DE COMPRAS E COMPRADORES ', NULL),
+(277, 'SUPERVISORES DE VENDAS ', NULL),
+(278, 'TECNICO ', NULL),
+(279, 'TECNICO AGRICOLA ', NULL),
+(280, 'TECNICO AGROPECUARIO ', NULL),
+(281, 'TECNICO DE ADMINISTRACAO ', NULL),
+(282, 'TECNICO DE CONTABILIDADE ', NULL),
+(283, 'TECNICO DE ENFERMAGEM ', NULL),
+(284, 'TECNICO DE LABORATORIO ', NULL),
+(285, 'TECNICO DE MANUTENCAO ELETRICA ', NULL),
+(286, 'TECNICO DE MANUTENCAO ELETRONICA ', NULL),
+(287, 'TECNICO DE OBRAS CIVIS ', NULL),
+(288, 'TECNICO DE PLANEJAMENTO DE PRODUCAO ', NULL),
+(289, 'TECNICO DE SEGURANCA DO TRABALHO ', NULL),
+(290, 'TECNICO DE SEGUROS ', NULL),
+(291, 'TECNICO DE TELECOMUNICACOES ', NULL),
+(292, 'TECNICO ELETRONICO ', NULL),
+(293, 'TECNICO MECANICO ', NULL),
+(294, 'TECNICO MECANICO MAQUINAS ', NULL),
+(295, 'TECNICO METALURGICO ', NULL),
+(296, 'TECNICO QUIMICO ', NULL),
+(297, 'TECNICOS DE BIOLOGIA  ', NULL),
+(298, 'TECNICOS DE ELETRICIDADE ', NULL),
+(299, 'TECNICOS DE ENFERMAGEM ', NULL),
+(300, 'TECNICOS DE OBRAS CIVIS ', NULL),
+(301, 'TERAPEUTA OCUPACIONAL ', NULL),
+(302, 'TOPOGRAFO ', NULL),
+(303, 'TRABALHADORES DAS PROFISSOES CIENTIFICAS ', NULL),
+(304, 'TRABALHADORES DE COMERCIO ', NULL),
+(305, 'TRABALHADORES DE SERVICOS ADMINISTRATIVOS ', NULL),
+(306, 'TRABALHADORES DE SERVICOS DE CONTABILIDADE ', NULL),
+(307, 'TRABALHADORES DE SERVICOS DE TURISMO ', NULL),
+(308, 'VENDEDOR A DOMICILIO ', NULL),
+(309, 'VENDEDOR AMBULANTE ', NULL),
+(310, 'VENDEDOR DE COMERCIO ATACADISTA ', NULL),
+(311, 'VENDEDOR DE COMERCIO VAREJISTA ', NULL),
+(312, 'VENDEDOR PRACISTA ', NULL),
+(313, 'VENDEDORES DE COMERCIO ATACADISTA E VAREJISTA ', NULL),
+(314, 'VENDEDORES PRACISTAS ', NULL),
+(315, 'INFORMATICA ', NULL),
+(316, 'ZOOTECNISTA', NULL),
+(317, 'TECNICO EM INFORMATICA PARA INTERNET', NULL),
+(318, 'TECNICO EM INFORMATICA', NULL),
+(319, 'DESENVOLVIMENTO DE SISTEMA', NULL),
+(320, 'OUTROS', NULL);
 
- INSERT INTO servico (nome, fk_categoria) VALUES
-("Projeto de Jardinagem", 31),
-("Limpeza e Manutenção de Jardim", 31),
-("Plantio de Árvore", 31),
-("Fetilização de Terrenos", 31),
-("Poda de Árvore", 31),
-("Adubação Química", 31),
-("Outros", 31);
+-- --------------------------------------------------------
 
-INSERT INTO servico (nome, fk_categoria) VALUES
-("Hidraúlica", 32),
-("Pintura", 32),
-("Eletrica", 32),
-("Alvenaria", 32),
-("Telhadista", 32),
-("Pedreiro", 32),
-("Dry Wall", 32),
-("Azulejista", 32),
-("Serralheiro", 32),
-("Outros", 32);
+--
+-- Table structure for table `profissao_usuario`
+--
 
-INSERT INTO servico (nome, fk_categoria) VALUES
-("Terapia", 33),
-("Fisioterapia e RPG", 33),
-("Tratamento Odontológico", 33),
-("Clínicas em Geral", 33),
-("Outros", 33);
+CREATE TABLE `profissao_usuario` (
+  `id` int(11) NOT NULL,
+  `fk_usuario` int(11) NOT NULL,
+  `fk_profissao` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-INSERT INTO servico (nome, fk_categoria) VALUES
-("Instalação de Rede de Proteção", 34),
-("Instalação de Tela Mosqueteira", 34),
-("Instalação de Cerca Elética", 34),
-("Instalação de Câmera de Segurança", 34),
-("Instalação de Alarmes", 34),
-("Monitoramento", 34),
-("serviço de Segurança", 34),
-("serviço de Escolta", 34),
-("Segurança do Trabalho", 34),
-("Porteiro", 34),
-("Outros", 34);
+-- --------------------------------------------------------
 
-INSERT INTO servico (nome, fk_categoria) VALUES
-("Veterinário", 35),
-("Veterinário em Domicílio", 35),
-("Banho e Tosa", 35),
-("Banho e Tosa me Domicílio", 35),
-("Dog Walker", 35),
-("Outros", 35);
+--
+-- Table structure for table `servico`
+--
 
-INSERT INTO servico (nome, fk_categoria) VALUES
-("Outros", 36);
+CREATE TABLE `servico` (
+  `id` int(11) NOT NULL,
+  `nome` varchar(100) NOT NULL,
+  `fk_categoria` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `servico`
+--
 
+INSERT INTO `servico` (`id`, `nome`, `fk_categoria`) VALUES
+(1, 'Artesanato', 1),
+(2, 'Trico', 1),
+(3, 'Crochê', 1),
+(4, 'Outos', 1),
+(5, 'Fotografia', 2),
+(6, 'Filmagem', 2),
+(7, 'Sonorização', 2),
+(8, 'Produção', 2),
+(9, 'Conversao LP para CD', 2),
+(10, 'Conversão VHS para DVD/Blu Ray', 2),
+(11, 'Recuperação de K7/VHS', 2),
+(12, 'Estúdio de Música', 2),
+(13, 'Sistema de Audio, video Automação', 2),
+(14, 'Outros', 2),
+(15, 'Cabeleleiro', 3),
+(16, 'Manicure', 3),
+(17, 'Pedicure', 3),
+(18, 'Massagem', 3),
+(19, 'Podólogo', 3),
+(20, 'Esteticista', 3),
+(21, 'Barbeiro', 3),
+(22, 'Depilação', 3),
+(23, 'Designer de Sombrancelhas', 3),
+(24, 'Outros', 3),
+(25, 'Pastas, Camistas', 4),
+(26, 'Canetas, Chaveiros', 4),
+(27, 'Adesivos', 4),
+(28, 'Outros', 4),
+(29, 'Comunicação Visual', 5),
+(30, 'Identidade Visual', 5),
+(31, 'Faixas', 5),
+(32, 'Letreiros', 5),
+(33, 'Grafiteiro', 5),
+(34, 'Marketing Digital', 5),
+(35, 'Outros', 5),
+(36, 'Costureira', 6),
+(37, 'Silk Screen', 6),
+(38, 'Alfaiate', 6),
+(39, 'Manutenção de Roupa', 6),
+(40, 'Pequenos Reparos', 6),
+(41, 'Outros', 6),
+(42, 'Persianas', 7),
+(43, 'Toldos', 7),
+(44, 'Papel de Parede', 7),
+(45, 'Cortinas', 7),
+(46, 'Tapetes', 7),
+(47, 'Caspetes', 7),
+(48, 'Designer de Interiores', 7),
+(49, 'Decorador', 7),
+(50, 'Paisagismo', 7),
+(51, 'Decorador', 7),
+(52, 'Jardinagem', 7),
+(53, 'Outros', 7),
+(54, 'Aula Particular', 8),
+(55, 'Aula de Reforço', 8),
+(56, 'Aula de Inglês', 8),
+(57, 'Aula de Alemão', 8),
+(58, 'Aula de Espanhol', 8),
+(59, 'Aula de Italiano', 8),
+(60, 'Aula de Instrumentos Musicais', 8),
+(61, 'Aula Particular de Ballet', 8),
+(62, 'Arte', 8),
+(63, 'Outros', 8),
+(64, 'Consertos em Geral', 9),
+(65, 'Outros', 9),
+(66, 'Conserto em Geral', 10),
+(67, 'Manutenção em Geral', 10),
+(68, 'Outros', 10),
+(69, 'Festas em Geral', 11),
+(70, 'Coffe Break', 11),
+(71, 'Coquetel', 11),
+(72, 'Churrasco', 11),
+(73, 'Organização de Eventos', 11),
+(74, 'Sonorização', 11),
+(75, 'Comes e Bebes', 11),
+(76, 'Mestre de Cerimônia', 11),
+(77, 'Fotógrafo', 11),
+(78, 'Músico', 11),
+(79, 'Locação de Cadeiras, Mesas, Utensílios', 11),
+(80, 'Animador de Festas', 11),
+(81, 'Assessor de Casamento', 11),
+(82, 'Bartender', 11),
+(83, 'Cantos de Cerimonias', 11),
+(84, 'Confeiteiro', 11),
+(85, 'Conzinheiro', 11),
+(86, 'Decoração Para Eventos', 11),
+(87, 'Outros', 11),
+(88, 'Doces e Salgados', 12),
+(89, 'Bolos', 12),
+(90, 'Jantares', 12),
+(91, 'Comida Vegetariana', 12),
+(92, 'Churrasco', 12),
+(93, 'Outros', 12),
+(94, 'Impressão de Panfletos', 13),
+(95, 'Cartões de Visita', 13),
+(96, 'Convites', 13),
+(97, 'Impressos', 13),
+(98, 'Etiquetas', 13),
+(99, 'Logotipos', 13),
+(100, 'Arte Graficas', 13),
+(101, 'Cartunista', 13),
+(102, 'Outros', 13),
+(103, 'Programador', 14),
+(104, 'Web Designer', 14),
+(105, 'Analista de Sistemas', 14),
+(106, 'Equipamentos em Geral', 14),
+(107, 'Web Sites', 14),
+(108, 'Consultoria', 14),
+(109, 'Desenvolvimento de Sistemas', 14),
+(110, 'Redes e Cabeamento', 14),
+(111, 'Conserto de Computadores', 14),
+(112, 'Outros', 14),
+(113, 'Geradores', 15),
+(114, 'Veículos em Geral', 15),
+(115, 'Cadeiras, Mesas e Utensílios', 15),
+(116, 'Banheiro Químico', 15),
+(117, 'Segurança', 15),
+(118, 'Garçom', 15),
+(119, 'Som Para Eventos', 15),
+(120, 'Máquinas de Jogos', 15),
+(121, 'Quadras em Geral', 15),
+(122, 'Casa de Praia', 15),
+(123, 'Sítios em Geral', 15),
+(124, 'Salões em Geral', 15),
+(125, 'Outros', 15),
+(126, 'Reparação em Geral', 16),
+(127, 'Conserto em Geral', 16),
+(128, 'Reforma em Geral', 16),
+(129, 'Pintura em Geral', 16),
+(130, 'Eletricista', 16),
+(131, 'Encanador', 16),
+(132, 'Pedreiro', 16),
+(133, 'Telhadista', 16),
+(134, 'Pisos', 16),
+(135, 'Gesseiro', 16),
+(136, 'Dry Wall', 16),
+(137, 'Rufos e Calhas', 16),
+(138, 'Aparelhos de Ginástica', 16),
+(139, 'Outros', 16),
+(140, 'Conserto de Automoveis', 17),
+(141, 'Conserto de Motocicletas', 17),
+(142, 'Conserto de Motores', 17),
+(143, 'Outros', 17),
+(144, 'Marcenaria', 18),
+(145, 'Montagem', 18),
+(146, 'Móveis Encomendados', 18),
+(147, 'Restauração', 18),
+(148, 'Tapeçaria', 18),
+(149, 'Estofador', 18),
+(150, 'Outros', 18),
+(151, 'Médico', 19),
+(152, 'Advogado', 19),
+(153, 'Engenheiro', 19),
+(154, 'Arquiteto', 19),
+(155, 'Programador', 19),
+(156, 'Web Designer', 19),
+(157, 'Dentista', 19),
+(158, 'Fisioterapeuta', 19),
+(159, 'Massagista', 19),
+(160, 'Designer Comunicação Visual', 19),
+(161, 'Contador', 19),
+(162, 'Personal Trainer', 19),
+(163, 'Personal Stylist', 19),
+(164, 'Personal Organizer', 19),
+(165, 'Outros', 19),
+(166, 'Instalação em Geral', 20),
+(167, 'Conserto em Geral', 20),
+(168, 'Montagem de Câmara Fria', 20),
+(169, 'Outros', 20),
+(170, 'Automotivo', 21),
+(171, 'Residencial', 21),
+(172, 'Pessoal', 21),
+(173, 'Outros', 21),
+(174, 'Diarista', 22),
+(175, 'Faxina', 22),
+(176, 'Limpeza em Geral', 22),
+(177, 'Lavagem de Roupa', 22),
+(178, 'Passar de Roupa', 22),
+(179, 'Cuidador', 22),
+(180, 'Babá', 22),
+(181, 'Outros', 22),
+(182, 'Som Para Eventos', 23),
+(183, 'Som Automotivo', 23),
+(184, 'Instalação de Home Theater', 23),
+(185, 'Outros', 23),
+(186, 'Tradutor', 24),
+(187, 'Tradutor e Intérprete', 24),
+(188, 'Traduções Simultâneas', 24),
+(189, 'Outros', 24),
+(190, 'Mudança', 25),
+(191, 'Ônibus Escolar', 25),
+(192, 'Motorista', 25),
+(193, 'Outros', 25),
+(194, 'Hospedagem Em Casa de Familia', 26),
+(195, 'Hotel', 26),
+(196, 'Motel', 26),
+(197, 'Pousada', 26),
+(198, 'Outros', 26),
+(199, 'Predial', 27),
+(200, 'Tapetes e Carpetes', 27),
+(201, 'Residencial', 27),
+(202, 'Piscina', 27),
+(203, 'Fachadas', 27),
+(204, 'Automotiva', 27),
+(205, 'Pós-Obra', 27),
+(206, 'Caixa D''Agua', 27),
+(207, 'Movéis', 27),
+(208, 'Outros', 27),
+(209, 'Correias Transportadoras', 28),
+(210, 'Borracharia', 28),
+(211, 'Pneus', 28),
+(212, 'Borracha em Geral', 28),
+(213, 'Outros', 28),
+(214, 'Impermeabilização', 29),
+(215, 'Cilindro', 29),
+(216, 'Piso', 29),
+(217, 'Azulejo', 29),
+(218, 'Forros', 29),
+(219, 'Outros', 29),
+(220, 'Telefonia', 30),
+(221, 'Radios e Comunicação', 30),
+(222, 'Teleconferência', 30),
+(223, 'Instalação de Redes de Computadores', 30),
+(224, 'Instalação e Manutenção de Câmeras', 30),
+(225, 'Instalação e Manutenção de Interfones', 30),
+(226, 'Instalação de Cental Telefonica/PABX', 30),
+(227, 'Outros', 30),
+(228, 'Projeto de Jardinagem', 31),
+(229, 'Limpeza e Manutenção de Jardim', 31),
+(230, 'Plantio de Árvore', 31),
+(231, 'Fetilização de Terrenos', 31),
+(232, 'Poda de Árvore', 31),
+(233, 'Adubação Química', 31),
+(234, 'Outros', 31),
+(235, 'Hidraúlica', 32),
+(236, 'Pintura', 32),
+(237, 'Eletrica', 32),
+(238, 'Alvenaria', 32),
+(239, 'Telhadista', 32),
+(240, 'Pedreiro', 32),
+(241, 'Dry Wall', 32),
+(242, 'Azulejista', 32),
+(243, 'Serralheiro', 32),
+(244, 'Outros', 32),
+(245, 'Terapia', 33),
+(246, 'Fisioterapia e RPG', 33),
+(247, 'Tratamento Odontológico', 33),
+(248, 'Clínicas em Geral', 33),
+(249, 'Outros', 33),
+(250, 'Instalação de Rede de Proteção', 34),
+(251, 'Instalação de Tela Mosqueteira', 34),
+(252, 'Instalação de Cerca Elética', 34),
+(253, 'Instalação de Câmera de Segurança', 34),
+(254, 'Instalação de Alarmes', 34),
+(255, 'Monitoramento', 34),
+(256, 'serviço de Segurança', 34),
+(257, 'serviço de Escolta', 34),
+(258, 'Segurança do Trabalho', 34),
+(259, 'Porteiro', 34),
+(260, 'Outros', 34),
+(261, 'Veterinário', 35),
+(262, 'Veterinário em Domicílio', 35),
+(263, 'Banho e Tosa', 35),
+(264, 'Banho e Tosa me Domicílio', 35),
+(265, 'Dog Walker', 35),
+(266, 'Outros', 35),
+(267, 'Outros', 36);
 
+-- --------------------------------------------------------
 
-INSERT INTO profissao (nome, id) VALUES ('ADMINISTRADOR ', 1);
-INSERT INTO profissao (nome, id) VALUES ('ADMINISTRADOR DE EDIFICIO ', 2);
-INSERT INTO profissao (nome, id) VALUES ('ADMINISTRADOR DE EXPLORACAO AGRICOLA ', 3);
-INSERT INTO profissao (nome, id) VALUES ('ADMINISTRADORES ', 4);
-INSERT INTO profissao (nome, id) VALUES ('ADVOGADO ', 5);
-INSERT INTO profissao (nome, id) VALUES ('ADVOGADO DIREITO DO TRABALHO ', 6);
-INSERT INTO profissao (nome, id) VALUES ('AGENCIADOR DE PROPAGANDA ', 7);
-INSERT INTO profissao (nome, id) VALUES ('AGENTE ADMINISTRATIVO ', 8);
-INSERT INTO profissao (nome, id) VALUES ('AGENTE DE COMPRAS ', 9);
-INSERT INTO profissao (nome, id) VALUES ('AGENTE DE VENDA DE SERVICOS AS EMPRESAS ', 10);
-INSERT INTO profissao (nome, id) VALUES ('AGENTE DE VIAGEM ', 11);
-INSERT INTO profissao (nome, id) VALUES ('AGENTE PUBLICITARIO ', 12);
-INSERT INTO profissao (nome, id) VALUES ('AGENTE TECNICO DE VENDAS ', 13);
-INSERT INTO profissao (nome, id) VALUES ('AGENTES ADMINISTRATIVOS ', 14);
-INSERT INTO profissao (nome, id) VALUES ('AGENTES DE ADMINISTRACAO DE EMPRESAS PUBLICAS E PRIVADAS ', 15);
-INSERT INTO profissao (nome, id) VALUES ('ALMOXARIFE ', 16);
-INSERT INTO profissao (nome, id) VALUES ('ANALISTA DE CARGOS E SALARIOS ', 17);
-INSERT INTO profissao (nome, id) VALUES ('ANALISTA DE COMERCIALIZACAO ', 18);
-INSERT INTO profissao (nome, id) VALUES ('ANALISTA DE COMUNICACA 8234    ANALISTA DE CREDITO E COBRANCA ', 19);
-INSERT INTO profissao (nome, id) VALUES ('ANALISTA DE IMPORTACAO E EXPORTACAO ', 20);
-INSERT INTO profissao (nome, id) VALUES ('ANALISTA DE OCUPACAO ', 21);
-INSERT INTO profissao (nome, id) VALUES ('ANALISTA DE ORGANIZACAO E METODOS ', 22);
-INSERT INTO profissao (nome, id) VALUES ('ANALISTA DE PESQUISA DE MERCADO ', 23);
-INSERT INTO profissao (nome, id) VALUES ('ANALISTA DE RECURSOS HUMANOS ', 24);
-INSERT INTO profissao (nome, id) VALUES ('ANALISTA DE SEGUROS ', 25);
-INSERT INTO profissao (nome, id) VALUES ('ANALISTA DE SISTEMAS ', 26);
-INSERT INTO profissao (nome, id) VALUES ('ANALISTA DE SUPORTE DE SISTEMA ', 27);
-INSERT INTO profissao (nome, id) VALUES ('APONTADOR DE MAO DE OBRA ', 28);
-INSERT INTO profissao (nome, id) VALUES ('APONTADOR DE PRODUCAO ', 29);
-INSERT INTO profissao (nome, id) VALUES ('ARQUITETO ', 30);
-INSERT INTO profissao (nome, id) VALUES ('ARQUIVISTA ', 31);
-INSERT INTO profissao (nome, id) VALUES ('ASSISTENTE ADMINISTRATIVO ', 32);
-INSERT INTO profissao (nome, id) VALUES ('ASSISTENTE DE PATRIMONIO ', 33);
-INSERT INTO profissao (nome, id) VALUES ('ASSISTENTE DE VENDAS FINANCEIRO ', 34);
-INSERT INTO profissao (nome, id) VALUES ('ASSISTENTE SOCIAL ', 35);
-INSERT INTO profissao (nome, id) VALUES ('ATENDETE DE ENFERMAGEM ', 36);
-INSERT INTO profissao (nome, id) VALUES ('ATLETA PROFISSIONAL DE FUTEBOL ', 37);
-INSERT INTO profissao (nome, id) VALUES ('AUDITOR CONTABIL ', 38);
-INSERT INTO profissao (nome, id) VALUES ('AUDITOR GERAL ', 39);
-INSERT INTO profissao (nome, id) VALUES ('AUXILIAR DE ALMOXARIFADO ', 40);
-INSERT INTO profissao (nome, id) VALUES ('AUXILIAR DE BIBLIOTECA ', 41);
-INSERT INTO profissao (nome, id) VALUES ('AUXILIAR DE CONTABILIDADE ', 42);
-INSERT INTO profissao (nome, id) VALUES ('AUXILIAR DE ENFERMAGEM ', 43);
-INSERT INTO profissao (nome, id) VALUES ('AUXILIAR DE ESCRITORIO ', 44);
-INSERT INTO profissao (nome, id) VALUES ('AUXILIAR DE FARMACIA ', 45);
-INSERT INTO profissao (nome, id) VALUES ('AUXILIAR DE IMPORTACAO E EXPORTACAO ', 46);
-INSERT INTO profissao (nome, id) VALUES ('AUXILIAR DE LABORATORIO DE ANALISES CLINICAS ', 47);
-INSERT INTO profissao (nome, id) VALUES ('AUXILIAR DE LABORATORIO DE ANALISES FISICOQUIMICAS ', 48);
-INSERT INTO profissao (nome, id) VALUES ('AUXILIAR DE PESSOAL ', 49);
-INSERT INTO profissao (nome, id) VALUES ('AUXILIAR DE SEGUROS ', 50);
-INSERT INTO profissao (nome, id) VALUES ('AUXILIAR DE SERVICOS JURIDICOS ', 51);
-INSERT INTO profissao (nome, id) VALUES ('AUXILIARES DE CONTABILIDADE ', 52);
-INSERT INTO profissao (nome, id) VALUES ('AUXILIARES DE ESCRITORIO ', 53);
-INSERT INTO profissao (nome, id) VALUES ('BABA ', 54);
-INSERT INTO profissao (nome, id) VALUES ('BARMAN ', 55);
-INSERT INTO profissao (nome, id) VALUES ('BIBLIOTECARIO ', 56);
-INSERT INTO profissao (nome, id) VALUES ('BIOLOGISTA ', 57);
-INSERT INTO profissao (nome, id) VALUES ('BIOQUIMICO ', 58);
-INSERT INTO profissao (nome, id) VALUES ('CABELEIREIRO ', 59);
-INSERT INTO profissao (nome, id) VALUES ('CARTEIRO ', 60);
-INSERT INTO profissao (nome, id) VALUES ('CHEFE DE ADMINISTRATIVOS ', 61);
-INSERT INTO profissao (nome, id) VALUES ('CHEFE DE ALMOXARIFADO ', 62);
-INSERT INTO profissao (nome, id) VALUES ('CHEFE DE CONTABILIDADE ', 63);
-INSERT INTO profissao (nome, id) VALUES ('CHEFE DE CONTABILIDADE E FINANCAS ', 64);
-INSERT INTO profissao (nome, id) VALUES ('CHEFE DE CONTAS A PAGAR ', 65);
-INSERT INTO profissao (nome, id) VALUES ('CHEFE DE CONTROLE DE PATRIMONIO ', 66);
-INSERT INTO profissao (nome, id) VALUES ('CHEFE DE ESCRITORIO ', 67);
-INSERT INTO profissao (nome, id) VALUES ('CHEFE DE ESCRITORIO CONTABILIDADE ', 68);
-INSERT INTO profissao (nome, id) VALUES ('CHEFE DE ESCRITORIO CREDITO E COBRANCA ', 69);
-INSERT INTO profissao (nome, id) VALUES ('CHEFE DE ESCRITORIO ORCAMENTO ', 70);
-INSERT INTO profissao (nome, id) VALUES ('CHEFE DE ESCRITORIO PESSOAL ', 71);
-INSERT INTO profissao (nome, id) VALUES ('CHEFE DE ESCRITORIO SERVICOS GERAIS ', 72);
-INSERT INTO profissao (nome, id) VALUES ('CHEFE DE ESCRITORIO TESOURARIA ', 73);
-INSERT INTO profissao (nome, id) VALUES ('CHEFE DE RECEPCAO HOTEL ', 74);
-INSERT INTO profissao (nome, id) VALUES ('CHEFE DE SERVICO DE TRANSPORTE RODOVIARIO ', 75);
-INSERT INTO profissao (nome, id) VALUES ('CHEFE DE SERVICOS DE TELECOMUNICACOES ', 76);
-INSERT INTO profissao (nome, id) VALUES ('CIRURGIAO ', 77);
-INSERT INTO profissao (nome, id) VALUES ('CIRURGIAO DENTISTA ', 78);
-INSERT INTO profissao (nome, id) VALUES ('CODIFICADOR DE DADOS ', 79);
-INSERT INTO profissao (nome, id) VALUES ('COMERCIANTE VAREJISTA ', 80);
-INSERT INTO profissao (nome, id) VALUES ('COMISSARIO DE BORDO AERONAVES ', 81);
-INSERT INTO profissao (nome, id) VALUES ('COMPRADOR COMERCIO ATACADISTA E VAREJISTA ', 82);
-INSERT INTO profissao (nome, id) VALUES ('CONDUTOR DE CAMINHAO BASCULANTE ', 83);
-INSERT INTO profissao (nome, id) VALUES ('CONDUTORES DE AUTOMOVEIS ', 84);
-INSERT INTO profissao (nome, id) VALUES ('CONSULTOR JURIDICO ', 85);
-INSERT INTO profissao (nome, id) VALUES ('CONTADOR ', 86);
-INSERT INTO profissao (nome, id) VALUES ('CONTRAMESTRE DE EMBARCACAO ', 87);
-INSERT INTO profissao (nome, id) VALUES ('CONTRAMESTRE INDUSTRIA TEXTIL ', 88);
-INSERT INTO profissao (nome, id) VALUES ('COORDENADOR DE ENSINO ', 89);
-INSERT INTO profissao (nome, id) VALUES ('CORRESPONDENTE COMERCIAL ', 90);
-INSERT INTO profissao (nome, id) VALUES ('COZINHEIRO CHEFE ', 91);
-INSERT INTO profissao (nome, id) VALUES ('CRONOANALISTA ', 92);
-INSERT INTO profissao (nome, id) VALUES ('DATILOGRAFO ', 93);
-INSERT INTO profissao (nome, id) VALUES ('DEMONSTRADOR ', 94);
-INSERT INTO profissao (nome, id) VALUES ('DESENHISTA ', 95);
-INSERT INTO profissao (nome, id) VALUES ('DESENHISTA PROJETISTA ', 96);
-INSERT INTO profissao (nome, id) VALUES ('DESENHISTA TECNICO ', 97);
-INSERT INTO profissao (nome, id) VALUES ('DESPACHANTE ', 98);
-INSERT INTO profissao (nome, id) VALUES ('DIAGRAMADOR ', 99);
-INSERT INTO profissao (nome, id) VALUES ('DIGITADOR ', 100);
-INSERT INTO profissao (nome, id) VALUES ('DIRETOR DE EMPRESA ', 101);
-INSERT INTO profissao (nome, id) VALUES ('DIRETOR DE EMPRESA DE COMERCIO VAREJISTA ', 102);
-INSERT INTO profissao (nome, id) VALUES ('DIRETOR DE EMPRESA DE COMUNICACOES ', 103);
-INSERT INTO profissao (nome, id) VALUES ('DIRETOR DE EMPRESA DE CONSTRUCAO CIVIL ', 104);
-INSERT INTO profissao (nome, id) VALUES ('DIRETOR DE EMPRESA DE PRESTACAO DE SERVICOS ', 105);
-INSERT INTO profissao (nome, id) VALUES ('DIRETOR DE EMPRESA DE SERVICOS CLINICOS E HOSPITALARES ', 106);
-INSERT INTO profissao (nome, id) VALUES ('DIRETOR DE EMPRESA FINANCEIRA ', 107);
-INSERT INTO profissao (nome, id) VALUES ('DIRETOR DE EMPRESA MANUFATUREIRA ', 108);
-INSERT INTO profissao (nome, id) VALUES ('DIRETOR DE ESTABELECIMENTO DE ENSINO ', 109);
-INSERT INTO profissao (nome, id) VALUES ('DIRETOR DE ESTABELECIMENTO DE ENSINO SUPERIOR ', 110);
-INSERT INTO profissao (nome, id) VALUES ('DIRETORES DE EMPRESAS ', 111);
-INSERT INTO profissao (nome, id) VALUES ('ECONOMISTA ', 112);
-INSERT INTO profissao (nome, id) VALUES ('ECONOMISTA MERCADOLOGIA ', 113);
-INSERT INTO profissao (nome, id) VALUES ('ECONOMISTA PROGRAMACAO ECONOMICO FINANCEIRA ', 114);
-INSERT INTO profissao (nome, id) VALUES ('ECONOMISTAS ', 115);
-INSERT INTO profissao (nome, id) VALUES ('EDITOR DE LIVROS ', 116);
-INSERT INTO profissao (nome, id) VALUES ('ENCARREGADO DE DIGITACAO E OPERACAO ', 117);
-INSERT INTO profissao (nome, id) VALUES ('ENFERMEIRO ', 118);
-INSERT INTO profissao (nome, id) VALUES ('ENFERMEIRO DO TRABALHO ', 119);
-INSERT INTO profissao (nome, id) VALUES ('ENFERMEIROS ', 120);
-INSERT INTO profissao (nome, id) VALUES ('ENGENHEIRO AERONAUTICO ', 121);
-INSERT INTO profissao (nome, id) VALUES ('ENGENHEIRO AGRONOMO ', 122);
-INSERT INTO profissao (nome, id) VALUES ('ENGENHEIRO CIVIL ', 123);
-INSERT INTO profissao (nome, id) VALUES ('ENGENHEIRO DE CONTROLE DE QUALIDADE ', 124);
-INSERT INTO profissao (nome, id) VALUES ('ENGENHEIRO DE MANUTENCAO ELETRICIDADE E ELETRONICA ', 125);
-INSERT INTO profissao (nome, id) VALUES ('ENGENHEIRO DE MINAS ', 126);
-INSERT INTO profissao (nome, id) VALUES ('ENGENHEIRO DE ORGANIZACAO E METODOS ', 127);
-INSERT INTO profissao (nome, id) VALUES ('ENGENHEIRO DE SEGURANCA DO TRABALHO ', 128);
-INSERT INTO profissao (nome, id) VALUES ('ENGENHEIRO DE TELECOMUNICACOES ', 129);
-INSERT INTO profissao (nome, id) VALUES ('ENGENHEIRO DE TRAFEGO ', 130);
-INSERT INTO profissao (nome, id) VALUES ('ENGENHEIRO ELETRICISTA ', 131);
-INSERT INTO profissao (nome, id) VALUES ('ENGENHEIRO ELETRONICO ', 132);
-INSERT INTO profissao (nome, id) VALUES ('ENGENHEIRO MECANICO ', 133);
-INSERT INTO profissao (nome, id) VALUES ('ENGENHEIRO QUIMICO ', 134);
-INSERT INTO profissao (nome, id) VALUES ('ENGENHEIROS ', 135);
-INSERT INTO profissao (nome, id) VALUES ('ESCRITURARIO ', 136);
-INSERT INTO profissao (nome, id) VALUES ('ESCRIVAO ', 137);
-INSERT INTO profissao (nome, id) VALUES ('ESTATISTICO ', 138);
-INSERT INTO profissao (nome, id) VALUES ('ESTETICISTA ', 139);
-INSERT INTO profissao (nome, id) VALUES ('FARMACEUTICO ', 140);
-INSERT INTO profissao (nome, id) VALUES ('FISIOTERAPEUTA ', 141);
-INSERT INTO profissao (nome, id) VALUES ('FONOAUDIOLOGO ', 142);
-INSERT INTO profissao (nome, id) VALUES ('FUNCIONARIO PUBLICO ESTADUAL SUPERIOR ', 143);
-INSERT INTO profissao (nome, id) VALUES ('FUNCIONARIO PUBLICO FEDERAL SUPERIOR ', 144);
-INSERT INTO profissao (nome, id) VALUES ('FUNCIONARIO PUBLICO MUNICIPAL SUPERIOR ', 145);
-INSERT INTO profissao (nome, id) VALUES ('FUNCIONARIO PUBLICO SUPERIOR ', 146);
-INSERT INTO profissao (nome, id) VALUES ('GEOLOGO ', 147);
-INSERT INTO profissao (nome, id) VALUES ('GERENTE ADMINISTRATIVO ', 148);
-INSERT INTO profissao (nome, id) VALUES ('GERENTE COMERCIAL ', 149);
-INSERT INTO profissao (nome, id) VALUES ('GERENTE DE BANCO ', 150);
-INSERT INTO profissao (nome, id) VALUES ('GERENTE DE BAR ', 151);
-INSERT INTO profissao (nome, id) VALUES ('GERENTE DE COMPRA ', 152);
-INSERT INTO profissao (nome, id) VALUES ('GERENTE DE  EMPRESAS ', 153);
-INSERT INTO profissao (nome, id) VALUES ('GERENTE DE HOTEL ', 154);
-INSERT INTO profissao (nome, id) VALUES ('GERENTE DE INFORMATICA ', 155);
-INSERT INTO profissao (nome, id) VALUES ('GERENTE DE LOJA ', 156);
-INSERT INTO profissao (nome, id) VALUES ('GERENTE DE MARKETING ', 157);
-INSERT INTO profissao (nome, id) VALUES ('GERENTE DE OPERACAO ', 158);
-INSERT INTO profissao (nome, id) VALUES ('GERENTE DE PESQUISA E DESENVOLVIMENTO ', 159);
-INSERT INTO profissao (nome, id) VALUES ('GERENTE DE PESSOAL ', 160);
-INSERT INTO profissao (nome, id) VALUES ('GERENTE DE PLANEJAMENTO ', 161);
-INSERT INTO profissao (nome, id) VALUES ('GERENTE DE POSTAL E TELECOMUNICACOES ', 162);
-INSERT INTO profissao (nome, id) VALUES ('GERENTE DE PRODUCAO ', 163);
-INSERT INTO profissao (nome, id) VALUES ('GERENTE DE PROPAGANDA ', 164);
-INSERT INTO profissao (nome, id) VALUES ('GERENTE DE RESTAURANTE ', 165);
-INSERT INTO profissao (nome, id) VALUES ('GERENTE DE RH ', 166);
-INSERT INTO profissao (nome, id) VALUES ('GERENTE DE TRANSPORTE ', 167);
-INSERT INTO profissao (nome, id) VALUES ('GERENTE DE VENDAS ', 168);
-INSERT INTO profissao (nome, id) VALUES ('GERENTE EXECUTIVO ', 169);
-INSERT INTO profissao (nome, id) VALUES ('GERENTE FINANCEIRO ', 170);
-INSERT INTO profissao (nome, id) VALUES ('GERENTE OPERACIONAL ', 171);
-INSERT INTO profissao (nome, id) VALUES ('INSPETOR DE PRODUCAO ', 172);
-INSERT INTO profissao (nome, id) VALUES ('INSPETOR DE QUALIDADE ', 173);
-INSERT INTO profissao (nome, id) VALUES ('INSPETOR DE	SERVICOS DE TRANSPORTE ', 174);
-INSERT INTO profissao (nome, id) VALUES ('INSPETOR TECNICO DE VENDAS ', 175);
-INSERT INTO profissao (nome, id) VALUES ('INSTRUTOR DE APRENDIZAGEM E TREINAMENTO ', 176);
-INSERT INTO profissao (nome, id) VALUES ('JORNALISTA ', 177);
-INSERT INTO profissao (nome, id) VALUES ('LABORATORISTA ANALISES CLINICAS ', 178);
-INSERT INTO profissao (nome, id) VALUES ('LABORATORISTA INDUSTRIAL ', 179);
-INSERT INTO profissao (nome, id) VALUES ('LOCUTOR ', 180);
-INSERT INTO profissao (nome, id) VALUES ('MAITRE ', 181);
-INSERT INTO profissao (nome, id) VALUES ('MEDICO ', 182);
-INSERT INTO profissao (nome, id) VALUES ('MEDICO ANESTESISTA ', 183);
-INSERT INTO profissao (nome, id) VALUES ('MEDICO CARDIOLOGISTA ', 184);
-INSERT INTO profissao (nome, id) VALUES ('MEDICO DO TRABALHO ', 185);
-INSERT INTO profissao (nome, id) VALUES ('MEDICO GINECOLOGISTA ', 186);
-INSERT INTO profissao (nome, id) VALUES ('MEDICO ORTOPEDISTA ', 187);
-INSERT INTO profissao (nome, id) VALUES ('MEDICO PEDIATRA ', 188);
-INSERT INTO profissao (nome, id) VALUES ('MEDICO PSIQUIATRA ', 189);
-INSERT INTO profissao (nome, id) VALUES ('MEDICO VETERINARIO ', 190);
-INSERT INTO profissao (nome, id) VALUES ('MESTRE CONTRUCAO CIVIL ', 191);
-INSERT INTO profissao (nome, id) VALUES ('MESTRE INDUSTRIAL ', 192);
-INSERT INTO profissao (nome, id) VALUES ('MOTOCICLISTA TRANSPORTE DE MERCADORIAS ', 193);
-INSERT INTO profissao (nome, id) VALUES ('MOTORISTA ', 194);
-INSERT INTO profissao (nome, id) VALUES ('MOTORISTA DE CAMINHAO ', 195);
-INSERT INTO profissao (nome, id) VALUES ('MOTORISTA DE FURGAO OU VEICULO SIMILAR ', 196);
-INSERT INTO profissao (nome, id) VALUES ('MOTORISTA DE ONIBUS ', 197);
-INSERT INTO profissao (nome, id) VALUES ('MOTORISTA DE TAXI ', 198);
-INSERT INTO profissao (nome, id) VALUES ('MUSICO ', 199);
-INSERT INTO profissao (nome, id) VALUES ('NUTRICIONISTA ', 200);
-INSERT INTO profissao (nome, id) VALUES ('OPERADOR DE CAMERA DE TELEVISAO ', 201);
-INSERT INTO profissao (nome, id) VALUES ('OPERADOR DE COMPUTADOR ', 202);
-INSERT INTO profissao (nome, id) VALUES ('OPERADOR DE EQUIPAMENTOS DE ENTRADA DE DADOS ', 203);
-INSERT INTO profissao (nome, id) VALUES ('OPERADOR DE ESTACAO DE RADIO ', 204);
-INSERT INTO profissao (nome, id) VALUES ('OPERADOR DE MAQUINAS E VEICULOS ', 205);
-INSERT INTO profissao (nome, id) VALUES ('OPERADOR DE MICRO ', 206);
-INSERT INTO profissao (nome, id) VALUES ('OPERADOR DE PRODUTOS FINANCEIROS ', 207);
-INSERT INTO profissao (nome, id) VALUES ('OPERADOR DE RAIOS X ', 208);
-INSERT INTO profissao (nome, id) VALUES ('OPERADOR DE TELEMARKETING ', 209);
-INSERT INTO profissao (nome, id) VALUES ('ORIENTADOR EDUCACIONAL ', 210);
-INSERT INTO profissao (nome, id) VALUES ('OURIVES ', 211);
-INSERT INTO profissao (nome, id) VALUES ('PEDAGOGO ', 212);
-INSERT INTO profissao (nome, id) VALUES ('PILOTO ', 213);
-INSERT INTO profissao (nome, id) VALUES ('PINTOR ', 214);
-INSERT INTO profissao (nome, id) VALUES ('PRODUTOR DE RADIO E TELEVISAO ', 215);
-INSERT INTO profissao (nome, id) VALUES ('PROFESSOR DE 1A A 4A SERIE ENSINO DE 1O GRAU ', 216);
-INSERT INTO profissao (nome, id) VALUES ('PROFESSOR DE ADMINISTRACAO ENSINO SUPERIOR ', 217);
-INSERT INTO profissao (nome, id) VALUES ('PROFESSOR DE ALUNOS COM DEFICENCIAS MENTAIS ', 218);
-INSERT INTO profissao (nome, id) VALUES ('PROFESSOR DE BIOLOGIA ENSINO DE 2O GRAU ', 219);
-INSERT INTO profissao (nome, id) VALUES ('PROFESSOR DE CIENCIAS NATURAIS ENSINO DE 1O GRAU ', 220);
-INSERT INTO profissao (nome, id) VALUES ('PROFESSOR DE COMUNICACAO ', 221);
-INSERT INTO profissao (nome, id) VALUES ('PROFESSOR DE CONTABILIDADE ENSINO SUPERIOR ', 222);
-INSERT INTO profissao (nome, id) VALUES ('PROFESSOR DE DIDATICA ENSINO SUPERIOR ', 223);
-INSERT INTO profissao (nome, id) VALUES ('PROFESSOR DE DIREITO ', 224);
-INSERT INTO profissao (nome, id) VALUES ('PROFESSOR DE ECONOMIA ', 225);
-INSERT INTO profissao (nome, id) VALUES ('PROFESSOR DE EDUCACAO FISICA ', 226);
-INSERT INTO profissao (nome, id) VALUES ('PROFESSOR DE ENFERMAGEM ', 227);
-INSERT INTO profissao (nome, id) VALUES ('PROFESSOR DE ENSINO PRE ESCOLAR ', 228);
-INSERT INTO profissao (nome, id) VALUES ('PROFESSOR DE ESTATISTICA ', 229);
-INSERT INTO profissao (nome, id) VALUES ('PROFESSOR DE ESTUDOS SOCIAIS ENSINO DE 1O GRAU ', 230);
-INSERT INTO profissao (nome, id) VALUES ('PROFESSOR DE FISICA ', 231);
-INSERT INTO profissao (nome, id) VALUES ('PROFESSOR DE FISIOTERAPIA ENSINO SUPERIOR ', 232);
-INSERT INTO profissao (nome, id) VALUES ('PROFESSOR DE HISTORIA ', 233);
-INSERT INTO profissao (nome, id) VALUES ('PROFESSOR DE INGLES ', 234);
-INSERT INTO profissao (nome, id) VALUES ('PROFESSOR DE LINGUA PORTUGUESA ', 235);
-INSERT INTO profissao (nome, id) VALUES ('PROFESSOR DE LINGUAS ESTRANGEIRAS ', 236);
-INSERT INTO profissao (nome, id) VALUES ('PROFESSOR DE MATEMATICA ', 237);
-INSERT INTO profissao (nome, id) VALUES ('PROFESSOR DE ORIENTACAO EDUCACIONAL ENSINO SUPERIOR ', 238);
-INSERT INTO profissao (nome, id) VALUES ('PROFESSOR DE PEDAGOGIA ', 239);
-INSERT INTO profissao (nome, id) VALUES ('PROFESSOR DE PORTUGUES E LITERATURA ', 240);
-INSERT INTO profissao (nome, id) VALUES ('PROFESSOR DE PRATICA DE ENSINO ENSINO SUPERIOR ', 241);
-INSERT INTO profissao (nome, id) VALUES ('PROFESSOR DE PSICOLOGIA ', 242);
-INSERT INTO profissao (nome, id) VALUES ('PROFESSOR DE QUIMICA ', 243);
-INSERT INTO profissao (nome, id) VALUES ('PROFESSOR DE SOCIOLOGIA ', 244);
-INSERT INTO profissao (nome, id) VALUES ('PROFESSOR DE TECNOLOGIA ', 245);
-INSERT INTO profissao (nome, id) VALUES ('PROFESSORES ', 246);
-INSERT INTO profissao (nome, id) VALUES ('PROFESSORES DE BIOLOGIA ', 247);
-INSERT INTO profissao (nome, id) VALUES ('PROFESSORES DE CIENCIAS HUMANAS ', 248);
-INSERT INTO profissao (nome, id) VALUES ('PROFESSORES DE ENSINO DE 2O GRAU ', 249);
-INSERT INTO profissao (nome, id) VALUES ('PROFESSORES DE ENSINO DE PRIMEIRO GRAU ', 250);
-INSERT INTO profissao (nome, id) VALUES ('PROFESSORES DE ENSINO ESPECIAL ', 251);
-INSERT INTO profissao (nome, id) VALUES ('PROFESSORES DE ENSINO PRE ESCOLAR ', 252);
-INSERT INTO profissao (nome, id) VALUES ('PROFESSORES DE ENSINO SUPERIOR ', 253);
-INSERT INTO profissao (nome, id) VALUES ('PROFESSORES DE PEDAGOGIA ', 254);
-INSERT INTO profissao (nome, id) VALUES ('PROFESSSOR DE GEOGRAFIA ', 255);
-INSERT INTO profissao (nome, id) VALUES ('PROGRAMADOR DE COMPUTADOR ', 256);
-INSERT INTO profissao (nome, id) VALUES ('PROPAGANDISTA DE PRODUTOS DE LABORATORIO ', 257);
-INSERT INTO profissao (nome, id) VALUES ('PSICOLOGO ', 258);
-INSERT INTO profissao (nome, id) VALUES ('QUIMICO ', 259);
-INSERT INTO profissao (nome, id) VALUES ('QUIMICO ANALISTA ', 260);
-INSERT INTO profissao (nome, id) VALUES ('QUIMICO INDUSTRIAL ', 261);
-INSERT INTO profissao (nome, id) VALUES ('RECEPCIONISTA ', 262);
-INSERT INTO profissao (nome, id) VALUES ('REDATOR ', 263);
-INSERT INTO profissao (nome, id) VALUES ('RELACOES PUBLICAS ', 264);
-INSERT INTO profissao (nome, id) VALUES ('REPORTER ', 265);
-INSERT INTO profissao (nome, id) VALUES ('REPRESENTANTE COMERCIAL ', 266);
-INSERT INTO profissao (nome, id) VALUES ('SECRETARIO ', 267);
-INSERT INTO profissao (nome, id) VALUES ('SECRETARIO BILINGUE ', 268);
-INSERT INTO profissao (nome, id) VALUES ('SECRETARIO EXECUTIVO ', 269);
-INSERT INTO profissao (nome, id) VALUES ('SERVENTUARIOS DA JUSTICA ', 270);
-INSERT INTO profissao (nome, id) VALUES ('SOCIOLOGO ', 271);
-INSERT INTO profissao (nome, id) VALUES ('SUPERVISOR DE COMPRAS ', 272);
-INSERT INTO profissao (nome, id) VALUES ('SUPERVISOR DE VENDAS COMERCIO ATACADISTA ', 273);
-INSERT INTO profissao (nome, id) VALUES ('SUPERVISOR DE VENDAS COMERCIO VAREJISTA ', 274);
-INSERT INTO profissao (nome, id) VALUES ('SUPERVISOR EDUCACIONAL ', 275);
-INSERT INTO profissao (nome, id) VALUES ('SUPERVISORES DE COMPRAS E COMPRADORES ', 276);
-INSERT INTO profissao (nome, id) VALUES ('SUPERVISORES DE VENDAS ', 277);
-INSERT INTO profissao (nome, id) VALUES ('TECNICO ', 278);
-INSERT INTO profissao (nome, id) VALUES ('TECNICO AGRICOLA ', 279);
-INSERT INTO profissao (nome, id) VALUES ('TECNICO AGROPECUARIO ', 280);
-INSERT INTO profissao (nome, id) VALUES ('TECNICO DE ADMINISTRACAO ', 281);
-INSERT INTO profissao (nome, id) VALUES ('TECNICO DE CONTABILIDADE ', 282);
-INSERT INTO profissao (nome, id) VALUES ('TECNICO DE ENFERMAGEM ', 283);
-INSERT INTO profissao (nome, id) VALUES ('TECNICO DE LABORATORIO ', 284);
-INSERT INTO profissao (nome, id) VALUES ('TECNICO DE MANUTENCAO ELETRICA ', 285);
-INSERT INTO profissao (nome, id) VALUES ('TECNICO DE MANUTENCAO ELETRONICA ', 286);
-INSERT INTO profissao (nome, id) VALUES ('TECNICO DE OBRAS CIVIS ', 287);
-INSERT INTO profissao (nome, id) VALUES ('TECNICO DE PLANEJAMENTO DE PRODUCAO ', 288);
-INSERT INTO profissao (nome, id) VALUES ('TECNICO DE SEGURANCA DO TRABALHO ', 289);
-INSERT INTO profissao (nome, id) VALUES ('TECNICO DE SEGUROS ', 290);
-INSERT INTO profissao (nome, id) VALUES ('TECNICO DE TELECOMUNICACOES ', 291);
-INSERT INTO profissao (nome, id) VALUES ('TECNICO ELETRONICO ', 292);
-INSERT INTO profissao (nome, id) VALUES ('TECNICO MECANICO ', 293);
-INSERT INTO profissao (nome, id) VALUES ('TECNICO MECANICO MAQUINAS ', 294);
-INSERT INTO profissao (nome, id) VALUES ('TECNICO METALURGICO ', 295);
-INSERT INTO profissao (nome, id) VALUES ('TECNICO QUIMICO ', 296);
-INSERT INTO profissao (nome, id) VALUES ('TECNICOS DE BIOLOGIA  ', 297);
-INSERT INTO profissao (nome, id) VALUES ('TECNICOS DE ELETRICIDADE ', 298);
-INSERT INTO profissao (nome, id) VALUES ('TECNICOS DE ENFERMAGEM ', 299);
-INSERT INTO profissao (nome, id) VALUES ('TECNICOS DE OBRAS CIVIS ', 300);
-INSERT INTO profissao (nome, id) VALUES ('TERAPEUTA OCUPACIONAL ', 301);
-INSERT INTO profissao (nome, id) VALUES ('TOPOGRAFO ', 302);
-INSERT INTO profissao (nome, id) VALUES ('TRABALHADORES DAS PROFISSOES CIENTIFICAS ', 303);
-INSERT INTO profissao (nome, id) VALUES ('TRABALHADORES DE COMERCIO ', 304);
-INSERT INTO profissao (nome, id) VALUES ('TRABALHADORES DE SERVICOS ADMINISTRATIVOS ', 305);
-INSERT INTO profissao (nome, id) VALUES ('TRABALHADORES DE SERVICOS DE CONTABILIDADE ', 306);
-INSERT INTO profissao (nome, id) VALUES ('TRABALHADORES DE SERVICOS DE TURISMO ', 307);
-INSERT INTO profissao (nome, id) VALUES ('VENDEDOR A DOMICILIO ', 308);
-INSERT INTO profissao (nome, id) VALUES ('VENDEDOR AMBULANTE ', 309);
-INSERT INTO profissao (nome, id) VALUES ('VENDEDOR DE COMERCIO ATACADISTA ', 310);
-INSERT INTO profissao (nome, id) VALUES ('VENDEDOR DE COMERCIO VAREJISTA ', 311);
-INSERT INTO profissao (nome, id) VALUES ('VENDEDOR PRACISTA ', 312);
-INSERT INTO profissao (nome, id) VALUES ('VENDEDORES DE COMERCIO ATACADISTA E VAREJISTA ', 313);
-INSERT INTO profissao (nome, id) VALUES ('VENDEDORES PRACISTAS ', 314);
-INSERT INTO profissao (nome, id) VALUES ('INFORMATICA ', 315);
-INSERT INTO profissao (nome, id) VALUES ('ZOOTECNISTA', 316);
-INSERT INTO profissao (nome, id) VALUES ('TECNICO EM INFORMATICA PARA INTERNET', 317);
-INSERT INTO profissao (nome, id) VALUES ('TECNICO EM INFORMATICA', 318);
-INSERT INTO profissao (nome, id) VALUES ('DESENVOLVIMENTO DE SISTEMA', 319);
-INSERT INTO profissao (nome, id) VALUES ('OUTROS', 320);
+--
+-- Table structure for table `solicitacao_contrato`
+--
 
+CREATE TABLE `solicitacao_contrato` (
+  `id` int(11) NOT NULL,
+  `dataPedido` datetime DEFAULT CURRENT_TIMESTAMP,
+  `fk_cliente` int(11) NOT NULL,
+  `fk_prestadorServico` int(11) NOT NULL,
+  `fk_endereco` int(11) NOT NULL,
+  `status_solicitacao` char(1) COLLATE utf8_unicode_ci NOT NULL,
+  `convite` char(1) COLLATE utf8_unicode_ci NOT NULL,
+  `estagio` char(1) COLLATE utf8_unicode_ci NOT NULL,
+  `mensagem` varchar(255) COLLATE utf8_unicode_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
+--
+-- Dumping data for table `solicitacao_contrato`
+--
 
+INSERT INTO `solicitacao_contrato` (`id`, `dataPedido`, `fk_cliente`, `fk_prestadorServico`, `fk_endereco`, `status_solicitacao`, `convite`, `estagio`, `mensagem`) VALUES
+(17, '2018-09-01 22:28:04', 6, 1, 5, '1', '0', '1', 'quanto custa um software de vendas'),
+(18, '2018-09-01 23:02:40', 6, 1, 15, '1', '1', '3', 'teste');
 
+-- --------------------------------------------------------
 
+--
+-- Table structure for table `tipo_acesso`
+--
 
+CREATE TABLE `tipo_acesso` (
+  `id` int(11) NOT NULL,
+  `descricao` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `tipo_acesso`
+--
 
+INSERT INTO `tipo_acesso` (`id`, `descricao`) VALUES
+(1, 'Cliente'),
+(2, 'Administrador'),
+(3, 'Prestador de Serviço');
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `usuario`
+--
+
+CREATE TABLE `usuario` (
+  `id` int(11) NOT NULL,
+  `nome` varchar(100) NOT NULL,
+  `email` varchar(100) NOT NULL,
+  `senha` varchar(100) NOT NULL,
+  `ativo` char(1) NOT NULL,
+  `nivel_acesso` char(1) NOT NULL,
+  `foto` varchar(100) DEFAULT NULL,
+  `tipo_usuario` char(1) NOT NULL,
+  `fk_tipo_acesso` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `usuario`
+--
+
+INSERT INTO `usuario` (`id`, `nome`, `email`, `senha`, `ativo`, `nivel_acesso`, `foto`, `tipo_usuario`, `fk_tipo_acesso`) VALUES
+(1, 'God Silva', 'gold@gmail.com', '123456', '1', '0', NULL, '0', 2),
+(2, 'Prestador1', 'prestador1@gmail.com', '123456', '1', '1', 'img_avatar.png', '1', 3),
+(3, 'prestador2', 'prestador2@gmail.com', '123456', '1', '1', 'img_avatar.png', '1', 3),
+(4, 'Cliente1', 'cliente1@gmail.com', '123456', '1', '1', 'img_avatar.png', '1', 1),
+(5, 'Fulano', 'fulano@gmail.com', '123456', '0', '1', 'img_avatar.png', '2', 3),
+(6, 'cliente2', 'cliente2@gmail.com', '123456', '1', '1', 'img_avatar.png', '1', 1),
+(7, 'Cliente3', 'cliente3@gmail.com', '123456', '1', '1', 'img_avatar.png', '1', 1),
+(8, 'Cliente4', 'cliente4@gmail.com', '123456', '1', '1', 'img_avatar.png', '2', 1),
+(9, 'Cliente5', 'cliente5@gmail.com', '123456', '1', '1', 'img_avatar.png', '1', 1),
+(10, 'Cliente6', 'cliente6@gmail.com', '123456', '1', '1', 'img_avatar.png', '2', 1),
+(11, 'prestador4', 'prestador4@gmail.com', '123456', '1', '1', 'img_avatar.png', '1', 3),
+(12, 'prestador5', 'prestador5@gmail.com', '123456', '1', '1', 'img_avatar.png', '2', 3),
+(13, 'cliente8', 'cliente8@gmail.com', '123456', '1', '1', 'img_avatar.png', '1', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `usuario_servico`
+--
+
+CREATE TABLE `usuario_servico` (
+  `id` int(11) NOT NULL,
+  `descricao` varchar(255) NOT NULL,
+  `fk_usuario` int(11) NOT NULL,
+  `fk_servico` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `usuario_servico`
+--
+
+INSERT INTO `usuario_servico` (`id`, `descricao`, `fk_usuario`, `fk_servico`) VALUES
+(1, 'teste', 2, 103),
+(2, 'teste', 3, 104),
+(3, 'tests', 2, 110),
+(4, 'teste', 5, 243),
+(5, 'teste', 11, 8),
+(6, 'teste', 12, 64);
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `avaliacao`
+--
+ALTER TABLE `avaliacao`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `FKsr3rqeydqetuwby4x7psto5l5` (`fk_solicitacao_contrato`);
+
+--
+-- Indexes for table `categoria_servico`
+--
+ALTER TABLE `categoria_servico`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `chatSolicitacao`
+--
+ALTER TABLE `chatSolicitacao`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `FKs91c49685klvqa1f4ck8yg3ae` (`fk_solicitacao`),
+  ADD KEY `FK4t6da5fvmg8gdoqujtn9hyryu` (`fk_cliente`),
+  ADD KEY `FKiocqwlbp2ddf4qsfqb04whfe8` (`fk_prestador`);
+
+--
+-- Indexes for table `cidade`
+--
+ALTER TABLE `cidade`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `FKedwmmd3jtkssgrwyugrindb7j` (`estado`);
+
+--
+-- Indexes for table `cidade_atuacao_servico`
+--
+ALTER TABLE `cidade_atuacao_servico`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `FKbmfsut4yfm2u4vfqvg0l58tk3` (`fk_cidade`),
+  ADD KEY `FKfmfxw22a66uccj61ak75qhbaw` (`fk_usuarioServico`);
+
+--
+-- Indexes for table `contrato`
+--
+ALTER TABLE `contrato`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `FK1p49akwru1pq7sqf3l2moyjl3` (`fk_solicitacao_contrato`);
+
+--
+-- Indexes for table `dado_pessoal`
+--
+ALTER TABLE `dado_pessoal`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `FK5hmgct1my2xgbydokvhrtkufo` (`fk_usuario`);
+
+--
+-- Indexes for table `endereco`
+--
+ALTER TABLE `endereco`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `FKb5igrjkabotyomtpno64ctvfq` (`cidade`),
+  ADD KEY `FK6sc1akd9rxpytcdgf0gsokstv` (`estado`),
+  ADD KEY `FK7j7a7vcyqtyafh08k5d1wybbk` (`fk_usuario`);
+
+--
+-- Indexes for table `estado`
+--
+ALTER TABLE `estado`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `pendencias`
+--
+ALTER TABLE `pendencias`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `FK2jstdhjygm1a1d27pnd2iwjx2` (`fk_solicitacao_contrato`);
+
+--
+-- Indexes for table `profissao`
+--
+ALTER TABLE `profissao`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `profissao_usuario`
+--
+ALTER TABLE `profissao_usuario`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `FKdf1nd8ulxu496nh3si0lqef6n` (`fk_profissao`),
+  ADD KEY `FKbcvkccsdk753a3ov20r5lr90g` (`fk_usuario`);
+
+--
+-- Indexes for table `servico`
+--
+ALTER TABLE `servico`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `FKr9mj3d5hunjb9lsh5dtu1e53l` (`fk_categoria`);
+
+--
+-- Indexes for table `solicitacao_contrato`
+--
+ALTER TABLE `solicitacao_contrato`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `FKkdg5omifowgremsah12rkla0t` (`fk_endereco`),
+  ADD KEY `FKnc9uatcpcgumhv98e71a7tg03` (`fk_cliente`),
+  ADD KEY `FKhggafdju5w58ve7vpl6qdo45j` (`fk_prestadorServico`);
+
+--
+-- Indexes for table `tipo_acesso`
+--
+ALTER TABLE `tipo_acesso`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `usuario`
+--
+ALTER TABLE `usuario`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `FKnd5dh1sobio945c8e93lowv34` (`fk_tipo_acesso`);
+
+--
+-- Indexes for table `usuario_servico`
+--
+ALTER TABLE `usuario_servico`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `FKbio5dtvb9vwudltnygabdcoyu` (`fk_servico`),
+  ADD KEY `FKrr708fol3rmgpifijs2t7a0dd` (`fk_usuario`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `avaliacao`
+--
+ALTER TABLE `avaliacao`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `categoria_servico`
+--
+ALTER TABLE `categoria_servico`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
+--
+-- AUTO_INCREMENT for table `chatSolicitacao`
+--
+ALTER TABLE `chatSolicitacao`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+--
+-- AUTO_INCREMENT for table `cidade`
+--
+ALTER TABLE `cidade`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5565;
+--
+-- AUTO_INCREMENT for table `cidade_atuacao_servico`
+--
+ALTER TABLE `cidade_atuacao_servico`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+--
+-- AUTO_INCREMENT for table `contrato`
+--
+ALTER TABLE `contrato`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+--
+-- AUTO_INCREMENT for table `dado_pessoal`
+--
+ALTER TABLE `dado_pessoal`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+--
+-- AUTO_INCREMENT for table `endereco`
+--
+ALTER TABLE `endereco`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+--
+-- AUTO_INCREMENT for table `estado`
+--
+ALTER TABLE `estado`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+--
+-- AUTO_INCREMENT for table `pendencias`
+--
+ALTER TABLE `pendencias`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `profissao`
+--
+ALTER TABLE `profissao`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=321;
+--
+-- AUTO_INCREMENT for table `profissao_usuario`
+--
+ALTER TABLE `profissao_usuario`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `servico`
+--
+ALTER TABLE `servico`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=268;
+--
+-- AUTO_INCREMENT for table `solicitacao_contrato`
+--
+ALTER TABLE `solicitacao_contrato`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+--
+-- AUTO_INCREMENT for table `tipo_acesso`
+--
+ALTER TABLE `tipo_acesso`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+--
+-- AUTO_INCREMENT for table `usuario`
+--
+ALTER TABLE `usuario`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+--
+-- AUTO_INCREMENT for table `usuario_servico`
+--
+ALTER TABLE `usuario_servico`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `avaliacao`
+--
+ALTER TABLE `avaliacao`
+  ADD CONSTRAINT `FKsr3rqeydqetuwby4x7psto5l5` FOREIGN KEY (`fk_solicitacao_contrato`) REFERENCES `solicitacao_contrato` (`id`),
+  ADD CONSTRAINT `avaliacao_ibfk_1` FOREIGN KEY (`fk_solicitacao_contrato`) REFERENCES `solicitacao_contrato` (`id`);
+
+--
+-- Constraints for table `chatSolicitacao`
+--
+ALTER TABLE `chatSolicitacao`
+  ADD CONSTRAINT `FK4t6da5fvmg8gdoqujtn9hyryu` FOREIGN KEY (`fk_cliente`) REFERENCES `usuario` (`id`),
+  ADD CONSTRAINT `FKiocqwlbp2ddf4qsfqb04whfe8` FOREIGN KEY (`fk_prestador`) REFERENCES `usuario` (`id`),
+  ADD CONSTRAINT `FKs91c49685klvqa1f4ck8yg3ae` FOREIGN KEY (`fk_solicitacao`) REFERENCES `solicitacao_contrato` (`id`);
+
+--
+-- Constraints for table `cidade`
+--
+ALTER TABLE `cidade`
+  ADD CONSTRAINT `FKedwmmd3jtkssgrwyugrindb7j` FOREIGN KEY (`estado`) REFERENCES `estado` (`id`),
+  ADD CONSTRAINT `cidade_ibfk_1` FOREIGN KEY (`estado`) REFERENCES `estado` (`id`);
+
+--
+-- Constraints for table `cidade_atuacao_servico`
+--
+ALTER TABLE `cidade_atuacao_servico`
+  ADD CONSTRAINT `FKbmfsut4yfm2u4vfqvg0l58tk3` FOREIGN KEY (`fk_cidade`) REFERENCES `cidade` (`id`),
+  ADD CONSTRAINT `FKfmfxw22a66uccj61ak75qhbaw` FOREIGN KEY (`fk_usuarioServico`) REFERENCES `usuario_servico` (`id`),
+  ADD CONSTRAINT `cidade_atuacao_servico_ibfk_1` FOREIGN KEY (`fk_cidade`) REFERENCES `cidade` (`id`),
+  ADD CONSTRAINT `cidade_atuacao_servico_ibfk_2` FOREIGN KEY (`fk_usuarioServico`) REFERENCES `usuario_servico` (`id`);
+
+--
+-- Constraints for table `contrato`
+--
+ALTER TABLE `contrato`
+  ADD CONSTRAINT `FK1p49akwru1pq7sqf3l2moyjl3` FOREIGN KEY (`fk_solicitacao_contrato`) REFERENCES `solicitacao_contrato` (`id`),
+  ADD CONSTRAINT `contrato_ibfk_1` FOREIGN KEY (`fk_solicitacao_contrato`) REFERENCES `solicitacao_contrato` (`id`);
+
+--
+-- Constraints for table `dado_pessoal`
+--
+ALTER TABLE `dado_pessoal`
+  ADD CONSTRAINT `FK5hmgct1my2xgbydokvhrtkufo` FOREIGN KEY (`fk_usuario`) REFERENCES `usuario` (`id`),
+  ADD CONSTRAINT `dado_pessoal_ibfk_1` FOREIGN KEY (`fk_usuario`) REFERENCES `usuario` (`id`);
+
+--
+-- Constraints for table `endereco`
+--
+ALTER TABLE `endereco`
+  ADD CONSTRAINT `FK6sc1akd9rxpytcdgf0gsokstv` FOREIGN KEY (`estado`) REFERENCES `estado` (`id`),
+  ADD CONSTRAINT `FK7j7a7vcyqtyafh08k5d1wybbk` FOREIGN KEY (`fk_usuario`) REFERENCES `usuario` (`id`),
+  ADD CONSTRAINT `FKb5igrjkabotyomtpno64ctvfq` FOREIGN KEY (`cidade`) REFERENCES `cidade` (`id`),
+  ADD CONSTRAINT `endereco_ibfk_1` FOREIGN KEY (`cidade`) REFERENCES `cidade` (`id`),
+  ADD CONSTRAINT `endereco_ibfk_2` FOREIGN KEY (`estado`) REFERENCES `estado` (`id`),
+  ADD CONSTRAINT `endereco_ibfk_3` FOREIGN KEY (`fk_usuario`) REFERENCES `usuario` (`id`);
+
+--
+-- Constraints for table `pendencias`
+--
+ALTER TABLE `pendencias`
+  ADD CONSTRAINT `FK2jstdhjygm1a1d27pnd2iwjx2` FOREIGN KEY (`fk_solicitacao_contrato`) REFERENCES `solicitacao_contrato` (`id`);
+
+--
+-- Constraints for table `profissao_usuario`
+--
+ALTER TABLE `profissao_usuario`
+  ADD CONSTRAINT `FKbcvkccsdk753a3ov20r5lr90g` FOREIGN KEY (`fk_usuario`) REFERENCES `usuario` (`id`),
+  ADD CONSTRAINT `FKdf1nd8ulxu496nh3si0lqef6n` FOREIGN KEY (`fk_profissao`) REFERENCES `profissao` (`id`),
+  ADD CONSTRAINT `profissao_usuario_ibfk_1` FOREIGN KEY (`fk_usuario`) REFERENCES `usuario` (`id`),
+  ADD CONSTRAINT `profissao_usuario_ibfk_2` FOREIGN KEY (`fk_profissao`) REFERENCES `profissao` (`id`);
+
+--
+-- Constraints for table `servico`
+--
+ALTER TABLE `servico`
+  ADD CONSTRAINT `FKr9mj3d5hunjb9lsh5dtu1e53l` FOREIGN KEY (`fk_categoria`) REFERENCES `categoria_servico` (`id`),
+  ADD CONSTRAINT `servico_ibfk_1` FOREIGN KEY (`fk_categoria`) REFERENCES `categoria_servico` (`id`);
+
+--
+-- Constraints for table `solicitacao_contrato`
+--
+ALTER TABLE `solicitacao_contrato`
+  ADD CONSTRAINT `FKhggafdju5w58ve7vpl6qdo45j` FOREIGN KEY (`fk_prestadorServico`) REFERENCES `usuario_servico` (`id`),
+  ADD CONSTRAINT `FKkdg5omifowgremsah12rkla0t` FOREIGN KEY (`fk_endereco`) REFERENCES `endereco` (`id`),
+  ADD CONSTRAINT `FKnc9uatcpcgumhv98e71a7tg03` FOREIGN KEY (`fk_cliente`) REFERENCES `usuario` (`id`),
+  ADD CONSTRAINT `solicitacao_contrato_ibfk_1` FOREIGN KEY (`fk_cliente`) REFERENCES `usuario` (`id`),
+  ADD CONSTRAINT `solicitacao_contrato_ibfk_2` FOREIGN KEY (`fk_prestadorServico`) REFERENCES `usuario_servico` (`id`),
+  ADD CONSTRAINT `solicitacao_contrato_ibfk_3` FOREIGN KEY (`fk_endereco`) REFERENCES `endereco` (`id`);
+
+--
+-- Constraints for table `usuario`
+--
+ALTER TABLE `usuario`
+  ADD CONSTRAINT `FKnd5dh1sobio945c8e93lowv34` FOREIGN KEY (`fk_tipo_acesso`) REFERENCES `tipo_acesso` (`id`),
+  ADD CONSTRAINT `usuario_ibfk_1` FOREIGN KEY (`fk_tipo_acesso`) REFERENCES `tipo_acesso` (`id`);
+
+--
+-- Constraints for table `usuario_servico`
+--
+ALTER TABLE `usuario_servico`
+  ADD CONSTRAINT `FKbio5dtvb9vwudltnygabdcoyu` FOREIGN KEY (`fk_servico`) REFERENCES `servico` (`id`),
+  ADD CONSTRAINT `FKrr708fol3rmgpifijs2t7a0dd` FOREIGN KEY (`fk_usuario`) REFERENCES `usuario` (`id`),
+  ADD CONSTRAINT `usuario_servico_ibfk_1` FOREIGN KEY (`fk_usuario`) REFERENCES `usuario` (`id`),
+  ADD CONSTRAINT `usuario_servico_ibfk_2` FOREIGN KEY (`fk_servico`) REFERENCES `servico` (`id`);
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

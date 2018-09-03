@@ -202,7 +202,8 @@
                                 
                         <div class="fontawesome-list-wrap">
                                 <section>
-                                    <h3 style="text-align: center;">Progresso do pedido</h3><br>    
+                                    <h3 style="text-align: center;">Progresso do pedido</h3><br> 
+                                    
                                     <ul id="progress">
                                             <li class="active"></span>Inf. Cliente</li>
                                             <li >Inf. Serviço</li>
@@ -230,7 +231,14 @@
                                     </div>
                                  </div>
                                 <h2 style="text-align: center;">Informações do Cliente</h2><br>
-                                <p> Neste estágio você terá acesso ao endereço do cliente. Será disponível também para você um mapa, e este mapa traçará uma rota: do seu endereço até a residência do cliente
+                                 <c:if test="${proposta.tipoUsuario == '1'}">
+									<h3 style="text-align: center;"> ${proposta.nome}</h3><br> 
+							      </c:if>
+							      <c:if test="${proposta.tipoUsuario == '2'}">
+									 <h4 style="text-align: center;"> Serviço: ${proposta.nomeFantasia}</h4><br>
+							      </c:if>
+                                 <h4 style="text-align: center;"> Serviço: ${proposta.servico}</h4><br>
+                                <p> Neste estágio você terá acesso ao endereço do cliente. Será disponível também para você um mapa, e este mapa traçará uma rota: do seu endereço até a residência do cliente:
                                 
                                   <c:if test="${proposta.tipoUsuario == '1'}">
 									 <b>${proposta.nome}</b>  
@@ -405,7 +413,7 @@
 		 
 		 swal({
 			  title: "Você tem certeza que quer aceitar esse pedido?",
-			  text: "",
+			  text:"",
 			  icon: "warning",
 			  buttons:true,
 			  dangerMode: true,

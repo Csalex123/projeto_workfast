@@ -15,7 +15,7 @@
                         <img src="<%=request.getContextPath()%>/resources/img/icon/avatar-big-01.jpg" alt="${usuarioLogado.nome}" />
                     </div>
                     <h4 class="name">${usuarioLogado.nome}</h4>
-                    <a href="logout"><i class="fas fa-sign-out"></i>Sair</a>
+                    <a href="logout"><i class="fas fa-sign-out-alt"></i> Sair</a>
                 </div>
                 <nav class="navbar-sidebar2">
                     <ul class="list-unstyled navbar__list">
@@ -31,27 +31,33 @@
                         </li>
                         <li>
                             <a href="ExibirServicos">
-                                <i class="fas fa-gears"></i>Serviços</a>
+                                <i class="fas fa-gears"></i>Meus Serviços</a>
                         </li>
                         <li class="has-sub">
                             <a class="js-arrow" href="#">
-                                <i class="fas  fa-list-alt"></i>Solicitações
+                                <i class="fas  fa-list-alt"></i>Solicitações de Serviços
                                 <span class="arrow">
                                     <i class="fas fa-angle-down"></i>
                                 </span>
                             </a>
                             <ul class="list-unstyled navbar__sub-list js-sub-list">
-                                <li>
-                                    <a href="">
-                                        <i class="fas fa-pencil "></i>Propostas</a>
-                                </li>
+                                
                                 <li>
                                     <a href="ServicosEmAberto?cas=${usuarioLogado.idUsuario}">
-                                        <i class="far fa-thumb-tack"></i>Em aberto</a>
+                                        <i class="fas fa-thumbtack "></i>Em aberto</a>
                                 </li>
+                                <li>
+                                    <a href="">
+                                        <i class="fa fa-clock"></i>Em andamento</a>
+                                </li>
+                               
                                 <li>
                                     <a href="ServicosFinalizados">
                                         <i class="fas fa-legal"></i>Terminados</a>
+                                </li>
+                                <li>
+                                    <a href="">
+                                        <i class="fa fa-ban "></i>Contratos Cancelados</a>
                                 </li>
                                
                             </ul>
@@ -153,9 +159,8 @@
                         <a href="logout">Sair</a>
                     </div>
                     <nav class="navbar-sidebar2">
-                            <ul class="list-unstyled navbar__list">
-                      
-                        <li>
+                       <ul class="list-unstyled navbar__list">
+                       <li>
                             <a href="paginaInicialPrestador">
                                 <i class="fas  fa-home"></i>Pagina Inicial</a>
                            
@@ -166,7 +171,7 @@
                         </li>
                         <li>
                             <a href="ExibirServicos">
-                                <i class="fas fa-gears"></i>Serviços</a>
+                                <i class="fas fa-gears"></i>Meus Serviços</a>
                         </li>
                         <li class="has-sub">
                             <a class="js-arrow" href="#">
@@ -177,16 +182,21 @@
                             </a>
                             <ul class="list-unstyled navbar__sub-list js-sub-list">
                                 <li>
-                                    <a href="">
-                                        <i class="fas fa-pencil "></i>Propostas</a>
+                                    <a href="ServicosEmAberto?cas=${usuarioLogado.idUsuario}">
+                                        <i class="fas fa-thumbtack "></i>Em aberto</a>
                                 </li>
                                 <li>
-                                    <a href="ServicosEmAberto">
-                                        <i class="far fa-thumb-tack"></i>Em aberto</a>
+                                    <a href="">
+                                        <i class="fa fa-clock"></i>Em andamento</a>
                                 </li>
+                               
                                 <li>
                                     <a href="ServicosFinalizados">
                                         <i class="fas fa-legal"></i>Terminados</a>
+                                </li>
+                                <li>
+                                    <a href="">
+                                        <i class="fa fa-ban "></i>Contratos Cancelados</a>
                                 </li>
                                
                             </ul>

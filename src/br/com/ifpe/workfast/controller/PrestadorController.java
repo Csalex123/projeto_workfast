@@ -1,6 +1,9 @@
 package br.com.ifpe.workfast.controller;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -26,6 +29,8 @@ import br.com.ifpe.workfast.model.Cidade;
 import br.com.ifpe.workfast.model.CidadeAtuacaoServico;
 import br.com.ifpe.workfast.model.CidadeAtuacaoServicoDao;
 import br.com.ifpe.workfast.model.CidadeDao;
+import br.com.ifpe.workfast.model.Contrato;
+import br.com.ifpe.workfast.model.ContratoDao;
 import br.com.ifpe.workfast.model.DadosPessoais;
 import br.com.ifpe.workfast.model.DadosPessoaisDao;
 import br.com.ifpe.workfast.model.Endereco;
@@ -51,6 +56,8 @@ import br.com.ifpe.workfast.model.UsuarioServicoDao;
 @Controller
 public class PrestadorController {
 
+	private Contrato contrato;
+
 	// metodo para redirecionar para pagina inicial
 	@RequestMapping("paginaInicialPrestador")
 	public String paginaInical() {
@@ -58,13 +65,13 @@ public class PrestadorController {
 		return "prestador/index";
 	}
 
-	// metodo para mostrar solicitacões
-	@RequestMapping(value = "buscarSolicitacoes", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+	// metodo para mostrar solicitacões na area
+	@RequestMapping(value = "buscarSolicitacoesDoPrestadorLogado", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
 	public @ResponseBody String buscarSolicitacoesIndex(@RequestParam("cas") Integer idUsuario, Model model) {
 
 		SolicitacaoContratoDao dao = new SolicitacaoContratoDao();
 		List<ListaPedidosPendentesVO> lista = dao.listarPedidosPrestador(idUsuario);
-
+		
 		return new Gson().toJson(lista);
 	}
 
@@ -142,7 +149,7 @@ public class PrestadorController {
 		} else if (solicitacao.getEstagio().equals("3") && solicitacao.getStatus().equals("1")
 				&& solicitacao.getConvite().equals("1")) {
 
-			encaminhar = "TerceiraEtapa";
+			encaminhar = "detalheContratoPrestador";
 
 		} else if (solicitacao.getEstagio().equals("4") && solicitacao.getStatus().equals("3")
 				&& solicitacao.getConvite().equals("1")) {
@@ -230,7 +237,7 @@ public class PrestadorController {
 	public String segundaEtapa(@RequestParam("cas") Integer idSolicitacao, Model model) {
 		
 		SolicitacaoContratoDao dao = new SolicitacaoContratoDao();
-		SolicitacaoContrato solicitacao = dao.buscarPorId(idSolicitacao);
+		ListaPedidosPendentesVO solicitacao = dao.buscarPedidoPendente(idSolicitacao);
 		model.addAttribute("proposta", solicitacao);
 		return "prestador/2_estagio";
 	}
@@ -724,5 +731,101 @@ public class PrestadorController {
 
 		return new Gson().toJson("");
 	}
+	
+	@RequestMapping(value = "verificarCodigoContrato", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+	public @ResponseBody String verificarCodigoContrato(@RequestParam("prefixo") String prefixo) {
+
+		
+		int gerar = 1000 + (int)(Math.random() * (10000 - 1000));
+		String codigo1 = "WF"+prefixo+gerar;
+        Contrato contrato = new Contrato();
+		String codigoNovo = contrato.gerarMatricula(codigo1,prefixo);
+		
+		
+
+	    return new Gson().toJson(codigoNovo);
+		
+	
+		
+
+
+	}
+	
+	@RequestMapping(value = "salvarContrato", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+	public @ResponseBody String salvarContrato(@RequestParam("codigoContrato") String codigoContrato
+		,@RequestParam("idProposta") Integer idProposta, @RequestParam("prazo") Integer prazo, @RequestParam("data") String data,
+		@RequestParam("parcelas") Integer parcelas, @RequestParam("pagamento") String pagamento,
+		@RequestParam("valor") String valor,@RequestParam("descricaoServico") String descricaoServico,
+		@RequestParam("descricaoPagamento") String descricaoPagamento, @RequestParam("multa") Integer multa	) throws ParseException {
+
+		
+		ContratoDao dao = new ContratoDao();
+		SolicitacaoContratoDao dao2  = new SolicitacaoContratoDao();
+		SolicitacaoContrato proposta = dao2.buscarPorId(idProposta);
+		proposta.setEstagio("3");// fase contrato
+		proposta.setStatus("1");// status pendente, esperando o cliente aceitar o contrato
+		dao2.update(proposta);
+		
+		
+		Contrato contrato = new Contrato();
+		contrato.setAceito("0");
+		contrato.setCodigoContrato(codigoContrato);
+		contrato.setDescricaoServicos(descricaoServico);
+		contrato.setPrazo(prazo);
+		
+		SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+		Date dataInicio = formato.parse(data);
+		
+		contrato.setDataInicio(dataInicio);
+		contrato.setFormaPagamento(pagamento);
+		contrato.setParcelas(parcelas);
+		contrato.setValor(Float.parseFloat(valor));
+		contrato.setDescricaoPagamento(descricaoPagamento);
+		contrato.setMulta(multa);
+		contrato.setSolicitacao(proposta);
+		dao.salvar(contrato);
+		
+		
+		
+		return new Gson().toJson("detalheContratoPrestador");
+	
+	
+		
+
+
+	}
+	
+	
+	// metodo para redirecionar para pagina detalhe contrato
+		@RequestMapping("detalheContratoPrestador")
+		public String detalheContratoPrestador(@RequestParam("cas") Integer codigoSolicitacao, Model model1,Model model2,Model model3,Model model4,Model model5,Model model6) {
+            
+			ContratoDao daoContrato = new ContratoDao();
+            Contrato contrato = daoContrato.buscarContratoPorSolicitacao(codigoSolicitacao);
+            
+            SolicitacaoContratoDao daoSolicitacao = new SolicitacaoContratoDao();
+            SolicitacaoContrato solicitacao = daoSolicitacao.buscarPorId(contrato.getSolicitacao().getIdSolicitacaoContrato());
+
+            DadosPessoaisDao daoDados = new DadosPessoaisDao();
+            DadosPessoais clienteDados = daoDados.buscarDadosPessoaisUsuario(solicitacao.getUsuario().getIdUsuario());
+            DadosPessoais prestadorDados = daoDados.buscarDadosPessoaisUsuario(solicitacao.getUsuarioServico().getUsuario().getIdUsuario());
+			
+            EnderecoDao daoEndereco = new EnderecoDao();
+            Endereco clienteEndereco = solicitacao.getEndereco();
+            Endereco prestadorEndereco = daoEndereco.buscarEnderecoUsuario(solicitacao.getUsuarioServico().getUsuario().getIdUsuario());
+            
+            model1.addAttribute("contrato", contrato);
+            model2.addAttribute("solicitacao", solicitacao);
+            model3.addAttribute("clienteDados", clienteDados);
+            model4.addAttribute("prestadorDados", prestadorDados);
+            model5.addAttribute("clienteEndereco", clienteEndereco);
+            model6.addAttribute("prestadorEndereco", prestadorEndereco);
+            
+            
+            
+
+			return "prestador/detalheContrato";
+		}
+
 
 }

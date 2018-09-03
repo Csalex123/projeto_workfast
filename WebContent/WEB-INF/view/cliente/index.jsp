@@ -112,8 +112,19 @@
 
               
                     <!-- Conteiner de listagem de candidatos -->
-                    <div id="filtro" >
-                    </div>
+                     <div class="main-content">
+		                <div class="section__content section__content--p30">
+		                    <div class="container-fluid">
+		                        <div class="row" id="filtro">
+		                          
+		                         </div>
+		                                                         
+		                        </div>
+		                     </div>
+		                  </div>
+                   
+                       
+                    
 
 
 					
@@ -131,6 +142,7 @@
 
                 </div>
             </div>
+            
 	
 
    <script type="text/javascript">
@@ -151,53 +163,58 @@
         	   
        }, function(dadosJSON){
      	  var linhas = " ";
-     	  
+     	 
 				if(dadosJSON.length > 0){
 					$(dadosJSON).each(function (i) {
-						linhas += '<div class="container mt-3 " >';
-						linhas += '<div class="media border p-3 shadow p-3 mb-5 bg-white rounded" style="background-color:white;">';
-						linhas += '<div class="media-left media-top" style="margin-top:30px;">';
-						linhas += ' <img class="media-object" style="width:90px; " src="/workfast/resources/img/icon/avatar-04.jpg" class="img-responsive">';
-						linhas += '</div>';
-						linhas += '<div class="media-body">';
-						 if(dadosJSON[i].tipo == '1'){
-							 linhas += '<center><h4 class="media-heading">'+dadosJSON[i].usuario+'</h4></center>';
-			            	 
-			           }else if(dadosJSON[i].tipo == '2'){
-			        	   linhas += '<center ><h4 class="media-heading" >'+dadosJSON[i].nomeFantasia+'</h4></center>';
-			        	   
-			           }
-						 linhas += '<br>';
-						 linhas += '<div style="margin-left:10px;" class="table-responsive table-responsive-data2">'
-							 linhas += ' <table class="table table-data2" style="background-color:#DCDCDC;">';
-							        linhas += '<thead>';
-							           linhas += '<tr>';
-							               linhas += '<th>'+dadosJSON[i].categoria+'</th>';
-							               linhas += '<th>'+dadosJSON[i].servico+'</th>';
-							               linhas += '<th>'+dadosJSON[i].localizacao+'</th>';
-							           linhas += '</tr>';
-							         linhas += '<thead>';
-							         linhas += '<tbody>';
-							           linhas += '<tr>';
-							              linhas += '<td colspan="3">';
-						      
-							              linhas += '<p>'+dadosJSON[i].descricaoServico+'</p>';
-							              
-							              linhas += '</td>';
-							              linhas += '</tr>' ;
-							              linhas += '<tr>'; 
-								              linhas += '<td colspan="3" >';
-								                linhas += '<div style="float:right;"><a href="solicitacaoServico?id='+dadosJSON[i].idUsuarioServico+'"><button class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="Contratar">Contratar <i class="fa fa-handshake-o "></i></button></a></div>';
-								                
-								              linhas += '</td>'; 
-							              linhas += '</tr>'; 
-							         linhas += '</tbody>';
-							       linhas += '</table>';
-							linhas += '</div>';
-						linhas += '</div>';
-						linhas += '</div>';
-						linhas += '</div>';
-						linhas += '<hr>';
+
+		                   linhas += '<div class="col-md-4">';
+		                        linhas += '<div class="card">';
+		                            linhas += '<div class="card-header">';
+		                                linhas += '<i class="far fa-list-alt"></i>';
+		                                linhas += '<strong class="card-title pl-2"> '+dadosJSON[i].categoria+'</strong>';
+		                            linhas += '</div>';
+		                            linhas += '<div class="card-body">';
+		                                linhas += '<div class="mx-auto d-block">';
+		                                    linhas += '<img class="rounded-circle mx-auto d-block" src="/workfast/resources/img/icon/avatar-04.jpg" alt="Card image cap">';
+		                                    if(dadosJSON[i].tipo == '1'){
+		           						     
+		                                    	linhas += '<h5 class="text-sm-center mt-2 mb-1"> '+dadosJSON[i].usuario+'</h5>';
+
+			           			             }
+			           						 if(dadosJSON[i].tipo == '2'){
+			           			        	  
+			           			        	   linhas += '<h5 class="text-sm-center mt-2 mb-1">  '+dadosJSON[i].nomeFantasia+'</h5>';
+
+			           			             }
+		                                                                        
+		                                    linhas += '<div class="location text-sm-center">';
+		                                    linhas += ' <i class="fa fa-map-marker"></i> '+dadosJSON[i].localizacao+'</div>';
+		                                    linhas += '<div class="location text-sm-center"><i class="fas fa-star"></i>';
+		                                    linhas += '<i class="fas fa-star"></i>';
+		                                    linhas += '<i class="fas fa-star"></i>';
+		                                    linhas += '<i class="fas fa-star"></i>';
+		                                    linhas += '<i class="fas fa-star-half"></i>';
+		                                       
+		                                linhas += '</div>';
+		                                linhas += '<hr>';
+		                                linhas += '<div class="card-text text-sm-center">';
+		                                linhas += ' <i class="fas fa-gears"></i> '+dadosJSON[i].servico+'</div>';
+		                                  linhas +='<br><b>Descrição do serviço:</b><br><textarea disabled="disabled" style="resize: none" class="form-control" rows="5">'+dadosJSON[i].descricaoServico+'</textarea>';
+		                                  
+		                                linhas += '</div>';
+		                                linhas += '<div class="card-footer">';
+		                                linhas += '<a style="width:100%" href="solicitacaoServico?id='+dadosJSON[i].idUsuarioServico+'"><button style="width:100%" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="Contratar">Solicitar Serviço <i class="fa fa-handshake-o "></i></button></a>';
+		                            linhas += '</div>';
+		                                linhas += '</div>';
+		                                
+		                            linhas += '</div>';
+		                            
+		                           
+		                        linhas += '</div>';
+		                    linhas += '</div>';
+		                    linhas += '</div>';
+
+						
 						
 						
 						
@@ -205,10 +222,11 @@
 					       	  
 						
 					});
+					
 					$('#filtro').html(linhas).fadeIn(1200);
 					
 				}else{
-					$('#filtro').html('<br><br><center><span>Nenhum Prestador encontrado!</span></center>').fadeIn(1200);
+					$('#filtro').html('<div class="col-md-12 col-lg-12 col-sm-12"><br><br><center><span>Nenhum Prestador encontrado!</span></center>').fadeIn(1200);
 				}
 
 				

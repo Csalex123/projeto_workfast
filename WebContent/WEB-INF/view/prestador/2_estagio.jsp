@@ -12,6 +12,57 @@
 	
 <style type="text/css">
 
+  .containerChat {
+    border: 2px solid #dedede;
+    background-color: #f1f1f1;
+    border-radius: 5px;
+    padding: 10px;
+    width:50%;
+    margin: 10px auto;
+}
+
+/* Darker chat container */
+.darker {
+    border-color: #ccc;
+    background-color: #ddd;
+   
+}
+
+/* Clear floats */
+.containerChat::after {
+    content: "";
+    clear: both;
+    display: table;
+}
+
+/* Style images */
+.containerChat img {
+    float: left;
+    max-width: 60px;
+    width: 100%;
+    margin-right: 20px;
+    border-radius: 50%;
+}
+
+/* Style the right image */
+.containerChat img.right {
+    float: right;
+    margin-left: 20px;
+    margin-right:0;
+}
+
+/* Style time text */
+.time-right {
+    float: right;
+    color: #aaa;
+}
+
+/* Style time text */
+.time-left {
+    float: left;
+    color: #999;
+}
+
 * {
     box-sizing: border-box;
 }
@@ -132,7 +183,9 @@
 
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript">
 
+</script>
 <!-- Main CSS-->
 <link
 	href="<%=request.getContextPath()%>/resources/css/theme-prestador.css"
@@ -172,47 +225,83 @@
                                 </section>
 
                             <section >
-                            <sectio>
+                            <section>
                                <h2 style="text-align: center;">Informações do Serviço</h2><br>
+                                <h2 style="text-align: center;"> - ${proposta.servico} -</h2><br>
                                 <center><p> Aqui você terá um fórum para se comunicar com o cliente para tirar a suas dúvidas sobre o serviço que ele vai querer.</p></center><br>
 
-                                <h4 style="text-align: center;"> chat</h4><br>
-                            </sectio>
+                               
+                            </section>
                                 
                                 
                                 
-                                
-                                <div id="chat" class="container mt-3" style="left:10px; top:20px; height: 400px; z-index:1; overflow: auto; padding-bottom: 300px;">
+                          <div class="main-content" style="margin-top: -130px;">
+                            <div class="section__content section__content--p30">
+                              <div class="container-fluid">
+                                 <div class="row">									
+									  
+								    <div class="col-lg-12">
+                                <div class="au-card au-card--no-shadow au-card--no-pad m-b-40 au-card--border" style="margin: 0 auto; width:  600px; " >
+                                    <div class="au-card-title" style="background-image:url('/workfast/resources/images/bg-title-02.jpg');">
+                                        <div class="bg-overlay bg-overlay--blue"></div>
+                                        <h3>
+                                            <i class="zmdi zmdi-comment-text"></i>Chat</h3>
+                                       
+                                    </div>
+                                    <div class="au-inbox-wrap">
+                                        <div class="au-chat au-chat--border">
+                                            <div class="au-chat__title">
+                                                <div class="au-chat-info">
+                                                    <div class=" ">
+                                                        <div class="avatar avatar--small">
+                                                            <img src="/workfast/resources/img/icon/avatar-04.jpg" alt="John Smith">
+                                                        </div>
+                                                    </div>
+                                                    <span class="nick">
+                                                        <c:if test="${proposta.tipoUsuario == '1'}">
+													        <a href="#">${proposta.nome}</a>
+													    </c:if>
+													    
+													    <c:if test="${proposta.tipoUsuario == '2'}">
+													        <a href="#">${proposta.nomeFantasia}</a>
+													    </c:if>
+                                                    
+                                                        <a href="#"></a>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <div id="corpoChat" class="au-chat__content au-chat__content2 js-scrollbar5">
+                                                <div id="chat"></div>
+                                            </div>
+                                            <div class="au-chat-textfield">
+                                                <div  class="au-form-icon">
+                                                    <input id="mensagem" class="au-input au-input--full au-input--h65" type="text" placeholder="Digite uma mensagem">
+                                                    <button id="enviarMensagem" class="au-input-icon">
+                                                        <i class="zmdi zmdi-mail-send"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
 								  
-								  
+							     </div>
+							   </div>
+						    </div>  
+						  </div>		  
 								  
 								  
 								 
 								  
-								</div>
 								
-                                <div class="row ">
-                                    <div class="col col-md-10">
-                                       <div class="form-group">
-										  <label for="mensagem">Mensagem:</label>
-										  <textarea class="form-control" rows="3" id="mensagem"></textarea>
-										</div>
-                                    </div>
-                                    <div class="col col-md-2">
-                                       <div class="form-group">
-										  <label for="mensagem"> &nbsp;</label>
-										   <button type="button" id="enviarMensagem" class="btn btn-primary" style="width:100%; height: 100%;">
-                                               &nbsp;<i class="fas fa-forward"></i> Enviar</button>
-								       </div>
-                                      
-                                    </div>
-                                 </div>
+								
                                   <div class="row ">
                                     
                                     <div class="col col-md-12">
                                        <div class="form-group">
 										  <label for="mensagem"> &nbsp;</label>
-										   <a href="TerceiraEtapa?cas=${proposta.idSolicitacaoContrato}"></a><button type="button" class="btn btn-primary" style="width:100%; height: 100%;">
+										   <a style="width:100%; height: 100%;" href="TerceiraEtapa?cas=${proposta.idProposta}"><button type="button" class="btn btn-primary" style="width:100%; height: 100%;">
                                                &nbsp;<i class="fas fa-forward"></i> Ir ao contrato</button></a>
 								       </div>
                                       
@@ -245,10 +334,25 @@
 	</div>
 	
 	<script type="text/javascript">
-	var idProposta = "${proposta.idSolicitacaoContrato}";
-    var idCliente = "${proposta.usuario.idUsuario}";
+	var idProposta = "${proposta.idProposta}";
+    var idCliente = "${proposta.idCliente}";
     var idPrestador = "${usuarioLogado.idUsuario}";
-     
+    function verificarMensagemNova(id){
+    	$.post('verificarMensagemNovaCliente', {
+	           idProposta:id,
+	          	           
+	        	   
+	       }, function(dadosJSON){
+	    	   
+	    	  if(dadosJSON == "novaMensagem"){
+	    		  
+	    		  alert("tem mensagem nova");
+	    	  }else{
+	    		  alert("nenhuma mensagem nova");
+	    	  }
+	    	   
+	       });
+    }
 	function popularChat(idProposta,idCliente,idPrestador){
 		 
 		   $('#chat').html(' ').fadeOut(100);
@@ -267,46 +371,42 @@
 						$(dadosJSON).each(function (i) {
 							
 							if(dadosJSON[i].enviadoPor == "${usuarioLogado.idUsuario}"){
+								linhas +='<div class="send-mess-wrap">';
+								linhas +='<span class="mess-time">30 Sec ago</span>';
+								linhas +='<div class="send-mess__inner">';
+								linhas +='<div class="send-mess-list">';
+								linhas +='<div class="send-mess-list">';
+								  linhas +=' <div class="send-mess">'+dadosJSON[i].mensagem+'</div>';
+							    linhas +='</div>';
+							    linhas +='</div>';
+								linhas +='</div>';
 								
-								linhas += ' <div class="media border p-3">';
-									linhas += ' <div class="media-body">';
-									 if(dadosJSON[i].tipoUsuarioPrestador == '1'){
-										 linhas += '  <h4>'+dadosJSON[i].nomePrestador+' <small><i>Agosto 30, 2018</i></small></h4>';
-									 }else if(dadosJSON[i].tipoUsuarioPrestador == '2'){
-										 linhas += '  <h4>'+dadosJSON[i].nomeFantasiaPrestador+' <small><i>Agosto 30, 2018</i></small></h4>';
-									 }
-									
-									linhas += '  <p>'+dadosJSON[i].mensagem+'</p>';
-									linhas += ' </div>';
-									linhas += '<img src="/workfast/resources/img/icon/avatar-01.jpg"  class="ml-3 mt-3 rounded-circle" style="width:60px;">';
 								
-								linhas += ' </div>';
-								linhas += ' <br>';
+								
 							}else{
 								
-
-								linhas += ' <div class="media border p-3">';
-								linhas += '<img src="/workfast/resources/img/icon/avatar-03.jpg"  class="ml-3 mt-3 rounded-circle" style="width:60px;">';
-									linhas += ' <div class="media-body">';
-									 if(dadosJSON[i].tipoUsuarioCliente == '1'){
-										
-										 linhas += '  <h4>'+dadosJSON[i].nomeCLiente+' <small><i>Agosto 30, 2018</i></small></h4>';
-									 }else if(dadosJSON[i].tipoUsuarioCliente == '2'){
-										
-										 linhas += '  <h4>'+dadosJSON[i].nomeFantasiaCliente+' <small><i>Agosto 30, 2018</i></small></h4>';
-									 }
-									
-									linhas += '  <p>'+dadosJSON[i].mensagem+'</p>';
-									linhas += ' </div>';
-									
+								linhas +='<div class="recei-mess__inner">';
+								linhas +='<span class="mess-time">12 Min ago</span>';
+								linhas +=' <div class="recei-mess__inner">';
+								linhas +=' <div class="recei-mess-list">';
+								linhas +='<div class="recei-mess__inner">';
+								linhas +='<div class="recei-mess">'+dadosJSON[i].mensagem+'</div>';
 								
-								linhas += ' </div>';
-								linhas += ' <br>';
+								 
+							    linhas +='</div>';
+								linhas +='</div>';
+								linhas +='</div>';
+								linhas +='</div>';
+							    
 							}
 								
 							
 						});
-						$('#chat').html(linhas).fadeIn(1200);
+						$('#chat').html(linhas).fadeToggle();
+						$(function(){
+							var minhadiv = document.getElementById("corpoChat");
+						    	minhadiv.scrollTop = minhadiv.scrollHeight;
+						});
 						
 					}else{
 						$('#chat').html('<br><br><center><span>Escreva uma mensagem!</span></center>').fadeIn(1200);
@@ -319,7 +419,10 @@
 	   }
 	
 	  $(document).ready(function(){
+		
 		   popularChat(idProposta,idCliente,idPrestador);
+		  
+		   //setInterval("popularChat(idProposta,idCliente,idPrestador);", 3000);
 		   
 	   });
 	  

@@ -103,7 +103,7 @@
 			
 				
 				<div class="container" style="padding-bottom: 50%;" style="background-color:white;" >
-				   <p><h3>Proposta de Serviços</h3></p>
+				  
 				   <br>
 				   <div id="propostas" >
 				   
@@ -140,59 +140,66 @@
 		
 		$('#propostas').html(' ').fadeOut(200);
 		
-		 $.post('buscarSolicitacoes', {
+		 $.post('buscarSolicitacoesDoPrestadorLogado', {
 	          
 			 cas:cas,
 	          
 	        	   
 	       }, function(dadosJSON){
-	    	   
+	    	  
 	     	  var linhas = " ";
-	     	  
+	     	    linhas += '<div class="row">';
 					if(dadosJSON.length > 0){$(dadosJSON).each(function (i) {
 						
-							linhas += '<div class="media shadow-sm p-3 mb-5 bg-white rounded" style="background-color:white; padding-top:1px; padding-left:1px; padding-right:1px;" >';
-							  linhas += '<div class="media-left" >';
-							    linhas += '<img src="/workfast/resources/img/icon/avatar-05.jpg" class="media-object" style="width:90px">';
-							  linhas += '</div>';
-							  linhas += '<div class="media-body" style="margin-left:15px;">';
-							    if(dadosJSON[i].tipoUsuario == '1'){
-							    	linhas += '<h4 style="margin-top: -5px;" class="media-heading">'+dadosJSON[i].nome+'</h4>';
-							    }
-							    if(dadosJSON[i].tipoUsuario == '2'){
-							    	linhas += '<h4 style="margin-bottom: 5px;" class="media-heading">'+dadosJSON[i].nomeFantasia+'</h4>';
-							    }
-							    linhas += '<div class="table-responsive" style="margin-top:10px;">';
-							    linhas += '<table class="table table-condensed >';
-							    
-							    linhas += '<tbody>';
-								    linhas += '<tr>';
-									    linhas += '<td colspan ="4"><label style="font-size:12px;"><b>Serviço</b></label><br>'+dadosJSON[i].servico+'</td>';
-									linhas += '</tr>';
-									linhas += '<tr>';
-									    linhas += '<td><label style="font-size:12px;"><b>Cidade</b></label><br>'+dadosJSON[i].cidade+'</td>';
-									    linhas += '<td><label style="font-size:12px;"><b>Endereço</b></label><br>'+dadosJSON[i].rua+'</td>';
-									    linhas += '<td><label style="font-size:12px;"><b>Numero Casa</b></label><br>'+dadosJSON[i].numeroCasa+'</td>';
-								    linhas += '</tr>';
-								    linhas += '<tr>';
-								    linhas += '<td colspan ="4"><label style="font-size:12px;"><b>Mensagem</b></label><br>'+dadosJSON[i].mensagem+'</td>';
-								    linhas += '</tr>';
-								    linhas += '<tr>';
-								      linhas += '<td colspan ="4" ><div style="float:right;"><a href="PrimeiraEtapa?cas='+dadosJSON[i].idProposta+'"><button class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="Contratar">Veja mais <i class="fa fa-handshake-o "></i></button></a></div></td>';
-								    linhas += '</tr>';
-								    
-							    linhas += '</tbody>';
-							    
-							    
-							    linhas += '</table>';
-							    
-							    linhas += '</div>';
-							    
-							    
-							linhas += '</div>';
-						linhas += '</div>';
-							
-						linhas += '<hr>';
+						  linhas +='<div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">';
+                          linhas +=' <aside class="profile-nav alt">';
+                              linhas +=' <section class="card">';
+                                   linhas +='<div class="card-header user-header alt bg-dark">';
+                                       linhas +='<div class="media">';
+                                           linhas +='<a href="#">';
+                                               linhas +='<img  class="align-self-center rounded-circle mr- " style=" width:85px; height:85px; margin-right:30px;" alt="" src="/workfast/resources/img/icon/avatar-04.jpg">';
+                                           linhas +='</a>';
+                                           linhas +=' <div class="media-body">';
+                                            if(dadosJSON[i].tipoUsuario == '1'){
+												 linhas +='<h2 style="float:right;" class="text-light display-6">'+dadosJSON[i].nome+'</h2> '; 
+											 }
+											 
+											 if(dadosJSON[i].tipoUsuario == '2'){
+												 linhas +='<h2 style="float:right;" class="text-light display-6">'+dadosJSON[i].nomeFantasia+'</h2> ';
+											 }
+                                               linhas +='<p style="font-size:12px; color:#C1C1C1; float:right;">Proposta de Serviço</p>';
+                                           linhas +='</div>';
+                                       linhas +='</div>';
+                                   linhas +='</div>';
+
+
+                                   linhas +='<ul class="list-group list-group-flush">';
+                                       linhas +='<li class="list-group-item">';
+                                           linhas +='<a href="#" style="font-size:18px;">';
+                                           linhas +='<i class="fas fa-gears"></i>  '+dadosJSON[i].servico;
+                                        	   
+                                           linhas +='</a>';
+                                       linhas +='</li>';
+                                       linhas +='<li class="list-group-item">';
+                                     
+	                                       linhas +='<b>Cidade:</b><br>'+dadosJSON[i].cidade;
+	                                       linhas +='<br><b>Endereço:</b><br>'+dadosJSON[i].rua + ' - Nº '+dadosJSON[i].numeroCasa;
+	                                       linhas +='<br><b>Mensagem:</b><br><textarea style="resize: none" class="form-control" rows="5">'+dadosJSON[i].mensagem+'</textarea>';
+	                                       
+	                                    	   
+	                                       
+                                        linhas +='</li>';
+                                        linhas +='<li class="list-group-item">';
+                                        linhas += '<div style="float:right;"><a href="PrimeiraEtapa?cas='+dadosJSON[i].idProposta+'"><button class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="Contratar">Veja mais <i class="fa fa-handshake-o "></i></button></a></div>';
+                                       linhas +='</li>';
+                                       linhas +='</ul>';
+
+                                       linhas +='</section>';
+                                   linhas +='</aside>';
+                               linhas +='</div>';
+
+						
+						
 							
 							
 							
@@ -200,7 +207,8 @@
 						       	  
 							
 						});
-						$('#propostas').html(linhas).fadeIn(1200);
+					linhas += '</div>';
+					$('#propostas').html(linhas).fadeIn(1200);
 						
 					}else{
 						$('#propostas').html('<br><br><center><span>Não tem solicitação</span></center>').fadeIn(1200);
@@ -213,6 +221,7 @@
 	} 
 	
 	$(document).ready(function(){
+		
 		listarSolicitacoes(); 
 		 
 	 });

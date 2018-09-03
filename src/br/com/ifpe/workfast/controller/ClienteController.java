@@ -162,6 +162,7 @@ public class ClienteController {
 
 		SolicitacaoContratoDao dao = new SolicitacaoContratoDao();
 		List<ListaPedidosPendentesVO> listaPendentes = dao.listarPedidosPendentesCliente(idUsuario);
+		System.out.println("-------------------"+listaPendentes.size());
 		model.addAttribute("listaPendentes", listaPendentes);
 
 		return "cliente/solicitacoesPendentes";
@@ -317,7 +318,7 @@ public class ClienteController {
 	@RequestMapping("SegundoEstagio")
 	public String SegundoEstagioPedido(@RequestParam("cas") Integer idSolicitacao, Model model) {
 		SolicitacaoContratoDao dao = new SolicitacaoContratoDao();
-		SolicitacaoContrato solicitacao = dao.buscarPorId(idSolicitacao);
+		ListaPedidosPendentesVO solicitacao = dao.buscarPedidoPendentePrestador(idSolicitacao);
 		model.addAttribute("proposta", solicitacao);
 		return "cliente/2_estagio";
 

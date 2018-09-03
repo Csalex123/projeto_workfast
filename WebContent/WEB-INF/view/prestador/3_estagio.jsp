@@ -135,9 +135,11 @@
 	href="<%=request.getContextPath()%>/resources/css/theme-prestador.css"
 	rel="stylesheet" media="all">
 	
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
-
-</head>
+  </head>
 
 <body class="animsition">
 
@@ -175,15 +177,217 @@
                                  </p><br>
 
                                 <h4 style="text-align: center;"> Contrato</h4><br><br>
+                                
+                                <div class="col-lg-12 col-md-12">
+                                <div class="card">
+                                    <div class="card-header" >
+                                        <strong >Informações do Contrato</strong>
+                                        
+                                    </div>
+                                    <div class="card-body card-block">
+                                       
+                                       <div class="row">
+                                         <div class="col-md-3">
+                                           <div class="form-group">
+	                                            <label for="contrato" class=" form-control-label"><b>Nª Contrato</b></label>
+	                                            <input type="text" disabled="disabled" id="numeroContrato" placeholder="" class="form-control">
+                                          </div>
+                           
+                                         </div>
+                                          <div class="col-md-9">
+                                             <div class="form-group">
+	                                            <label for="cliente" class=" form-control-label"><b>Cliente</b></label>
+	                                               <c:if test="${proposta.tipoUsuario == '1'}">
+	                                                 <input type="text" disabled="disabled" id="cliente" placeholder="" value=" ${proposta.nome} " class="form-control">
+	                                              
+												    </c:if>
+												     <c:if test="${proposta.tipoUsuario == '2'}">
+												     <input type="text" disabled="disabled" id="cliente" placeholder="" value="  ${proposta.nomeFantasia } " class="form-control">
+	                                              
+												      
+												    </c:if>
+	                                              
+	                                            
+	                                           
+                                             </div>
+                           
+                                         </div>
+                                       </div>
+                                       
+                                       <div class="row">
+                                         <div class="col-md-4">
+	                                           <div class="form-group">
+		                                            <label for="estado" class=" form-control-label"><b>Estado</b></label>
+		                                            <input type="text" id="estado" value="${proposta.estado}" disabled="disabled" class="form-control">
+	                                          </div>
+                           
+                                         </div>
+                                         <div class="col-md-4">
+	                                           <div class="form-group">
+		                                            <label for="cidade" class=" form-control-label"><b>Cidade</b></label>
+		                                            <input type="text" disabled="disabled" value="${proposta.cidade }" id="cidade" placeholder="" class="form-control">
+	                                          </div>
+                           
+                                         </div>
+                                         <div class="col-md-4">
+	                                           <div class="form-group">
+		                                            <label for="cep" class=" form-control-label"><b>CEP</b></label>
+		                                            <input type="text"  disabled="disabled" value="${proposta.cep }" id="cep" placeholder="" class="form-control">
+	                                          </div>
+                           
+                                         </div>
+                                          
+                                       </div>
+                                       
+                                       <div class="row">
+                                        <div class="col-md-6">
+                                             <div class="form-group">
+	                                            <label for="bairro" class=" form-control-label"><b>Bairro</b></label>
+	                                            <input type="text" disabled="disabled" id="bairro" value="${proposta.bairro}" class="form-control">
+                                             </div>
+                           
+                                         </div>
+                                         <div class="col-md-6">
+	                                           <div class="form-group">
+		                                            <label for="endereco" class=" form-control-label"><b>Endereco</b></label>
+		                                            <input type="text" disabled="disabled" id="endereco" value="${proposta.rua }" class="form-control">
+	                                          </div>
+                           
+                                         </div>
+                                         </div>
+                                         <div class="row">
+                                         <div class="col-md-6">
+	                                           <div class="form-group">
+		                                            <label for="numero" class=" form-control-label"><b>Numero</b></label>
+		                                            <input type="text" disabled="disabled" value="${proposta.numeroCasa }" id="numero" placeholder="" class="form-control">
+	                                          </div>
+                           
+                                         </div>
+                                         <div class="col-md-6">
+	                                           <div class="form-group">
+		                                            <label for="complemento" class=" form-control-label"><b>Complemento</b></label>
+		                                            <input type="text" disabled="disabled" value="${proposta.complemento }"id="complemento" placeholder="" class="form-control">
+	                                          </div>
+                           
+                                         </div>
+                                        
+                                         
+                                          
+                                       </div>
+                                        
+                                         <hr>
+                                       
+                                       
+                                       <div class="row">
+                                         <div class="col-md-12">
+	                                           <div class="form-group">
+		                                            <label for="servico" class=" form-control-label"><b>Serviço</b></label>
+		                                            <input type="text" id="servico" disabled="disabled"  value="${proposta.servico }" class="form-control">
+	                                          </div>
+                           
+                                         </div>
+                                       </div>
+                                       
+                                       <div class="row">
+                                         <div class="col-md-12">
+	                                            <div class="form-group">
+		                                           <label for="descricaoServico" class=" form-control-label"><b>Descrição do Serviço</b> </label>
+		                                           <textarea name="textarea-input" id="descricaoServico" rows="6" placeholder="Explique detalhadamente qual será o serviço que vai ser executado..." class="form-control"></textarea>	                                          
+		                                         </div>
+                                               </div>
+                                       </div>
+                                       
+                                       
+                                       <div class="row">
+                                         <div class="col-md-6">
+	                                            <div class="form-group">
+		                                            <label for="" class=" form-control-label"><b>Prazo do Serviço(em dias)</b></label>
+		                                            <input type="text" id="prazo" placeholder="" class="form-control">
+	                                          </div>
+                                          </div>
+                                          <div class="col-md-6">
+	                                            <div class="form-group">
+		                                            <label for="" class=" form-control-label"><b>Data inicio</b></label>
+		                                            <input type="text" id="data" placeholder="" class="form-control">
+	                                          </div>
+                                          </div>
+                                          </div>
+                                          <div class="row">
+                                           <div class="col-md-6">
+	                                            <div class="form-group">
+		                                            <label for="" class=" form-control-label"><b>Forma de pagamento</b></label>
+		                                             <select name="selectSm" id="formaPagamento" class="form-control-sm form-control">
+                                                        <option value="">Selecione</option>
+                                                        <option value="Cartão de Credito">Cartão de Credito</option>
+                                                        <option value="Em dinheiro">Em dinheiro</option>
+                                                        <option value="Boleto">Boleto</option>
+                                                        
+                                                    </select>
+	                                          </div>
+                                          </div>
+                                           <div class="col-md-6">
+	                                            <div class="form-group">
+		                                            <label for="" class=" form-control-label"><b>Parcelas</b></label>
+		                                             <select name="selectSm" id="parcelas" class="form-control-sm form-control">
+                                                        <option value="0">Selecione</option>
+                                                        <option value="1">1</option>
+                                                        <option value="2">2</option>
+                                                        <option value="3">3</option>
+                                                        <option value="4">4</option>
+                                                        <option value="5">5</option>
+                                                        <option value="6">6</option>
+                                                        <option value="7">7</option>
+                                                        <option value="8">8</option>
+                                                        <option value="9">9</option>
+                                                         <option value="10">10</option>
+                                                          <option value="10">11</option>
+                                                           <option value="10">12</option>
+                                                    </select>
+	                                          </div>
+                                          </div>
+                                       </div>
+                                        <div class="row">
+	                                         <div class="col-md-12">
+	                                           <div class="form-group">
+		                                            <label for="company" class=" form-control-label"><b>Valor total a ser pago pela execução dos serviços (em reais)</b> </label>
+		                                            <input type="text" id="valor" placeholder="" class="form-control">
+	                                          </div>
+	                           
+	                                         </div>
+	                                          
+                                       </div>
+                                       <div class="row">
+                                         <div class="col-md-12">
+	                                            <div class="form-group">
+		                                           <label for="company" class=" form-control-label"><b>Descrição da forma do pagamento</b> </label>
+		                                           <textarea name="textarea-input" id="descricaoPagamento" rows="6" placeholder="Explique detalhadamente como será realizado o pagamento do serviço..." class="form-control"></textarea>	                                          
+		                                         </div>
+                                               </div>
+                                        </div>
+                                         <div class="row">
+                                         <div class="col-md-12">
+                                           <div class="form-group">
+	                                            <label for="company" class=" form-control-label"><b>(Opcional) Multa cobrada em caso de atraso no pagamento do serviço (em porcentagem)</b></label>
+	                                            <input type="text" id="multa" value="0" placeholder="Insira um numero inferior a 100" class="form-control">
+                                          </div>
+                           
+                                         </div>
+                                          
+                                       </div>
+                                       
+                                       
+                                    </div>
+                                </div>
+                            </div>
         
                             
 
                  
-                                <!-- Fim do Filtro de profissão-->
+                                
                                 <div class="row form-group"  style="float: right;">
                                     <div class="col col-md-3">
-                                       <a href="QuartaEtapa"><button type="button" class="btn btn-primary">
-                                        &nbsp;<i class="fas fa-forward"></i> Avançar</button></a>
+                                       <button type="button" id="btnEnviar" class="btn btn-primary">
+                                        &nbsp;<i class="fas fa-forward"></i> Enviar contrato</button>
                                     </div>
                                  </div>
 
@@ -211,7 +415,118 @@
 	</div>
 
 	</div>
+	<script type="text/javascript">
+	var codigoContrato = $("#numeroContrato").val();
+	 var idProposta = "${proposta.idProposta}";
+	 
+	function gerarCodigo(codigo,prefixo){
+		alert();
+		 $.post('verificarCodigoContrato', {
+			   prefixo:prefixo,
+			   				
 
+			}, function(dadosJSON) {
+				
+				$("#numeroContrato").val(dadosJSON);
+				
+				
+			});
+	}
+	$(document).ready(function(){
+		
+		gerarCodigo(codigoContrato,idProposta);
+		
+	});
+	
+	
+	$("#btnEnviar").on('click',function(){
+		
+		 var prazo = $("#prazo").val();
+		 var data = $("#data").val();
+		 var parcelas = $("#parcelas").val();
+		 var pagamento = $("#formaPagamento").val();
+		 var valor = $("#valor").val().replace(',','.');
+		 var descricaoPagamento = $("#descricaoPagamento").val();
+		 var descricaoServico = $("#descricaoServico").val();
+		 var multa = $("#multa").val();
+		 
+		
+		  if($('#descricaoServico').val() == null || $('#descricaoServico').val() == ""){
+			  swal("Digite a descrição do serviço.","","warning");
+			  
+		  }else if($('#prazo').val() == null || $('#prazo').val() == ""){
+			  swal("Digite o prazo do serviço.","","warning");
+			  
+		  }else if($('#data').val() == null || $('#data').val() == ""){
+			  swal("Digite a data inicio do serviço.","","warning");
+			  
+		  }else if($('#formaPagamento').val() == null || $('#formaPagamento').val() == ""){
+			  swal("Selecione a forma de pagamento do serviço.","","warning");
+			  
+		  }else if(($('#parcelas').val() == null || $('#parcelas').val() == "") && ($('#formaPagamento').val() == 3|| $('#formaPagamento').val() == 1)){
+			  swal("Selecione a parcelas da forma de pagamento do serviço.","","warning");
+			  
+		  }else if($('#valor').val() == null || $('#valor').val() == ""){
+			  swal("Digite o valor do serviço.","","warning");
+			  
+		  }else if($('#descricaoPagamento').val() == null || $('#descricaoPagamento').val() == ""){
+			  swal("Digite a descrição do pagamento do serviço.","","warning");
+			  
+		  }else{
+			  
+				 swal({
+					  title: "Você tem certeza que quer enviar esse contrato?",
+					  text:"",
+					  icon: "warning",
+					  buttons:true,
+					  dangerMode: true,
+					})
+					.then((willDelete) => {
+					 
+					  if (willDelete) {
+						  
+						  
+						  $.post('salvarContrato', {
+							   idProposta:idProposta,
+							   codigoContrato:codigoContrato,
+						       prazo:prazo,
+							   data:data,
+							   parcelas:parcelas,
+							   pagamento:pagamento,
+							   valor:valor,
+							   descricaoPagamento:descricaoPagamento,
+							   descricaoServico:descricaoServico,
+							   multa:multa,
+												
+
+							}, function(dadosJSON) {
+
+								swal("Contrato enviado com sucesso!", {
+								      icon: "success",
+								    }).then((value) => {
+								    	 swal("Aguarde aprovação do cliente!").then((value) => {
+								    		   window.location = dadosJSON+"?cod="+idProposta;
+								    	 });
+								 });
+								
+							});
+						  
+						  
+						  
+						
+						
+					    
+					   
+					    
+					  } 
+					  
+					});
+		  }
+		  
+	  });
+
+	</script>
+   
 
 	<!-- Jquery JS-->
 	<script
@@ -249,7 +564,15 @@
 
 	<!-- Main JS-->
 	<script src="<%=request.getContextPath()%>/resources/js/main.js"></script>
-
+	<script src="https://igorescobar.github.io/jQuery-Mask-Plugin/js/jquery.mask.min.js"></script>  
+   
+   <script type="text/javascript">
+   $(document).ready(function(){
+	   $('#valor').mask('#.##0,00', {reverse: true});
+	   $('#data').mask('00/00/0000', {reverse: true});
+	   $('#prazo').mask('000000#', {reverse: true});
+   });
+   </script>
 </body>
 
 </html>

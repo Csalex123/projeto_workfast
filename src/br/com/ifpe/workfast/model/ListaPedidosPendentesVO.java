@@ -7,6 +7,7 @@ public class ListaPedidosPendentesVO {
 	private Integer idProposta;
 	private Integer idPrestador;
 	private Integer idCliente;
+	private Integer idEndereco;
 	private String nome;
 	private String nomeFantasia;
 	private String tipoUsuario;
@@ -47,6 +48,25 @@ public class ListaPedidosPendentesVO {
 		this.mensagem = mensagem;
 		this.bairro = bairro;
 		this.complemento = complemento;
+		this.foto = foto;
+		this.estagio = estagio;
+		this.status = status;
+	}
+	
+	public ListaPedidosPendentesVO(Integer idProposta, Integer idPrestador, Integer idCliente, Integer idEndereco,
+			String nome, String nomeFantasia, String tipoUsuario, String servico, String convite, String mensagem,
+			String foto, String estagio, String status) {
+		super();
+		this.idProposta = idProposta;
+		this.idPrestador = idPrestador;
+		this.idCliente = idCliente;
+		this.idEndereco = idEndereco;
+		this.nome = nome;
+		this.nomeFantasia = nomeFantasia;
+		this.tipoUsuario = tipoUsuario;
+		this.servico = servico;
+		this.convite = convite;
+		this.mensagem = mensagem;
 		this.foto = foto;
 		this.estagio = estagio;
 		this.status = status;
@@ -165,6 +185,13 @@ public class ListaPedidosPendentesVO {
 	public void setStatus(String status) {
 		this.status = status;
 	}
+	public Integer getIdEndereco() {
+		return idEndereco;
+	}
+	public void setIdEndereco(Integer idEndereco) {
+		this.idEndereco = idEndereco;
+	}
+	
 	
 	
 	
