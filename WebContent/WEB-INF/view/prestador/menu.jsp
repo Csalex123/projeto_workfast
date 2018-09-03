@@ -12,7 +12,7 @@
             <div class="menu-sidebar2__content js-scrollbar1">
                 <div class="account2">
                     <div class="image img-cir img-120">
-                        <img src="<%=request.getContextPath()%>/resources/img/icon/avatar-big-01.jpg" alt="${usuarioLogado.nome}" />
+                        <img src="<%=request.getContextPath()%>/resources/img/${usuarioLogado.foto}" alt="${usuarioLogado.nome}" />
                     </div>
                     <h4 class="name">${usuarioLogado.nome}</h4>
                     <a href="logout"><i class="fas fa-sign-out-alt"></i> Sair</a>
@@ -47,7 +47,7 @@
                                         <i class="fas fa-thumbtack "></i>Em aberto</a>
                                 </li>
                                 <li>
-                                    <a href="">
+                                    <a href="ServicosEmAndamento">
                                         <i class="fa fa-clock"></i>Em andamento</a>
                                 </li>
                                
@@ -153,7 +153,7 @@
                 <div class="menu-sidebar2__content js-scrollbar2">
                     <div class="account2">
                         <div class="image img-cir img-120">
-                            <img src="<%=request.getContextPath()%>/resources/img/icon/avatar-big-01.jpg" alt="${usuarioLogado.nome}" />
+                            <img src="<%=request.getContextPath()%>/resources/img/${usuarioLogado.foto}" alt="${usuarioLogado.nome}" />
                         </div>
                         <h4 class="name">${usuarioLogado.nome}</h4>
                         <a href="logout">Sair</a>
@@ -186,7 +186,7 @@
                                         <i class="fas fa-thumbtack "></i>Em aberto</a>
                                 </li>
                                 <li>
-                                    <a href="">
+                                    <a href="ServicosEmAndamento">
                                         <i class="fa fa-clock"></i>Em andamento</a>
                                 </li>
                                

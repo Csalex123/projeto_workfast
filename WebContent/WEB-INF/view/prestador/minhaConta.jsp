@@ -6,6 +6,7 @@
 <head>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<link rel="icon"  href="<%=request.getContextPath()%>/resources/img/icon/fivicon.png">
 <!-- Required meta tags-->
 
 <meta name="viewport"
@@ -98,6 +99,20 @@
 			<div class="container-fluid">
 				<div class="row" style="padding-bottom: 50%;">
 					<div class="col-lg-12 col-md-12 col-sm-12 ">
+                  <form action="#" method="post">
+	                                <div class="row form-group">
+	                                    <img src="<%=request.getContextPath()%>/resources/img/${usuarioLogado.foto}" class="img-responsive img-thumbnail" alt="foto" style="width: 150px; height: 144px; margin-left: 20px; ">   
+	                                    <input type="file" class="btn btn-default" name="">
+	                                </div>
+	                           
+	                                 <div class="row form-group" >    
+	                                 	<div class="col col-md-3">        
+	                                 	<button type="submit" class="btn btn-primary" > &nbsp;
+	                                 		<i class="fas fa-upload"></i> Enviar foto</button>    
+	                                 	</div> 
+	                                 </div>     
+	 				</form>
+	 				
 						<div class="card">
 						${msg}
 						<form action="editarDadosPrestadorFisico?IdUsuario=${usuarioLogado.idUsuario}" method="post">

@@ -192,6 +192,14 @@ public class PrestadorController {
 
 		return "prestador/proposta";
 	}
+	
+	
+	// metodo para redirecionar para pagina de Serviço finalizados
+		@RequestMapping("ServicosEmAndamento")
+		public String servicosEmAndamento() {
+
+			return "prestador/servico_em_andamento";
+		}
 
 	// metodo para o prestador aceitar o pedido escolhido
 	@RequestMapping(value = "aceitarPedido", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)

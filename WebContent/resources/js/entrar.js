@@ -22,7 +22,8 @@
 						email:{
 							required: "Este campo é obrigatório.",
 							minlength: "O e-mail deve ter no mínimo 8 caracteres.",
-							maxlength: "O e-mail deve ter no máximo 100 caracteres."			
+							maxlength: "O e-mail deve ter no máximo 100 caracteres.",
+							email: "Coloque um e-mail valido."
 						},
 						senha:{
 							required: "Este campo é obrigatório",

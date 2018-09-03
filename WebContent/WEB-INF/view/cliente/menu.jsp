@@ -1,6 +1,8 @@
  <!-- Importando a biblioteca Taglib -->
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
+
+
 <div class="page-wrapper">
         <!-- Menu horizontal-->
         <header class="header-mobile d-block d-lg-none">
@@ -117,46 +119,6 @@
                             <!-- Icone de notificação -->	
                             <div class="header-button">
                                 <div class="noti-wrap">
-                                    <div class="noti__item js-item-menu">
-                                        <i class="zmdi zmdi-comment-more"></i>
-                                        <span class="quantity">3</span>
-                                        <div class="mess-dropdown js-dropdown">
-                                            <div class="mess__title">
-                                                <p>Você tem 3 novas mensagens</p>
-                                            </div>
-                                            <div class="mess__item">
-                                                <div class="image img-cir img-40">
-                                                    <img src="images/icon/img_avatar.png" alt="Jonas" />
-                                                </div>
-                                                <div class="content">
-                                                    <h6>Jonas</h6>
-                                                    <p>Que horas posso chegar aí?</p> 
-                                                </div>
-                                            </div>
-                                            <div class="mess__item">
-                                                <div class="image img-cir img-40">
-                                                    <img src="images/icon/img_avatar.png" alt="Matheus" />
-                                                </div>
-                                                <div class="content">
-                                                    <h6>Matheus Cruz</h6>
-                                                    <p>Como está a sitaução da sua parede?</p>    
-                                                </div>
-                                            </div>
-                                             <div class="mess__item">
-                                                <div class="image img-cir img-40">
-                                                    <img src="images/icon/img_avatar.png" alt="Gabriel" />
-                                                </div>
-                                                <div class="content">
-                                                    <h6>Gabriel Arthur</h6>
-                                                    <p>Irei precisar de alguns materias.</p>    
-                                                </div>
-                                            </div>
-                                            <div class="mess__footer">
-                                                <a href="#">Veja todas mensagens</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    
                                     <div class="noti__item js-item-menu">
                                         <i class="zmdi zmdi-notifications"></i>
                                         <span class="quantity">1</span>

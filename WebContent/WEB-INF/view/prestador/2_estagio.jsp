@@ -5,6 +5,7 @@
 
 <head>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<link rel="icon"  href="<%=request.getContextPath()%>/resources/img/icon/fivicon.png">
 <!-- Required meta tags-->
 
 <meta name="viewport"
@@ -254,7 +255,7 @@
                                                 <div class="au-chat-info">
                                                     <div class=" ">
                                                         <div class="avatar avatar--small">
-                                                            <img src="/workfast/resources/img/icon/avatar-04.jpg" alt="John Smith">
+                                                            <img src="/workfast/resources/img/${proposta.foto}" alt="John Smith">
                                                         </div>
                                                     </div>
                                                     <span class="nick">
@@ -372,7 +373,7 @@
 							
 							if(dadosJSON[i].enviadoPor == "${usuarioLogado.idUsuario}"){
 								linhas +='<div class="send-mess-wrap">';
-								linhas +='<span class="mess-time">30 Sec ago</span>';
+								linhas +='<span class="mess-time">04 Sec. atrás</span>';
 								linhas +='<div class="send-mess__inner">';
 								linhas +='<div class="send-mess-list">';
 								linhas +='<div class="send-mess-list">';

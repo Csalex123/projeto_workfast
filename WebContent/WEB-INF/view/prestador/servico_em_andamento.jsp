@@ -13,7 +13,7 @@
 
 
 <!-- Title Page-->
-<title>WorkFast - Area do Administrador</title>
+<title>WorkFast - Area do Prestador</title>
 
 <!-- Fontfaces CSS-->
 <link href="<%=request.getContextPath()%>/resources/css/font-face.css"
@@ -64,7 +64,8 @@
 
 
 <!-- Main CSS-->
-<link href="<%=request.getContextPath()%>/resources/css/theme-adm.css"
+<link
+	href="<%=request.getContextPath()%>/resources/css/theme-prestador.css"
 	rel="stylesheet" media="all">
 
 </head>
@@ -73,121 +74,85 @@
 
 	<div class="page-wrapper">
 		<!-- menu adm -->
-		<c:import url="../administrador/menu.jsp" />
+		<c:import url="../prestador/menu.jsp" />
 
-		<!-- Conteudo-->
-		<div class="page-content--bgf7">
-
-			<!-- DATA TABLE-->
-			<section class="p-t-20">
-			<div class="container">
+		<section class="au-breadcrumb m-t-75" style="margin-bottom:60px;">
+		<div class="section__content section__content--p30">
+			<div class="container-fluid">
 				<div class="row">
 					<div class="col-md-12">
-						<br>
-						<h3 class="title-5 m-b-35">Estados - UF </h3>
-						<hr class="line-seprate">
-						<br>
-						<div class="table-data__tool">
-							<div class="table-data__tool-left">
-
-								<div class="form-group">
-
-									<input type="text" id="txtPesquisa" name="pesquisa"
-										placeholder="Pesquise aqui.." class="form-control">
-
-								</div>
-
+						<div class="au-breadcrumb-content">
+							<div class="au-breadcrumb-left" style="margin-top: 5px;">
+								<h1 class="title-4">Todos Serviços em andamento</h1>
 							</div>
-							<div class="table-data__tool-right">
-								<form action="cadastrarEstado">
-									<button type="submit"
-										class="au-btn au-btn-icon au-btn--azul au-btn--small"
-										style="background-color:">
-										<i class="zmdi zmdi-plus"></i>Novo Estado
-									</button>
-								</form>
+							
+							
 
-
-							</div>
-						</div>
-						
-						<div class="table-responsive table-responsive-data2"
-							style="padding-bottom: 20%">
-							<div style="text-align: center; color: red;">${msg}</div>
-							<table class="table table-data2">
-								<thead>
-									<tr>
-
-										<th>Nome</th>
-										<th>UF</th>
-										
-									</tr>
-								</thead>
-								<tbody id="tbEstado">
-									<c:forEach var="estado" items="${listarEstados}">
-										<tr class="tr-shadow">
-
-											<td width="180">${estado.nome}</td>
-
-											<td><span>${estado.uf}</span></td>
-											
-
-												<td><div class="table-data-feature">
-													
-																										
-
-													
-													<a href="editarEstado?id=${estado.idEstado}" class="item" data-toggle="tooltip"
-														data-placement="top" title="Editar">
-														<i class="zmdi zmdi-edit"></i>
-													  </a>
-
-													
-
-													<a href="deleteEstado?id=${estado.idEstado}"  class="item" data-toggle="tooltip"
-															data-placement="top" title="Excluir">
-															<i class="zmdi zmdi-delete"></i>
-													</a>
-
-													
-
-
-												</div>
-											</td>
-
-										</tr>
-										<tr class="spacer"></tr>
-
-									</c:forEach>
-
-
-
-
-								</tbody>
-							</table>
 						</div>
 					</div>
 				</div>
 			</div>
-			</section>
-			<!-- END DATA TABLE-->
-
-
-			<!-- COPYRIGHT-->
-
-			<section class="p-t-60 p-b-20">
-			<div class="container">
-				<div class="row">
-					<div class="col-md-12">
-						<div class="copyright">
-							<p>Copyright © 2018 WorkFast. Todos os direitos reservados..</p>
-						</div>
-					</div>
-				</div>
-			</div>
-			</section>
-			<!-- END COPYRIGHT-->
 		</div>
+		</section>
+		<section>
+		<div class="section__content section__content--p30">
+			<div class="container-fluid">
+				<div class="row" style="padding-bottom: 50%;">
+	
+					<!-- Conteiner de listagem de candidatos -->
+                    <div class="container-fluid" style="margin-top: 30px;">
+                        <div class="fontawesome-list-wrap">
+                            <section >
+                                <div class="table-responsive table-responsive-data2">
+                                    <table class="table table-data2">
+                                        <thead>
+                                            <tr>
+                                            	<th>Nome do Cliente</th>
+                                                <th>Serviço</th>
+                                                <th>Data início</th>
+                                                <th>Estapa</th>
+                                                
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr >
+                                            	<td>João</td>
+                                                <td>Fotografia</td>
+                                               	<td>20/00/2000</td>
+                                               	<td><b style="color: green">Andamento</b></td>
+                                                <td>
+                                                    <a href="QuintaEtapa"><button class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="Visualizar">Visualizar</button></a>                      
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                             </section>    
+                        </div>
+                    </div>
+					
+
+				</div>
+			</div>
+		</div>
+		</section>
+
+		<section>
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="copyright">
+						<p>
+							Copyright © 2018 WorkFast. Todos os direitos reservados.
+						</p>
+					</div>
+				</div>
+			</div>
+		</div>
+		</section>
+
+	</div>
 
 	</div>
 
@@ -227,17 +192,6 @@
 
 	<!-- Main JS-->
 	<script src="<%=request.getContextPath()%>/resources/js/main.js"></script>
-
-	<script>
-		$(document).ready(function(){
-		  $("#txtPesquisa").on("keyup", function() {
-		    var value = $(this).val().toLowerCase();
-		    $("#tbEstado tr").filter(function() {
-		      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-		    });
-		  });
-		});
-		</script>
 
 </body>
 

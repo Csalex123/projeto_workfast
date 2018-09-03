@@ -6,6 +6,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<link rel="icon"  href="<%=request.getContextPath()%>/resources/img/icon/fivicon.png">
 
 <!-- Required meta tags-->
 <meta name="viewport"
@@ -297,7 +298,7 @@ $(document).ready(function(){
 							
 							
 							<div class="col-12 col-md-5">
-							<form action="" id="cadastrar_avaliacao">
+							<form  id="cadastrar_avaliacao">
 								<fieldset class="rating">
 									<input type="radio" id="star5" name="rating" value="5" /><label
 										class="full" for="star5" title="5 Estrelas"></label> <input
@@ -332,7 +333,7 @@ $(document).ready(function(){
 								<textarea class="form-control" id="mensagem" required rows="7" style="resize: none"></textarea>	
 							</div>
 						</div>
-						<input type="hidden" value="11" id="id_solicitacao">
+						<input type="hidden" value="17" id="id_solicitacao">
 						
 						<div class="row form-group" style="float: right;">
 							<div class="col col-md-3">

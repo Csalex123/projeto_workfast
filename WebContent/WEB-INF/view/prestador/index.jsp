@@ -5,6 +5,7 @@
 
 <head>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<link rel="icon"  href="<%=request.getContextPath()%>/resources/img/icon/fivicon.png">
 <!-- Required meta tags-->
 
 <meta name="viewport"
@@ -157,7 +158,7 @@
                                    linhas +='<div class="card-header user-header alt bg-dark">';
                                        linhas +='<div class="media">';
                                            linhas +='<a href="#">';
-                                               linhas +='<img  class="align-self-center rounded-circle mr- " style=" width:85px; height:85px; margin-right:30px;" alt="" src="/workfast/resources/img/icon/avatar-04.jpg">';
+                                               linhas +='<img  class="align-self-center rounded-circle mr- " style=" width:85px; height:85px; margin-right:30px;" alt="" src="/workfast/resources/img/'+dadosJSON[i].foto+'">';
                                            linhas +='</a>';
                                            linhas +=' <div class="media-body">';
                                             if(dadosJSON[i].tipoUsuario == '1'){
@@ -184,7 +185,7 @@
                                      
 	                                       linhas +='<b>Cidade:</b><br>'+dadosJSON[i].cidade;
 	                                       linhas +='<br><b>Endereço:</b><br>'+dadosJSON[i].rua + ' - Nº '+dadosJSON[i].numeroCasa;
-	                                       linhas +='<br><b>Mensagem:</b><br><textarea style="resize: none" class="form-control" rows="5">'+dadosJSON[i].mensagem+'</textarea>';
+	                                       linhas +='<br><b>Mensagem:</b><br><textarea style="resize: none" class="form-control" rows="5" disabled>'+dadosJSON[i].mensagem+'</textarea>';
 	                                       
 	                                    	   
 	                                       

@@ -6,6 +6,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<link rel="icon"  href="<%=request.getContextPath()%>/resources/img/icon/fivicon.png">
 
     <!-- Required meta tags-->
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -209,7 +210,7 @@
                                                 <div class="au-chat-info">
                                                     <div class=" ">
                                                         <div class="avatar avatar--small">
-                                                            <img src="/workfast/resources/img/icon/avatar-04.jpg" alt="John Smith">
+                                                            <img src="/workfast/resources/img/${proposta.foto}" alt="John Smith">
                                                         </div>
                                                     </div>
                                                     <span class="nick">
@@ -327,7 +328,7 @@
 							
 							if(dadosJSON[i].enviadoPor == "${usuarioLogado.idUsuario}"){
 								linhas +='<div class="send-mess-wrap">';
-								linhas +='<span class="mess-time">30 Sec ago</span>';
+								linhas +='<span class="mess-time">04 Sec. atrás</span>';
 								linhas +='<div class="send-mess__inner">';
 								linhas +='<div class="send-mess-list">';
 								linhas +='<div class="send-mess-list">';

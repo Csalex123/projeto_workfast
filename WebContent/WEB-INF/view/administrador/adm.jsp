@@ -5,6 +5,7 @@
 
 <head>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<link rel="icon"  href="<%=request.getContextPath()%>/resources/img/icon/fivicon.png">
 <!-- Required meta tags-->
 
 <meta name="viewport"
@@ -158,14 +159,14 @@
 													
 														<c:choose>
 															<c:when test="${usuarioAdm.ativo == '1'}">
-																<a href="bloquearUsuario?id=${usuarioAdm.id}" class="item" data-toggle="tooltip"
+																<a href="bloquearUsuario?id=${usuarioAdm.idUsuario}" class="item" data-toggle="tooltip"
 																	data-placement="top" title="Bloquear">
 																	<i class="zmdi zmdi-lock"></i>
 																 </a>
 																
 															</c:when>
 															<c:otherwise>
-																<a href="desbloquearUsuario?id=${usuarioAdm.id}" class="item" data-toggle="tooltip"
+																<a href="desbloquearUsuario?id=${usuarioAdm.idUsuario}" class="item" data-toggle="tooltip"
 																	data-placement="top" title="Desbloquear">
 																	 <i class="zmdi zmdi-lock-open"></i>
 																 </a>
@@ -175,14 +176,14 @@
 													
 
 													
-													<a href="editAdm?id=${usuarioAdm.id}" class="item" data-toggle="tooltip"
+													<a href="editAdm?id=${usuarioAdm.idUsuario}" class="item" data-toggle="tooltip"
 														data-placement="top" title="Editar">
 														<i class="zmdi zmdi-edit"></i>
 													  </a>
 
 													
 
-													<a href="deleteAdm?id=${usuarioAdm.id}"  class="item" data-toggle="tooltip"
+													<a href="deleteAdm?id=${usuarioAdm.idUsuario}"  class="item" data-toggle="tooltip"
 															data-placement="top" title="Excluir">
 															<i class="zmdi zmdi-delete"></i>
 													</a>

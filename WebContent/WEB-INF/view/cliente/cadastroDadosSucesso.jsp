@@ -4,6 +4,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link rel="icon"  href="<%=request.getContextPath()%>/resources/img/icon/fivicon.png">
 <meta http-equiv="refresh" content="3; URL=paginaInicialCliente">
 <title>Workfast</title>
 </head>

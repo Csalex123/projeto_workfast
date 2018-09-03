@@ -4,6 +4,7 @@
 <html>
 <head>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<link rel="icon"  href="<%=request.getContextPath()%>/resources/img/icon/fivicon.png">
 
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 
@@ -175,7 +176,7 @@
 		                            linhas += '</div>';
 		                            linhas += '<div class="card-body">';
 		                                linhas += '<div class="mx-auto d-block">';
-		                                    linhas += '<img class="rounded-circle mx-auto d-block" src="/workfast/resources/img/icon/avatar-04.jpg" alt="Card image cap">';
+		                                    linhas += '<img src="/workfast/resources/img/'+dadosJSON[i].foto+'" class="rounded-circle mx-auto d-block img-responsive" style="width: 150px; height: 144px;"  alt="Imagem do prestador ">';
 		                                    if(dadosJSON[i].tipo == '1'){
 		           						     
 		                                    	linhas += '<h5 class="text-sm-center mt-2 mb-1"> '+dadosJSON[i].usuario+'</h5>';

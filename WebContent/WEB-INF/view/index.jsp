@@ -100,9 +100,12 @@
 						</div>
 
 						<div class="wow fadeInUp" data-wow-delay="0.4s">
-							<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam varius ante sit amet luctus mattis. Quisque nibh ante, consectetur et nulla vel, lacinia vehicula dui. Nam sit amet eros id nunc porta porttitor. Nam a purus dapibus, volutpat dui at, ultricies turpis. Sed ipsum nulla, facilisis et justo pellentesque, tempus mattis tortor. .</p>
-							<p>Nullam mattis arcu metus, sit amet ultricies ipsum lobortis ac. In libero ligula, porta a risus et, vestibulum feugiat lorem. Suspendisse lectus mi, interdum vel congue a, sagittis ut augue. Pellentesque convallis interdum odio, non bibendum nibh porttitor nec. In sed lobortis velitemo</p>
-					<%=request.getContextPath()%>/resources/vendor/font-awesome-4.7/css/font-awesome.min.css
+							<p>Nosso objetivo é fazer uma conexão entre o cliente, que possue necessidades de um serviço
+							com preço justo e bem feito, e um prestador de serviço que em meio a tempos de crise busca
+							oportunidades de emprego para levar o pão de cada dia para sua família.</p>
+							
+							<p>O site foi desenvolvido pelos estudantes Alex Ricardo, Marcílio do Rego, Matheus Cruz, Gabriel Arthur e Jonas William do IFPE - Instituto Federal de Educação, Ciência e Tecnologia de Pernambuco, Campus Jaboatão dos Guararapes.</p>
+					
 						</div>
 					</div>
 				</div>
