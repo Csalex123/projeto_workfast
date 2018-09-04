@@ -184,27 +184,8 @@
 						<h4 style="text-align: center;">Pedência(s)</h4>
 						<br>
 						
-							<div  class="table-responsive table-responsive-data2">
-								<table class="table table-data2">
-									<thead>
-										<tr>
-											<th><h4>Pedência(s) enviada para você</h4></th>';
-											
-										</tr>
-									</thead>
-									
-								<c:forEach var="pendencias" items="${listaPencias}">
-									<tbody >
-									<tr>
-										
-										<td>${pendencias.mensagem} <br><br> <b style="color:blue"> Data Postado: ${pendencias.dataPostagem}</b></td>
-										<td></td><br>
-										
-									</tr>
-									</tbody>
-								</c:forEach>
+							<div  id="dadosPendencias">
 								
-								</table>
 							</div>
 
 
@@ -599,6 +580,51 @@
   </div>
 	
 	<script>
+	function carregarPendencias(){
+		
+		//encaminhando os valores do formulario para ser processadas 
+		$.post('ListarPendenciasSolicitacao',{
+		   cas:"${solicitacao.idSolicitacaoContrato}",
+		 }, function(dadosJSON){
+			  var linhas = '';
+			  
+			  linhas += '<div class="table-responsive table-responsive-data2">';
+			  linhas += '<table class="table table-data2">';
+			  linhas += '<thead>';
+				  linhas += '<tr>';
+					  linhas += '<th><h4>Pedência(s) já enviada(s) por você</h4></th>';
+					  linhas += '<th></th>';
+				  linhas += '</tr>';
+			  linhas += ' </thead>';
+			  
+				$(dadosJSON).each(function (i) {
+		
+				    linhas += '<tr>';
+					    linhas += '<td>'+dadosJSON[i].mensagem+' <br><br> <b style="color:blue"> Data Postado: '+dadosJSON[i].dataPostagem+ ' </b></td>';
+					    linhas += '<td><div class="table-data-feature">';
+					    linhas += '<button onclick="deletar('+ dadosJSON[i].idPendencias +')" class="item" data-toggle="tooltip" data-placement="top" title="Apagar Pedência" >';
+					    linhas += '<i class="zmdi zmdi-delete"></i></button></div></td>';
+				    linhas += '</tr>';
+				    
+				  
+				    
+			    linhas += '</tbody>';
+			    	
+				});
+				
+			  
+				linhas += ' </table>';
+				linhas += ' </div>';
+	            
+	                     
+				$('#dadosPendencias').html(linhas);
+				   
+		 });
+		
+	}
+	$(document).ready(function(){
+		setInterval("carregarPendencias()", 5000);
+	})
 	var gerarPdf = false;
 	function demoFromHTML() {
 		$('#myModal').modal('hide');

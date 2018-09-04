@@ -183,7 +183,7 @@
 						<h2 style="text-align: center;">Contrato</h2>
 						<br>
 						<p>
-						<center>Aguardando aprovação do cliente</center>
+						<center id="aprovacao">Aguardando aprovação do cliente</center>
 						</p>
 						<br>
 
@@ -213,19 +213,20 @@
 										class="variable_vide"> ${clienteDados.rgIe}</span></span>, CPF n. <span
 										id="span_id_cpf_contratante1"><span
 										class="variable_vide"> ${clienteDados.cpfCnpj}</span></span>, residente em:
-						    </c:if>
-
-								<c:if test="${solicitacao.usuario.tipo_usuario == '2'}">
+						         </c:if>
+						         
+						         <c:if test="${solicitacao.usuario.tipo_usuario == '2'}">
 									<strong><br /> <span id="span_id_nome_contratante1"><span
-											class="variable_vide"> ${clienteDados.razaoSocial} </span></span></strong>
+											class="variable_vide">${solicitacao.usuario.nome}</span></span></strong>
 									<span class="variable_vide"></span>
-									</span>, <span id="span_id_documento_contratante1">Inscrição
-										Estadual (IE) </span> n. <span
+									</span>, <span id="span_id_documento_contratante1">Inscrição Estudal(IE)</span> n. <span
 										id="span_id_numero_documento_contratante1"><span
-										class="variable_vide">${clienteDados.rgIe }</span></span>, CNPJ n. <span
+										class="variable_vide"> ${clienteDados.rgIe}</span></span>, CNPJ n. <span
 										id="span_id_cpf_contratante1"><span
-										class="variable_vide"> ${clienteDados.cpfCnpj} </span></span>, com sede em:
-						    </c:if>
+										class="variable_vide"> ${clienteDados.cpfCnpj}</span></span>, com sede em:
+						         </c:if>
+
+								
 
 
 							</p>
@@ -550,10 +551,10 @@
 						<br>
 						<div class="row form-group" style="float: right;">
 							<div class="col col-md-3">
-								<button disabled="disabled" type="button" id="btnProximo"
+								<a href="QuartaEtapa?cas=${solicitacao.idSolicitacaoContrato }" ><button disabled="disabled" type="button" id="btnProximo"
 									class="btn btn-primary">
 									&nbsp;<i class="fas fa-forward"></i> Proximo
-								</button>
+								</button></a>
 							</div>
 						</div>
 						<div class="row form-group" style="float: left;">
@@ -591,6 +592,7 @@
 
 	<script type="text/javascript">
 	var gerarPdf = false;
+	var aceitou = false;
 	function demoFromHTML() {
 	    var pdf = new jsPDF('p', 'pt', 'letter');
 	    // source can be HTML-formatted string, or a reference
@@ -642,6 +644,7 @@
 
 					   if(dadosJSON == "1"){
 						   $("#btnProximo").removeAttr("disabled");
+						   aceitou = true;
 					   }
 								 
 					
@@ -657,6 +660,9 @@
 		
 		$(document).ready(function(){
 			setInterval("aceitou()", 5000);
+			if(aceitou == true){
+				$("#aprovacao").html('<h2>O cliente aceitou o contrato!</h2>');
+			}
 		});
 	
     	

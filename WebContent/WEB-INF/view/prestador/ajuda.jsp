@@ -114,7 +114,7 @@
                                 <h2 style="text-align: center;">Ajuda</h2><br>
                                 
                                  <ul class="list-group">
-								    <li class="list-group-item"><a href="">Mapa do Site</a></li>
+								    <li class="list-group-item"><a href="https://ibb.co/dfbrPe" target="_blank">Mapa do Site</a></li>
 								    <li class="list-group-item">Perguntas Frequentes</li>
 								    <li class="list-group-item">.....</li>
 								  </ul>

@@ -324,13 +324,13 @@ public class PrestadorController {
 	}
 
 	@RequestMapping("QuintaEtapa")
-	public String quintaEtapa(@RequestParam("cas") Integer idSolicitacao, Model model) {
+	public String quintaEtapa(@RequestParam("cas") Integer idSolicitacao, Model model,  Model model2) {
 
 		SolicitacaoContratoDao dao = new SolicitacaoContratoDao();
 		AvaliacaoDao dao2 = new AvaliacaoDao();
 
-		ListaPedidosPendentesVO solicitacaoVo = dao.buscarPedidoPendente(idSolicitacao);
-		model.addAttribute("proposta", solicitacaoVo);
+		
+		model2.addAttribute("proposta", idSolicitacao);
 			
 		Avaliacao avalicao = dao2.buscarAvalicaoPorId(idSolicitacao);
 		model.addAttribute("avalicao", avalicao);	
@@ -765,6 +765,17 @@ public class PrestadorController {
 
 		return new Gson().toJson(listaPendencias);
 	}
+	
+
+	@RequestMapping(value = "ListarPendenciasSolicitacao", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+	public @ResponseBody String ListarPendenciasSolicitacao(@RequestParam("cas") Integer id) {
+
+		PendenciasDao dao = new PendenciasDao();
+		List<Pendencias> listaPendencias = dao.buscarPendencias(id);
+
+		return new Gson().toJson(listaPendencias);
+	}
+
 
 	// Deletar Pendência
 

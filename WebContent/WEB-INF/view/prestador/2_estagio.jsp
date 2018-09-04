@@ -430,7 +430,7 @@
 		
 		   popularChat(idProposta,idCliente,idPrestador);
 		  
-		   //setInterval("popularChat(idProposta,idCliente,idPrestador);", 3000);
+		   setInterval("popularChat(idProposta,idCliente,idPrestador);", 3000);
 		   
 	   });
 	  

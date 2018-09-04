@@ -75,6 +75,9 @@
 	integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
 	crossorigin="anonymous"></script>
 	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+	<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.4.1/jspdf.min.js"></script>
+	
 
 <style type="text/css">
 * {
@@ -264,7 +267,7 @@
 								</p>
 							</c:if>
 
-							<p style="padding-left: 30px;">
+								<p style="padding-left: 30px;">
 								<span id="span_id_endereco_contratado1pj"><span
 									class="variable_vide"><div>
 											<b> ${prestadorEndereco.rua} -
@@ -575,6 +578,7 @@
 	</div>
 	
 	<script type="text/javascript">
+	
 	$('#btnEnviar').on('click', function(){
 		
 		 swal({
@@ -599,6 +603,7 @@
 						swal("Contrato aceito com sucesso!", {
 						      icon: "success",
 						    });
+						windon.location = "QuartoEstagio?cas=${solicitacao.idSolicitacaoContrato}";
 						 
 						
 					});

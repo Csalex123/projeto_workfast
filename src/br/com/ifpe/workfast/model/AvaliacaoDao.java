@@ -32,7 +32,7 @@ public class AvaliacaoDao {
 		EntityManagerFactory factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT);
 		EntityManager manager = factory.createEntityManager();
 		Query query = null;
-		query = manager.createQuery("FROM Avaliacao WHERE SolicitacaoContrato.idSolicitacaoContrato = :paramId");
+		query = manager.createQuery("FROM Avaliacao a WHERE a.solicitacaoContrato.idSolicitacaoContrato = :paramId");
 		query.setParameter("paramId", idSolicitacao);
 		
 		try {

@@ -380,24 +380,50 @@ public class ClienteController {
 		Endereco prestadorEndereco = daoEndereco
 				.buscarEnderecoUsuario(solicitacao.getUsuarioServico().getUsuario().getIdUsuario());
 
+
 		model1.addAttribute("contrato", contrato);
 		model2.addAttribute("solicitacao", solicitacao);
 		model3.addAttribute("clienteDados", clienteDados);
 		model4.addAttribute("prestadorDados", prestadorDados);
 		model5.addAttribute("clienteEndereco", clienteEndereco);
-
+		model6.addAttribute("prestadorEndereco", prestadorEndereco);
+		
 		return "cliente/3_estagio";
 
 	}
 
 	// Método para abrir o Quarto estágio do pedido
 	@RequestMapping("QuartoEstagio")
-	public String QuartoEstagioPedido(Model model) {
+	public String QuartoEstagioPedido(Model modelPendencias,@RequestParam("cas") Integer idSolicitacao, Model model, Model model1, Model model2,
+			Model model3, Model model4, Model model5, Model model6) {
 
+		ContratoDao daoContrato = new ContratoDao();
+		Contrato contrato = daoContrato.buscarContratoPorSolicitacao(idSolicitacao);
+
+		SolicitacaoContratoDao daoSolicitacao = new SolicitacaoContratoDao();
+		SolicitacaoContrato solicitacao = daoSolicitacao
+				.buscarPorId(contrato.getSolicitacao().getIdSolicitacaoContrato());
+
+		DadosPessoaisDao daoDados = new DadosPessoaisDao();
+		DadosPessoais clienteDados = daoDados.buscarDadosPessoaisUsuario(solicitacao.getUsuario().getIdUsuario());
+		DadosPessoais prestadorDados = daoDados
+				.buscarDadosPessoaisUsuario(solicitacao.getUsuarioServico().getUsuario().getIdUsuario());
+
+		EnderecoDao daoEndereco = new EnderecoDao();
+		Endereco clienteEndereco = solicitacao.getEndereco();
+		Endereco prestadorEndereco = daoEndereco
+				.buscarEnderecoUsuario(solicitacao.getUsuarioServico().getUsuario().getIdUsuario());
+
+		model1.addAttribute("contrato", contrato);
+		model2.addAttribute("solicitacao", solicitacao);
+		model3.addAttribute("clienteDados", clienteDados);
+		model4.addAttribute("prestadorDados", prestadorDados);
+		model5.addAttribute("clienteEndereco", clienteEndereco);
+		model6.addAttribute("prestadorEndereco", prestadorEndereco);	
 		PendenciasDao dao = new PendenciasDao();
 		List<Pendencias> listaPencias = dao.buscarPendencias(11);
 
-		model.addAttribute("listaPencias", listaPencias);
+		modelPendencias.addAttribute("listaPencias", listaPencias);
 
 		return "cliente/4_estagio";
 

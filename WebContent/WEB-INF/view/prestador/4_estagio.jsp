@@ -268,7 +268,7 @@ function carregarPendencias(){
 
 								<form id="form_cadastroPendencias" action="adicionarPendencias" method="post" >													
 	                                <textarea requiered="" name="mensagem" id="mensagem" class="form-control" placeholder="Ex.: Olá, cliente!  Você precisa comprar esses materiais para continuar o serviço (...)"></textarea><br>
-									<input type="hidden" id="id_contrato" name="solicitacaoContrato" value="${contrato.idContrato}">
+									<input type="hidden" id="id_contrato" name="solicitacaoContrato" value="${solicitacao.idSolicitacaoContrato}">
 									
 	                                <div class="row form-group"  style="float: right;">
 	                                    <div class="col col-md-3">
@@ -284,7 +284,7 @@ function carregarPendencias(){
                                 <!-- Fim do Filtro de profissão-->
                                 <div class="row form-group"  style="float: right;">
                                     <div class="col col-md-3">
-                                       <a href="QuintaEtapa"> <button type="button" class="btn btn-primary">
+                                       <a href="QuintaEtapa?cas=${solicitacao.idSolicitacaoContrato }"> <button type="button" class="btn btn-primary">
                                         &nbsp;<i class="fas fa-forward"></i> Finalizar serviço</button></a>
                                     </div>
                                  </div>

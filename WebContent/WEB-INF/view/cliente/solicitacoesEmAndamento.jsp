@@ -336,7 +336,7 @@ table td{
 	        	   
 	       }, function(dadosJSON){
 	    	   
-	          window.location = dadosJSON;
+	          window.location = dadosJSON+"?cas="+idSolitacao;
 	          
 	       });
 		  

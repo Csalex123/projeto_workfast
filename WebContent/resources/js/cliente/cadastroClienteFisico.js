@@ -20,13 +20,14 @@
 									}
 								}
 							}
+			
 						},
 
 						
 
 						rgIe:{
 							required: true,
-							maxlength: 9,
+							maxlength: 10,
 							minlength: 9,
 							remote:{
 								url:"procurar_rgIeCliente",

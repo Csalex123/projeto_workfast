@@ -137,7 +137,7 @@
                                         </div>
                                          <div class="account-dropdown__item">
                                             <a href="logout">
-                                                <i class="fal fa-sign-out"></i>Sair</a>                     
+                                                <i class="fas fa-sign-out-alt"></i>Sair</a>                     
                                         </div>
                                         
                                     </div>

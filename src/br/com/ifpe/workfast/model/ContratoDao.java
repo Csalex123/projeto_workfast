@@ -67,7 +67,7 @@ public class ContratoDao {
 		EntityManager manager = factory.createEntityManager();
 		Query query = null;
 		query = manager.createQuery(
-				"FROM Contrato c WHERE c.aceitou = :paramAceitou AND c.solicitacao.idSolicitacaoContrato = :paramId");
+				"FROM Contrato c WHERE c.aceito = :paramAceitou AND c.solicitacao.idSolicitacaoContrato = :paramId");
 		query.setParameter("paramId", id);
 		query.setParameter("paramAceitou", "1");
 
