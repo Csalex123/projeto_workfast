@@ -1,5 +1,6 @@
 package br.com.ifpe.workfast.controller;
 
+import java.text.ParseException;
 import java.util.Date;
 import java.util.List;
 
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.google.gson.Gson;
 
@@ -37,8 +39,10 @@ import br.com.ifpe.workfast.model.ProfissaoDao;
 import br.com.ifpe.workfast.model.SolicitacaoContrato;
 import br.com.ifpe.workfast.model.SolicitacaoContratoDao;
 import br.com.ifpe.workfast.model.Usuario;
+import br.com.ifpe.workfast.model.UsuarioDao;
 import br.com.ifpe.workfast.model.UsuarioServico;
 import br.com.ifpe.workfast.model.UsuarioServicoDao;
+import br.com.ifpe.workfast.util.Util;
 
 @Controller
 public class ClienteController {
@@ -75,6 +79,13 @@ public class ClienteController {
 		return "cliente/minhaConta";
 
 	}
+	
+	@RequestMapping("ajudaCliente")
+	public String Ajuda() {
+		
+		return "cliente/ajuda";
+
+	}
 
 	// metodo para redirecionar para o perfil do cliente
 	@RequestMapping("adicionarEndereco")
@@ -92,15 +103,28 @@ public class ClienteController {
 	}
 
 	// Método para salvar o endereço do usuário
-	@RequestMapping("salvarEndereco")
-	public String salvarEndereco(Endereco endereco, Model model) {
+
+	@RequestMapping(value = "salvarEndereco", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+	public @ResponseBody String salvarEndereco(@RequestParam("cep") String cep, @RequestParam("bairro") String bairro,
+			@RequestParam("cidade") Cidade cidade, @RequestParam("estado") Estado estado, 
+			@RequestParam("rua") String rua, @RequestParam("complemento") String complemento, @RequestParam("numeroCasa") String numeroCasa,
+			@RequestParam("idUsuario") Usuario idUsuario) throws ParseException{
 
 		EnderecoDao dao = new EnderecoDao();
-		dao.salvarEndereco(endereco);
+		Endereco end = new Endereco();
+		
+		end.setBairro(bairro);
+		end.setCep(cep);
+		end.setCidade(cidade);
+		end.setEstado(estado);
+		end.setNumeroCasa(numeroCasa);
+		end.setComplemento(complemento);
+		end.setRua(rua);
+		end.setUsuario(idUsuario);
+		
+		dao.salvarEndereco(end);
 
-		model.addAttribute("msg", "Endereço cadastrado com Sucesso!");
-
-		return "cliente/adicionarEndereco";
+		return new Gson().toJson("");
 
 	}
 
@@ -210,12 +234,12 @@ public class ClienteController {
 
 	// Método para abrir o primeiro estágio do pedido
 	@RequestMapping("solicitacaoServico")
-	public String solicitacaoServico(@RequestParam("id") Integer idUsuarioServico, Model model, Model model2, Model model3,Model model4,
-			HttpServletRequest request) {
+	public String solicitacaoServico(@RequestParam("id") Integer idUsuarioServico, Model model, Model model2,
+			Model model3, Model model4, HttpServletRequest request) {
 
 		UsuarioServicoDao dao2 = new UsuarioServicoDao();
 		DadosPessoaisDao dao3 = new DadosPessoaisDao();
-		
+
 		UsuarioServico usuarioServico = dao2.buscarPorId(idUsuarioServico);
 		DadosPessoais dados = dao3.buscarDadosPessoaisUsuario(usuarioServico.getUsuario().getIdUsuario());
 		Usuario usuario = (Usuario) request.getSession().getAttribute("usuarioLogado");
@@ -482,7 +506,7 @@ public class ClienteController {
 		Contrato con = dao.buscarContratoPorSolicitacao(idProposta);
 		con.setAceito("1");
 		dao.alterar(con);
-		
+
 		SolicitacaoContratoDao dao2 = new SolicitacaoContratoDao();
 		SolicitacaoContrato proposta = dao2.buscarPorId(idProposta);
 		proposta.setEstagio("4");// fase contrato
@@ -493,5 +517,109 @@ public class ClienteController {
 		return new Gson().toJson("");
 
 	}
+	/*
+	 //Método para alterar foto com ajax
+	  
+	  @RequestMapping(value = "alteraImagem", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE) 
+	  public @ResponseBody String alteraFotoClciente(@RequestParam("idUsuario") Integer IdUsuario, @RequestParam("file") MultipartFile imagem) {
+	  
+	  UsuarioDao dao = new UsuarioDao(); 
+	  Usuario usuario = dao.buscarPorId(IdUsuario);
+	  
+	  if (Util.fazerUploadImagem(imagem)) {
+		  usuario.setFoto(Util.obterMomentoAtual() + " - " +
+		  imagem.getOriginalFilename()); 
+	  }  
+	  
+	  dao.alterar(usuario);
+	  
+	  return new Gson().toJson("");
+	  
+	  }
+	 
+	  */
+
+	@RequestMapping("alteraImagem")
+	public String save(@RequestParam("idUsuario") Integer IdUsuario, @RequestParam("file") MultipartFile imagem, Model model) {
+		
+		UsuarioDao dao = new UsuarioDao(); 
+		Usuario usuario = dao.buscarPorId(IdUsuario);
+		
+		if (Util.fazerUploadImagem(imagem)) {
+			  usuario.setFoto(Util.obterMomentoAtual() + " - " +
+			 imagem.getOriginalFilename()); 
+		} 
+			
+		
+		dao.alterar(usuario);
+		
+		model.addAttribute("mensagemFoto", "Foto Atualizada com sucesso!");
+		
+		return "forward:minhaContaCliente";
+		
+		
+	}
+		/*
+	@RequestMapping(value = "alterarDados", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+	public @ResponseBody String alterarDadosPessoais(@RequestParam("cpf") String cpf,
+			@RequestParam("idUsuario2") Integer idUsuario, @RequestParam("nome") String nome,
+			@RequestParam("rg") String rg, @RequestParam("senha") String senha, @RequestParam("sexo") String sexo,
+			@RequestParam("dataNascimento") Date dataNascimento, @RequestParam("email") String email) {
+
+		UsuarioDao dao = new UsuarioDao();
+		Usuario usuario = dao.buscarPorId(idUsuario);
+
+		DadosPessoaisDao dados = new DadosPessoaisDao();
+		DadosPessoais dadosPessoais = dados.buscarDadosPessoaisUsuario(idUsuario);
+
+		usuario.setIdUsuario(idUsuario);
+		usuario.setEmail(email);
+		usuario.setNome(nome);
+		usuario.setSenha(senha);
+		usuario.setEmail(email);
+
+		dadosPessoais.setDataNascimento(dataNascimento);
+		dadosPessoais.setCpfCnpj(cpf);
+		dadosPessoais.setRgIe(rg);
+		dadosPessoais.setSexo(sexo);
+
+		dados.alterar(dadosPessoais);
+		dao.alterar(usuario);
+
+		return new Gson().toJson("");
+
+	}
+	*/
+	  
+		@RequestMapping("alterarDadosPessoaisCliente")
+		public String alterarDadosPessoaisCliente(@RequestParam("cpf") String cpf,
+				@RequestParam("idUsuario") Integer idUsuario, @RequestParam("nome") String nome,
+				@RequestParam("rgIe") String rg, @RequestParam("senha") String senha, @RequestParam("sexo") String sexo,
+				@RequestParam("dataNascimento") Date dataNascimento, @RequestParam("email") String email, Model model) {
+
+			UsuarioDao dao = new UsuarioDao();
+			Usuario usuario = dao.buscarPorId(idUsuario);
+
+			DadosPessoaisDao dados = new DadosPessoaisDao();
+			DadosPessoais dadosPessoais = dados.buscarDadosPessoaisUsuario(idUsuario);
+
+			usuario.setEmail(email);
+			usuario.setNome(nome);
+			usuario.setSenha(senha);
+			usuario.setEmail(email);
+
+			dadosPessoais.setDataNascimento(dataNascimento);
+			dadosPessoais.setCpfCnpj(cpf);
+			dadosPessoais.setRgIe(rg);
+			dadosPessoais.setSexo(sexo);
+
+			dados.alterar(dadosPessoais);
+			dao.alterar(usuario);
+			
+			model.addAttribute("mensagem", "Dados Atualizados com sucesso!");
+
+			return "forward:minhaContaCliente";
+
+		}
 
 }

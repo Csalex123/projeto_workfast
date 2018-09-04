@@ -78,10 +78,53 @@
 	href="<%=request.getContextPath()%>/resources/css/theme-cliente.css"
 	rel="stylesheet" media="all">
 
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+<script>
+$(document).ready(function(){
+	
+	//$("#cadastrar_avaliacao").submit(function() {
+		$("#form_cadastrar_endereco").submit(function(){
+			
+			   var cep = $("#cep").val();  
+			   var bairro = $("#bairro").val();
+			   var cidade = $("#cidade").val();
+			   var estado = $("#estado").val();
+			   var rua = $("#rua").val();
+			   var complemento = $("#complemento").val();
+			   var numeroCasa = $("#numeroCasa").val();
+			   var idUsuario = $("#id_usuario").val();
+			  
+			   
+  	
+			 $.post('salvarEndereco',{
+		           
+				 cep:cep,
+				 bairro:bairro,
+				 cidade:cidade,
+			     estado:estado,
+			     rua:rua,
+			     complemento:complemento,
+			     numeroCasa:numeroCasa,
+			     idUsuario:idUsuario,
+		          
+		          }, function(data){    
+		        	  swal("Endereço cadastrado com sucesso!","","success").then((value) => {
+		        	    	 window.location = "meuEnderecos";
+		        	    });
+		          });
+
+		return false; 
+	  });
+});
+</script>
 
 
 </head>
+
 
 
 <body class="animsition">
@@ -96,7 +139,8 @@
 					<section>
 					<h2 style="text-align: center;">Adicione um novo endereço</h2>
 					<br>
-
+					
+ 					<!--  
 					<c:if test="${not empty msg}">
 						<br>
 						<div class="alert alert-success alert-dismissible">
@@ -104,12 +148,12 @@
 							${msg}
 						</div>
 						<br>
-					</c:if> <br>
+					</c:if> <br> -->
 
-					<form action="salvarEndereco" method="post">
+					<form id="form_cadastrar_endereco">
 
 						<input type="hidden" value="${usuarioLogado.idUsuario}"
-							name="usuario">
+							name="usuario" id="id_usuario">
 
 						<div class="row form-group">
 							<div class="col col-md-3">
@@ -131,13 +175,9 @@
 											name="estado" class="form-control">
 											<option value="">Selecione</option>
 											<c:forEach items="${listaEstado}" var="obj">
-
 												<option id="${obj.uf}" value="${obj.idEstado}">${obj.nome}</option>
-
-
 											</c:forEach>
-
-										</select>
+								</select>
 							</div>
 						</div>
 
@@ -183,7 +223,7 @@
 									da Casa:</label>
 							</div>
 							<div class="col-12 col-md-5">
-								<input type="text" name="numeroCasa" required="" maxlength="4"
+								<input type="text" name="numeroCasa" id="numeroCasa" required="" maxlength="4"
 									class="form-control">
 							</div>
 						</div>
@@ -193,7 +233,7 @@
 								<label for="select" class=" form-control-label">Complemento:</label>
 							</div>
 							<div class="col-12 col-md-5">
-								<input type="text" name="complemento"  maxlength="45"
+								<input type="text" name="complemento" id="complemento"  maxlength="45"
 									class="form-control">
 							</div>
 						</div>

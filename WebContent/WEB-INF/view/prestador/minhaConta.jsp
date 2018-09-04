@@ -99,10 +99,19 @@
 			<div class="container-fluid">
 				<div class="row" style="padding-bottom: 50%;">
 					<div class="col-lg-12 col-md-12 col-sm-12 ">
-                  <form action="#" method="post">
+					
+					 <c:if test="${not empty mensagemFoto}">
+							<br><div class="alert alert-success alert-dismissible">
+									<button type="button" class="close" data-dismiss="alert">&times;</button>
+									${mensagemFoto}
+							</div><br>
+					</c:if>
+					
+                  <form action="alteraImagemPrestador" method="post" enctype="multipart/form-data">
 	                                <div class="row form-group">
 	                                    <img src="<%=request.getContextPath()%>/resources/img/${usuarioLogado.foto}" class="img-responsive img-thumbnail" alt="foto" style="width: 150px; height: 144px; margin-left: 20px; ">   
-	                                    <input type="file" class="btn btn-default" name="">
+	                                    <input type="file" class="btn btn-default" id="foto" name="file" required>
+	                                    <input type="hidden" name="idUsuario" id="id_usuario" value="${usuarioLogado.idUsuario}" required>
 	                                </div>
 	                           
 	                                 <div class="row form-group" >    

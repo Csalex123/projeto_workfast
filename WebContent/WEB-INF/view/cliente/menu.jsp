@@ -9,9 +9,8 @@
             <div class="header-mobile__bar">
                 <div class="container-fluid">
                     <div class="header-mobile-inner">
-                        <a class="logo" href="index.html">
+                        <a class="logo" href="paginaInicialCliente">
                             <img style="width: 120px; height: 35px;"  src="<%=request.getContextPath()%>/resources/img/icon_cliente/logo3.png" alt="WorkFast" />
-                           
                         </a>
                         <button class="hamburger hamburger--slider" type="button">
                             <span class="hamburger-box">
@@ -46,7 +45,7 @@
 
 
                         <li>
-                            <a href="form.html">
+                            <a href="ajudaCliente">
                                 <i class="fa fa-question" aria-hidden="true"></i>Ajuda</a>
                         </li>
                          <li>
@@ -63,7 +62,7 @@
         <!-- Menu lateral -->
         <aside class="menu-sidebar d-none d-lg-block">
             <div class="logo">
-                <a href="#">
+                <a href="paginaInicialCliente">
                     <img style="width: 220px; height: 35px;" src="<%=request.getContextPath()%>/resources/img/icon_cliente/logo3.png" alt="WorkFast" />
                 </a>
                 
@@ -92,7 +91,7 @@
                           
 
                         <li class="">
-                            <a href="#">
+                            <a href="ajudaCliente">
                                 <i class="fa fa-question" aria-hidden="true"></i>Ajuda</a>
                         </li>
                         <hr>

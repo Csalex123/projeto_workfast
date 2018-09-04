@@ -176,13 +176,13 @@
                                 <h4 style="text-align: center;"> Avaliação</h4><br><br>
                                 
                                 <p>O cliente x avaliou você desta maneira:</p> <br><br>
-                                
+                                      
                                 <i class="fas fa-star"></i>
                                 <i class="fas fa-star"></i>
                                 <i class="fas fa-star"></i>
                                 <i class="fas fa-star"></i>
                                 <i class="fas fa-star-half"></i>(Recomendado)<br>
-                                
+                                <!-- ${mensagem} -->
                                 <p>O prestador x prestou serviço pra mim no dia 00/00/000 e concluiu com êxato aquilo tinha 
                                 prometido, super recomendo.</p>
         

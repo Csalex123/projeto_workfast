@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.google.gson.Gson;
 
@@ -52,6 +53,7 @@ import br.com.ifpe.workfast.model.UsuarioProfissao;
 import br.com.ifpe.workfast.model.UsuarioProfissaoDao;
 import br.com.ifpe.workfast.model.UsuarioServico;
 import br.com.ifpe.workfast.model.UsuarioServicoDao;
+import br.com.ifpe.workfast.util.Util;
 
 @Controller
 public class PrestadorController {
@@ -189,16 +191,16 @@ public class PrestadorController {
 		model.addAttribute("listaEmFinalizado", listaEmFinalizado);
 		return "prestador/servico_finalizado";
 	}
-	
-	// metodo para redirecionar para pagina de Serviço finalizados
-		@RequestMapping("ServicosCancelados")
-		public String servicosCancelados(@RequestParam("cas") Integer idUsuario, Model model) {
 
-			SolicitacaoContratoDao dao = new SolicitacaoContratoDao();
-			List<ListaPedidosPendentesVO> listaCancelado = dao.listarPedidosPrestadorEmCancelado(idUsuario);
-			model.addAttribute("listaCancelados", listaCancelado);
-			return "prestador/servico_cancelado";
-		}
+	// metodo para redirecionar para pagina de Serviço finalizados
+	@RequestMapping("ServicosCancelados")
+	public String servicosCancelados(@RequestParam("cas") Integer idUsuario, Model model) {
+
+		SolicitacaoContratoDao dao = new SolicitacaoContratoDao();
+		List<ListaPedidosPendentesVO> listaCancelado = dao.listarPedidosPrestadorEmCancelado(idUsuario);
+		model.addAttribute("listaCancelados", listaCancelado);
+		return "prestador/servico_cancelado";
+	}
 
 	// metodo para redirecionar para pagina de Serviço finalizados
 	@RequestMapping("Propostas")
@@ -317,17 +319,23 @@ public class PrestadorController {
 		model4.addAttribute("prestadorDados", prestadorDados);
 		model5.addAttribute("clienteEndereco", clienteEndereco);
 		model6.addAttribute("prestadorEndereco", prestadorEndereco);
-		
+
 		return "prestador/4_estagio";
 	}
 
 	@RequestMapping("QuintaEtapa")
 	public String quintaEtapa(@RequestParam("cas") Integer idSolicitacao, Model model) {
-		
+
 		SolicitacaoContratoDao dao = new SolicitacaoContratoDao();
-		
+		AvaliacaoDao dao2 = new AvaliacaoDao();
+
 		ListaPedidosPendentesVO solicitacaoVo = dao.buscarPedidoPendente(idSolicitacao);
 		model.addAttribute("proposta", solicitacaoVo);
+			
+		Avaliacao avalicao = dao2.buscarAvalicaoPorId(idSolicitacao);
+		model.addAttribute("avalicao", avalicao);	
+		
+		
 		return "prestador/5_estagio";
 	}
 
@@ -513,6 +521,12 @@ public class PrestadorController {
 	public String paginaServicos() {
 
 		return "prestador/servicos";
+	}
+	
+	@RequestMapping("ajudaPrestador")
+	public String ajudaPrestador() {
+
+		return "prestador/ajuda";
 	}
 
 	// metodo para redirecionar para pagina de cadastro primerio acesso: tipo fisico
@@ -886,17 +900,14 @@ public class PrestadorController {
 
 		ContratoDao dao = new ContratoDao();
 		Contrato con = dao.aceitouContrato(idProposta);
-		
-		if(con == null) {
+
+		if (con == null) {
 			return new Gson().toJson("0");
-		}else {
+		} else {
 			return new Gson().toJson("1");
 		}
 
-		
-
 	}
-	
 
 	// Método para finalizar contrato
 
@@ -906,15 +917,35 @@ public class PrestadorController {
 		SolicitacaoContratoDao dao2 = new SolicitacaoContratoDao();
 		SolicitacaoContrato proposta = dao2.buscarPorId(idProposta);
 		proposta.setEstagio("5");// fase finalizar contrato
-		proposta.setStatus("2");// status finalizado, 
+		proposta.setStatus("2");// status finalizado,
 		dao2.update(proposta);
-		
-		
-		return new Gson().toJson("");
-		
 
-		
+		return new Gson().toJson("");
 
 	}
+	
+	//Método para alterar a imagem
+	@RequestMapping("alteraImagemPrestador")
+	public String save(@RequestParam("idUsuario") Integer IdUsuario, @RequestParam("file") MultipartFile imagem, Model model) {
+		
+		UsuarioDao dao = new UsuarioDao(); 
+		Usuario usuario = dao.buscarPorId(IdUsuario);
+		
+		if (Util.fazerUploadImagem(imagem)) {
+			  usuario.setFoto(Util.obterMomentoAtual() + " - " +
+			 imagem.getOriginalFilename()); 
+		} 
+			
+		
+		dao.alterar(usuario);
+		
+		model.addAttribute("mensagemFoto", "Foto Atualizada com sucesso!");
+		
+		return "forward:minhaConta";
+		
+		
+	}
+
+
 
 }

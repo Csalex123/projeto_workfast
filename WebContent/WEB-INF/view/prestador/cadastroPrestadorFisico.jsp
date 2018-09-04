@@ -94,9 +94,9 @@ $(document).ready(function(){
 		          
 		          }, function(data){
 		             
-		        	  swal("Dados cadastrados com sucesso.","","success")
+		        	  swal("Dados cadastrados com sucesso!","","success")
 		        	  .then((value) => {
-		        	    swal("Quase lá! Você sera redirecionado para 2 etapa do cadastro.","Cadastro do servico e a vinculação da area aonde vai ser atuado!").then((value) => {
+		        	    swal("Quase lá! Você será redirecionado para 2 etapa do cadastro.","Cadastro do serviço e a vinculação da área aonde vai ser atuado.").then((value) => {
 		        	    	 window.location = data;
 		        	    });
 		        	  });

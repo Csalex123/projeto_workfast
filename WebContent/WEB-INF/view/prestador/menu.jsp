@@ -62,6 +62,11 @@
                                
                             </ul>
                         </li>
+                        
+                         <li>
+                            <a href="ajudaPrestador">
+                                <i class="fa fa-question"></i>Ajuda</a>
+                        </li>
                     </ul>
                 </nav>
             </div>
@@ -204,10 +209,12 @@
                         <li>
                            <a href="minhaConta">
                                   <i class="zmdi zmdi-account"></i>Minha Conta</a>
-                          
                         </li>
                        
-                        
+                        <li>
+                            <a href="ajudaPrestador">
+                                <i class="fa fa-question"></i>Ajuda</a>
+                        </li>
                         
                     </ul>
                     </nav>

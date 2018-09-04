@@ -274,11 +274,7 @@
 								<td>${obj.rua}</td>
 								<td>${obj.numeroCasa}</td>
 								<td><button type="button" onclick="solicitarPedido(${obj.id})" class="btn btn-primary">Primary</button></td>
-							</tr>
-				
-																
-				
-				
+							</tr>	
 						  </c:forEach>
 							
 							
@@ -313,7 +309,7 @@
 					 
 					 swal("Solicitação enviada com sucesso.","","success");
 				   	  
-					 $('#solicitacao').html('<center>Solicitação enviada com sucesso!</br>Aguardando aprovação do Prestador.</center>');
+					 $('#solicitacao').html('<center>Solicitação enviada com sucesso!</br>Aguardando aprovação do Prestador.<br><br> Acompanhe seu pedido em [Pedidos Pendentes]</center>');
 				}
 			});
 		 

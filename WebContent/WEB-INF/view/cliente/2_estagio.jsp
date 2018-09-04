@@ -212,7 +212,7 @@
                                                 <div class="au-chat-info">
                                                     <div class=" ">
                                                         <div class="avatar avatar--small">
-                                                            <img src="/workfast/resources/img/icon/avatar-04.jpg" alt="John Smith">
+                                                            <img src="/workfast/resources/img/${proposta.foto}" alt="John Smith">
                                                         </div>
                                                     </div>
                                                     <span class="nick">

@@ -4,6 +4,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link rel="icon"  href="<%=request.getContextPath()%>/resources/img/icon/fivicon.png">
 <title>WorkFast</title>	
 	
 		<meta http-equiv="X-UA-Compatible" content="IE=Edge">
