@@ -47,17 +47,17 @@
                                         <i class="fas fa-thumbtack "></i>Em aberto</a>
                                 </li>
                                 <li>
-                                    <a href="ServicosEmAndamento">
+                                    <a href="ServicosEmAndamento?cas=${usuarioLogado.idUsuario}">
                                         <i class="fa fa-clock"></i>Em andamento</a>
                                 </li>
                                
                                 <li>
-                                    <a href="ServicosFinalizados">
+                                    <a href="ServicosFinalizados?cas=${usuarioLogado.idUsuario}">
                                         <i class="fas fa-legal"></i>Terminados</a>
                                 </li>
                                 <li>
-                                    <a href="">
-                                        <i class="fa fa-ban "></i>Contratos Cancelados</a>
+                                    <a href="ServicosCancelados?cas=${usuarioLogado.idUsuario}">
+                                        <i class="fa fa-ban "></i>Pedidos Cancelados</a>
                                 </li>
                                
                             </ul>
@@ -186,17 +186,17 @@
                                         <i class="fas fa-thumbtack "></i>Em aberto</a>
                                 </li>
                                 <li>
-                                    <a href="ServicosEmAndamento">
+                                    <a href="ServicosEmAndamento?cas=${usuarioLogado.idUsuario}">
                                         <i class="fa fa-clock"></i>Em andamento</a>
                                 </li>
                                
                                 <li>
-                                    <a href="ServicosFinalizados">
+                                    <a href="ServicosFinalizados?cas=${usuarioLogado.idUsuario}">
                                         <i class="fas fa-legal"></i>Terminados</a>
                                 </li>
                                 <li>
-                                    <a href="">
-                                        <i class="fa fa-ban "></i>Contratos Cancelados</a>
+                                    <a href="ServicosCancelados?cas=${usuarioLogado.idUsuario}">
+                                        <i class="fa fa-ban "></i>Pedidos Cancelados</a>
                                 </li>
                                
                             </ul>

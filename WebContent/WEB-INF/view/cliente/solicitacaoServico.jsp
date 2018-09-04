@@ -236,7 +236,18 @@
 					</section>
 
 					<section id="solicitacao">
-						<h2 style="text-align: center;">Cadastro de Endereço</h2>
+					    <h2 style="text-align: center;">
+					    <c:if test="${usuarioServico.usuario.tipo_usuario == '1'}">
+					        ${usuarioServico.usuario.nome} -
+					    </c:if>
+					    
+					    <c:if test="${usuarioServico.usuario.tipo_usuario == '2'}">
+					        ${dados.nomeFantasia} -
+					    </c:if>
+						${usuarioServico.servico.nome} 
+					    
+					     </h2>
+						<h2 style="text-align: center;">Endereço</h2>
 						<br>
 						<p>Você irá escolher um dos seus endereço cadastrados para que o Prestador saiba onde que você reside. Apos disso, você ficará no aguardo da confirmação do Prestador. Caso o prestador aceite a sua solicitação, irá 
 							prosseguir para a segunda etapa do processo de solicitação: <b>Informações</b>.</p>
@@ -384,7 +395,7 @@
 						 swal("Solicitação enviada com sucesso.","","success");
 						 limparCampo();
 						 $('#exampleModal').modal('hide');
-						 $('#solicitacao').html('<center>Solicitação enviada com sucesso!</br>Aguardando aprovação do Prestador.</center>');
+						 $('#solicitacao').html("<center>Solicitação enviada com sucesso!</br>Aguardando aprovação do </center>");
 					
 					}
 				});

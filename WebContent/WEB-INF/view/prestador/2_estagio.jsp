@@ -255,7 +255,7 @@
                                                 <div class="au-chat-info">
                                                     <div class=" ">
                                                         <div class="avatar avatar--small">
-                                                            <img src="/workfast/resources/img/${proposta.foto}" alt="John Smith">
+                                                            <img src="/workfast/resources/img/${proposta.foto}" alt="">
                                                         </div>
                                                     </div>
                                                     <span class="nick">
@@ -299,11 +299,16 @@
 								
                                   <div class="row ">
                                     
-                                    <div class="col col-md-12">
+                                    <div class="col col-md-12 " >
                                        <div class="form-group">
-										  <label for="mensagem"> &nbsp;</label>
-										   <a style="width:100%; height: 100%;" href="TerceiraEtapa?cas=${proposta.idProposta}"><button type="button" class="btn btn-primary" style="width:100%; height: 100%;">
+										 
+										   <a style="float:right;" href="TerceiraEtapa?cas=${proposta.idProposta}"><button type="button" class="btn btn-primary" >
                                                &nbsp;<i class="fas fa-forward"></i> Ir ao contrato</button></a>
+								       </div>
+								       <div class="form-group">
+										 
+										   <button style="float:left;" type="button"  id="btnCancelar" class="btn btn-danger" >
+                                               &nbsp;<i class="fas fa-forward"></i> Cancelar pedido</button>
 								       </div>
                                       
                                     </div>
@@ -398,6 +403,8 @@
 								linhas +='</div>';
 								linhas +='</div>';
 								linhas +='</div>';
+								linhas +='</div>';
+
 							    
 							}
 								
@@ -449,6 +456,46 @@
 		       });
 		  }
 		  
+	  });
+	  
+	  $("#btnCancelar").on('click',function(){
+			 
+		  swal({
+			  title: "Você tem certeza que quer cancelar esse pedido?",
+			  text:"",
+			  icon: "warning",
+			  buttons:true,
+			  dangerMode: true,
+			})
+			.then((willDelete) => {
+			 
+			  if (willDelete) {
+				  
+				  $.post('cancelarPedidoPrestador', {
+					  cas:idProposta,
+			           
+			        	   
+			       }, function(dadosJSON){
+			    	   
+			    	   swal("Pedido Cancelado com sucesso","","success")
+			    	   .then((value) => {
+			    	     window.location = dadosJSON;
+			    	   });
+			    	   
+			    	  
+			       });
+				  
+				  
+				
+				
+			    
+			   
+			    
+			  } 
+			  
+			});
+			  
+		
 	  });
 
 	</script>

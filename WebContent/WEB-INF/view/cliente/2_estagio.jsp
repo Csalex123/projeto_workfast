@@ -6,7 +6,6 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<link rel="icon"  href="<%=request.getContextPath()%>/resources/img/icon/fivicon.png">
 
     <!-- Required meta tags-->
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -47,6 +46,9 @@
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"
 	integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
 	crossorigin="anonymous"></script>
+	
+	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+	
 
 <style type="text/css">
   .containerChat {
@@ -210,7 +212,7 @@
                                                 <div class="au-chat-info">
                                                     <div class=" ">
                                                         <div class="avatar avatar--small">
-                                                            <img src="/workfast/resources/img/${proposta.foto}" alt="John Smith">
+                                                            <img src="/workfast/resources/img/icon/avatar-04.jpg" alt="John Smith">
                                                         </div>
                                                     </div>
                                                     <span class="nick">
@@ -249,20 +251,16 @@
 								  
 								  
 								 
-								  
-								
-								
-                                  <div class="row ">
-                                    
+								   
+                                <div class="row form-group"  >
                                     <div class="col col-md-12">
-                                       <div class="form-group">
-										  <label for="mensagem"> &nbsp;</label>
-										   <a style="width:100%; height: 100%;" href="TerceiraEtapa?cas=${proposta.idProposta}"><button type="button" class="btn btn-primary" style="width:100%; height: 100%;">
-                                               &nbsp;<i class="fas fa-forward"></i> Ir ao contrato</button></a>
-								       </div>
-                                      
+                                       <button style="width:100%;" type="button" id="btnCancelar" class="btn btn-primary">
+                                        &nbsp;<i class="fas fa-forward"></i> Cancelar pedido</button>
                                     </div>
                                  </div>
+								
+								
+                                  
 
                             </section><br><br>
                         </div>
@@ -328,7 +326,7 @@
 							
 							if(dadosJSON[i].enviadoPor == "${usuarioLogado.idUsuario}"){
 								linhas +='<div class="send-mess-wrap">';
-								linhas +='<span class="mess-time">04 Sec. atrás</span>';
+								linhas +='<span class="mess-time">30 Sec ago</span>';
 								linhas +='<div class="send-mess__inner">';
 								linhas +='<div class="send-mess-list">';
 								linhas +='<div class="send-mess-list">';
@@ -404,6 +402,46 @@
 		       });
 		  }
 		  
+	  });
+	  
+	  $("#btnCancelar").on('click',function(){
+		 
+		  swal({
+			  title: "Você tem certeza que quer cancelar esse pedido?",
+			  text:"",
+			  icon: "warning",
+			  buttons:true,
+			  dangerMode: true,
+			})
+			.then((willDelete) => {
+			 
+			  if (willDelete) {
+				  
+				  $.post('cancelarPedidoCliente', {
+					  cas:idProposta,
+			           
+			        	   
+			       }, function(dadosJSON){
+			    	   
+			    	   swal("Pedido Cancelado com sucesso","","success")
+			    	   .then((value) => {
+			    	     window.location = dadosJSON;
+			    	   });
+			    	   
+			    	  
+			       });
+				  
+				  
+				
+				
+			    
+			   
+			    
+			  } 
+			  
+			});
+			  
+		
 	  });
 
 	</script>

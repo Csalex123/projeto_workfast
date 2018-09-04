@@ -421,7 +421,7 @@
 	 var idProposta = "${proposta.idProposta}";
 	 
 	function gerarCodigo(codigo,prefixo){
-		alert();
+		
 		 $.post('verificarCodigoContrato', {
 			   prefixo:prefixo,
 			   				
@@ -506,7 +506,7 @@
 								      icon: "success",
 								    }).then((value) => {
 								    	 swal("Aguarde aprovação do cliente!").then((value) => {
-								    		   window.location = dadosJSON+"?cod="+idProposta;
+								    		   window.location = dadosJSON+"?cas="+idProposta;
 								    	 });
 								 });
 								
@@ -569,7 +569,7 @@
    
    <script type="text/javascript">
    $(document).ready(function(){
-	   $('#valor').mask('#.##0,00', {reverse: true});
+	   $('#valor').mask('00000000#', {reverse: true});
 	   $('#data').mask('00/00/0000', {reverse: true});
 	   $('#prazo').mask('000000#', {reverse: true});
    });

@@ -224,6 +224,7 @@
 	$(document).ready(function(){
 		
 		listarSolicitacoes(); 
+		setInterval("listarSolicitacoes()", 5000);
 		 
 	 });
 	</script>

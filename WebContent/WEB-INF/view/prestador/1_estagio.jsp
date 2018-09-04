@@ -236,7 +236,7 @@
 									<h3 style="text-align: center;"> ${proposta.nome}</h3><br> 
 							      </c:if>
 							      <c:if test="${proposta.tipoUsuario == '2'}">
-									 <h4 style="text-align: center;"> Serviço: ${proposta.nomeFantasia}</h4><br>
+									 <h4 style="text-align: center;"> ${proposta.nomeFantasia}</h4><br>
 							      </c:if>
                                  <h4 style="text-align: center;"> Serviço: ${proposta.servico}</h4><br>
                                 <p> Neste estágio você terá acesso ao endereço do cliente. Será disponível também para você um mapa, e este mapa traçará uma rota: do seu endereço até a residência do cliente:

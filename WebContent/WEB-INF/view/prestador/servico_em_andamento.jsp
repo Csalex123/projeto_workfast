@@ -110,21 +110,37 @@
                                             	<th>Nome do Cliente</th>
                                                 <th>Serviço</th>
                                                 <th>Data início</th>
-                                                <th>Estapa</th>
+                                                <th>Etapa</th>
                                                 
                                                 <th></th>
                                             </tr>
                                         </thead>
                                         <tbody>
+                                        <c:forEach items="${listaEmAndamento}" var="obj">
                                             <tr >
-                                            	<td>João</td>
-                                                <td>Fotografia</td>
-                                               	<td>20/00/2000</td>
-                                               	<td><b style="color: green">Andamento</b></td>
+                                            	 <c:if test="${obj.tipoUsuario == '1'}">
+									                 <td>${obj.nome}</td>  
+							                      </c:if>
+							  
+							                     <c:if test="${obj.tipoUsuario == '2'}">
+									                <td>${obj.nomeFantasia}</td>  
+							                     </c:if>
+							                     
+                                                <td>${obj.servico}</td>
+                                               	<td>00/00/0000</td>
+                                               	<td>
+	                                               	 <c:if test="${obj.estagio == '4'}">
+										                 <b style="color: #B8860B">Em andamento</b> 
+								                      </c:if>
+								  
+								                     
+                                               	     
+                                               	</td>
                                                 <td>
-                                                    <a href="QuintaEtapa"><button class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="Visualizar">Visualizar</button></a>                      
+                                                    <button class="btn btn-primary" onclick="encaminhar(${obj.idProposta});" title="Visualizar">Ver Detalhes</button>                     
                                                 </td>
                                             </tr>
+                                          </c:forEach>
                                         </tbody>
                                     </table>
                                 </div>
@@ -155,6 +171,25 @@
 	</div>
 
 	</div>
+	<script type="text/javascript">
+	
+	 
+	 function encaminhar(idSolitacao){
+		
+		 $.post('verificarEstagios', {
+			 
+			 cas:idSolitacao
+	           
+	        	   
+	       }, function(dadosJSON){
+	    	   
+	          window.location = dadosJSON+"?cas="+idSolitacao;
+	          
+	       });
+		  
+		 
+	 }
+	</script>
 
 	<!-- Jquery JS-->
 	<script

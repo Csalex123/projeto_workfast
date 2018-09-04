@@ -83,7 +83,7 @@
 					<div class="col-md-12">
 						<div class="au-breadcrumb-content">
 							<div class="au-breadcrumb-left" style="margin-top: 5px;">
-								<h1 class="title-4">Todos Serviços finalizados</h1>
+								<h1 class="title-4">Todos Serviços Cancelados</h1>
 							</div>
 							
 							
@@ -112,11 +112,11 @@
                                                 <th>Data início</th>
                                                 <th>Etapa</th>
                                                 
-                                                <th></th>
+                                               
                                             </tr>
                                         </thead>
                                         <tbody>
-                                         <c:forEach items="${listaEmFinalizado}" var="obj">
+                                         <c:forEach items="${listaCancelados}" var="obj">
                                             <tr >
                                             	 <c:if test="${obj.tipoUsuario == '1'}">
 									                 <td>${obj.nome}</td>  
@@ -129,16 +129,14 @@
                                                 <td>${obj.servico}</td>
                                                	<td>00/00/0000</td>
                                                	<td>
-	                                               	 <c:if test="${obj.estagio == '5'}">
-										                 <b style="color: #B8860B">Finalizado</b> 
+	                                               	 <c:if test="${obj.estagio == '0'}">
+										                 <b style="color: #B8860B">Cancelado</b> 
 								                      </c:if>
 								  
 								                     
                                                	     
                                                	</td>
-                                                <td>
-                                                    <button class="btn btn-primary" onclick="encaminhar(${obj.idProposta});" title="Visualizar">Ver Detalhes</button>                     
-                                                </td>
+                                                
                                             </tr>
                                           </c:forEach>
                                     </table>

@@ -21,6 +21,8 @@ import br.com.ifpe.workfast.model.ChatSolicitacao;
 import br.com.ifpe.workfast.model.ChatSolicitacaoDao;
 import br.com.ifpe.workfast.model.Cidade;
 import br.com.ifpe.workfast.model.CidadeDao;
+import br.com.ifpe.workfast.model.Contrato;
+import br.com.ifpe.workfast.model.ContratoDao;
 import br.com.ifpe.workfast.model.DadosPessoais;
 import br.com.ifpe.workfast.model.DadosPessoaisDao;
 import br.com.ifpe.workfast.model.Endereco;
@@ -36,6 +38,7 @@ import br.com.ifpe.workfast.model.SolicitacaoContrato;
 import br.com.ifpe.workfast.model.SolicitacaoContratoDao;
 import br.com.ifpe.workfast.model.Usuario;
 import br.com.ifpe.workfast.model.UsuarioServico;
+import br.com.ifpe.workfast.model.UsuarioServicoDao;
 
 @Controller
 public class ClienteController {
@@ -162,7 +165,7 @@ public class ClienteController {
 
 		SolicitacaoContratoDao dao = new SolicitacaoContratoDao();
 		List<ListaPedidosPendentesVO> listaPendentes = dao.listarPedidosPendentesCliente(idUsuario);
-		System.out.println("-------------------"+listaPendentes.size());
+		System.out.println("-------------------" + listaPendentes.size());
 		model.addAttribute("listaPendentes", listaPendentes);
 
 		return "cliente/solicitacoesPendentes";
@@ -207,14 +210,21 @@ public class ClienteController {
 
 	// Método para abrir o primeiro estágio do pedido
 	@RequestMapping("solicitacaoServico")
-	public String solicitacaoServico(@RequestParam("id") Integer idUsuarioServico, Model model, Model model2,
+	public String solicitacaoServico(@RequestParam("id") Integer idUsuarioServico, Model model, Model model2, Model model3,Model model4,
 			HttpServletRequest request) {
 
+		UsuarioServicoDao dao2 = new UsuarioServicoDao();
+		DadosPessoaisDao dao3 = new DadosPessoaisDao();
+		
+		UsuarioServico usuarioServico = dao2.buscarPorId(idUsuarioServico);
+		DadosPessoais dados = dao3.buscarDadosPessoaisUsuario(usuarioServico.getUsuario().getIdUsuario());
 		Usuario usuario = (Usuario) request.getSession().getAttribute("usuarioLogado");
 		EnderecoDao dao = new EnderecoDao();
 		List<Endereco> lista = dao.listarEnderecoCliente(usuario.getIdUsuario());
 		model2.addAttribute("idUsuarioServico", idUsuarioServico);
 		model.addAttribute("listaEndereco", lista);
+		model3.addAttribute("usuarioServico", usuarioServico);
+		model4.addAttribute("dados", dados);
 
 		return "cliente/solicitacaoServico";
 
@@ -326,24 +336,48 @@ public class ClienteController {
 
 	// Método para abrir o terceiro estágio do pedido
 	@RequestMapping("TerceiroEstagio")
-	public String TerceiroEstagioPedido() {
+	public String TerceiroEstagioPedido(@RequestParam("cas") Integer codigoSolicitacao, Model model1, Model model2,
+			Model model3, Model model4, Model model5, Model model6) {
+
+		ContratoDao daoContrato = new ContratoDao();
+		Contrato contrato = daoContrato.buscarContratoPorSolicitacao(codigoSolicitacao);
+
+		SolicitacaoContratoDao daoSolicitacao = new SolicitacaoContratoDao();
+		SolicitacaoContrato solicitacao = daoSolicitacao
+				.buscarPorId(contrato.getSolicitacao().getIdSolicitacaoContrato());
+
+		DadosPessoaisDao daoDados = new DadosPessoaisDao();
+		DadosPessoais clienteDados = daoDados.buscarDadosPessoaisUsuario(solicitacao.getUsuario().getIdUsuario());
+		DadosPessoais prestadorDados = daoDados
+				.buscarDadosPessoaisUsuario(solicitacao.getUsuarioServico().getUsuario().getIdUsuario());
+
+		EnderecoDao daoEndereco = new EnderecoDao();
+		Endereco clienteEndereco = solicitacao.getEndereco();
+		Endereco prestadorEndereco = daoEndereco
+				.buscarEnderecoUsuario(solicitacao.getUsuarioServico().getUsuario().getIdUsuario());
+
+		model1.addAttribute("contrato", contrato);
+		model2.addAttribute("solicitacao", solicitacao);
+		model3.addAttribute("clienteDados", clienteDados);
+		model4.addAttribute("prestadorDados", prestadorDados);
+		model5.addAttribute("clienteEndereco", clienteEndereco);
 
 		return "cliente/3_estagio";
 
 	}
 
 	// Método para abrir o Quarto estágio do pedido
-		@RequestMapping("QuartoEstagio")
-		public String QuartoEstagioPedido(Model model) {
-			
-			PendenciasDao dao = new PendenciasDao();				
-			List<Pendencias> listaPencias = dao.buscarPendencias(11);
-			
-			model.addAttribute("listaPencias", listaPencias);
-			
-			return "cliente/4_estagio";
+	@RequestMapping("QuartoEstagio")
+	public String QuartoEstagioPedido(Model model) {
 
-		}
+		PendenciasDao dao = new PendenciasDao();
+		List<Pendencias> listaPencias = dao.buscarPendencias(11);
+
+		model.addAttribute("listaPencias", listaPencias);
+
+		return "cliente/4_estagio";
+
+	}
 
 	// Método para abrir o Quinto estágio do pedido
 	@RequestMapping("QuintoEstagio")
@@ -405,8 +439,59 @@ public class ClienteController {
 
 		return new Gson().toJson("send");
 	}
-	
-	
-	
+
+	// Método para cancelar contrato
+
+	@RequestMapping(value = "cancelarContrato", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+	public @ResponseBody String cancelarContrato(@RequestParam("cas") Integer idProposta, Model model) {
+		ContratoDao dao = new ContratoDao();
+		Contrato con = dao.buscarContratoPorSolicitacao(idProposta);
+		dao.removerContratoPorSolicitacao(con.getIdContrato());
+
+		SolicitacaoContratoDao dao2 = new SolicitacaoContratoDao();
+		SolicitacaoContrato proposta = dao2.buscarPorId(idProposta);
+		proposta.setEstagio("2");// fase contrato
+		proposta.setStatus("1");// status pendente, esperando o cliente aceitar o contrato
+		dao2.update(proposta);
+
+		return new Gson().toJson("SegundoEstagio?cas=" + idProposta);
+
+	}
+
+	// Método para cancelar pedido
+
+	@RequestMapping(value = "cancelarPedidoCliente", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+	public @ResponseBody String cancelarPedidoCliente(@RequestParam("cas") Integer idProposta, Model model) {
+
+		SolicitacaoContratoDao dao2 = new SolicitacaoContratoDao();
+		SolicitacaoContrato proposta = dao2.buscarPorId(idProposta);
+		proposta.setEstagio("0");// fase contrato
+		proposta.setStatus("0");// status pendente, esperando o cliente aceitar o contrato
+		proposta.setConvite("0");
+		dao2.update(proposta);
+
+		return new Gson().toJson("paginaInicialCliente");
+
+	}
+
+	// Método para aceitar contrato
+
+	@RequestMapping(value = "aceitarContratoCliente", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+	public @ResponseBody String aceitarContratoCliente(@RequestParam("cas") Integer idProposta, Model model) {
+		ContratoDao dao = new ContratoDao();
+		Contrato con = dao.buscarContratoPorSolicitacao(idProposta);
+		con.setAceito("1");
+		dao.alterar(con);
+		
+		SolicitacaoContratoDao dao2 = new SolicitacaoContratoDao();
+		SolicitacaoContrato proposta = dao2.buscarPorId(idProposta);
+		proposta.setEstagio("4");// fase contrato
+		proposta.setStatus("3");// status pendente, esperando o cliente aceitar o contrato
+		dao2.update(proposta);
+		
+
+		return new Gson().toJson("");
+
+	}
 
 }

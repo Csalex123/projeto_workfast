@@ -517,7 +517,7 @@
 							</p>
 							<p style="text-align: center;">(Local e data de assinatura)</p>
 							<p style="text-align: left;">
-								<strong><br /> <br /> <br />CONTRATANTE:</strong>
+								<center><strong><br /> <br /> <br />CONTRATANTE:</strong></center>
 							</p>
 							<p style="text-align: center;">
 								<br />_________________________________________
@@ -527,20 +527,13 @@
 										class="variable_vide">________</span></span></strong>
 							</p>
 							<p style="text-align: left;">
-								<strong><br /> <br /> <br /></strong><strong>CONTRATADA</strong><strong>:</strong>
+								<center><strong><br /> <br /> <br /></strong><strong>CONTRATADA</strong><strong>:</strong></center>
 							</p>
 							<p style="text-align: center;">
 								<br />_________________________________________
 							</p>
-							<p style="text-align: center;">
-								<strong><span id="span_id_socio1_contratado1pj"><span
-										class="variable_vide">________</span></span></strong>
-							</p>
-							<p style="text-align: center;">
-								<em>neste ato representando a pessoa jurídica</em> <strong><span
-									id="span_id_nome_contratado1pj"><span
-										class="variable_vide">________</span></span></strong>
-							</p>
+							
+							
 							<p style="text-align: left;">
 								<strong><br /> <br /> <br /></strong>
 							</p>
@@ -557,7 +550,7 @@
 						<br>
 						<div class="row form-group" style="float: right;">
 							<div class="col col-md-3">
-								<button disabled="disabled" type="button" id="btnEnviar"
+								<button disabled="disabled" type="button" id="btnProximo"
 									class="btn btn-primary">
 									&nbsp;<i class="fas fa-forward"></i> Proximo
 								</button>
@@ -567,7 +560,7 @@
 							<div class="col col-md-3">
 								<button  type="button"
 									onclick="javascript:demoFromHTML()" class="btn btn-primary">
-									&nbsp;<i class="fas fa-forward"></i> gerar pdf
+									&nbsp;<i class="fas fa-forward"></i> Gerar pdf
 								</button>
 							</div>
 						</div>
@@ -597,43 +590,76 @@
 	</div>
 
 	<script type="text/javascript">
-    	function demoFromHTML() {
-    var pdf = new jsPDF('p', 'pt', 'letter');
-    // source can be HTML-formatted string, or a reference
-    // to an actual DOM element from which the text will be scraped.
-    source = $('#contrato')[0];
+	var gerarPdf = false;
+	function demoFromHTML() {
+	    var pdf = new jsPDF('p', 'pt', 'letter');
+	    // source can be HTML-formatted string, or a reference
+	    // to an actual DOM element from which the text will be scraped.
+	    source = $('#contrato')[0];
 
-    // we support special element handlers. Register them with jQuery-style 
-    // ID selector for either ID or node name. ("#iAmID", "div", "span" etc.)
-    // There is no support for any other type of selectors 
-    // (class, of compound) at this time.
-    specialElementHandlers = {
-        // element with id of "bypass" - jQuery style selector
-        '#bypassme': function (element, renderer) {
-            // true = "handled elsewhere, bypass text extraction"
-            return true
-        }
-    };
-    margins = {
-                bottom: 60,
-                width: 522
-    };
-    // all coords and widths are in jsPDF instance's declared units
-    // 'inches' in this case
-    pdf.fromHTML(
-        source, // HTML string or DOM elem ref.
-        margins.left, // x coord
-        margins.top, {// y coord
-            'width': margins.width, // max width of content on PDF
-            'elementHandlers': specialElementHandlers
-        },
-        function (dispose) {
-            // dispose: object with X, Y of the last line add to the PDF 
-            //          this allow the insertion of new lines after html
-            pdf.save('Test.pdf');
-        }
-        , margins);
-}
+	    // we support special element handlers. Register them with jQuery-style 
+	    // ID selector for either ID or node name. ("#iAmID", "div", "span" etc.)
+	    // There is no support for any other type of selectors 
+	    // (class, of compound) at this time.
+	    specialElementHandlers = {
+	        // element with id of "bypass" - jQuery style selector
+	        '#bypassme': function (element, renderer) {
+	            // true = "handled elsewhere, bypass text extraction"
+	            return true
+	        }
+	    };
+	    margins = {
+	                bottom: 60,
+	                width: 522
+	    };
+	    // all coords and widths are in jsPDF instance's declared units
+	    // 'inches' in this case
+	    pdf.fromHTML(
+	        source, // HTML string or DOM elem ref.
+	        margins.left, // x coord
+	        margins.top, {// y coord
+	            'width': margins.width, // max width of content on PDF
+	            'elementHandlers': specialElementHandlers
+	        },
+	        function (dispose) {
+	            // dispose: object with X, Y of the last line add to the PDF 
+	            //          this allow the insertion of new lines after html
+	            pdf.save('contrato.pdf');
+	            gerarPdf = true;
+	        
+	        }
+	        , margins);
+	}
+	
+	function aceitou(){
+		
+			 $.post('aceitouContrato', {
+				 
+		           cas:'${contrato.solicitacao.idSolicitacaoContrato}',
+									
+
+				}, function(dadosJSON) {
+
+					   if(dadosJSON == "1"){
+						   $("#btnProximo").removeAttr("disabled");
+					   }
+								 
+					
+				});
+	  }
+	
+		
+		
+
+		
+		
+	
+		
+		$(document).ready(function(){
+			setInterval("aceitou()", 5000);
+		});
+	
+    	
     </script>
 
 

@@ -238,6 +238,7 @@
    
    $(document).ready(function(){
 	   popularFiltro(idEstado,idCidade,idCategoria,idServico);
+	   setInterval("popularFiltro(idEstado,idCidade,idCategoria,idServico)", 10000);
 	   
    });
    var selectOption = document.getElementById("limparFiltro");
